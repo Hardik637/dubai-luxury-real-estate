@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AURA DUBAI — The Feeling of Living in Dubai</title>
-  <meta name="description" content="A full-screen cinematic visual journey through living in Dubai. Curated signature estates, calm waters, and timeless architecture." />
+  <meta name="description" content="A seamless cinematic journey through living in Dubai. Curated signature estates, calm waters, and timeless architecture." />
   
   <!-- Refined Typography: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Minimalist Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,8 @@
     <div class="hero-sticky-viewport">
       <canvas id="hero-canvas"></canvas>
     </div>
+    <!-- Soft organic blend from hero video into the warm cream of the website -->
+    <div class="hero-transition-blend"></div>
   </section>
 
   <!-- ============================================================
@@ -69,46 +71,164 @@
   <main id="main-content">
 
     <!-- ============================================================
-         FULL-SIZE CINEMATIC SCENE 1: THE COASTLINE (DAWN)
-         Full-screen 100vh image with text that slowly glides in on scroll
+         ACT I: THE COASTAL THRESHOLD (06:20 DAWN)
+         Full-size panoramic visual with prominent bidirectional scroll reveal
          ============================================================ -->
-    <section id="act-dawn" class="cinematic-act-screen">
-      <div class="act-bg-wrap">
-        <img src="/images/morning_light.jpg" alt="Dawn over calm turquoise waters of Palm Jumeirah" class="act-bg-img" />
-        <div class="act-gradient-overlay"></div>
-      </div>
-      
-      <div class="act-content-container">
-        <div class="scroll-reveal-box">
-          <div class="act-micro-tag">
-            <span class="act-time">06:20</span>
-            <span class="act-coord">25.1185° N, 55.1328° E • Palm Jumeirah Fronds</span>
+    <section id="act-dawn" class="cinematic-act-section">
+      <div class="act-wrapper">
+        <div class="cinematic-act-panel">
+          <div class="act-media-box">
+            <img src="/images/morning_light.jpg" alt="Dawn over calm turquoise waters of Palm Jumeirah" class="act-photo" />
+            <div class="act-photo-gradient"></div>
           </div>
 
-          <h2 class="act-cinematic-title">
-            Where the silence of the sea meets the first warmth of desert light.
-          </h2>
+          <div class="act-floating-overlay">
+            <div class="scroll-reveal-box">
+              <div class="act-micro-tag">
+                <span class="act-time">06:20</span>
+                <span class="act-coord">25.1185° N, 55.1328° E • Palm Jumeirah Fronds</span>
+              </div>
 
-          <p class="act-cinematic-caption">
-            Wake to glass-calm waters lapping against your private jetty. The morning air carries a tranquil sea breeze as the city skyline rests in pastel haze.
-          </p>
+              <h2 class="act-cinematic-title">
+                Where the silence of the sea meets the first warmth of desert light.
+              </h2>
 
-          <div class="act-floating-metrics">
-            <div class="metric-chip">
-              <span class="chip-val">24°C</span>
-              <span class="chip-lbl">Dawn Air</span>
+              <p class="act-cinematic-caption">
+                Wake to glass-calm waters lapping against your private jetty. The morning air carries a tranquil sea breeze as the city skyline rests in soft pastel haze.
+              </p>
+
+              <div class="act-floating-metrics">
+                <div class="metric-chip">
+                  <span class="chip-val">24°C</span>
+                  <span class="chip-lbl">Dawn Air</span>
+                </div>
+                <div class="metric-chip">
+                  <span class="chip-val">360°</span>
+                  <span class="chip-lbl">Coastal Sun</span>
+                </div>
+                <div class="metric-chip">
+                  <span class="chip-val">0%</span>
+                  <span class="chip-lbl">Personal Tax</span>
+                </div>
+                <div class="metric-chip">
+                  <span class="chip-val">#1</span>
+                  <span class="chip-lbl">Global Safety</span>
+                </div>
+              </div>
             </div>
-            <div class="metric-chip">
-              <span class="chip-val">360°</span>
-              <span class="chip-lbl">Coastal Sun</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ACT II: LIVING ARCHITECTURE (14:00 MIDDAY)
+         Full-size panoramic visual plate
+         ============================================================ -->
+    <section id="act-stone" class="cinematic-act-section">
+      <div class="act-wrapper">
+        <div class="cinematic-act-panel">
+          <div class="act-media-box">
+            <img src="/images/villa_exterior.jpg" alt="Travertine villa and infinity pool at golden hour" class="act-photo" />
+            <div class="act-photo-gradient"></div>
+          </div>
+
+          <div class="act-floating-overlay">
+            <div class="scroll-reveal-box">
+              <div class="act-micro-tag">
+                <span class="act-time">14:00</span>
+                <span class="act-coord">The Coastal Edge • Architecture & Light</span>
+              </div>
+
+              <h2 class="act-cinematic-title">
+                Clean limestone carved into the shoreline. Architecture defined by light.
+              </h2>
+
+              <p class="act-cinematic-caption">
+                Expansive travertine volumes, floor-to-ceiling glass that dissolves into the horizon, and natural bio-lagoon pools creating a private micro-climate of pure seclusion.
+              </p>
+
+              <div class="act-subtle-pillars">
+                <span class="act-pill-item">Private Calm-Water Beachfront</span>
+                <span class="act-pill-item">Roman Travertine & Cedar</span>
+                <span class="act-pill-item">Subterranean Car Gallery</span>
+              </div>
             </div>
-            <div class="metric-chip">
-              <span class="chip-val">0%</span>
-              <span class="chip-lbl">Personal Tax</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ACT III: THE DUNES (18:45 SUNSET)
+         Full-size panoramic visual plate
+         ============================================================ -->
+    <section id="act-dunes" class="cinematic-act-section">
+      <div class="act-wrapper">
+        <div class="cinematic-act-panel">
+          <div class="act-media-box">
+            <img src="/images/desert_sunset.jpg" alt="Sunken firepit lounge in desert dunes at sunset" class="act-photo" />
+            <div class="act-photo-gradient"></div>
+          </div>
+
+          <div class="act-floating-overlay">
+            <div class="scroll-reveal-box">
+              <div class="act-micro-tag">
+                <span class="act-time">18:45</span>
+                <span class="act-coord">Emirates Hills & Desert Enclaves • Golden Hour</span>
+              </div>
+
+              <h2 class="act-cinematic-title">
+                The deep acoustic stillness of the dunes.
+              </h2>
+
+              <p class="act-cinematic-caption">
+                Sunken travertine fire lounge surrounded by warm amber sands. As evening arrives, quiet acoustic silence takes over, sheltered away from the city's pulse.
+              </p>
+
+              <div class="act-subtle-pillars">
+                <span class="act-pill-item">Acoustic Silence</span>
+                <span class="act-pill-item">200-Year-Old Olive Courtyards</span>
+                <span class="act-pill-item">Gated Perimeter Security</span>
+              </div>
             </div>
-            <div class="metric-chip">
-              <span class="chip-val">#1</span>
-              <span class="chip-lbl">Global Safety</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ACT IV: SKYLINE TWILIGHT (21:30 NIGHTFALL)
+         Full-size panoramic visual plate
+         ============================================================ -->
+    <section id="act-skyline" class="cinematic-act-section">
+      <div class="act-wrapper">
+        <div class="cinematic-act-panel">
+          <div class="act-media-box">
+            <img src="/images/twilight_terrace.jpg" alt="Candlelit rooftop terrace looking out to Downtown Dubai" class="act-photo" />
+            <div class="act-photo-gradient"></div>
+          </div>
+
+          <div class="act-floating-overlay">
+            <div class="scroll-reveal-box">
+              <div class="act-micro-tag">
+                <span class="act-time">21:30</span>
+                <span class="act-coord">Downtown Horizon & DIFC • Nightfall</span>
+              </div>
+
+              <h2 class="act-cinematic-title">
+                Suspended between candlelight and illuminated towers.
+              </h2>
+
+              <p class="act-cinematic-caption">
+                Evenings unfold on private sky terraces overlooking the Burj Khalifa. Michelin-starred culinary craft, opera nights, and 24-hour private concierge service at your fingertips.
+              </p>
+
+              <div class="act-subtle-pillars">
+                <span class="act-pill-item">Private Sky Lap Pool</span>
+                <span class="act-pill-item">Direct Valet & House Car</span>
+                <span class="act-pill-item">Sommelier & Private Chef Access</span>
+              </div>
             </div>
           </div>
         </div>
@@ -116,146 +236,48 @@
     </section>
 
     <!-- ============================================================
-         FULL-SIZE CINEMATIC SCENE 2: LIVING ARCHITECTURE (MIDDAY)
-         Full-screen 100vh image: limestone, infinity water, palm silhouettes
+         ACT V: THE MARITIME HARBOUR (16:40 HARBOUR)
+         Full-size panoramic visual plate
          ============================================================ -->
-    <section id="act-stone" class="cinematic-act-screen">
-      <div class="act-bg-wrap">
-        <img src="/images/villa_exterior.jpg" alt="Travertine villa and infinity pool at golden hour" class="act-bg-img" />
-        <div class="act-gradient-overlay"></div>
-      </div>
-      
-      <div class="act-content-container">
-        <div class="scroll-reveal-box">
-          <div class="act-micro-tag">
-            <span class="act-time">14:00</span>
-            <span class="act-coord">The Coastal Edge • Architecture & Light</span>
+    <section id="act-maritime" class="cinematic-act-section">
+      <div class="act-wrapper">
+        <div class="cinematic-act-panel">
+          <div class="act-media-box">
+            <img src="/images/yacht_lifestyle.jpg" alt="Private yacht deck overlooking Dubai Harbour and Marina skyline" class="act-photo" />
+            <div class="act-photo-gradient"></div>
           </div>
 
-          <h2 class="act-cinematic-title">
-            Clean limestone carved into the shoreline. Architecture defined by light.
-          </h2>
+          <div class="act-floating-overlay">
+            <div class="scroll-reveal-box">
+              <div class="act-micro-tag">
+                <span class="act-time">16:40</span>
+                <span class="act-coord">Dubai Harbour & Marina • Superyacht Slip</span>
+              </div>
 
-          <p class="act-cinematic-caption">
-            Expansive travertine volumes, floor-to-ceiling glass that dissolves into the horizon, and natural bio-lagoon pools creating a private micro-climate of pure seclusion.
-          </p>
+              <h2 class="act-cinematic-title">
+                The rhythm of open water and coastal horizons.
+              </h2>
 
-          <div class="act-subtle-pillars">
-            <span class="act-pill-item">Private Calm-Water Beachfront</span>
-            <span class="act-pill-item">Roman Travertine & Cedar</span>
-            <span class="act-pill-item">Subterranean Car Gallery</span>
+              <p class="act-cinematic-caption">
+                Private berths accommodating up to 160-meter vessels. Set sail into the sunset, or unwind on teak decks as the Mediterranean-style promenade comes to life.
+              </p>
+
+              <div class="act-subtle-pillars">
+                <span class="act-pill-item">Deepwater Superyacht Marina</span>
+                <span class="act-pill-item">Private Yacht Club Privileges</span>
+                <span class="act-pill-item">Bluewaters & Open Gulf Panorama</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         FULL-SIZE CINEMATIC SCENE 3: THE DUNES (SUNSET)
-         Full-screen 100vh image: sunken travertine firepit in golden dunes
-         ============================================================ -->
-    <section id="act-dunes" class="cinematic-act-screen">
-      <div class="act-bg-wrap">
-        <img src="/images/desert_sunset.jpg" alt="Sunken firepit lounge in desert dunes at sunset" class="act-bg-img" />
-        <div class="act-gradient-overlay"></div>
-      </div>
-      
-      <div class="act-content-container">
-        <div class="scroll-reveal-box">
-          <div class="act-micro-tag">
-            <span class="act-time">18:45</span>
-            <span class="act-coord">Emirates Hills & Desert Enclaves • Golden Hour</span>
-          </div>
-
-          <h2 class="act-cinematic-title">
-            The deep acoustic stillness of the dunes.
-          </h2>
-
-          <p class="act-cinematic-caption">
-            Sunken travertine fire lounge surrounded by warm amber sands. As evening arrives, quiet acoustic silence takes over, sheltered away from the city's pulse.
-          </p>
-
-          <div class="act-subtle-pillars">
-            <span class="act-pill-item">Acoustic Silence</span>
-            <span class="act-pill-item">200-Year-Old Olive Courtyards</span>
-            <span class="act-pill-item">Gated Perimeter Security</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         FULL-SIZE CINEMATIC SCENE 4: SKYLINE TWILIGHT & MARITIME
-         Full-screen 100vh image: candlelit rooftop terrace looking over Burj Khalifa
-         ============================================================ -->
-    <section id="act-skyline" class="cinematic-act-screen">
-      <div class="act-bg-wrap">
-        <img src="/images/twilight_terrace.jpg" alt="Candlelit rooftop terrace looking out to Downtown Dubai" class="act-bg-img" />
-        <div class="act-gradient-overlay"></div>
-      </div>
-      
-      <div class="act-content-container">
-        <div class="scroll-reveal-box">
-          <div class="act-micro-tag">
-            <span class="act-time">21:30</span>
-            <span class="act-coord">Downtown Horizon & DIFC • Nightfall</span>
-          </div>
-
-          <h2 class="act-cinematic-title">
-            Suspended between candlelight and illuminated towers.
-          </h2>
-
-          <p class="act-cinematic-caption">
-            Evenings unfold on private sky terraces overlooking the Burj Khalifa. Michelin-starred culinary craft, opera nights, and 24-hour private concierge service at your fingertips.
-          </p>
-
-          <div class="act-subtle-pillars">
-            <span class="act-pill-item">Private Sky Lap Pool</span>
-            <span class="act-pill-item">Direct Valet & House Car</span>
-            <span class="act-pill-item">Sommelier & Private Chef Access</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         FULL-SIZE CINEMATIC SCENE 5: SUPER YACHT & MARITIME HARBOUR
-         ============================================================ -->
-    <section id="act-maritime" class="cinematic-act-screen">
-      <div class="act-bg-wrap">
-        <img src="/images/yacht_lifestyle.jpg" alt="Private yacht deck overlooking Dubai Harbour and Marina skyline" class="act-bg-img" />
-        <div class="act-gradient-overlay"></div>
-      </div>
-      
-      <div class="act-content-container">
-        <div class="scroll-reveal-box">
-          <div class="act-micro-tag">
-            <span class="act-time">16:40</span>
-            <span class="act-coord">Dubai Harbour & Marina • Superyacht Slip</span>
-          </div>
-
-          <h2 class="act-cinematic-title">
-            The rhythm of open water and coastal horizons.
-          </h2>
-
-          <p class="act-cinematic-caption">
-            Private berths accommodating up to 160-meter vessels. Set sail into the sunset, or unwind on teak decks as the Mediterranean-style promenade comes to life.
-          </p>
-
-          <div class="act-subtle-pillars">
-            <span class="act-pill-item">Deepwater Superyacht Marina</span>
-            <span class="act-pill-item">Private Yacht Club Privileges</span>
-            <span class="act-pill-item">Bluewaters & Open Gulf Panorama</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         FULL-SCREEN CURATED ESTATES SHOWCASE
-         Large photographic gallery cards with smooth reveals
+         ACT VI: CURATED ARCHITECTURE & ESTATES
          ============================================================ -->
     <section id="act-estates" class="cinematic-estates-section">
-      <div class="section-container">
+      <div class="act-wrapper">
         
         <div class="estates-cinema-header scroll-reveal-box">
           <span class="act-micro-tag">Curated Architecture</span>
@@ -331,65 +353,68 @@
     </section>
 
     <!-- ============================================================
-         CINEMATIC PRIVATE ADVISORY DESK
-         Spacious, minimal, full of atmosphere
+         ACT VII: PRIVATE ADVISORY DESK
+         Harmonious warm travertine & cream styling
          ============================================================ -->
     <section id="act-advisory" class="cinematic-advisory-section">
-      <div class="act-bg-wrap">
-        <img src="/images/penthouse_interior.jpg" alt="Luxury Dubai penthouse interior" class="act-bg-img" style="filter: brightness(0.65);" />
-        <div class="act-gradient-overlay-dark"></div>
-      </div>
-
-      <div class="advisory-cinema-container">
-        <div class="scroll-reveal-box advisory-cinema-content">
-          <div class="act-micro-tag">
-            <span class="act-time">Private Desk</span>
-            <span class="act-coord">DIFC Gate Precinct 4, Level 14</span>
-          </div>
-
-          <h2 class="advisory-cinema-title">
-            Every acquisition begins with a quiet conversation.
-          </h2>
-
-          <p class="advisory-cinema-lead">
-            Whether securing an off-market island sanctuary, private yacht berth residence, or discreet estate sale, our senior partners represent principals with absolute discretion.
-          </p>
-
-          <form id="enquiry-form" class="cinema-clean-form">
-            <div class="form-row-duo">
-              <input type="text" id="form-name" required placeholder="Full Name / Title" />
-              <input type="email" id="form-email" required placeholder="Email Address" />
-            </div>
+      <div class="act-wrapper">
+        <div class="advisory-card-plate scroll-reveal-box">
+          
+          <div class="advisory-col-info">
+            <span class="act-micro-tag">Private Desk • DIFC</span>
+            <h2 class="advisory-cinema-title">
+              Every acquisition begins with a quiet conversation.
+            </h2>
+            <p class="advisory-cinema-lead">
+              Whether securing an off-market island sanctuary, private yacht berth residence, or discreet estate sale, our senior partners represent principals with absolute discretion.
+            </p>
             
-            <div class="form-row-duo">
-              <input type="tel" id="form-phone" required placeholder="Phone / WhatsApp (+971 ...)" />
-              <select id="form-intent" class="custom-select-cinema">
-                <option value="acquisition">Private Estate Acquisition ($10M+)</option>
-                <option value="offmarket">Access Off-Market Portfolio</option>
-                <option value="listing">List / Sell a Prime Residence</option>
-                <option value="lease">Prime Estate Lease</option>
-              </select>
+            <div class="advisory-cinema-meta">
+              <div class="meta-line">
+                <span class="meta-label">Direct Desk</span>
+                <span class="meta-val">+971 (0)4 892 4000</span>
+              </div>
+              <div class="meta-line">
+                <span class="meta-label">Confidential</span>
+                <span class="meta-val">advisory@auradubai.com</span>
+              </div>
+              <div class="meta-line">
+                <span class="meta-label">Location</span>
+                <span class="meta-val">DIFC Gate Precinct 4, Level 14, Dubai</span>
+              </div>
             </div>
-
-            <textarea id="form-notes" rows="3" placeholder="Preferred location (Palm, Downtown, Golf Course), waterfront criteria, or timeline..."></textarea>
-
-            <button type="submit" class="btn-primary btn-cinema-submit" id="submit-enquiry-btn">
-              Submit Confidential Enquiry
-            </button>
-          </form>
-
-          <div id="enquiry-success" class="form-success-box" style="display: none; margin-top: 20px;">
-            <h4>Request Received in Confidence</h4>
-            <p>A senior partner has been assigned to your request and will contact you via your preferred channel.</p>
           </div>
 
-          <div class="advisory-cinema-footer">
-            <span>Direct Line: +971 (0)4 892 4000</span>
-            <span>•</span>
-            <span>advisory@auradubai.com</span>
-            <span>•</span>
-            <span>25.2048° N, 55.2708° E</span>
+          <div class="advisory-col-form">
+            <form id="enquiry-form" class="cinema-clean-form">
+              <div class="form-row-duo">
+                <input type="text" id="form-name" required placeholder="Full Name / Title" />
+                <input type="email" id="form-email" required placeholder="Email Address" />
+              </div>
+              
+              <div class="form-row-duo">
+                <input type="tel" id="form-phone" required placeholder="Phone / WhatsApp (+971 ...)" />
+                <select id="form-intent" class="custom-select-cinema">
+                  <option value="acquisition">Private Estate Acquisition ($10M+)</option>
+                  <option value="offmarket">Access Off-Market Portfolio</option>
+                  <option value="listing">List / Sell a Prime Residence</option>
+                  <option value="lease">Prime Estate Lease</option>
+                </select>
+              </div>
+
+              <textarea id="form-notes" rows="3" placeholder="Preferred location (Palm, Downtown, Golf Course), waterfront criteria, or timeline..."></textarea>
+
+              <button type="submit" class="btn-primary btn-cinema-submit" id="submit-enquiry-btn">
+                Submit Confidential Enquiry
+              </button>
+            </form>
+
+            <div id="enquiry-success" class="form-success-box" style="display: none;">
+              <h4>Request Received in Confidence</h4>
+              <p>A senior partner has been assigned to your request and will contact you via your preferred channel.</p>
+            </div>
           </div>
+
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroScroll();
   initNavigation();
   initCurrencySelector();
-  initCinematicScrollReveals();
+  initBidirectionalScrollReveals();
   initVisualCatalog();
   initModals();
   initForms();
@@ -30,7 +30,7 @@ function initHeroScroll() {
     framePath: (num) => `/hero-frames/frame_${String(num).padStart(4, '0')}.webp`,
     onProgress: (progress) => {
       // Reveal navbar ONLY after scrolling through the hero sequence
-      if (progress >= 0.90) {
+      if (progress >= 0.88) {
         navbar.classList.add('visible');
       } else {
         navbar.classList.remove('visible');
@@ -47,39 +47,50 @@ function initHeroScroll() {
 }
 
 /* ==========================================================================
-   2. CINEMATIC SLOW SCROLL REVEALS
-   Titles, coordinates, and small text slowly glide and fade in as you scroll
+   2. PROMINENT BIDIRECTIONAL SCROLL REVEALS
+   Triggers dynamically when scrolling DOWN and UP both!
    ========================================================================== */
-function initCinematicScrollReveals() {
+function initBidirectionalScrollReveals() {
   const revealElements = document.querySelectorAll('.scroll-reveal-box');
-  const actScreens = document.querySelectorAll('.cinematic-act-screen');
+  const actPanels = document.querySelectorAll('.cinematic-act-panel');
 
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px 0px -15% 0px',
-    threshold: 0.15
-  };
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-      }
-    });
-  }, observerOptions);
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+        } else {
+          // Remove class when scrolling out so it re-animates in both directions
+          entry.target.classList.remove('is-revealed');
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: '-30px 0px -30px 0px',
+      threshold: 0.15
+    }
+  );
 
   revealElements.forEach((el) => revealObserver.observe(el));
 
-  // Background slow push-in animation observer
-  const actObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      }
-    });
-  }, { threshold: 0.1 });
+  // Background slow zoom push-in observer (bidirectional)
+  const panelObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    },
+    {
+      threshold: 0.1
+    }
+  );
 
-  actScreens.forEach((screen) => actObserver.observe(screen));
+  actPanels.forEach((panel) => panelObserver.observe(panel));
 }
 
 /* ==========================================================================
@@ -188,9 +199,19 @@ function renderVisualCatalog() {
     </article>
   `).join('');
 
-  // Re-observe newly created elements
+  // Attach observer to new property cards
   const newCards = grid.querySelectorAll('.scroll-reveal-box');
-  newCards.forEach((c) => c.classList.add('is-revealed'));
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+      } else {
+        entry.target.classList.remove('is-revealed');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  newCards.forEach((c) => cardObserver.observe(c));
 
   attachEstateModalListeners();
 }
