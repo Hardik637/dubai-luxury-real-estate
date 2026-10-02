@@ -1,75 +1,17 @@
 import { HeroScrollEngine } from './hero-scroll.js';
 import { PROPERTIES, EXCHANGE_RATES } from './properties-data.js';
 
-// State management
 let state = {
   currency: 'AED',
   category: 'all'
 };
 
-// 24 Hours Daylight Moments
-const DAYLIGHT_MOMENTS = {
-  dawn: {
-    image: "/images/morning_light.jpg",
-    tag: "06:30 • DAWN ON WATER • PALM FRONDS",
-    quote: "“Waking to quiet ripples against your private wooden jetty as the city rests in pastel haze.”",
-    meta: "24°C Morning Breeze • Barefoot Shoreline"
-  },
-  midday: {
-    image: "/images/villa_exterior.jpg",
-    tag: "13:15 • SHADED ARCHITECTURE • EMIRATES HILLS",
-    quote: "“Cool Roman travertine corridors, gentle palm shadows, and an endless infinity pool reflecting the sky.”",
-    meta: "31°C Midday Sun • Climatized Seclusion"
-  },
-  sunset: {
-    image: "/images/desert_sunset.jpg",
-    tag: "18:45 • DUNE AMBER • DESERT HORIZON",
-    quote: "“Sunken travertine fire lounge wrapped by rolling golden dunes, where silence is the greatest luxury.”",
-    meta: "28°C Amber Twilight • Firepit Glow"
-  },
-  twilight: {
-    image: "/images/twilight_terrace.jpg",
-    tag: "21:30 • SKYLINE TWILIGHT • DOWNTOWN DUBAI",
-    quote: "“Candlelit rooftop terrace gatherings with the illuminated silhouette of the Burj Khalifa floating above.”",
-    meta: "26°C Evening Breeze • City Lights"
-  }
-};
-
-// District Visual Panoramas
-const DISTRICT_DATA = {
-  palm: {
-    image: "/images/villa_exterior.jpg",
-    name: "THE ISLAND COASTLINE • PALM JUMEIRAH",
-    desc: "Tranquil water-centric living. Step barefoot onto calm white sand, enjoy morning boat departures, and unwind to unhurried sunset tides."
-  },
-  downtown: {
-    image: "/images/twilight_terrace.jpg",
-    name: "THE DOWNTOWN HORIZON • DIFC",
-    desc: "Cosmopolitan grandeur in the sky. Direct pedestrian access to Michelin-starred dining, opera, art galleries, and 360-degree skyline views."
-  },
-  desert: {
-    image: "/images/desert_sunset.jpg",
-    name: "THE OASIS & SANCTUARY • EMIRATES HILLS",
-    desc: "Expansive private acreages framed by ancient olive groves, natural bio-ponds, and total acoustic tranquility."
-  },
-  harbour: {
-    image: "/images/yacht_lifestyle.jpg",
-    name: "THE MARITIME RIVIERA • DUBAI HARBOUR",
-    desc: "Mediterranean nautical elegance. Deepwater superyacht slips, coastal breeze, and sunset sailing into the open Arabian Gulf."
-  }
-};
-
-/* ==========================================================================
-   INITIALIZATION
-   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   initHeroScroll();
   initNavigation();
   initCurrencySelector();
-  initDaylightCycle();
-  initInteractiveTilt();
+  initCinematicScrollReveals();
   initVisualCatalog();
-  initDistrictPanorama();
   initModals();
   initForms();
 });
@@ -105,7 +47,43 @@ function initHeroScroll() {
 }
 
 /* ==========================================================================
-   2. NAVIGATION & SMOOTH SCROLLING
+   2. CINEMATIC SLOW SCROLL REVEALS
+   Titles, coordinates, and small text slowly glide and fade in as you scroll
+   ========================================================================== */
+function initCinematicScrollReveals() {
+  const revealElements = document.querySelectorAll('.scroll-reveal-box');
+  const actScreens = document.querySelectorAll('.cinematic-act-screen');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -15% 0px',
+    threshold: 0.15
+  };
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+      }
+    });
+  }, observerOptions);
+
+  revealElements.forEach((el) => revealObserver.observe(el));
+
+  // Background slow push-in animation observer
+  const actObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  actScreens.forEach((screen) => actObserver.observe(screen));
+}
+
+/* ==========================================================================
+   3. NAVIGATION ANCHOR SMOOTH SCROLLING
    ========================================================================== */
 function initNavigation() {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -122,63 +100,7 @@ function initNavigation() {
 }
 
 /* ==========================================================================
-   3. DAYLIGHT CYCLE (24 HOURS IN DUBAI)
-   ========================================================================== */
-function initDaylightCycle() {
-  const stepButtons = document.querySelectorAll('.cycle-step-btn');
-  const stageImg = document.getElementById('stage-bg-image');
-  const stageTag = document.getElementById('stage-tag');
-  const stageQuote = document.getElementById('stage-quote');
-  const stageMeta = document.getElementById('stage-meta');
-
-  stepButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      stepButtons.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const timeKey = btn.getAttribute('data-time');
-      const data = DAYLIGHT_MOMENTS[timeKey];
-      if (!data || !stageImg) return;
-
-      // Smooth cross-fade animation
-      stageImg.style.opacity = '0.3';
-      stageImg.style.transform = 'scale(1.05)';
-
-      setTimeout(() => {
-        stageImg.src = data.image;
-        stageTag.textContent = data.tag;
-        stageQuote.textContent = data.quote;
-        stageMeta.textContent = data.meta;
-        stageImg.style.opacity = '1';
-        stageImg.style.transform = 'scale(1)';
-      }, 300);
-    });
-  });
-}
-
-/* ==========================================================================
-   4. INTERACTIVE MOUSE PARALLAX TILT
-   ========================================================================== */
-function initInteractiveTilt() {
-  const tiltItems = document.querySelectorAll('.interactive-tilt');
-  
-  tiltItems.forEach((item) => {
-    item.addEventListener('mousemove', (e) => {
-      const rect = item.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      
-      item.style.transform = `perspective(1000px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-4px)`;
-    });
-
-    item.addEventListener('mouseleave', () => {
-      item.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(0)';
-    });
-  });
-}
-
-/* ==========================================================================
-   5. VISUAL PROPERTY CATALOG
+   4. CURRENCY CONVERSION & FORMATTING
    ========================================================================== */
 function formatPrice(aedPrice, isRent = false) {
   const currInfo = EXCHANGE_RATES[state.currency] || EXCHANGE_RATES.AED;
@@ -190,7 +112,7 @@ function formatPrice(aedPrice, isRent = false) {
   else if (state.currency === 'EUR') formatted = `€${converted.toLocaleString()}`;
   else if (state.currency === 'GBP') formatted = `£${converted.toLocaleString()}`;
 
-  if (isRent) formatted += ` <span style="font-size: 0.75rem; color: var(--text-muted);">/ yr</span>`;
+  if (isRent) formatted += ` <span style="font-size: 0.75rem; color: #DDD5C9;">/ yr</span>`;
   return formatted;
 }
 
@@ -214,8 +136,10 @@ function initCurrencySelector() {
   });
 }
 
+/* ==========================================================================
+   5. VISUAL PROPERTY CATALOG
+   ========================================================================== */
 function initVisualCatalog() {
-  // Category tabs
   const categoryPills = document.querySelectorAll('.filter-pill');
   categoryPills.forEach((pill) => {
     pill.addEventListener('click', () => {
@@ -239,7 +163,7 @@ function renderVisualCatalog() {
   });
 
   grid.innerHTML = filtered.map((p) => `
-    <article class="prop-card-visual" data-estate-id="${p.id}">
+    <article class="prop-card-visual scroll-reveal-box" data-estate-id="${p.id}">
       <div class="prop-media-wrap view-estate-btn" data-estate-id="${p.id}">
         <img src="${p.image}" alt="${p.title}" class="prop-img" loading="lazy" />
         <span class="prop-badge-top">${p.status}</span>
@@ -264,6 +188,10 @@ function renderVisualCatalog() {
     </article>
   `).join('');
 
+  // Re-observe newly created elements
+  const newCards = grid.querySelectorAll('.scroll-reveal-box');
+  newCards.forEach((c) => c.classList.add('is-revealed'));
+
   attachEstateModalListeners();
 }
 
@@ -278,39 +206,7 @@ function attachEstateModalListeners() {
 }
 
 /* ==========================================================================
-   6. DISTRICT PANORAMA SWITCHER
-   ========================================================================== */
-function initDistrictPanorama() {
-  const districtBtns = document.querySelectorAll('.district-btn');
-  const districtImg = document.getElementById('district-img');
-  const districtName = document.getElementById('district-name');
-  const districtDesc = document.getElementById('district-desc');
-
-  districtBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      districtBtns.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const districtKey = btn.getAttribute('data-district');
-      const data = DISTRICT_DATA[districtKey];
-      if (!data || !districtImg) return;
-
-      districtImg.style.opacity = '0.3';
-      districtImg.style.transform = 'scale(1.04)';
-
-      setTimeout(() => {
-        districtImg.src = data.image;
-        districtName.textContent = data.name;
-        districtDesc.textContent = data.desc;
-        districtImg.style.opacity = '1';
-        districtImg.style.transform = 'scale(1)';
-      }, 300);
-    });
-  });
-}
-
-/* ==========================================================================
-   7. MODALS (PROPERTY DETAILS & OWNER LISTING)
+   6. MODALS
    ========================================================================== */
 function initModals() {
   const propertyModal = document.getElementById('property-modal');
@@ -401,7 +297,7 @@ function openPropertyModal(estateId) {
             <form id="modal-viewing-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
               <input type="text" required placeholder="Your Name" style="padding: 10px; font-size: 0.8125rem; border: 1px solid var(--border-subtle); border-radius: 2px;" />
               <input type="tel" required placeholder="Phone / WhatsApp" style="padding: 10px; font-size: 0.8125rem; border: 1px solid var(--border-subtle); border-radius: 2px;" />
-              <button type="submit" class="btn-dark" style="width: 100%; padding: 12px;">
+              <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; margin-top: 4px;">
                 Request Chauffeur Viewing
               </button>
             </form>
@@ -416,7 +312,6 @@ function openPropertyModal(estateId) {
     </div>
   `;
 
-  // Setup gallery thumbnail clicks
   const mainImg = document.getElementById('modal-active-img');
   const thumbs = modalBody.querySelectorAll('.modal-thumb');
   thumbs.forEach((thumb) => {
@@ -457,7 +352,7 @@ function formatMonthlyFinancing(totalAed) {
 }
 
 /* ==========================================================================
-   8. FORM HANDLERS
+   7. FORM HANDLERS
    ========================================================================== */
 function initForms() {
   const enquiryForm = document.getElementById('enquiry-form');
