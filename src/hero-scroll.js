@@ -203,60 +203,26 @@ export class HeroScrollEngine {
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
 
-    if (isMobile) {
-      // MOBILE: FIT IN (CONTAIN) - ZERO CROPPING OF THE 16:9 FRAME
-      ctx.fillStyle = '#080A0E';
-      ctx.fillRect(0, 0, cWidth, cHeight);
+    // Unified full-bleed cinematic cover-fit (edge-to-edge on mobile and PC)
+    const canvasRatio = cWidth / cHeight;
+    const imgRatio = imgWidth / imgHeight;
 
-      // Soft ambient background reflection to eliminate harsh black void and harmonize with frame lighting
-      let ambientDrawn = false;
-      try {
-        if ('filter' in ctx) {
-          ctx.save();
-          ctx.filter = 'blur(45px) brightness(0.4)';
-          ctx.drawImage(img, 0, 0, cWidth, cHeight);
-          ctx.restore();
-          ambientDrawn = true;
-        }
-      } catch (e) {}
+    let sWidth, sHeight, sx, sy;
 
-      if (!ambientDrawn) {
-        const grad = ctx.createLinearGradient(0, 0, 0, cHeight);
-        grad.addColorStop(0, '#0E131B');
-        grad.addColorStop(0.5, '#05070A');
-        grad.addColorStop(1, '#0E131B');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, cWidth, cHeight);
-      }
-
-      // Calculate uncropped contain dimensions
-      const scale = Math.min(cWidth / imgWidth, cHeight / imgHeight);
-      const fitW = Math.round(imgWidth * scale);
-      const fitH = Math.round(imgHeight * scale);
-      const fitX = Math.round((cWidth - fitW) / 2);
-      const fitY = Math.round((cHeight - fitH) / 2);
-
-      ctx.drawImage(img, 0, 0, imgWidth, imgHeight, fitX, fitY, fitW, fitH);
+    if (imgRatio > canvasRatio) {
+      // Taller screens (mobile portrait): Fill 100% height, center horizontally
+      sHeight = imgHeight;
+      sWidth = imgHeight * canvasRatio;
+      sx = (imgWidth - sWidth) / 2;
+      sy = 0;
     } else {
-      // DESKTOP: UNTOUCHED - Clean cinematic cover
-      const canvasRatio = cWidth / cHeight;
-      const imgRatio = imgWidth / imgHeight;
-
-      let sWidth, sHeight, sx, sy;
-
-      if (imgRatio > canvasRatio) {
-        sHeight = imgHeight;
-        sWidth = imgHeight * canvasRatio;
-        sx = (imgWidth - sWidth) / 2;
-        sy = 0;
-      } else {
-        sWidth = imgWidth;
-        sHeight = imgWidth / canvasRatio;
-        sx = 0;
-        sy = (imgHeight - sHeight) / 2;
-      }
-
-      ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cWidth, cHeight);
+      // Wider screens (desktop): Fill 100% width, center vertically
+      sWidth = imgWidth;
+      sHeight = imgWidth / canvasRatio;
+      sx = 0;
+      sy = (imgHeight - sHeight) / 2;
     }
+
+    ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cWidth, cHeight);
   }
 }
