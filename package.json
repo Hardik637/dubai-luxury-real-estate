@@ -1,7 +1,7 @@
 {
   "name": "dubai-luxury-real-estate",
   "private": true,
-  "version": "1.0.0",
+  "version": "deploy",
   "type": "module",
   "scripts": {
     "dev": "vite",
