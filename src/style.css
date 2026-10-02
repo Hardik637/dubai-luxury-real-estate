@@ -400,6 +400,73 @@ a {
 }
 
 /* --------------------------------------------------------------------------
+   0. MASTER DEVELOPER MANIFESTO & HERITAGE (SOBHA-INSPIRED)
+   -------------------------------------------------------------------------- */
+.manifesto-section {
+  padding: 100px 0 70px;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.manifesto-header {
+  max-width: 1080px;
+  margin-bottom: 60px;
+}
+
+.manifesto-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4.4vw, 4.2rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--text-main);
+  margin-bottom: 24px;
+}
+
+.manifesto-lead {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  max-width: 860px;
+  font-weight: 300;
+}
+
+.heritage-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.heritage-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heritage-number {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 3.8vw, 3.6rem);
+  font-weight: 400;
+  color: var(--brand-navy);
+  line-height: 1;
+}
+
+.heritage-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-sand);
+  font-weight: 600;
+}
+
+.heritage-desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
    1. MASTER COMMUNITIES (SOBHA-STYLE LIVING ENCLAVES)
    -------------------------------------------------------------------------- */
 .master-communities-section {
@@ -412,6 +479,7 @@ a {
   gap: 12px;
   margin-bottom: 32px;
   overflow-x: auto;
+  padding-bottom: 6px;
 }
 
 .community-tab-btn {
@@ -426,6 +494,18 @@ a {
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.community-tab-btn .tab-icon {
+  font-size: 0.95rem;
+}
+
+.community-tab-btn:hover {
+  border-color: var(--text-main);
+  color: var(--text-main);
 }
 
 .community-tab-btn.active {
@@ -476,7 +556,43 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(10, 28, 56, 0.92) 0%, rgba(10, 28, 56, 0.45) 55%, transparent 100%);
+  background: linear-gradient(to top, rgba(10, 28, 56, 0.94) 0%, rgba(10, 28, 56, 0.5) 55%, transparent 100%);
+}
+
+/* Dual Mode Toggle (Atmosphere vs Blueprint) */
+.comm-view-mode-bar {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  z-index: 5;
+  background: rgba(10, 28, 56, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(250, 248, 245, 0.15);
+  border-radius: 30px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.comm-mode-btn {
+  background: transparent;
+  border: none;
+  color: #D4B996;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-weight: 500;
+}
+
+.comm-mode-btn.active {
+  background: #FAF8F5;
+  color: var(--brand-navy);
+  font-weight: 600;
 }
 
 .comm-content-overlay {
@@ -487,7 +603,7 @@ a {
 }
 
 .comm-inner-card {
-  max-width: 820px;
+  max-width: 860px;
 }
 
 .comm-badge {
@@ -518,12 +634,55 @@ a {
 
 .comm-features-strip {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   font-size: 0.8125rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent-sand);
   margin-bottom: 28px;
+}
+
+.comm-cta-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Masterplan Blueprint Mode Grid */
+.blueprint-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.blueprint-stat {
+  background: rgba(250, 248, 245, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250, 248, 245, 0.16);
+  padding: 16px 20px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.blueprint-val {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: #FAF8F5;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.blueprint-lbl {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-sand);
 }
 
 /* --------------------------------------------------------------------------
@@ -562,7 +721,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.6s var(--ease-cinematic);
+  transition: transform 1.6s var(--ease-cinematic), opacity 0.5s ease;
 }
 
 .craft-visual-panel:hover .craft-photo {
@@ -574,7 +733,7 @@ a {
   bottom: 24px;
   left: 24px;
   right: 24px;
-  background: rgba(10, 28, 56, 0.88);
+  background: rgba(10, 28, 56, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: #FAF8F5;
@@ -586,6 +745,7 @@ a {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  border: 1px solid rgba(250, 248, 245, 0.1);
 }
 
 .craft-floating-tag span:first-child {
@@ -596,22 +756,32 @@ a {
 .craft-cards-column {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .craft-pillar-card {
   background: var(--surface);
   border: 1px solid var(--border-subtle);
+  border-left: 3px solid transparent;
   border-radius: 3px;
-  padding: 24px 28px;
+  padding: 22px 26px;
   display: flex;
-  gap: 24px;
+  gap: 22px;
   align-items: flex-start;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  cursor: pointer;
 }
 
 .craft-pillar-card:hover {
   transform: translateX(6px);
+  box-shadow: var(--shadow-subtle);
+  border-color: var(--accent-sand);
+}
+
+.craft-pillar-card.active {
+  border-left-color: var(--accent-sand);
+  border-color: var(--accent-sand);
+  background: #FAF8F5;
   box-shadow: var(--shadow-subtle);
 }
 
@@ -625,7 +795,7 @@ a {
 
 .pillar-title {
   font-family: var(--font-serif);
-  font-size: 1.375rem;
+  font-size: 1.3rem;
   font-weight: 400;
   color: var(--text-main);
   margin-bottom: 6px;
@@ -782,6 +952,203 @@ a {
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0);
+}
+
+/* --------------------------------------------------------------------------
+   3.5 SOVEREIGN ADVANTAGE & YIELD CALCULATOR
+   -------------------------------------------------------------------------- */
+.sovereign-section {
+  padding: 110px 0;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sovereign-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.sov-pillar-item {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  padding: 32px 28px;
+  border-radius: 4px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.sov-pillar-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+.sov-icon {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--accent-sand);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.sov-pillar-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.sov-pillar-desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Calculator Box */
+.sovereign-calc-box {
+  background: #FAF8F5;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 48px;
+  box-shadow: var(--shadow-card);
+}
+
+.calc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.calc-badge {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-sand);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.calc-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  color: var(--text-main);
+}
+
+.calc-current-val {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.calc-val-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.calc-val-number {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--brand-navy);
+}
+
+.calc-slider-wrap {
+  margin-bottom: 40px;
+}
+
+.sov-range-input {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: var(--border-subtle);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.sov-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--brand-navy);
+  border: 3px solid #FAF8F5;
+  box-shadow: 0 2px 8px rgba(10, 28, 56, 0.35);
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+
+.sov-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+}
+
+.calc-range-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.calc-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.calc-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-result-card.highlight {
+  border-color: var(--accent-sand);
+  background: rgba(212, 185, 150, 0.08);
+}
+
+.result-number {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--brand-navy);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.result-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.result-sub {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.calc-cta-row {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* --------------------------------------------------------------------------

@@ -7,7 +7,7 @@ let state = {
   isAudioPlaying: false
 };
 
-// Master Communities Data
+// Master Communities Data (Sobha-style Ecosystems)
 const MASTER_COMMUNITIES = {
   forest: {
     badge: "BIOPHILIC LAGOON LIVING • 40% GREEN CANOPY",
@@ -15,7 +15,18 @@ const MASTER_COMMUNITIES = {
     image: "/images/forest_villa.jpg",
     desc: "Surrounded by thousands of mature trees, shaded walking paths, and crystalline freshwater lagoons that naturally lower ambient temperature by 4°C. Complete with private international schools and wellness pavilions.",
     features: ["Crystal Bio-Lagoon", "North London Collegiate School (3 min)", "Private Forest Villas"],
-    estateId: "estate-dubai-hills"
+    estateId: "estate-dubai-hills",
+    blueprint: {
+      title: "The Forest Sanctuary Masterplan",
+      stats: [
+        { val: "350 Acres", lbl: "Total Enclave Area" },
+        { val: "40% Canopy", lbl: "Protected Green Parkland" },
+        { val: "1.8M Sq.Ft.", lbl: "Crystal Bio-Lagoon" },
+        { val: "3 Minutes", lbl: "North London Collegiate School" },
+        { val: "12 Minutes", lbl: "Downtown Dubai & DIFC" },
+        { val: "100% Freehold", lbl: "Sovereign Title Deed" }
+      ]
+    }
   },
   island: {
     badge: "PRIVATE ISLAND ENCLAVE • ARABIAN GULF",
@@ -23,7 +34,18 @@ const MASTER_COMMUNITIES = {
     image: "/images/jumeirah_bay_island.jpg",
     desc: "An exclusive seahorse island sanctuary offering private white sand beaches, dedicated 120ft superyacht berths, and direct open sea departures.",
     features: ["120ft Superyacht Slip", "Bulgari Resort Proximity", "Private Beachfront"],
-    estateId: "estate-jumeirah-bay"
+    estateId: "estate-jumeirah-bay",
+    blueprint: {
+      title: "The Island Reserve Masterplan",
+      stats: [
+        { val: "6.3M Sq.Ft.", lbl: "Seahorse Island Footprint" },
+        { val: "40m Frontage", lbl: "Direct Open Gulf Seafront" },
+        { val: "120ft Berth", lbl: "Dedicated Superyacht Slip" },
+        { val: "2 Minutes", lbl: "Bulgari Marina & Yacht Club" },
+        { val: "15 Minutes", lbl: "Dubai International Airport" },
+        { val: "100% Freehold", lbl: "Sovereign Title Deed" }
+      ]
+    }
   },
   harbour: {
     badge: "MEDITERRANEAN MARITIME LIVING • DEEPWATER MARINA",
@@ -31,7 +53,18 @@ const MASTER_COMMUNITIES = {
     image: "/images/yacht_lifestyle.jpg",
     desc: "The Middle East's premier nautical district. Shaded palm promenades, Michelin-starred coastal dining, and sunset sailing into the open Gulf.",
     features: ["160m Berth Capacity", "Dubai Harbour Yacht Club", "Bluewaters Access"],
-    estateId: "estate-harbour-residence"
+    estateId: "estate-harbour-residence",
+    blueprint: {
+      title: "The Superyacht Harbour Masterplan",
+      stats: [
+        { val: "20M Sq.Ft.", lbl: "Maritime District Scale" },
+        { val: "700 Berths", lbl: "Deepwater Yacht Marina" },
+        { val: "1.2 km", lbl: "Direct Coastal Beachfront" },
+        { val: "Direct Pier", lbl: "Dubai Harbour Yacht Club" },
+        { val: "5 Minutes", lbl: "Palm Jumeirah & Marina" },
+        { val: "100% Freehold", lbl: "Sovereign Title Deed" }
+      ]
+    }
   },
   dunes: {
     badge: "TOTAL ACOUSTIC STILLNESS • EMIRATES HILLS",
@@ -39,7 +72,18 @@ const MASTER_COMMUNITIES = {
     image: "/images/desert_sunset.jpg",
     desc: "Vast architectural volumes framed by 200-year-old olive courtyards, championship golf fairways, and natural bio-lagoon pools where silence reigns.",
     features: ["Acoustic Seclusion", "Montgomerie Fairways", "Gated Security Perimeter"],
-    estateId: "estate-emirates-hills"
+    estateId: "estate-emirates-hills",
+    blueprint: {
+      title: "The Desert Oasis Masterplan",
+      stats: [
+        { val: "520 Acres", lbl: "Private Golf Enclave" },
+        { val: "18-Hole", lbl: "Championship Fairways" },
+        { val: "Acoustic <28dB", lbl: "Silent Desert Ambient" },
+        { val: "24/7 Gated", lbl: "Biometric Perimeter Security" },
+        { val: "10 Minutes", lbl: "Dubai Marina & Media City" },
+        { val: "100% Freehold", lbl: "Sovereign Title Deed" }
+      ]
+    }
   },
   sky: {
     badge: "PRESIDENTIAL SKY DUPLEXES • DOWNTOWN DUBAI",
@@ -47,7 +91,42 @@ const MASTER_COMMUNITIES = {
     image: "/images/twilight_terrace.jpg",
     desc: "Double-height sky residences floating above the clouds with 360-degree panoramas of the Burj Khalifa and Arabian Gulf, attended by private concierges.",
     features: ["Private Sky Lap Pool", "Direct Biometric Elevator", "Opera District Access"],
-    estateId: "estate-downtown-penthouse"
+    estateId: "estate-downtown-penthouse",
+    blueprint: {
+      title: "The Sovereign Sky Masterplan",
+      stats: [
+        { val: "Levels 65-72", lbl: "Crowning Sky Duplexes" },
+        { val: "7.2m Ceilings", lbl: "Double-Height Glass Volumes" },
+        { val: "360° Panoramas", lbl: "Burj Khalifa & Persian Gulf" },
+        { val: "Private Lift", lbl: "Direct Biometric Penthouse Access" },
+        { val: "3 Minutes", lbl: "Dubai Opera & Fashion Avenue" },
+        { val: "100% Freehold", lbl: "Sovereign Title Deed" }
+      ]
+    }
+  }
+};
+
+// Craftsmanship Lab Materials Data
+const CRAFT_MATERIALS = {
+  marble: {
+    title: "Direct Quarry Stone & Book-Matching",
+    sub: "Italian Calacatta & Fluted Solid Walnut",
+    img: "/images/craft_detail.jpg"
+  },
+  acoustic: {
+    title: "Acoustic & Thermal Decoupling (42dB)",
+    sub: "Triple-Laminated Acoustic Low-E Facades",
+    img: "/images/penthouse_interior.jpg"
+  },
+  joinery: {
+    title: "Proprietary German Joinery & Metalwork",
+    sub: "Solid Fluted European Walnut & Brushed Bronze",
+    img: "/images/craft_detail.jpg"
+  },
+  biophilic: {
+    title: "Self-Sustaining Biophilic Ecosystems",
+    sub: "Chlorine-Free Crystal Bio-Lagoons (-4°C Cooling)",
+    img: "/images/forest_villa.jpg"
   }
 };
 
@@ -57,6 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initAmbientAudio();
   initCurrencySelector();
   initMasterCommunities();
+  initCraftsmanshipLab();
+  initSovereignCalculator();
   initBidirectionalScrollReveals();
   initVisualCatalog();
   initModals();
@@ -187,8 +268,10 @@ function stopAmbientSound() {
 }
 
 /* ==========================================================================
-   3. MASTER COMMUNITIES SWITCHER
+   3. MASTER COMMUNITIES SWITCHER (SOBHA-STYLE LIVING ENCLAVES)
    ========================================================================== */
+let currentCommKey = 'forest';
+
 function initMasterCommunities() {
   const tabs = document.querySelectorAll('.community-tab-btn');
   const stage = document.getElementById('community-stage');
@@ -197,14 +280,55 @@ function initMasterCommunities() {
   const title = document.getElementById('comm-title');
   const desc = document.getElementById('comm-desc');
   const features = document.getElementById('comm-features');
+  const exploreBtn = document.getElementById('comm-explore-btn');
+
+  // Blueprint Elements
+  const atmosphereView = document.getElementById('comm-atmosphere-view');
+  const blueprintView = document.getElementById('comm-blueprint-view');
+  const blueprintTitle = document.getElementById('comm-blueprint-title');
+  const blueprintGrid = document.getElementById('comm-blueprint-grid');
+  const modeAtmosphereBtn = document.getElementById('mode-atmosphere-btn');
+  const modeBlueprintBtn = document.getElementById('mode-blueprint-btn');
+
+  function renderBlueprint(commKey) {
+    const data = MASTER_COMMUNITIES[commKey];
+    if (!data || !data.blueprint) return;
+    if (blueprintTitle) blueprintTitle.textContent = data.blueprint.title;
+    if (blueprintGrid) {
+      blueprintGrid.innerHTML = data.blueprint.stats.map(s => `
+        <div class="blueprint-stat">
+          <span class="blueprint-val">${s.val}</span>
+          <span class="blueprint-lbl">${s.lbl}</span>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Dual View Mode Switcher (Atmosphere vs Blueprint)
+  if (modeAtmosphereBtn && modeBlueprintBtn) {
+    modeAtmosphereBtn.addEventListener('click', () => {
+      modeAtmosphereBtn.classList.add('active');
+      modeBlueprintBtn.classList.remove('active');
+      if (atmosphereView) atmosphereView.style.display = 'block';
+      if (blueprintView) blueprintView.style.display = 'none';
+    });
+
+    modeBlueprintBtn.addEventListener('click', () => {
+      modeBlueprintBtn.classList.add('active');
+      modeAtmosphereBtn.classList.remove('active');
+      if (atmosphereView) atmosphereView.style.display = 'none';
+      if (blueprintView) blueprintView.style.display = 'block';
+      renderBlueprint(currentCommKey);
+    });
+  }
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       tabs.forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
 
-      const commKey = tab.getAttribute('data-comm');
-      const data = MASTER_COMMUNITIES[commKey];
+      currentCommKey = tab.getAttribute('data-comm');
+      const data = MASTER_COMMUNITIES[currentCommKey];
       if (!data || !bgImg) return;
 
       bgImg.style.opacity = '0.2';
@@ -212,16 +336,99 @@ function initMasterCommunities() {
 
       setTimeout(() => {
         bgImg.src = data.image;
-        badge.textContent = data.badge;
-        title.textContent = data.title;
-        desc.textContent = data.desc;
-        features.innerHTML = data.features.map(f => `<span>${f}</span>`).join(' • ');
+        if (badge) badge.textContent = data.badge;
+        if (title) title.textContent = data.title;
+        if (desc) desc.textContent = data.desc;
+        if (features) features.innerHTML = data.features.map(f => `<span>${f}</span>`).join(' • ');
+        if (exploreBtn) exploreBtn.setAttribute('data-estate-id', data.estateId);
+
+        renderBlueprint(currentCommKey);
 
         bgImg.style.opacity = '1';
         bgImg.style.transform = 'scale(1)';
       }, 300);
     });
   });
+}
+
+/* ==========================================================================
+   3.1 CRAFTSMANSHIP & MATERIALITY LAB (SOBHA "ART OF THE DETAIL")
+   ========================================================================== */
+function initCraftsmanshipLab() {
+  const cards = document.querySelectorAll('.craft-pillar-card');
+  const img = document.getElementById('craft-main-img');
+  const title = document.getElementById('craft-tag-title');
+  const sub = document.getElementById('craft-tag-sub');
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      cards.forEach((c) => c.classList.remove('active'));
+      card.classList.add('active');
+
+      const matKey = card.getAttribute('data-material');
+      const mat = CRAFT_MATERIALS[matKey];
+      if (!mat || !img) return;
+
+      img.style.opacity = '0.3';
+      setTimeout(() => {
+        img.src = mat.img;
+        if (title) title.textContent = mat.title;
+        if (sub) sub.textContent = mat.sub;
+        img.style.opacity = '1';
+      }, 250);
+    });
+  });
+}
+
+/* ==========================================================================
+   3.2 SOVEREIGN WEALTH & YIELD CALCULATOR
+   ========================================================================== */
+let currentCalculatorBudgetAED = 25000000;
+
+function updateSovereignCalculator() {
+  const displayBudget = document.getElementById('calc-display-budget');
+  const displayTax = document.getElementById('calc-tax-saved');
+  const displayYield = document.getElementById('calc-net-yield');
+  const displayVisa = document.getElementById('calc-visa-status');
+
+  const currInfo = EXCHANGE_RATES[state.currency] || EXCHANGE_RATES.AED;
+  const rate = currInfo.rate;
+  const curr = state.currency;
+
+  const convertedBudget = Math.round(currentCalculatorBudgetAED * rate);
+  const taxSaved = Math.round(currentCalculatorBudgetAED * 0.084 * 0.45 * rate);
+  const netYield = Math.round(currentCalculatorBudgetAED * 0.082 * rate);
+
+  const formatCurr = (val) => {
+    if (curr === 'AED') return `AED ${val.toLocaleString()}`;
+    if (curr === 'USD') return `$${val.toLocaleString()}`;
+    if (curr === 'EUR') return `€${val.toLocaleString()}`;
+    if (curr === 'GBP') return `£${val.toLocaleString()}`;
+    return `${val.toLocaleString()} ${curr}`;
+  };
+
+  if (displayBudget) displayBudget.textContent = formatCurr(convertedBudget);
+  if (displayTax) displayTax.textContent = formatCurr(taxSaved);
+  if (displayYield) displayYield.textContent = formatCurr(netYield);
+  if (displayVisa) {
+    if (currentCalculatorBudgetAED >= 2000000) {
+      displayVisa.textContent = "100% Qualified";
+    } else {
+      displayVisa.textContent = "Partial (2M AED min)";
+    }
+  }
+}
+
+function initSovereignCalculator() {
+  const slider = document.getElementById('sovereign-slider');
+  if (!slider) return;
+
+  slider.addEventListener('input', (e) => {
+    currentCalculatorBudgetAED = parseFloat(e.target.value) || 25000000;
+    updateSovereignCalculator();
+  });
+
+  updateSovereignCalculator();
 }
 
 /* ==========================================================================
@@ -315,6 +522,7 @@ function initCurrencySelector() {
       }
 
       renderVisualCatalog();
+      updateSovereignCalculator();
     });
   });
 }

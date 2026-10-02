@@ -40,10 +40,11 @@
       </a>
 
       <nav class="nav-links">
+        <a href="#manifesto" class="nav-link">Legacy</a>
         <a href="#communities" class="nav-link">Communities</a>
         <a href="#pillars" class="nav-link">Craftsmanship</a>
-        <a href="#lifestyle" class="nav-link">Living Experience</a>
-        <a href="#estates" class="nav-link">Signature Residences</a>
+        <a href="#sovereign-advantage" class="nav-link">Why Dubai</a>
+        <a href="#estates" class="nav-link">Residences</a>
         <a href="#advisory" class="nav-link">Private Desk</a>
       </nav>
 
@@ -80,6 +81,52 @@
   <main id="main-content">
 
     <!-- ============================================================
+         0. MASTER DEVELOPER MANIFESTO & HERITAGE (SOBHA-INSPIRED)
+         Establishing supreme authority, architectural legacy, and scale
+         ============================================================ -->
+    <section id="manifesto" class="manifesto-section">
+      <div class="act-wrapper">
+        <div class="manifesto-header scroll-reveal-box">
+          <div class="act-micro-tag">
+            <span class="act-time">Legacy of Mastery</span>
+            <span class="act-coord">Aura Dubai • Master Developer</span>
+          </div>
+          <h2 class="manifesto-title">
+            The Art of the Detail.<br />
+            Where Master-Planned Living Meets the Soul of Dubai.
+          </h2>
+          <p class="manifesto-lead">
+            We do not assemble disconnected towers. For nearly half a century, our philosophy has centered on total backward integration—conceiving, engineering, and crafting self-contained biophilic sanctuaries where crystal freshwater lagoons, world-tier academies, and deep acoustic silence become your everyday cadence.
+          </p>
+        </div>
+
+        <!-- Master Developer Heritage Metrics Grid (Sobha-style scale & authority) -->
+        <div class="heritage-stats-grid scroll-reveal-box">
+          <div class="heritage-stat-card">
+            <span class="heritage-number">48+</span>
+            <span class="heritage-label">Years of Craft</span>
+            <p class="heritage-desc">Rooted in architectural perfection, zero-compromise precision, and royal craftsmanship.</p>
+          </div>
+          <div class="heritage-stat-card">
+            <span class="heritage-number">130M+</span>
+            <span class="heritage-label">Sq. Ft. Master-Planned</span>
+            <p class="heritage-desc">Expansive biophilic forest reserves, seahorse islands, and private superyacht marinas.</p>
+          </div>
+          <div class="heritage-stat-card">
+            <span class="heritage-number">100%</span>
+            <span class="heritage-label">Backward Integrated</span>
+            <p class="heritage-desc">Zero subcontracting. In-house German joinery, Italian stone quarries, and precast engineering.</p>
+          </div>
+          <div class="heritage-stat-card">
+            <span class="heritage-number">100+</span>
+            <span class="heritage-label">Sovereign Nations</span>
+            <p class="heritage-desc">A discreet international community of discerning families and global leaders.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
          1. MASTER COMMUNITIES (SOBHA-STYLE ENCLAVES EXPLORATION)
          The Living Worlds: Forest Sanctuary, Waterfront Island, Superyacht Harbour, Sovereign Sky
          ============================================================ -->
@@ -99,34 +146,45 @@
           </p>
         </div>
 
-        <!-- Community Selector Bar -->
+        <!-- Community Selector Bar with Lifestyle Micro-Tags -->
         <div class="community-tabs-bar scroll-reveal-box">
           <button type="button" class="community-tab-btn active" data-comm="forest">
-            The Forest Sanctuary
+            <span class="tab-icon">🌿</span> The Forest Sanctuary
           </button>
           <button type="button" class="community-tab-btn" data-comm="island">
-            The Island Reserve
+            <span class="tab-icon">🏝️</span> The Island Reserve
           </button>
           <button type="button" class="community-tab-btn" data-comm="harbour">
-            The Superyacht Harbour
+            <span class="tab-icon">⚓</span> The Superyacht Harbour
           </button>
           <button type="button" class="community-tab-btn" data-comm="dunes">
-            The Desert Oasis
+            <span class="tab-icon">🏜️</span> The Desert Oasis
           </button>
           <button type="button" class="community-tab-btn" data-comm="sky">
-            The Sovereign Sky
+            <span class="tab-icon">✨</span> The Sovereign Sky
           </button>
         </div>
 
-        <!-- Master Community Hero Visual Display -->
+        <!-- Master Community Hero Visual Display with Dual-Mode View Switcher -->
         <div class="community-display-stage scroll-reveal-box" id="community-stage">
           <div class="comm-media-box">
             <img id="comm-bg-img" src="/images/forest_villa.jpg" alt="The Forest Sanctuary" class="comm-photo" />
             <div class="comm-gradient-overlay"></div>
           </div>
 
+          <!-- Dual Mode Toggle (Atmosphere vs Masterplan Blueprint) -->
+          <div class="comm-view-mode-bar">
+            <button type="button" class="comm-mode-btn active" id="mode-atmosphere-btn" data-mode="atmosphere">
+              Atmosphere View
+            </button>
+            <button type="button" class="comm-mode-btn" id="mode-blueprint-btn" data-mode="blueprint">
+              Masterplan Blueprint & Specs
+            </button>
+          </div>
+
           <div class="comm-content-overlay">
-            <div class="comm-inner-card">
+            <!-- Mode A: Atmosphere Narrative View -->
+            <div class="comm-inner-card" id="comm-atmosphere-view">
               <span class="comm-badge" id="comm-badge">BIOPHILIC LAGOON LIVING • 40% GREEN CANOPY</span>
               <h3 class="comm-title" id="comm-title">The Forest Sanctuary</h3>
               <p class="comm-desc" id="comm-desc">
@@ -142,11 +200,54 @@
               </div>
 
               <div class="comm-cta-row">
-                <button type="button" class="btn-primary view-estate-btn" data-estate-id="estate-dubai-hills">
+                <button type="button" class="btn-primary view-estate-btn" id="comm-explore-btn" data-estate-id="estate-dubai-hills">
                   Explore Community Masterplan →
+                </button>
+                <a href="#advisory" class="btn-secondary" id="comm-dossier-btn">
+                  Request Enclave Dossier
+                </a>
+              </div>
+            </div>
+
+            <!-- Mode B: Masterplan Blueprint & Specifications View -->
+            <div class="comm-inner-card comm-blueprint-card" id="comm-blueprint-view" style="display: none;">
+              <span class="comm-badge">ARCHITECTURAL BLUEPRINT & ECOSYSTEM SPECIFICATIONS</span>
+              <h3 class="comm-title" id="comm-blueprint-title">The Forest Sanctuary Masterplan</h3>
+              
+              <div class="blueprint-specs-grid" id="comm-blueprint-grid">
+                <div class="blueprint-stat">
+                  <span class="blueprint-val">350 Acres</span>
+                  <span class="blueprint-lbl">Total Enclave Area</span>
+                </div>
+                <div class="blueprint-stat">
+                  <span class="blueprint-val">40% Canopy</span>
+                  <span class="blueprint-lbl">Protected Green Parkland</span>
+                </div>
+                <div class="blueprint-stat">
+                  <span class="blueprint-val">1.8M Sq.Ft.</span>
+                  <span class="blueprint-lbl">Crystal Bio-Lagoon</span>
+                </div>
+                <div class="blueprint-stat">
+                  <span class="blueprint-val">3 Minutes</span>
+                  <span class="blueprint-lbl">North London Collegiate School</span>
+                </div>
+                <div class="blueprint-stat">
+                  <span class="blueprint-val">12 Minutes</span>
+                  <span class="blueprint-lbl">Downtown Dubai & DIFC</span>
+                </div>
+                <div class="blueprint-stat">
+                  <span class="blueprint-val">100% Freehold</span>
+                  <span class="blueprint-lbl">Sovereign Title Deed</span>
+                </div>
+              </div>
+
+              <div class="comm-cta-row" style="margin-top: 24px;">
+                <button type="button" class="btn-primary view-estate-btn" data-estate-id="estate-dubai-hills">
+                  Inspect Available Residences →
                 </button>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -163,67 +264,67 @@
         <div class="section-title-wrap scroll-reveal-box">
           <div class="act-micro-tag">
             <span class="act-time">Philosophy of Craft</span>
-            <span class="act-coord">Defining the Standard of Living</span>
+            <span class="act-coord">100% Backward Integrated Mastery</span>
           </div>
           <h2 class="section-main-heading">
             True excellence lies in the obsession with every detail.
           </h2>
           <p class="section-main-sub">
-            From in-house Italian stone book-matching to acoustic dampening and acoustic glass facades, nothing is left to chance.
+            From direct Italian marble quarry extraction to acoustic decoupling and proprietary German joinery, we subcontract nothing.
           </p>
         </div>
 
-        <!-- Pillars Grid with Macro Craft Detail Visual -->
+        <!-- Interactive Craftsmanship Lab Grid -->
         <div class="craft-layout-grid">
           
           <div class="craft-visual-panel scroll-reveal-box">
             <div class="craft-image-frame">
-              <img src="/images/craft_detail.jpg" alt="Macro detail of book-matched Calacatta marble and fluted walnut joinery" class="craft-photo" />
-              <div class="craft-floating-tag">
-                <span>Precision Craftsmanship</span>
-                <span>Italian Calacatta & Fluted Solid Walnut</span>
+              <img id="craft-main-img" src="/images/craft_detail.jpg" alt="Macro detail of book-matched Calacatta marble and fluted walnut joinery" class="craft-photo" />
+              <div class="craft-floating-tag" id="craft-floating-tag">
+                <span id="craft-tag-title">Precision Craftsmanship</span>
+                <span id="craft-tag-sub">Italian Calacatta & Fluted Solid Walnut</span>
               </div>
             </div>
           </div>
 
-          <div class="craft-cards-column scroll-reveal-box">
+          <div class="craft-cards-column scroll-reveal-box" id="craft-cards-column">
             
-            <div class="craft-pillar-card">
+            <div class="craft-pillar-card active" data-material="marble">
               <span class="pillar-idx">01</span>
               <div>
-                <h4 class="pillar-title">Uncompromising Materiality</h4>
+                <h4 class="pillar-title">Direct Quarry Stone & Book-Matching</h4>
                 <p class="pillar-text">
-                  Direct quarry sourcing of Italian marble, solid European oak joinery, and German-engineered sanitary fittings crafted for generations.
+                  Direct quarry sourcing from Carrara and Tuscany. Every slab is laser-measured and dry-laid in our European atelier with 0.5mm joint calibration.
                 </p>
               </div>
             </div>
 
-            <div class="craft-pillar-card">
+            <div class="craft-pillar-card" data-material="acoustic">
               <span class="pillar-idx">02</span>
               <div>
-                <h4 class="pillar-title">Acoustic & Thermal Mastery</h4>
+                <h4 class="pillar-title">Acoustic & Thermal Decoupling (42dB)</h4>
                 <p class="pillar-text">
-                  Triple-glazed acoustic glass minimizing solar heat gain by 68% and creating complete acoustic stillness inside every residence.
+                  Triple-laminated Low-E solar glass eliminating exterior urban sound and reducing solar infrared penetration by 92% for absolute internal silence.
                 </p>
               </div>
             </div>
 
-            <div class="craft-pillar-card">
+            <div class="craft-pillar-card" data-material="joinery">
               <span class="pillar-idx">03</span>
               <div>
-                <h4 class="pillar-title">Self-Sustaining Ecosystems</h4>
+                <h4 class="pillar-title">Proprietary German Joinery & Metalwork</h4>
                 <p class="pillar-text">
-                  Integrated communities featuring world-class private education, waterfront promenades, and dedicated wellness sanctuaries.
+                  Solid fluted European walnut, concealed acoustic door seals, and custom brushed champagne bronze ironmongery tested to 200,000 cycles.
                 </p>
               </div>
             </div>
 
-            <div class="craft-pillar-card">
+            <div class="craft-pillar-card" data-material="biophilic">
               <span class="pillar-idx">04</span>
               <div>
-                <h4 class="pillar-title">Sovereign Freehold Security</h4>
+                <h4 class="pillar-title">Self-Sustaining Biophilic Ecosystems</h4>
                 <p class="pillar-text">
-                  100% foreign freehold ownership, 0% personal tax, and expedited 10-Year Renewable UAE Golden Visa residency status.
+                  Freshwater crystal lagoons with zero chlorine, shaded mature forest canopies that naturally drop ambient microclimate temperatures by 4°C.
                 </p>
               </div>
             </div>
@@ -291,6 +392,104 @@
               <span class="act-pill-item">Ancient Olive Trees</span>
               <span class="act-pill-item">Gated Perimeter</span>
             </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3.5 WHY DUBAI: THE SOVEREIGN LIVING BLUEPRINT & CALCULATOR
+         (Sobha-style Dubai Advantage, Golden Visa & Yield Analytics)
+         ============================================================ -->
+    <section id="sovereign-advantage" class="sovereign-section">
+      <div class="act-wrapper">
+        
+        <div class="section-title-wrap scroll-reveal-box">
+          <div class="act-micro-tag">
+            <span class="act-time">The Dubai Advantage</span>
+            <span class="act-coord">The World's Preeminent Sovereign Capital</span>
+          </div>
+          <h2 class="section-main-heading">
+            A sanctuary for family legacy, wealth preservation, and freedom.
+          </h2>
+          <p class="section-main-sub">
+            Dubai offers an unrivaled global convergence: zero personal taxation, 100% foreign freehold property ownership, and the world's highest safety index.
+          </p>
+        </div>
+
+        <!-- 4 Sovereign Pillars Strip -->
+        <div class="sovereign-pillars-grid scroll-reveal-box">
+          <div class="sov-pillar-item">
+            <span class="sov-icon">0%</span>
+            <h4 class="sov-pillar-name">Zero Personal Tax</h4>
+            <p class="sov-pillar-desc">0% Personal Income Tax, 0% Capital Gains, and 0% Inheritance Tax on all prime residential assets.</p>
+          </div>
+          <div class="sov-pillar-item">
+            <span class="sov-icon">10Y</span>
+            <h4 class="sov-pillar-name">UAE Golden Visa</h4>
+            <p class="sov-pillar-desc">Long-term renewable residency for you, your spouse, children, and domestic staff with seamless banking.</p>
+          </div>
+          <div class="sov-pillar-item">
+            <span class="sov-icon">100%</span>
+            <h4 class="sov-pillar-name">Foreign Freehold</h4>
+            <p class="sov-pillar-desc">Unconditional, perpetual land and property ownership registered directly with the Dubai Land Department.</p>
+          </div>
+          <div class="sov-pillar-item">
+            <span class="sov-icon">#1</span>
+            <h4 class="sov-pillar-name">Global Family Safety</h4>
+            <p class="sov-pillar-desc">Ranked #1 safest global metropolis for families, backed by elite private international academic institutions.</p>
+          </div>
+        </div>
+
+        <!-- Interactive Sovereign Acquisition & Yield Calculator -->
+        <div class="sovereign-calc-box scroll-reveal-box">
+          <div class="calc-header-row">
+            <div>
+              <span class="calc-badge">SOVEREIGN WEALTH ANALYTICS</span>
+              <h3 class="calc-title">Interactive Acquisition & Yield Simulator</h3>
+            </div>
+            <div class="calc-current-val">
+              <span class="calc-val-label">Target Investment:</span>
+              <span class="calc-val-number" id="calc-display-budget">AED 25,000,000</span>
+            </div>
+          </div>
+
+          <div class="calc-slider-wrap">
+            <input type="range" id="sovereign-slider" min="5000000" max="100000000" step="1000000" value="25000000" class="sov-range-input" />
+            <div class="calc-range-marks">
+              <span>AED 5M</span>
+              <span>AED 25M</span>
+              <span>AED 50M</span>
+              <span>AED 75M</span>
+              <span>AED 100M+</span>
+            </div>
+          </div>
+
+          <div class="calc-results-grid">
+            <div class="calc-result-card">
+              <span class="result-number" id="calc-tax-saved">AED 2,100,000</span>
+              <span class="result-label">Annual Tax Saved (vs UK/US/EU)</span>
+              <span class="result-sub">Calculated against a 45% standard foreign tax bracket</span>
+            </div>
+
+            <div class="calc-result-card">
+              <span class="result-number" id="calc-net-yield">AED 2,050,000</span>
+              <span class="result-label">Net Tax-Free Rental Yield (8.2%)</span>
+              <span class="result-sub">Conservative benchmark for prime master-planned enclaves</span>
+            </div>
+
+            <div class="calc-result-card highlight">
+              <span class="result-number" id="calc-visa-status">Qualified</span>
+              <span class="result-label">10-Year UAE Golden Visa</span>
+              <span class="result-sub">Instant qualifying eligibility with private family sponsorship</span>
+            </div>
+          </div>
+
+          <div class="calc-cta-row">
+            <a href="#advisory" class="btn-primary">
+              Schedule Confidential Sovereign Advisory →
+            </a>
           </div>
         </div>
 
