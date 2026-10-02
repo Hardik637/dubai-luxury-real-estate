@@ -50,14 +50,24 @@ export class HeroScrollEngine {
   }
 
   handleResize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const isMobile = window.innerWidth <= 768;
+    // On high-DPR mobile screens, use full devicePixelRatio up to 2.5 for crystal-sharp retina clarity
+    const dpr = isMobile 
+      ? Math.min(window.devicePixelRatio || 1, 2.5)
+      : Math.min(window.devicePixelRatio || 1, 2);
+
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    this.canvas.width = width * dpr;
-    this.canvas.height = height * dpr;
+    this.canvas.width = Math.round(width * dpr);
+    this.canvas.height = Math.round(height * dpr);
     this.canvas.style.width = `${width}px`;
     this.canvas.style.height = `${height}px`;
+
+    if (this.ctx) {
+      this.ctx.imageSmoothingEnabled = true;
+      this.ctx.imageSmoothingQuality = 'high';
+    }
 
     // Redraw current frame on resize
     this.renderFrame(Math.round(this.currentFrameIndex));
@@ -206,6 +216,8 @@ export class HeroScrollEngine {
       sy = (imgHeight - sHeight) / 2;
     }
 
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cWidth, cHeight);
   }
 }

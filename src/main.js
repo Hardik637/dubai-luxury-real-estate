@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSovereignCalculator();
   initBidirectionalScrollReveals();
   initVisualCatalog();
+  initMobileCarousels();
   initModals();
   initForms();
 });
@@ -432,6 +433,110 @@ function initSovereignCalculator() {
 }
 
 /* ==========================================================================
+   3.3 MOBILE-ONLY AUTOMATIC CAROUSEL ENGINE
+   - STRICT GUARD: Only operates when window.innerWidth <= 768px (never touches PC view)
+   - Automatically scrolls horizontally through components with items exceeding one row
+   - Allows natural finger swipe anytime with smooth native scroll-snap
+   - Pauses on user touch/drag and resumes automatically
+   - Zero dots / bullets (as instructed: "dont need the dots to navigate just swiping should do the trick")
+   ========================================================================== */
+let mobileCarouselTimers = [];
+
+function initMobileCarousels() {
+  // Clear any existing timers first
+  mobileCarouselTimers.forEach((t) => clearInterval(t));
+  mobileCarouselTimers = [];
+
+  // STRICT GUARD: DO NOTHING ON PC/DESKTOP VIEW
+  if (window.innerWidth > 768) return;
+
+  const carouselTargets = [
+    { sel: '.heritage-stats-grid', interval: 3800 },
+    { sel: '.craft-cards-column', interval: 4200 },
+    { sel: '.sovereign-pillars-grid', interval: 3600 },
+    { sel: '.calc-results-grid', interval: 4000 },
+    { sel: '.visual-cinema-grid', interval: 4400 }
+  ];
+
+  carouselTargets.forEach(({ sel, interval }) => {
+    const container = document.querySelector(sel);
+    if (!container) return;
+
+    let isInteracting = false;
+    let resumeTimeout = null;
+
+    const pause = () => {
+      isInteracting = true;
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+    };
+
+    const resume = () => {
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        isInteracting = false;
+      }, 4500);
+    };
+
+    container.addEventListener('touchstart', pause, { passive: true });
+    container.addEventListener('touchend', resume, { passive: true });
+    container.addEventListener('touchcancel', resume, { passive: true });
+
+    // Sync craft active cards on mobile swipe
+    if (sel === '.craft-cards-column') {
+      let scrollTimer = null;
+      container.addEventListener('scroll', () => {
+        if (window.innerWidth > 768) return;
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          const cards = container.querySelectorAll('.craft-pillar-card');
+          const centerX = container.getBoundingClientRect().left + container.clientWidth / 2;
+          let closest = null;
+          let minDist = Infinity;
+
+          cards.forEach((c) => {
+            const rect = c.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const dist = Math.abs(centerX - cardCenter);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = c;
+            }
+          });
+
+          if (closest && !closest.classList.contains('active')) {
+            closest.click();
+          }
+        }, 120);
+      }, { passive: true });
+    }
+
+    // Auto-advance loop
+    const timer = setInterval(() => {
+      if (window.innerWidth > 768 || isInteracting) return;
+
+      const firstChild = container.firstElementChild;
+      if (!firstChild) return;
+
+      const cardWidth = firstChild.offsetWidth + 14;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+
+      if (container.scrollLeft >= maxScroll - 15) {
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      }
+    }, interval);
+
+    mobileCarouselTimers.push(timer);
+  });
+}
+
+// Re-evaluate on window resize
+window.addEventListener('resize', () => {
+  initMobileCarousels();
+}, { passive: true });
+
+/* ==========================================================================
    4. PROMINENT BIDIRECTIONAL SCROLL REVEALS
    ========================================================================== */
 function initBidirectionalScrollReveals() {
@@ -593,6 +698,9 @@ function renderVisualCatalog() {
   newCards.forEach((c) => cardObserver.observe(c));
 
   attachEstateModalListeners();
+  if (window.innerWidth <= 768) {
+    initMobileCarousels();
+  }
 }
 
 function attachEstateModalListeners() {

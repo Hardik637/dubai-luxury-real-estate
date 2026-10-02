@@ -1844,10 +1844,32 @@ a {
 }
 
 @media (max-width: 768px) {
+  /* Navigation */
   .nav-links {
     display: none;
   }
 
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .currency-selector {
+    display: none; /* Keep header minimal on mobile */
+  }
+
+  .audio-text {
+    display: none; /* Just keep icon on mobile */
+  }
+
+  .audio-toggle-btn {
+    padding: 6px 10px;
+  }
+
+  #open-list-modal {
+    display: none; /* Hide auxiliary list button on mobile */
+  }
+
+  /* Architectural Curtain & Spacing */
   #main-content {
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
@@ -1861,39 +1883,457 @@ a {
     padding-right: 20px;
   }
 
-  .community-display-stage,
-  .panoramic-moment-card {
-    min-height: 60vh;
+  /* Hero frames dynamic mobile height */
+  .hero-scroll-container {
+    height: 400vh;
   }
 
-  .comm-content-overlay,
-  .moment-overlay {
-    padding: 30px 20px;
+  .hero-sticky-viewport,
+  #hero-canvas {
+    height: 100dvh;
+    height: 100vh;
+    image-rendering: -webkit-optimize-contrast;
   }
 
-  .visual-cinema-grid {
+  /* --------------------------------------------------
+     1. HERITAGE STATS: MOBILE AUTO-CAROUSEL
+     -------------------------------------------------- */
+  .manifesto-section {
+    padding: 60px 0 50px;
+  }
+
+  .manifesto-title {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+    margin-bottom: 16px;
+  }
+
+  .manifesto-lead {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .heritage-stats-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    gap: 14px;
+    margin: 32px -20px 0;
+    padding: 10px 20px 16px;
+    border-top: 1px solid var(--border-subtle);
+    scrollbar-width: none;
+  }
+
+  .heritage-stats-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .heritage-stat-card {
+    flex: 0 0 78% !important;
+    max-width: 78% !important;
+    scroll-snap-align: start;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 24px 20px;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .heritage-number {
+    font-size: 2.5rem;
+  }
+
+  /* --------------------------------------------------
+     2. MASTER COMMUNITIES: MOBILE DYNAMIC DISPLAY & TABS
+     -------------------------------------------------- */
+  .master-communities-section {
+    padding: 60px 0 70px;
+  }
+
+  .section-main-heading {
+    font-size: clamp(1.85rem, 6.5vw, 2.4rem);
+  }
+
+  .section-main-sub {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .community-tabs-bar {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    margin: 0 -20px 24px;
+    padding: 0 20px 8px;
+    scrollbar-width: none;
+  }
+
+  .community-tabs-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .community-tab-btn {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start;
+    padding: 10px 18px;
+    font-size: 0.75rem;
+  }
+
+  .community-display-stage {
+    min-height: 72vh;
+    border-radius: 4px;
+  }
+
+  .comm-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .comm-view-mode-bar {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    justify-content: center;
+    padding: 3px;
+  }
+
+  .comm-mode-btn {
+    flex: 1;
+    text-align: center;
+    padding: 7px 10px;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+
+  .comm-content-overlay {
+    padding: 28px 20px 24px;
+  }
+
+  .comm-title {
+    font-size: 1.85rem;
+    margin-bottom: 10px;
+  }
+
+  .comm-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .comm-features-strip {
+    font-size: 0.75rem;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* Blueprint Specs: Mobile Swipe Carousel */
+  .blueprint-specs-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    gap: 12px;
+    margin: 16px -20px 0;
+    padding: 0 20px 8px;
+    scrollbar-width: none;
+  }
+
+  .blueprint-specs-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .blueprint-stat {
+    flex: 0 0 65% !important;
+    max-width: 65% !important;
+    scroll-snap-align: start;
+    padding: 14px 16px;
+  }
+
+  .blueprint-val {
+    font-size: 1.4rem;
+  }
+
+  /* --------------------------------------------------
+     3. CRAFTSMANSHIP LAB: MOBILE AUTO-CAROUSEL
+     -------------------------------------------------- */
+  .craft-pillars-section {
+    padding: 70px 0;
+  }
+
+  .craft-layout-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .form-row-duo,
-  .owner-cinema-strip,
-  .footer-simple-row,
-  .cinema-card-top,
-  .cinema-specs-row {
+  .craft-image-frame {
+    aspect-ratio: 16 / 11;
+  }
+
+  .craft-photo {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .craft-floating-tag {
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    padding: 10px 14px;
+    font-size: 0.6875rem;
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
+  }
+
+  .craft-cards-column {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    gap: 14px;
+    margin: 12px -20px 0;
+    padding: 4px 20px 14px;
+    scrollbar-width: none;
+  }
+
+  .craft-cards-column::-webkit-scrollbar {
+    display: none;
+  }
+
+  .craft-pillar-card {
+    flex: 0 0 82% !important;
+    max-width: 82% !important;
+    scroll-snap-align: start;
+    padding: 20px;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .pillar-title {
+    font-size: 1.15rem;
+  }
+
+  /* --------------------------------------------------
+     4. PANORAMIC MOMENTS: MOBILE RESPONSIVE
+     -------------------------------------------------- */
+  .lifestyle-narrative-section {
+    padding: 70px 0;
+  }
+
+  .panoramic-moment-card {
+    min-height: 65vh;
+    border-radius: 4px;
+    margin-bottom: 32px;
+  }
+
+  .moment-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .moment-overlay {
+    padding: 36px 20px 28px;
+  }
+
+  .moment-heading {
+    font-size: clamp(1.7rem, 6vw, 2.2rem);
+    margin-bottom: 14px;
+  }
+
+  .moment-desc {
+    font-size: 0.9375rem;
+    margin-bottom: 22px;
+  }
+
+  /* --------------------------------------------------
+     5. WHY DUBAI SOVEREIGN PILLARS: MOBILE AUTO-CAROUSEL
+     -------------------------------------------------- */
+  .sovereign-section {
+    padding: 70px 0;
+  }
+
+  .sovereign-pillars-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    gap: 14px;
+    margin: 0 -20px 32px;
+    padding: 4px 20px 14px;
+    scrollbar-width: none;
+  }
+
+  .sovereign-pillars-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sov-pillar-item {
+    flex: 0 0 78% !important;
+    max-width: 78% !important;
+    scroll-snap-align: start;
+    padding: 26px 22px;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .sovereign-calc-box {
+    padding: 28px 20px;
+  }
+
+  .calc-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .calc-current-val {
+    align-items: flex-start;
+  }
+
+  .calc-results-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
     gap: 12px;
+    margin: 0 -20px 24px;
+    padding: 4px 20px 12px;
+    scrollbar-width: none;
   }
 
-  .cinema-card-content {
-    padding: 24px;
+  .calc-results-grid::-webkit-scrollbar {
+    display: none;
   }
 
-  .cinema-title {
-    font-size: 1.75rem;
+  .calc-result-card {
+    flex: 0 0 76% !important;
+    max-width: 76% !important;
+    scroll-snap-align: start;
+    padding: 22px 18px;
+  }
+
+  .calc-cta-row {
+    justify-content: stretch;
+  }
+
+  .calc-cta-row .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* --------------------------------------------------
+     6. CURATED RESIDENCES: MOBILE HERO & AUTO-CAROUSEL GRID
+     -------------------------------------------------- */
+  .cinematic-estates-section {
+    padding: 70px 0;
   }
 
   .cinema-card-media {
-    min-height: 380px;
+    min-height: 480px;
+    aspect-ratio: auto;
+  }
+
+  .cinema-card-img {
+    object-fit: cover;
+    object-position: center;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .cinema-card-content {
+    padding: 24px 20px;
+  }
+
+  .cinema-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .cinema-price {
+    font-size: 1.7rem;
+  }
+
+  .cinema-title {
+    font-size: 1.85rem;
+  }
+
+  .cinema-desc {
+    font-size: 0.9375rem;
+    margin-bottom: 18px;
+  }
+
+  .cinema-specs-row {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.75rem;
+    margin-bottom: 22px;
+  }
+
+  .estate-filter-pills {
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .estate-filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pill {
+    white-space: nowrap;
+  }
+
+  /* Property Catalog: Mobile Auto-Carousel */
+  .visual-cinema-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    gap: 16px;
+    margin: 0 -20px 36px;
+    padding: 4px 20px 16px;
+    scrollbar-width: none;
+  }
+
+  .visual-cinema-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prop-card-visual {
+    flex: 0 0 84% !important;
+    max-width: 84% !important;
+    scroll-snap-align: start;
+    box-shadow: var(--shadow-card);
+  }
+
+  .prop-img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .owner-cinema-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 32px 24px;
+  }
+
+  .footer-simple-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 }
