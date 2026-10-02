@@ -34,9 +34,21 @@ export class HeroScrollEngine {
   init() {
     this.handleResize();
     window.addEventListener('resize', () => this.handleResize(), { passive: true });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => this.handleResize(), 80);
+    });
+
+    // Auto-detect container & viewport resizes (e.g. mobile URL bar expand/collapse, DevTools)
+    if (typeof ResizeObserver !== 'undefined' && this.container) {
+      const ro = new ResizeObserver(() => this.handleResize());
+      ro.observe(this.container);
+      const viewport = this.container.querySelector('.hero-sticky-viewport');
+      if (viewport) ro.observe(viewport);
+    }
 
     // Load first frame with urgent priority to render immediately
     this.loadFirstFrame().then(() => {
+      this.handleResize();
       this.renderFrame(0);
       this.preloadAllFrames();
     });
@@ -50,19 +62,20 @@ export class HeroScrollEngine {
   }
 
   handleResize() {
+    if (!this.canvas) return;
+
     const isMobile = window.innerWidth <= 768;
     // On high-DPR mobile screens, use full devicePixelRatio up to 2.5 for crystal-sharp retina clarity
     const dpr = isMobile 
       ? Math.min(window.devicePixelRatio || 1, 2.5)
       : Math.min(window.devicePixelRatio || 1, 2);
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const viewport = this.canvas.parentElement;
+    const width = (viewport && viewport.clientWidth) ? viewport.clientWidth : window.innerWidth;
+    const height = (viewport && viewport.clientHeight) ? viewport.clientHeight : window.innerHeight;
 
     this.canvas.width = Math.round(width * dpr);
     this.canvas.height = Math.round(height * dpr);
-    this.canvas.style.width = `${width}px`;
-    this.canvas.style.height = `${height}px`;
 
     if (this.ctx) {
       this.ctx.imageSmoothingEnabled = true;
@@ -139,7 +152,9 @@ export class HeroScrollEngine {
 
   onScroll() {
     const rect = this.container.getBoundingClientRect();
-    const totalScrollable = this.container.offsetHeight - window.innerHeight;
+    const viewport = this.container.querySelector('.hero-sticky-viewport');
+    const viewportH = (viewport && viewport.clientHeight) ? viewport.clientHeight : window.innerHeight;
+    const totalScrollable = this.container.offsetHeight - viewportH;
     
     if (totalScrollable <= 0) return;
 
