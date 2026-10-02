@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURA DUBAI — The Feeling of Living in Dubai</title>
+  <meta name="description" content="A visual and sensory story of living in Dubai. Curated signature estates, calm waters, and timeless architecture." />
+  
+  <!-- Refined Typography: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Minimalist Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HERO: SCROLL-DRIVEN VIDEO FRAMES (STRICTLY CLEAN & UNCLUTTERED)
+       - Shows ONLY the video frames on initial screen.
+       - No navbar, no logo, no buttons, no text, no overlays.
+       ============================================================ -->
+  <section id="hero-scroll-container" class="hero-scroll-container">
+    <div class="hero-sticky-viewport">
+      <canvas id="hero-canvas"></canvas>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       NAVIGATION: REVEALED ONLY AFTER SCROLLING BEYOND HERO
+       Subtle, minimal, sticky.
+       ============================================================ -->
+  <header id="main-navbar" class="main-navbar" aria-label="Main Navigation">
+    <div class="nav-container">
+      <a href="#arrive" class="nav-brand">
+        <span class="brand-title">AURA</span>
+        <span class="brand-subtitle">DUBAI</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#atmosphere" class="nav-link">Atmosphere</a>
+        <a href="#cadence" class="nav-link">24 Hours</a>
+        <a href="#vignettes" class="nav-link">Sensory</a>
+        <a href="#estates" class="nav-link">Estates</a>
+        <a href="#districts" class="nav-link">Districts</a>
+        <a href="#private-desk" class="nav-link">Private Desk</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Live Currency Switcher -->
+        <div class="currency-selector" id="currency-selector">
+          <button type="button" class="currency-btn active" data-curr="AED">AED</button>
+          <button type="button" class="currency-btn" data-curr="USD">USD</button>
+          <button type="button" class="currency-btn" data-curr="EUR">EUR</button>
+          <button type="button" class="currency-btn" data-curr="GBP">GBP</button>
+        </div>
+
+        <button type="button" class="btn-minimal btn-list-property" id="open-list-modal">
+          List Estate
+        </button>
+
+        <a href="#private-desk" class="btn-primary">
+          Enquire
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============================================================
+         1. ATMOSPHERE: ARRIVE IN DUBAI (VISUAL-DRIVEN PARALLAX PLATES)
+         Minimal text, maximum visual feeling.
+         ============================================================ -->
+    <section id="atmosphere" class="story-section atmosphere-section">
+      <div class="section-container">
+        
+        <div class="visual-header-minimal">
+          <span class="visual-eyebrow">01 / The Threshold</span>
+          <h1 class="visual-display-title">
+            Where calm water, desert light, and stone converge.
+          </h1>
+        </div>
+
+        <!-- Big Dual Visual Panels with Micro-Details -->
+        <div class="visual-mosaic-row">
+          
+          <div class="mosaic-item mosaic-item-large interactive-tilt">
+            <div class="mosaic-media-wrap">
+              <img src="/images/morning_light.jpg" alt="Dawn over calm Palm Jumeirah waters" class="mosaic-img" />
+              <div class="mosaic-floating-tag">
+                <span class="tag-time">06:20</span>
+                <span class="tag-title">Calm Gulf Horizon • Palm Fronds</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mosaic-item mosaic-item-small interactive-tilt">
+            <div class="mosaic-media-wrap">
+              <img src="/images/villa_exterior.jpg" alt="Travertine villa and infinity pool" class="mosaic-img" />
+              <div class="mosaic-floating-tag">
+                <span class="tag-time">14:00</span>
+                <span class="tag-title">Sunlight & Limestone Reflection</span>
+              </div>
+            </div>
+            
+            <div class="mosaic-stats-strip">
+              <div class="stat-cell">
+                <span class="stat-num">360°</span>
+                <span class="stat-lbl">Coastal Light</span>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-num">0%</span>
+                <span class="stat-lbl">Personal Tax</span>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-num">#1</span>
+                <span class="stat-lbl">Global Safety</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. LIVE DUBAI: 24 HOURS IN DUBAI (INTERACTIVE DAYLIGHT CYCLE)
+         Animated interactive visual slider transitioning through time of day.
+         ============================================================ -->
+    <section id="cadence" class="story-section cadence-section">
+      <div class="section-container">
+
+        <div class="visual-header-minimal">
+          <span class="visual-eyebrow">02 / The Cadence of Living</span>
+          <h2 class="visual-display-title">
+            24 Hours of Living.
+          </h2>
+        </div>
+
+        <!-- Daylight Cycle Scrubber -->
+        <div class="daylight-scrubber-bar">
+          <button type="button" class="cycle-step-btn active" data-time="dawn">
+            <span class="step-clock">06:30</span>
+            <span class="step-label">Dawn on Water</span>
+          </button>
+          <button type="button" class="cycle-step-btn" data-time="midday">
+            <span class="step-clock">13:15</span>
+            <span class="step-label">The Shaded Villa</span>
+          </button>
+          <button type="button" class="cycle-step-btn" data-time="sunset">
+            <span class="step-clock">18:45</span>
+            <span class="step-label">Dune Amber</span>
+          </button>
+          <button type="button" class="cycle-step-btn" data-time="twilight">
+            <span class="step-clock">21:30</span>
+            <span class="step-label">Skyline Twilight</span>
+          </button>
+        </div>
+
+        <!-- Daylight Visual Stage -->
+        <div class="daylight-stage" id="daylight-stage">
+          <div class="stage-image-container">
+            <img id="stage-bg-image" src="/images/morning_light.jpg" alt="Dubai Living Scene" class="stage-bg-img" />
+            <div class="stage-overlay-card" id="stage-card">
+              <span class="stage-moment-tag" id="stage-tag">DAWN ON WATER • PALM JUMEIRAH</span>
+              <h3 class="stage-moment-quote" id="stage-quote">
+                “Waking to quiet ripples against your private jetty while the city skyline rests in pastel haze.”
+              </h3>
+              <div class="stage-moment-meta" id="stage-meta">
+                <span>24°C Coastal Breeze</span>
+                <span>•</span>
+                <span>Waterfront Peace</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. SENSORY VIGNETTES: VISUAL LOOKBOOK (IMAGE-FORWARD TILES)
+         Generous visual cards with smooth hover parallax and minimal labels.
+         ============================================================ -->
+    <section id="vignettes" class="story-section vignettes-section">
+      <div class="section-container">
+
+        <div class="visual-header-minimal">
+          <span class="visual-eyebrow">03 / Sensory Living</span>
+          <h2 class="visual-display-title">
+            The Living Experience.
+          </h2>
+        </div>
+
+        <!-- 4 Large Photographic Panels -->
+        <div class="vignettes-grid">
+
+          <div class="vignette-card">
+            <div class="vignette-media">
+              <img src="/images/yacht_lifestyle.jpg" alt="Yacht deck overlooking Dubai Harbour" class="vignette-img" loading="lazy" />
+              <div class="vignette-badge">Maritime</div>
+            </div>
+            <div class="vignette-footer">
+              <span class="vignette-num">01</span>
+              <div class="vignette-info">
+                <h4 class="vignette-title">Open Sea Departures</h4>
+                <span class="vignette-sub">Dubai Harbour Yacht Club</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vignette-card">
+            <div class="vignette-media">
+              <img src="/images/desert_sunset.jpg" alt="Sunken firepit lounge in desert dunes" class="vignette-img" loading="lazy" />
+              <div class="vignette-badge">Sanctuary</div>
+            </div>
+            <div class="vignette-footer">
+              <span class="vignette-num">02</span>
+              <div class="vignette-info">
+                <h4 class="vignette-title">The Silence of the Dunes</h4>
+                <span class="vignette-sub">Sunken Travertine Fire Lounge</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vignette-card">
+            <div class="vignette-media">
+              <img src="/images/twilight_terrace.jpg" alt="Rooftop terrace dining overlooking Downtown Dubai" class="vignette-img" loading="lazy" />
+              <div class="vignette-badge">Epicurean</div>
+            </div>
+            <div class="vignette-footer">
+              <span class="vignette-num">03</span>
+              <div class="vignette-info">
+                <h4 class="vignette-title">Evenings in the Sky</h4>
+                <span class="vignette-sub">Downtown Dubai Rooftop</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vignette-card">
+            <div class="vignette-media">
+              <img src="/images/penthouse_interior.jpg" alt="Warm boucle interior and panoramic skyline" class="vignette-img" loading="lazy" />
+              <div class="vignette-badge">Architecture</div>
+            </div>
+            <div class="vignette-footer">
+              <span class="vignette-num">04</span>
+              <div class="vignette-info">
+                <h4 class="vignette-title">Volume & Daylight</h4>
+                <span class="vignette-sub">Floor-to-Ceiling Travertine Duplex</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. CURATED ESTATES: VISUAL PROPERTY SHOWCASE
+         Large photographic cards with interactive hover previews and modal viewer
+         ============================================================ -->
+    <section id="estates" class="story-section estates-section">
+      <div class="section-container">
+
+        <div class="estates-header-row">
+          <div>
+            <span class="visual-eyebrow">04 / Discover Properties</span>
+            <h2 class="visual-display-title">Signature Residences</h2>
+          </div>
+
+          <!-- Filter Pills -->
+          <div class="estate-filter-pills" id="category-tabs">
+            <button type="button" class="filter-pill active" data-category="all">All</button>
+            <button type="button" class="filter-pill" data-category="sale">Acquisition</button>
+            <button type="button" class="filter-pill" data-category="rent">Lease</button>
+            <button type="button" class="filter-pill" data-category="off-plan">Off-Plan</button>
+          </div>
+        </div>
+
+        <!-- Featured Signature Estate (Wide Photographic Hero Card) -->
+        <div class="signature-hero-card" id="featured-estate-card">
+          <div class="sig-media-container">
+            <img src="/images/jumeirah_bay_island.jpg" alt="Sanctuary of the Sun, Jumeirah Bay Island" class="sig-main-img" />
+            <div class="sig-floating-specs">
+              <span class="sig-price" data-price-aed="165000000">AED 165,000,000</span>
+              <span class="sig-quick">7 Beds • 9 Baths • 21,500 sq.ft • Private Yacht Slip</span>
+            </div>
+          </div>
+          <div class="sig-bar">
+            <div>
+              <span class="sig-loc">Jumeirah Bay Island</span>
+              <h3 class="sig-title">Sanctuary of the Sun</h3>
+            </div>
+            <button type="button" class="btn-dark view-estate-btn" data-estate-id="estate-jumeirah-bay">
+              Inspect Estate →
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Visual Property Grid -->
+        <div class="visual-property-grid" id="property-catalog-grid">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Owner Private Listing Banner (Clean & Visual) -->
+        <div class="owner-minimal-bar">
+          <div class="owner-minimal-text">
+            <h4>Discreet Representation for Prime Estate Owners</h4>
+            <span>Access verified international collectors and family offices with complete confidentiality.</span>
+          </div>
+          <button type="button" class="btn-minimal" id="btn-owner-enquiry">
+            Submit Estate for Valuation
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. DISTRICTS: VISUAL DISTRICT ATMOSPHERES
+         Interactive visual selector: clicking an area reveals full atmosphere
+         ============================================================ -->
+    <section id="districts" class="story-section districts-section">
+      <div class="section-container">
+
+        <div class="visual-header-minimal">
+          <span class="visual-eyebrow">05 / Micro-Districts</span>
+          <h2 class="visual-display-title">
+            The Living Backdrops of Dubai.
+          </h2>
+        </div>
+
+        <!-- District Visual Switcher Tabs -->
+        <div class="district-switcher-row" id="district-tabs">
+          <button type="button" class="district-btn active" data-district="palm">
+            The Palm & Island Coast
+          </button>
+          <button type="button" class="district-btn" data-district="downtown">
+            Downtown & DIFC
+          </button>
+          <button type="button" class="district-btn" data-district="desert">
+            Emirates Hills & Desert
+          </button>
+          <button type="button" class="district-btn" data-district="harbour">
+            Dubai Harbour & Marina
+          </button>
+        </div>
+
+        <!-- District Big Visual Canvas Display -->
+        <div class="district-big-display" id="district-display">
+          <div class="district-canvas-frame">
+            <img id="district-img" src="/images/villa_exterior.jpg" alt="Palm Jumeirah Lifestyle" class="district-full-img" />
+            <div class="district-info-pill">
+              <span class="district-pill-name" id="district-name">THE ISLAND COASTLINE</span>
+              <p class="district-pill-desc" id="district-desc">
+                Tranquil water-centric living. Step barefoot onto calm white sand, enjoy morning boat departures, and unwind to unhurried sunset tides.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. PRIVATE ADVISORY / CONTACT
+         Discreet, minimal, elegant consultation request
+         ============================================================ -->
+    <section id="private-desk" class="story-section advisory-section">
+      <div class="section-container">
+
+        <div class="advisory-minimal-layout">
+          <div class="advisory-minimal-left">
+            <span class="visual-eyebrow">06 / Private Office</span>
+            <h2 class="visual-display-title">
+              Let us curate your life in Dubai.
+            </h2>
+            <p class="advisory-lead-note">
+              Every acquisition begins with a conversation about how you wish to live. Private viewings, confidential portfolios, and chauffeur arrangements.
+            </p>
+            <div class="advisory-quick-lines">
+              <div><span>Desk:</span> +971 4 892 4000</div>
+              <div><span>Direct:</span> advisory@auradubai.com</div>
+              <div><span>Location:</span> DIFC Gate Precinct, Dubai</div>
+            </div>
+          </div>
+
+          <div class="advisory-minimal-right">
+            <form id="enquiry-form" class="minimal-clean-form">
+              <div class="form-row-compact">
+                <input type="text" id="form-name" required placeholder="Your Full Name" />
+                <input type="email" id="form-email" required placeholder="Email Address" />
+              </div>
+              <div class="form-row-compact">
+                <input type="tel" id="form-phone" required placeholder="Phone / WhatsApp" />
+                <select id="form-intent" class="custom-select-minimal">
+                  <option value="acquisition">Private Estate Acquisition ($10M+)</option>
+                  <option value="offmarket">Off-Market Confidential Access</option>
+                  <option value="lease">Prime Estate Lease</option>
+                  <option value="listing">List / Sell a Prime Residence</option>
+                </select>
+              </div>
+              <textarea id="form-notes" rows="3" placeholder="Desired location, waterfront preferences, or specific timeline..."></textarea>
+              <button type="submit" class="btn-dark btn-submit-full" id="submit-enquiry-btn">
+                Send Confidential Request
+              </button>
+            </form>
+
+            <div id="enquiry-success" class="form-success-box" style="display: none; margin-top: 16px;">
+              <h4>Request Received in Confidence</h4>
+              <p>A senior partner has been assigned to your enquiry and will contact you shortly.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       MINIMAL EDITORIAL FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-simple-row">
+        <span class="footer-logo">AURA DUBAI</span>
+        <div class="footer-coords">25.2048° N, 55.2708° E • RERA #84920</div>
+        <p class="copyright">© 2026 AURA DUBAI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       MODAL 1: PROPERTY DETAILS & GALLERY VIEWER
+       ============================================================ -->
+  <div id="property-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">✕</button>
+      <div class="modal-content" id="modal-content-body">
+        <!-- Rendered dynamically by src/main.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL 2: "LIST YOUR ESTATE" SUBMISSION FOR OWNERS
+       ============================================================ -->
+  <div id="list-estate-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-medium">
+      <button type="button" class="modal-close-btn" id="list-modal-close-btn" aria-label="Close modal">✕</button>
+      
+      <div class="modal-content modal-padded">
+        <span class="visual-eyebrow">Private Placement</span>
+        <h3 class="modal-title">List Your Dubai Estate</h3>
+        <p class="modal-desc">
+          Present your residence directly to vetted international high-net-worth buyers with absolute discretion.
+        </p>
+
+        <form id="owner-listing-form" class="minimal-clean-form">
+          <div class="form-row-compact">
+            <input type="text" id="owner-name" required placeholder="Owner / Representative Name" />
+            <input type="text" id="owner-contact" required placeholder="Email or Mobile" />
+          </div>
+
+          <div class="form-row-compact">
+            <input type="text" id="property-community" required placeholder="Community (e.g. Palm Jumeirah)" />
+            <input type="text" id="property-estimated-price" required placeholder="Target Value (e.g. AED 85,000,000)" />
+          </div>
+
+          <textarea id="property-notes" rows="3" placeholder="Architectural highlights, private beach, yacht slip, or view details..."></textarea>
+
+          <button type="submit" class="btn-dark btn-submit-full" id="owner-submit-btn">
+            Submit Estate for Confidential Review
+          </button>
+        </form>
+
+        <div id="owner-success-box" class="form-success-box" style="display: none; margin-top: 20px;">
+          <h4>Estate Registered for Private Review</h4>
+          <p>Your property submission has been received under our client confidentiality agreement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
