@@ -3,13 +3,60 @@ import { PROPERTIES, EXCHANGE_RATES } from './properties-data.js';
 
 let state = {
   currency: 'AED',
-  category: 'all'
+  category: 'all',
+  isAudioPlaying: false
+};
+
+// Master Communities Data
+const MASTER_COMMUNITIES = {
+  forest: {
+    badge: "BIOPHILIC LAGOON LIVING • 40% GREEN CANOPY",
+    title: "The Forest Sanctuary",
+    image: "/images/forest_villa.jpg",
+    desc: "Surrounded by thousands of mature trees, shaded walking paths, and crystalline freshwater lagoons that naturally lower ambient temperature by 4°C. Complete with private international schools and wellness pavilions.",
+    features: ["Crystal Bio-Lagoon", "North London Collegiate School (3 min)", "Private Forest Villas"],
+    estateId: "estate-dubai-hills"
+  },
+  island: {
+    badge: "PRIVATE ISLAND ENCLAVE • ARABIAN GULF",
+    title: "The Island Reserve",
+    image: "/images/jumeirah_bay_island.jpg",
+    desc: "An exclusive seahorse island sanctuary offering private white sand beaches, dedicated 120ft superyacht berths, and direct open sea departures.",
+    features: ["120ft Superyacht Slip", "Bulgari Resort Proximity", "Private Beachfront"],
+    estateId: "estate-jumeirah-bay"
+  },
+  harbour: {
+    badge: "MEDITERRANEAN MARITIME LIVING • DEEPWATER MARINA",
+    title: "The Superyacht Harbour",
+    image: "/images/yacht_lifestyle.jpg",
+    desc: "The Middle East's premier nautical district. Shaded palm promenades, Michelin-starred coastal dining, and sunset sailing into the open Gulf.",
+    features: ["160m Berth Capacity", "Dubai Harbour Yacht Club", "Bluewaters Access"],
+    estateId: "estate-harbour-residence"
+  },
+  dunes: {
+    badge: "TOTAL ACOUSTIC STILLNESS • EMIRATES HILLS",
+    title: "The Desert Oasis",
+    image: "/images/desert_sunset.jpg",
+    desc: "Vast architectural volumes framed by 200-year-old olive courtyards, championship golf fairways, and natural bio-lagoon pools where silence reigns.",
+    features: ["Acoustic Seclusion", "Montgomerie Fairways", "Gated Security Perimeter"],
+    estateId: "estate-emirates-hills"
+  },
+  sky: {
+    badge: "PRESIDENTIAL SKY DUPLEXES • DOWNTOWN DUBAI",
+    title: "The Sovereign Sky",
+    image: "/images/twilight_terrace.jpg",
+    desc: "Double-height sky residences floating above the clouds with 360-degree panoramas of the Burj Khalifa and Arabian Gulf, attended by private concierges.",
+    features: ["Private Sky Lap Pool", "Direct Biometric Elevator", "Opera District Access"],
+    estateId: "estate-downtown-penthouse"
+  }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeroScroll();
   initNavigation();
+  initAmbientAudio();
   initCurrencySelector();
+  initMasterCommunities();
   initBidirectionalScrollReveals();
   initVisualCatalog();
   initModals();
@@ -29,7 +76,6 @@ function initHeroScroll() {
     totalFrames: 147,
     framePath: (num) => `/hero-frames/frame_${String(num).padStart(4, '0')}.webp`,
     onProgress: (progress) => {
-      // Reveal navbar ONLY after scrolling through the hero sequence
       if (progress >= 0.88) {
         navbar.classList.add('visible');
       } else {
@@ -47,12 +93,143 @@ function initHeroScroll() {
 }
 
 /* ==========================================================================
-   2. PROMINENT BIDIRECTIONAL SCROLL REVEALS
-   Triggers dynamically when scrolling DOWN and UP both!
+   2. AMBIENT AUDIO SYNTHESIZER (WEB AUDIO API - GENTLE COASTAL WAVES)
+   ========================================================================== */
+let audioCtx = null;
+let waveGain = null;
+let waveInterval = null;
+
+function initAmbientAudio() {
+  const audioBtn = document.getElementById('audio-toggle');
+  if (!audioBtn) return;
+
+  audioBtn.addEventListener('click', () => {
+    if (!state.isAudioPlaying) {
+      startAmbientSound();
+      audioBtn.classList.add('playing');
+      state.isAudioPlaying = true;
+    } else {
+      stopAmbientSound();
+      audioBtn.classList.remove('playing');
+      state.isAudioPlaying = false;
+    }
+  });
+}
+
+function startAmbientSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!audioCtx) {
+      audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    // Generate soothing pink noise for ocean waves
+    const bufferSize = audioCtx.sampleRate * 2;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.04;
+      b6 = white * 0.115926;
+    }
+
+    const whiteNoise = audioCtx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+
+    // Low pass filter to create a warm, gentle underwater / coastal rumble
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+    // Dynamic wave gain simulating ocean swells
+    waveGain = audioCtx.createGain();
+    waveGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+
+    whiteNoise.connect(filter);
+    filter.connect(waveGain);
+    waveGain.connect(audioCtx.destination);
+    whiteNoise.start();
+
+    // Rhythmic swell animation
+    const swell = () => {
+      if (!state.isAudioPlaying || !waveGain) return;
+      const now = audioCtx.currentTime;
+      waveGain.gain.cancelScheduledValues(now);
+      waveGain.gain.setValueAtTime(waveGain.gain.value, now);
+      waveGain.gain.linearRampToValueAtTime(0.08, now + 3);
+      waveGain.gain.linearRampToValueAtTime(0.01, now + 7);
+    };
+
+    swell();
+    waveInterval = setInterval(swell, 7500);
+  } catch (e) {
+    console.warn('Ambient audio error:', e);
+  }
+}
+
+function stopAmbientSound() {
+  if (waveInterval) clearInterval(waveInterval);
+  if (waveGain && audioCtx) {
+    waveGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+  }
+}
+
+/* ==========================================================================
+   3. MASTER COMMUNITIES SWITCHER
+   ========================================================================== */
+function initMasterCommunities() {
+  const tabs = document.querySelectorAll('.community-tab-btn');
+  const stage = document.getElementById('community-stage');
+  const bgImg = document.getElementById('comm-bg-img');
+  const badge = document.getElementById('comm-badge');
+  const title = document.getElementById('comm-title');
+  const desc = document.getElementById('comm-desc');
+  const features = document.getElementById('comm-features');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const commKey = tab.getAttribute('data-comm');
+      const data = MASTER_COMMUNITIES[commKey];
+      if (!data || !bgImg) return;
+
+      bgImg.style.opacity = '0.2';
+      bgImg.style.transform = 'scale(1.08)';
+
+      setTimeout(() => {
+        bgImg.src = data.image;
+        badge.textContent = data.badge;
+        title.textContent = data.title;
+        desc.textContent = data.desc;
+        features.innerHTML = data.features.map(f => `<span>${f}</span>`).join(' • ');
+
+        bgImg.style.opacity = '1';
+        bgImg.style.transform = 'scale(1)';
+      }, 300);
+    });
+  });
+}
+
+/* ==========================================================================
+   4. PROMINENT BIDIRECTIONAL SCROLL REVEALS
    ========================================================================== */
 function initBidirectionalScrollReveals() {
   const revealElements = document.querySelectorAll('.scroll-reveal-box');
-  const actPanels = document.querySelectorAll('.cinematic-act-panel');
+  const panels = document.querySelectorAll('.community-display-stage, .panoramic-moment-card, .estate-hero-cinema-card');
 
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -60,7 +237,6 @@ function initBidirectionalScrollReveals() {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-revealed');
         } else {
-          // Remove class when scrolling out so it re-animates in both directions
           entry.target.classList.remove('is-revealed');
         }
       });
@@ -74,7 +250,6 @@ function initBidirectionalScrollReveals() {
 
   revealElements.forEach((el) => revealObserver.observe(el));
 
-  // Background slow zoom push-in observer (bidirectional)
   const panelObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -85,16 +260,14 @@ function initBidirectionalScrollReveals() {
         }
       });
     },
-    {
-      threshold: 0.1
-    }
+    { threshold: 0.1 }
   );
 
-  actPanels.forEach((panel) => panelObserver.observe(panel));
+  panels.forEach((p) => panelObserver.observe(p));
 }
 
 /* ==========================================================================
-   3. NAVIGATION ANCHOR SMOOTH SCROLLING
+   5. NAVIGATION ANCHOR SMOOTH SCROLLING
    ========================================================================== */
 function initNavigation() {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -111,7 +284,7 @@ function initNavigation() {
 }
 
 /* ==========================================================================
-   4. CURRENCY CONVERSION & FORMATTING
+   6. CURRENCY CONVERSION & FORMATTING
    ========================================================================== */
 function formatPrice(aedPrice, isRent = false) {
   const currInfo = EXCHANGE_RATES[state.currency] || EXCHANGE_RATES.AED;
@@ -135,7 +308,6 @@ function initCurrencySelector() {
       btn.classList.add('active');
       state.currency = btn.getAttribute('data-curr');
       
-      // Update featured card
       const featuredPrice = document.querySelector('#featured-estate-card .sig-price');
       if (featuredPrice) {
         const aed = parseFloat(featuredPrice.getAttribute('data-price-aed'));
@@ -148,7 +320,7 @@ function initCurrencySelector() {
 }
 
 /* ==========================================================================
-   5. VISUAL PROPERTY CATALOG
+   7. VISUAL PROPERTY CATALOG
    ========================================================================== */
 function initVisualCatalog() {
   const categoryPills = document.querySelectorAll('.filter-pill');
@@ -199,7 +371,6 @@ function renderVisualCatalog() {
     </article>
   `).join('');
 
-  // Attach observer to new property cards
   const newCards = grid.querySelectorAll('.scroll-reveal-box');
   const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -227,7 +398,7 @@ function attachEstateModalListeners() {
 }
 
 /* ==========================================================================
-   6. MODALS
+   8. MODALS & FORMS
    ========================================================================== */
 function initModals() {
   const propertyModal = document.getElementById('property-modal');
@@ -372,9 +543,6 @@ function formatMonthlyFinancing(totalAed) {
   return `AED ${converted.toLocaleString()} /mo`;
 }
 
-/* ==========================================================================
-   7. FORM HANDLERS
-   ========================================================================== */
 function initForms() {
   const enquiryForm = document.getElementById('enquiry-form');
   const enquirySuccess = document.getElementById('enquiry-success');
