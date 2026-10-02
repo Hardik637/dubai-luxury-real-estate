@@ -101,8 +101,7 @@ a {
   width: 100vw;
   height: 100vh;
   display: block;
-  object-fit: cover;
-  background-color: #000;
+  background-color: #080A0E;
 }
 
 /* --------------------------------------------------------------------------
@@ -1883,15 +1882,25 @@ a {
     padding-right: 20px;
   }
 
-  /* Hero frames dynamic mobile height */
+  /* Hero frames dynamic mobile fit */
   .hero-scroll-container {
-    height: 400vh;
+    height: 360vh;
+    background-color: #080A0E;
   }
 
-  .hero-sticky-viewport,
+  .hero-sticky-viewport {
+    height: 100dvh;
+    height: 100vh;
+    width: 100vw;
+    background-color: #080A0E;
+  }
+
   #hero-canvas {
     height: 100dvh;
     height: 100vh;
+    width: 100vw;
+    display: block;
+    background-color: #080A0E;
     image-rendering: -webkit-optimize-contrast;
   }
 
