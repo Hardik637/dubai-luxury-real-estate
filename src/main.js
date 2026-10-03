@@ -269,7 +269,7 @@ function stopAmbientSound() {
 }
 
 /* ==========================================================================
-   3. MASTER COMMUNITIES SWITCHER (SOBHA-STYLE LIVING ENCLAVES)
+   3. MASTER COMMUNITIES SWITCHER & AUTO-CAROUSEL (SOBHA-STYLE LIVING ENCLAVES)
    ========================================================================== */
 let currentCommKey = 'forest';
 
@@ -282,6 +282,8 @@ function initMasterCommunities() {
   const desc = document.getElementById('comm-desc');
   const features = document.getElementById('comm-features');
   const exploreBtn = document.getElementById('comm-explore-btn');
+  const prevBtn = document.getElementById('comm-prev-btn');
+  const nextBtn = document.getElementById('comm-next-btn');
 
   // Blueprint Elements
   const atmosphereView = document.getElementById('comm-atmosphere-view');
@@ -290,6 +292,11 @@ function initMasterCommunities() {
   const blueprintGrid = document.getElementById('comm-blueprint-grid');
   const modeAtmosphereBtn = document.getElementById('mode-atmosphere-btn');
   const modeBlueprintBtn = document.getElementById('mode-blueprint-btn');
+
+  const commKeys = ['forest', 'island', 'harbour', 'dunes', 'sky'];
+  let autoPlayTimer = null;
+  let isHovered = false;
+  let isInView = true;
 
   function renderBlueprint(commKey) {
     const data = MASTER_COMMUNITIES[commKey];
@@ -312,6 +319,7 @@ function initMasterCommunities() {
       modeBlueprintBtn.classList.remove('active');
       if (atmosphereView) atmosphereView.style.display = 'block';
       if (blueprintView) blueprintView.style.display = 'none';
+      resetAutoPlay();
     });
 
     modeBlueprintBtn.addEventListener('click', () => {
@@ -320,36 +328,155 @@ function initMasterCommunities() {
       if (atmosphereView) atmosphereView.style.display = 'none';
       if (blueprintView) blueprintView.style.display = 'block';
       renderBlueprint(currentCommKey);
+      resetAutoPlay();
     });
   }
 
+  function switchCommunity(targetKey) {
+    if (!MASTER_COMMUNITIES[targetKey]) return;
+    currentCommKey = targetKey;
+
+    // Synchronize tab buttons
+    tabs.forEach((t) => {
+      const isMatch = t.getAttribute('data-comm') === currentCommKey;
+      t.classList.toggle('active', isMatch);
+      if (isMatch) {
+        // Smooth scroll tab into view if container is horizontally scrollable
+        t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+
+    const data = MASTER_COMMUNITIES[currentCommKey];
+    if (!data || !bgImg) return;
+
+    bgImg.style.opacity = '0.2';
+    bgImg.style.transform = 'scale(1.08)';
+
+    setTimeout(() => {
+      bgImg.src = data.image;
+      if (badge) badge.textContent = data.badge;
+      if (title) title.textContent = data.title;
+      if (desc) desc.textContent = data.desc;
+      if (features) features.innerHTML = data.features.map(f => `<span>${f}</span>`).join(' • ');
+      if (exploreBtn) exploreBtn.setAttribute('data-estate-id', data.estateId);
+
+      renderBlueprint(currentCommKey);
+
+      bgImg.style.opacity = '1';
+      bgImg.style.transform = 'scale(1)';
+    }, 280);
+  }
+
+  function nextCommunity() {
+    const idx = commKeys.indexOf(currentCommKey);
+    const nextIdx = (idx + 1) % commKeys.length;
+    switchCommunity(commKeys[nextIdx]);
+  }
+
+  function prevCommunity() {
+    const idx = commKeys.indexOf(currentCommKey);
+    const prevIdx = (idx - 1 + commKeys.length) % commKeys.length;
+    switchCommunity(commKeys[prevIdx]);
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    autoPlayTimer = setInterval(() => {
+      if (!isHovered && isInView) {
+        nextCommunity();
+      }
+    }, 5500);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+  }
+
+  function resetAutoPlay() {
+    startAutoPlay();
+  }
+
+  // Minimal Navigation Arrows
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevCommunity();
+      resetAutoPlay();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextCommunity();
+      resetAutoPlay();
+    });
+  }
+
+  // Tab button clicks
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
-      tabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      currentCommKey = tab.getAttribute('data-comm');
-      const data = MASTER_COMMUNITIES[currentCommKey];
-      if (!data || !bgImg) return;
-
-      bgImg.style.opacity = '0.2';
-      bgImg.style.transform = 'scale(1.08)';
-
-      setTimeout(() => {
-        bgImg.src = data.image;
-        if (badge) badge.textContent = data.badge;
-        if (title) title.textContent = data.title;
-        if (desc) desc.textContent = data.desc;
-        if (features) features.innerHTML = data.features.map(f => `<span>${f}</span>`).join(' • ');
-        if (exploreBtn) exploreBtn.setAttribute('data-estate-id', data.estateId);
-
-        renderBlueprint(currentCommKey);
-
-        bgImg.style.opacity = '1';
-        bgImg.style.transform = 'scale(1)';
-      }, 300);
+      const comm = tab.getAttribute('data-comm');
+      if (comm && comm !== currentCommKey) {
+        switchCommunity(comm);
+        resetAutoPlay();
+      }
     });
   });
+
+  // Pause on hover
+  if (stage) {
+    stage.addEventListener('mouseenter', () => {
+      isHovered = true;
+    });
+
+    stage.addEventListener('mouseleave', () => {
+      isHovered = false;
+    });
+
+    // Touch swipe support on mobile devices
+    let touchStartX = 0;
+    let touchStartY = 0;
+    stage.addEventListener('touchstart', (e) => {
+      isHovered = true;
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (e) => {
+      setTimeout(() => { isHovered = false; }, 3500);
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) {
+            nextCommunity();
+          } else {
+            prevCommunity();
+          }
+          resetAutoPlay();
+        }
+      }
+    }, { passive: true });
+
+    // Only auto-play when section is visible in viewport
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          isInView = entry.isIntersecting;
+        });
+      }, { threshold: 0.15 });
+      observer.observe(stage);
+    }
+  }
+
+  // Initialize auto-play
+  startAutoPlay();
 }
 
 /* ==========================================================================

@@ -574,6 +574,63 @@ a {
   background: linear-gradient(to top, rgba(10, 28, 56, 0.94) 0%, rgba(10, 28, 56, 0.5) 55%, transparent 100%);
 }
 
+/* Minimalist Luxury Community Carousel Arrows (Left & Right Ends) */
+.comm-nav-arrow {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(10, 28, 56, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 185, 150, 0.35);
+  color: var(--accent-sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-cinematic);
+  padding: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  outline: none;
+}
+
+.comm-nav-prev {
+  left: 24px;
+}
+
+.comm-nav-next {
+  right: 24px;
+}
+
+.comm-nav-arrow:hover {
+  background: rgba(10, 28, 56, 0.85);
+  border-color: rgba(212, 185, 150, 0.8);
+  color: #FFFFFF;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.comm-nav-arrow:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.comm-nav-arrow svg {
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.comm-nav-prev:hover svg {
+  transform: translateX(-2px);
+}
+
+.comm-nav-next:hover svg {
+  transform: translateX(2px);
+}
+
 /* Dual Mode Toggle (Atmosphere vs Blueprint) */
 .comm-view-mode-bar {
   position: absolute;
@@ -2005,6 +2062,20 @@ a {
   .community-display-stage {
     min-height: 72vh;
     border-radius: 4px;
+  }
+
+  .comm-nav-arrow {
+    width: 38px;
+    height: 38px;
+    top: 40%;
+  }
+
+  .comm-nav-prev {
+    left: 12px;
+  }
+
+  .comm-nav-next {
+    right: 12px;
   }
 
   .comm-photo {
