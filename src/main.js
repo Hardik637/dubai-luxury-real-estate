@@ -458,32 +458,10 @@ function initMasterCommunities() {
 }
 
 /* ==========================================================================
-   3.1 CRAFTSMANSHIP & MATERIALITY LAB (SOBHA "ART OF THE DETAIL")
+   3.1 CRAFTSMANSHIP PILLARS SHOWCASE (SOBHA "CONCEPT TO COMPLETION")
    ========================================================================== */
 function initCraftsmanshipLab() {
-  const cards = document.querySelectorAll('.craft-pillar-card');
-  const img = document.getElementById('craft-main-img');
-  const title = document.getElementById('craft-tag-title');
-  const sub = document.getElementById('craft-tag-sub');
-
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      cards.forEach((c) => c.classList.remove('active'));
-      card.classList.add('active');
-
-      const matKey = card.getAttribute('data-material');
-      const mat = CRAFT_MATERIALS[matKey];
-      if (!mat || !img) return;
-
-      img.style.opacity = '0.3';
-      setTimeout(() => {
-        img.src = mat.img;
-        if (title) title.textContent = mat.title;
-        if (sub) sub.textContent = mat.sub;
-        img.style.opacity = '1';
-      }, 250);
-    });
-  });
+  // Handled declaratively with Sobha-inspired 4-pillar showcase grid & mobile carousel
 }
 
 /* ==========================================================================
@@ -557,7 +535,7 @@ function initMobileCarousels() {
 
   const carouselTargets = [
     { sel: '.heritage-stats-grid', interval: 3800 },
-    { sel: '.craft-cards-column', interval: 4200 },
+    { sel: '.sobha-pillars-grid', interval: 4200 },
     { sel: '.sovereign-pillars-grid', interval: 3600 },
     { sel: '.calc-results-grid', interval: 4000 },
     { sel: '.visual-cinema-grid', interval: 4400 }
@@ -585,35 +563,6 @@ function initMobileCarousels() {
     container.addEventListener('touchstart', pause, { passive: true });
     container.addEventListener('touchend', resume, { passive: true });
     container.addEventListener('touchcancel', resume, { passive: true });
-
-    // Sync craft active cards on mobile swipe
-    if (sel === '.craft-cards-column') {
-      let scrollTimer = null;
-      container.addEventListener('scroll', () => {
-        if (window.innerWidth > 768) return;
-        if (scrollTimer) clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-          const cards = container.querySelectorAll('.craft-pillar-card');
-          const centerX = container.getBoundingClientRect().left + container.clientWidth / 2;
-          let closest = null;
-          let minDist = Infinity;
-
-          cards.forEach((c) => {
-            const rect = c.getBoundingClientRect();
-            const cardCenter = rect.left + rect.width / 2;
-            const dist = Math.abs(centerX - cardCenter);
-            if (dist < minDist) {
-              minDist = dist;
-              closest = c;
-            }
-          });
-
-          if (closest && !closest.classList.contains('active')) {
-            closest.click();
-          }
-        }, 120);
-      }, { passive: true });
-    }
 
     // Auto-advance loop
     const timer = setInterval(() => {
