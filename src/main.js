@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCurrencySelector();
   initMasterCommunities();
   initCraftsmanshipLab();
+  initLifestyleCarousel();
   initSovereignCalculator();
   initBidirectionalScrollReveals();
   initVisualCatalog();
@@ -468,6 +469,149 @@ function initCraftsmanshipLab() {
 }
 
 /* ==========================================================================
+   3.1.5 SENSORY LIVING: FULL-SIZE PANORAMIC MOMENTS (SMOOTH CROSSFADE CAROUSEL)
+   ========================================================================== */
+function initLifestyleCarousel() {
+  const stage = document.getElementById('lifestyle-stage');
+  if (!stage) return;
+
+  const cards = stage.querySelectorAll('.panoramic-moment-card');
+  const indicators = stage.querySelectorAll('.lifestyle-indicator');
+  const prevBtn = document.getElementById('lifestyle-prev-btn');
+  const nextBtn = document.getElementById('lifestyle-next-btn');
+  if (cards.length === 0) return;
+
+  let currentIndex = 0;
+  let timer = null;
+  let isHovered = false;
+  let isInView = true;
+
+  function showMoment(index) {
+    if (index === currentIndex) return;
+    cards.forEach((card, i) => {
+      if (i === index) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+
+    indicators.forEach((ind, i) => {
+      if (i === index) {
+        ind.classList.add('active');
+      } else {
+        ind.classList.remove('active');
+      }
+    });
+
+    currentIndex = index;
+  }
+
+  function nextMoment() {
+    const nextIdx = (currentIndex + 1) % cards.length;
+    showMoment(nextIdx);
+  }
+
+  function prevMoment() {
+    const prevIdx = (currentIndex - 1 + cards.length) % cards.length;
+    showMoment(prevIdx);
+  }
+
+  function startTimer() {
+    stopTimer();
+    timer = setInterval(() => {
+      if (!isHovered && isInView) {
+        nextMoment();
+      }
+    }, 4500);
+  }
+
+  function stopTimer() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  function resetTimer() {
+    startTimer();
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextMoment();
+      resetTimer();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevMoment();
+      resetTimer();
+    });
+  }
+
+  indicators.forEach((ind) => {
+    ind.addEventListener('click', () => {
+      const idx = parseInt(ind.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) {
+        showMoment(idx);
+        resetTimer();
+      }
+    });
+  });
+
+  stage.addEventListener('mouseenter', () => {
+    isHovered = true;
+  });
+
+  stage.addEventListener('mouseleave', () => {
+    isHovered = false;
+  });
+
+  // Touch swipe support on mobile devices
+  let touchStartX = 0;
+  let touchStartY = 0;
+  stage.addEventListener('touchstart', (e) => {
+    isHovered = true;
+    if (e.touches && e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  stage.addEventListener('touchend', (e) => {
+    setTimeout(() => { isHovered = false; }, 2000);
+    if (e.changedTouches && e.changedTouches.length > 0) {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) {
+          nextMoment();
+        } else {
+          prevMoment();
+        }
+        resetTimer();
+      }
+    }
+  }, { passive: true });
+
+  // Only auto-play when section is visible in viewport
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isInView = entry.isIntersecting;
+      });
+    }, { threshold: 0.15 });
+    observer.observe(stage);
+  }
+
+  startTimer();
+}
+
+/* ==========================================================================
    3.2 SOVEREIGN WEALTH & YIELD CALCULATOR
    ========================================================================== */
 let currentCalculatorBudgetAED = 25000000;
@@ -597,7 +741,7 @@ window.addEventListener('resize', () => {
    ========================================================================== */
 function initBidirectionalScrollReveals() {
   const revealElements = document.querySelectorAll('.scroll-reveal-box');
-  const panels = document.querySelectorAll('.community-display-stage, .panoramic-moment-card, .estate-hero-cinema-card');
+  const panels = document.querySelectorAll('.community-display-stage, .lifestyle-stage, .panoramic-moment-card, .estate-hero-cinema-card');
 
   const revealObserver = new IntersectionObserver(
     (entries) => {

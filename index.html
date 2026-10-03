@@ -332,46 +332,91 @@
           </h2>
         </div>
 
-        <!-- Moment 1: Dawn on Water -->
-        <div class="panoramic-moment-card scroll-reveal-box">
-          <div class="moment-media">
-            <img src="/images/morning_light.jpg" alt="Dawn over Palm Jumeirah turquoise waters" class="moment-photo" />
-            <div class="moment-gradient"></div>
-          </div>
-          <div class="moment-overlay">
-            <div class="act-micro-tag">
-              <span class="act-time">06:20</span>
-              <span class="act-coord">The Palm Coastline</span>
+        <!-- Lifestyle Narrative Smooth Crossfade Stage -->
+        <div class="lifestyle-stage scroll-reveal-box" id="lifestyle-stage">
+          
+          <!-- Moment 1: Dawn on Water -->
+          <div class="panoramic-moment-card active" data-index="0">
+            <div class="moment-media">
+              <img src="/images/morning_light.jpg" alt="Dawn over Palm Jumeirah turquoise waters" class="moment-photo" />
+              <div class="moment-gradient"></div>
             </div>
-            <h3 class="moment-heading">Where the silence of the sea meets the first warmth of desert light.</h3>
-            <p class="moment-desc">Wake to glass-calm waters lapping against your private jetty while the morning air carries a tranquil sea breeze.</p>
-            <div class="act-floating-metrics">
-              <div class="metric-chip"><span class="chip-val">24°C</span><span class="chip-lbl">Dawn Air</span></div>
-              <div class="metric-chip"><span class="chip-val">360°</span><span class="chip-lbl">Coastal Sun</span></div>
-              <div class="metric-chip"><span class="chip-val">0%</span><span class="chip-lbl">Personal Tax</span></div>
+            <div class="moment-overlay">
+              <div class="act-micro-tag">
+                <span class="act-time">06:20</span>
+                <span class="act-coord">The Palm Coastline</span>
+              </div>
+              <h3 class="moment-heading">Where the silence of the sea meets the first warmth of desert light.</h3>
+              <p class="moment-desc">Wake to glass-calm waters lapping against your private jetty while the morning air carries a tranquil sea breeze.</p>
+              <div class="act-floating-metrics">
+                <div class="metric-chip"><span class="chip-val">24°C</span><span class="chip-lbl">Dawn Air</span></div>
+                <div class="metric-chip"><span class="chip-val">360°</span><span class="chip-lbl">Coastal Sun</span></div>
+                <div class="metric-chip"><span class="chip-val">0%</span><span class="chip-lbl">Personal Tax</span></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Moment 2: The Amber Dunes -->
-        <div class="panoramic-moment-card scroll-reveal-box">
-          <div class="moment-media">
-            <img src="/images/desert_sunset.jpg" alt="Sunken firepit lounge in desert dunes" class="moment-photo" />
-            <div class="moment-gradient"></div>
-          </div>
-          <div class="moment-overlay">
-            <div class="act-micro-tag">
-              <span class="act-time">18:45</span>
-              <span class="act-coord">Emirates Hills & Desert Enclaves</span>
+          <!-- Moment 2: The Amber Dunes -->
+          <div class="panoramic-moment-card" data-index="1">
+            <div class="moment-media">
+              <img src="/images/desert_sunset.jpg" alt="Sunken firepit lounge in desert dunes" class="moment-photo" />
+              <div class="moment-gradient"></div>
             </div>
-            <h3 class="moment-heading">The deep acoustic stillness of the dunes.</h3>
-            <p class="moment-desc">Sunken travertine fire lounge surrounded by warm amber sands, where quiet acoustic silence takes over after twilight.</p>
-            <div class="act-subtle-pillars">
-              <span class="act-pill-item">Acoustic Silence</span>
-              <span class="act-pill-item">Ancient Olive Trees</span>
-              <span class="act-pill-item">Gated Perimeter</span>
+            <div class="moment-overlay">
+              <div class="act-micro-tag">
+                <span class="act-time">18:45</span>
+                <span class="act-coord">Emirates Hills & Desert Enclaves</span>
+              </div>
+              <h3 class="moment-heading">The deep acoustic stillness of Arabian twilight.</h3>
+              <p class="moment-desc">Sunken travertine fire lounge surrounded by warm amber sands, where quiet acoustic silence takes over after twilight.</p>
+              <div class="act-floating-metrics">
+                <div class="metric-chip"><span class="chip-val">120dB</span><span class="chip-lbl">Acoustic Stillness</span></div>
+                <div class="metric-chip"><span class="chip-val">42°C</span><span class="chip-lbl">Thermal Decoupling</span></div>
+                <div class="metric-chip"><span class="chip-val">100%</span><span class="chip-lbl">Sovereign Land</span></div>
+              </div>
             </div>
           </div>
+
+          <!-- Moment 3: The Starlight Harbor & Skyline -->
+          <div class="panoramic-moment-card" data-index="2">
+            <div class="moment-media">
+              <img src="/images/twilight_terrace.jpg" alt="Private starlight terrace overlooking the Persian Gulf and skyline" class="moment-photo" />
+              <div class="moment-gradient"></div>
+            </div>
+            <div class="moment-overlay">
+              <div class="act-micro-tag">
+                <span class="act-time">21:30</span>
+                <span class="act-coord">The Sovereign Sky & Marina Berth</span>
+              </div>
+              <h3 class="moment-heading">The midnight glow over glass-calm waters.</h3>
+              <p class="moment-desc">Private starlight dining and tranquil sea reflections suspended high above the Persian Gulf, where private superyacht berths meet the night horizon.</p>
+              <div class="act-floating-metrics">
+                <div class="metric-chip"><span class="chip-val">120ft</span><span class="chip-lbl">Private Berth</span></div>
+                <div class="metric-chip"><span class="chip-val">360°</span><span class="chip-lbl">Night Panoramas</span></div>
+                <div class="metric-chip"><span class="chip-val">100%</span><span class="chip-lbl">Freehold Sanctuary</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Minimalist Navigation Arrows -->
+          <button type="button" class="lifestyle-nav-arrow lifestyle-nav-prev" id="lifestyle-prev-btn" aria-label="Previous moment">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" class="lifestyle-nav-arrow lifestyle-nav-next" id="lifestyle-next-btn" aria-label="Next moment">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Hairline Progress Indicators -->
+          <div class="lifestyle-indicators">
+            <button type="button" class="lifestyle-indicator active" data-index="0" aria-label="Moment 1"></button>
+            <button type="button" class="lifestyle-indicator" data-index="1" aria-label="Moment 2"></button>
+            <button type="button" class="lifestyle-indicator" data-index="2" aria-label="Moment 3"></button>
+          </div>
+
         </div>
 
       </div>

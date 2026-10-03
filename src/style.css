@@ -926,18 +926,42 @@ a {
   background-color: var(--bg-primary);
 }
 
-.panoramic-moment-card {
+.lifestyle-stage {
   position: relative;
   width: 100%;
   min-height: 75vh;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
+  background: #1A1816;
+  border: 1px solid var(--border-subtle);
   margin-bottom: 48px;
+}
+
+.panoramic-moment-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   background: #1A1816;
-  border: 1px solid var(--border-subtle);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panoramic-moment-card.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 2;
 }
 
 .moment-media {
@@ -954,10 +978,10 @@ a {
   height: 100%;
   object-fit: cover;
   transform: scale(1.06);
-  transition: transform 2.2s var(--ease-cinematic);
+  transition: transform 3.5s var(--ease-cinematic);
 }
 
-.panoramic-moment-card.in-view .moment-photo {
+.panoramic-moment-card.active .moment-photo {
   transform: scale(1);
 }
 
@@ -967,7 +991,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(16, 14, 12, 0.82) 0%, rgba(16, 14, 12, 0.45) 55%, rgba(16, 14, 12, 0.18) 100%);
+  background: linear-gradient(to right, rgba(16, 14, 12, 0.85) 0%, rgba(16, 14, 12, 0.48) 55%, rgba(16, 14, 12, 0.18) 100%);
 }
 
 .moment-overlay {
@@ -975,6 +999,77 @@ a {
   z-index: 2;
   padding: 70px 60px;
   max-width: 860px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.panoramic-moment-card.active .moment-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Minimalist Navigation Arrows */
+.lifestyle-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(10, 28, 56, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250, 248, 245, 0.2);
+  color: #FAF8F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.lifestyle-nav-arrow:hover {
+  background: rgba(10, 28, 56, 0.9);
+  border-color: var(--accent-sand);
+  color: var(--accent-sand);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.lifestyle-nav-prev {
+  left: 24px;
+}
+
+.lifestyle-nav-next {
+  right: 24px;
+}
+
+/* Hairline Progress Indicators */
+.lifestyle-indicators {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.lifestyle-indicator {
+  width: 24px;
+  height: 3px;
+  background: rgba(250, 248, 245, 0.3);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: width 0.4s ease, background-color 0.4s ease;
+  padding: 0;
+}
+
+.lifestyle-indicator.active {
+  width: 48px;
+  background: var(--accent-sand);
 }
 
 .moment-heading {
@@ -2270,10 +2365,16 @@ a {
     padding: 70px 0;
   }
 
-  .panoramic-moment-card {
-    min-height: 65vh;
+  .lifestyle-stage {
+    min-height: 72vh;
     border-radius: 4px;
     margin-bottom: 32px;
+  }
+
+  .panoramic-moment-card {
+    min-height: 100%;
+    border-radius: 4px;
+    margin-bottom: 0;
   }
 
   .moment-photo {
@@ -2296,6 +2397,24 @@ a {
   .moment-desc {
     font-size: 0.9375rem;
     margin-bottom: 22px;
+  }
+
+  .lifestyle-nav-arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .lifestyle-nav-prev {
+    left: 12px;
+  }
+
+  .lifestyle-nav-next {
+    right: 12px;
+  }
+
+  .lifestyle-indicators {
+    bottom: 16px;
+    right: 20px;
   }
 
   /* --------------------------------------------------
