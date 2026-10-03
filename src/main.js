@@ -152,26 +152,29 @@ function initHeroScroll() {
   const navbar = document.getElementById('main-navbar');
   const heroContainer = document.getElementById('hero-scroll-container');
 
+  const updateNavbarState = () => {
+    if (!navbar || !heroContainer) return;
+    const heroRect = heroContainer.getBoundingClientRect();
+    // After completing the hero section (when the bottom of the hero reaches the top of the viewport)
+    if (heroRect.bottom <= 80) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
+
   new HeroScrollEngine({
     containerSelector: '#hero-scroll-container',
     canvasSelector: '#hero-canvas',
     totalFrames: 147,
     framePath: (num) => `/hero-frames/frame_${String(num).padStart(4, '0')}.webp`,
     onProgress: (progress) => {
-      if (progress >= 0.88) {
-        navbar.classList.add('visible');
-      } else {
-        navbar.classList.remove('visible');
-      }
+      updateNavbarState();
     }
   });
 
-  window.addEventListener('scroll', () => {
-    const heroRect = heroContainer.getBoundingClientRect();
-    if (heroRect.bottom <= window.innerHeight + 50) {
-      navbar.classList.add('visible');
-    }
-  }, { passive: true });
+  window.addEventListener('scroll', updateNavbarState, { passive: true });
+  updateNavbarState();
 }
 
 /* ==========================================================================

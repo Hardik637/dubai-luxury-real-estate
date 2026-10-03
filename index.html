@@ -31,47 +31,30 @@
        Subtle, minimal, sticky.
        ============================================================ -->
   <header id="main-navbar" class="main-navbar" aria-label="Main Navigation">
-    <div class="nav-container">
-      <a href="#hero-scroll-container" class="nav-brand">
-        <span class="brand-title">AURA</span>
-        <span class="brand-subtitle">DUBAI</span>
-      </a>
-
-      <nav class="nav-links">
+    <div class="nav-container-split">
+      
+      <!-- Left Navigation Options -->
+      <nav class="nav-col nav-col-left" aria-label="Primary Navigation Left">
         <a href="#manifesto" class="nav-link">Legacy</a>
         <a href="#communities" class="nav-link">Communities</a>
         <a href="#pillars" class="nav-link">Craftsmanship</a>
-        <a href="#sovereign-advantage" class="nav-link">Why Dubai</a>
-        <a href="#advisory" class="nav-link">Private Desk</a>
       </nav>
 
-      <div class="nav-actions">
-        <!-- Ambient Sound Toggle (Acoustic Immersion) -->
-        <button type="button" class="audio-toggle-btn" id="audio-toggle" aria-label="Toggle coastal ambient sound">
-          <span class="audio-bars">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </span>
-          <span class="audio-text">Ambiance</span>
-        </button>
-
-        <!-- Live Currency Switcher -->
-        <div class="currency-selector" id="currency-selector">
-          <button type="button" class="currency-btn active" data-curr="AED">AED</button>
-          <button type="button" class="currency-btn" data-curr="USD">USD</button>
-          <button type="button" class="currency-btn" data-curr="EUR">EUR</button>
-          <button type="button" class="currency-btn" data-curr="GBP">GBP</button>
-        </div>
-
-        <button type="button" class="btn-minimal" id="open-list-modal">
-          List Estate
-        </button>
-
-        <a href="#advisory" class="btn-primary">
-          Enquire
+      <!-- Center Brand Logo & Name -->
+      <div class="nav-col nav-col-center">
+        <a href="#hero-scroll-container" class="nav-brand-center" aria-label="AURA DUBAI">
+          <span class="brand-title">AURA</span>
+          <span class="brand-subtitle">DUBAI</span>
         </a>
       </div>
+
+      <!-- Right Navigation Options -->
+      <nav class="nav-col nav-col-right" aria-label="Primary Navigation Right">
+        <a href="#sovereign-advantage" class="nav-link">Why Dubai</a>
+        <a href="#advisory" class="nav-link">Advisory</a>
+        <a href="#advisory" class="nav-link nav-btn-enquire">Enquire</a>
+      </nav>
+
     </div>
   </header>
 

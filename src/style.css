@@ -133,7 +133,10 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   NAVIGATION (REVEALED ONLY AFTER SCROLLING BEYOND HERO)
+   NAVIGATION (HERO TRANSPARENT -> SCROLLED FROSTED CREAM BACKGROUND)
+   - Centered AURA DUBAI logo & brand.
+   - Symmetrical left and right navigation options.
+   - Transparent during hero video; background appears only after hero section.
    -------------------------------------------------------------------------- */
 .main-navbar {
   position: fixed;
@@ -141,76 +144,142 @@ a {
   left: 0;
   width: 100%;
   z-index: 100;
-  padding: 16px 0;
-  background: rgba(250, 248, 245, 0.94);
+  padding: 22px 0;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  transition: background 0.45s ease, backdrop-filter 0.45s ease, border-color 0.45s ease, padding 0.4s ease, box-shadow 0.45s ease;
+}
+
+/* Post-Hero State: Solid / Frosted Background appears after completing hero section */
+.main-navbar.scrolled {
+  background: rgba(250, 248, 245, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border-subtle);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-16px);
-  transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic);
+  box-shadow: 0 4px 24px rgba(28, 25, 23, 0.06);
+  padding: 16px 0;
 }
 
-.main-navbar.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.nav-container {
+.nav-container-split {
   max-width: 1520px;
   margin: 0 auto;
   padding: 0 48px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+/* Left & Right Navigation Columns */
+.nav-col {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.nav-brand {
+.nav-col-left {
+  justify-content: flex-start;
+  gap: 32px;
+}
+
+.nav-col-center {
+  justify-content: center;
+  text-align: center;
+}
+
+.nav-col-right {
+  justify-content: flex-end;
+  gap: 32px;
+}
+
+/* Center Brand Styling */
+.nav-brand-center {
   display: flex;
   flex-direction: column;
-  line-height: 1.05;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
 }
 
-.brand-title {
+.nav-brand-center .brand-title {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
-  letter-spacing: 0.22em;
+  font-size: 1.65rem;
+  letter-spacing: 0.28em;
   font-weight: 500;
+  color: #FAF8F5;
+  transition: color 0.45s ease;
+}
+
+.nav-brand-center .brand-subtitle {
+  font-size: 0.625rem;
+  letter-spacing: 0.45em;
+  color: var(--accent-sand);
+  font-weight: 500;
+  margin-top: 2px;
+  transition: color 0.45s ease;
+}
+
+.main-navbar.scrolled .nav-brand-center .brand-title {
   color: var(--text-main);
 }
 
-.brand-subtitle {
-  font-size: 0.625rem;
-  letter-spacing: 0.35em;
+.main-navbar.scrolled .nav-brand-center .brand-subtitle {
   color: var(--text-muted);
-  font-weight: 500;
 }
 
-.nav-links {
-  display: flex;
-  gap: 32px;
-  align-items: center;
-}
-
+/* Navigation Links */
 .nav-link {
   font-size: 0.8125rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-secondary);
-  transition: color var(--transition-fast);
-  font-weight: 500;
+  color: rgba(250, 248, 245, 0.85);
+  font-weight: 400;
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
+  color: var(--accent-sand);
+}
+
+.main-navbar.scrolled .nav-link {
   color: var(--text-main);
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.main-navbar.scrolled .nav-link:hover {
+  color: var(--accent-sand);
+}
+
+/* Enquire Action Link */
+.nav-btn-enquire {
+  border: 1px solid rgba(250, 248, 245, 0.5);
+  padding: 7px 18px;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #FAF8F5;
+  transition: all 0.3s ease;
+}
+
+.nav-btn-enquire:hover {
+  background: #FAF8F5;
+  color: #0A1C38;
+  border-color: #FAF8F5;
+}
+
+.main-navbar.scrolled .nav-btn-enquire {
+  background: var(--text-main);
+  border-color: var(--text-main);
+  color: var(--bg-primary);
+}
+
+.main-navbar.scrolled .nav-btn-enquire:hover {
+  background: #383430;
+  color: #FFFFFF;
 }
 
 /* Acoustic Ambiance Toggle */
@@ -1851,6 +1920,24 @@ a {
    RESPONSIVE QUERIES
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
+  .nav-container-split {
+    padding: 0 28px;
+  }
+
+  .nav-col-left,
+  .nav-col-right {
+    gap: 20px;
+  }
+
+  .nav-link {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .nav-brand-center .brand-title {
+    font-size: 1.45rem;
+  }
+
   .sobha-pillars-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -1868,28 +1955,40 @@ a {
 
 @media (max-width: 768px) {
   /* Navigation */
-  .nav-links {
+  .nav-container-split {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0 20px;
+  }
+
+  .nav-col-left {
     display: none;
   }
 
-  .nav-actions {
-    gap: 8px;
+  .nav-col-center {
+    margin: 0 auto;
+    text-align: center;
   }
 
-  .currency-selector {
-    display: none; /* Keep header minimal on mobile */
+  .nav-col-right {
+    position: absolute;
+    right: 20px;
+    gap: 0;
   }
 
-  .audio-text {
-    display: none; /* Just keep icon on mobile */
+  .nav-col-right .nav-link:not(.nav-btn-enquire) {
+    display: none;
   }
 
-  .audio-toggle-btn {
-    padding: 6px 10px;
+  .nav-btn-enquire {
+    padding: 5px 12px;
+    font-size: 0.6875rem;
   }
 
-  #open-list-modal {
-    display: none; /* Hide auxiliary list button on mobile */
+  .main-navbar {
+    padding: 14px 0;
   }
 
   /* Architectural Curtain & Spacing */
