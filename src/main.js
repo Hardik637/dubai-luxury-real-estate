@@ -377,7 +377,7 @@ function initMasterCommunities() {
       if (!isHovered && isInView) {
         nextCommunity();
       }
-    }, 5500);
+    }, 3000);
   }
 
   function stopAutoPlay() {
