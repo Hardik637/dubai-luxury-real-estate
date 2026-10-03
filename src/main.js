@@ -537,8 +537,7 @@ function initMobileCarousels() {
     { sel: '.heritage-stats-grid', interval: 3800 },
     { sel: '.sobha-pillars-grid', interval: 4200 },
     { sel: '.sovereign-pillars-grid', interval: 3600 },
-    { sel: '.calc-results-grid', interval: 4000 },
-    { sel: '.visual-cinema-grid', interval: 4400 }
+    { sel: '.calc-results-grid', interval: 4000 }
   ];
 
   carouselTargets.forEach(({ sel, interval }) => {
