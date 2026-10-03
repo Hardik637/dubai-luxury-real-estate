@@ -148,7 +148,7 @@ a {
   background: transparent;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(54, 48, 41, 0.12);
   box-shadow: none;
   transition: background 0.45s ease, backdrop-filter 0.45s ease, border-color 0.45s ease, padding 0.4s ease, box-shadow 0.45s ease;
 }
@@ -205,47 +205,53 @@ a {
 
 .nav-brand-center .brand-title {
   font-family: var(--font-serif);
-  font-size: 1.65rem;
+  font-size: 1.7rem;
   letter-spacing: 0.28em;
-  font-weight: 500;
-  color: #FAF8F5;
+  font-weight: 600;
+  color: #363029;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
   transition: color 0.45s ease;
 }
 
 .nav-brand-center .brand-subtitle {
-  font-size: 0.625rem;
+  font-size: 0.65rem;
   letter-spacing: 0.45em;
-  color: var(--accent-sand);
-  font-weight: 500;
+  color: #8C6E44;
+  font-weight: 700;
   margin-top: 2px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
   transition: color 0.45s ease;
 }
 
 .main-navbar.scrolled .nav-brand-center .brand-title {
   color: var(--text-main);
+  text-shadow: none;
 }
 
 .main-navbar.scrolled .nav-brand-center .brand-subtitle {
   color: var(--text-muted);
+  text-shadow: none;
 }
 
 /* Navigation Links */
 .nav-link {
   font-size: 0.8125rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(250, 248, 245, 0.85);
-  font-weight: 400;
+  color: #363029;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.45);
   transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   white-space: nowrap;
 }
 
 .nav-link:hover {
-  color: var(--accent-sand);
+  color: #8C6E44;
 }
 
 .main-navbar.scrolled .nav-link {
   color: var(--text-main);
+  text-shadow: none;
 }
 
 .main-navbar.scrolled .nav-link:hover {
@@ -254,27 +260,32 @@ a {
 
 /* Enquire Action Link */
 .nav-btn-enquire {
-  border: 1px solid rgba(250, 248, 245, 0.5);
+  border: 1.5px solid #363029;
   padding: 7px 18px;
   border-radius: 2px;
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 500;
-  color: #FAF8F5;
+  font-weight: 600;
+  color: #363029;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: all 0.3s ease;
 }
 
 .nav-btn-enquire:hover {
-  background: #FAF8F5;
-  color: #0A1C38;
-  border-color: #FAF8F5;
+  background: #363029;
+  color: #FAF8F5;
+  border-color: #363029;
 }
 
 .main-navbar.scrolled .nav-btn-enquire {
   background: var(--text-main);
   border-color: var(--text-main);
   color: var(--bg-primary);
+  text-shadow: none;
+  backdrop-filter: none;
 }
 
 .main-navbar.scrolled .nav-btn-enquire:hover {
