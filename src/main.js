@@ -274,7 +274,6 @@ function stopAmbientSound() {
 let currentCommKey = 'forest';
 
 function initMasterCommunities() {
-  const tabs = document.querySelectorAll('.community-tab-btn');
   const stage = document.getElementById('community-stage');
   const bgImg = document.getElementById('comm-bg-img');
   const badge = document.getElementById('comm-badge');
@@ -335,16 +334,6 @@ function initMasterCommunities() {
   function switchCommunity(targetKey) {
     if (!MASTER_COMMUNITIES[targetKey]) return;
     currentCommKey = targetKey;
-
-    // Synchronize tab buttons
-    tabs.forEach((t) => {
-      const isMatch = t.getAttribute('data-comm') === currentCommKey;
-      t.classList.toggle('active', isMatch);
-      if (isMatch) {
-        // Smooth scroll tab into view if container is horizontally scrollable
-        t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    });
 
     const data = MASTER_COMMUNITIES[currentCommKey];
     if (!data || !bgImg) return;
@@ -415,17 +404,6 @@ function initMasterCommunities() {
       resetAutoPlay();
     });
   }
-
-  // Tab button clicks
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const comm = tab.getAttribute('data-comm');
-      if (comm && comm !== currentCommKey) {
-        switchCommunity(comm);
-        resetAutoPlay();
-      }
-    });
-  });
 
   // Pause on hover
   if (stage) {
