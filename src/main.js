@@ -287,6 +287,9 @@ function initMasterCommunities() {
   const exploreBtn = document.getElementById('comm-explore-btn');
   const prevBtn = document.getElementById('comm-prev-btn');
   const nextBtn = document.getElementById('comm-next-btn');
+  const zonePrev = document.getElementById('comm-zone-prev');
+  const zoneNext = document.getElementById('comm-zone-next');
+  const indicators = stage ? stage.querySelectorAll('.comm-indicators .indicator-bar') : [];
 
   // Blueprint Elements
   const atmosphereView = document.getElementById('comm-atmosphere-view');
@@ -297,7 +300,6 @@ function initMasterCommunities() {
   const modeBlueprintBtn = document.getElementById('mode-blueprint-btn');
 
   const commKeys = ['forest', 'island', 'harbour', 'dunes', 'sky'];
-  let autoPlayTimer = null;
   let isHovered = false;
   let isInView = true;
 
@@ -322,7 +324,7 @@ function initMasterCommunities() {
       modeBlueprintBtn.classList.remove('active');
       if (atmosphereView) atmosphereView.style.display = 'block';
       if (blueprintView) blueprintView.style.display = 'none';
-      resetAutoPlay();
+      updateCommIndicators(currentCommKey);
     });
 
     modeBlueprintBtn.addEventListener('click', () => {
@@ -331,8 +333,44 @@ function initMasterCommunities() {
       if (atmosphereView) atmosphereView.style.display = 'none';
       if (blueprintView) blueprintView.style.display = 'block';
       renderBlueprint(currentCommKey);
-      resetAutoPlay();
+      updateCommIndicators(currentCommKey);
     });
+  }
+
+  function updateCommIndicators(targetKey) {
+    const idx = commKeys.indexOf(targetKey);
+    if (idx === -1) return;
+
+    indicators.forEach((ind, i) => {
+      const fill = ind.querySelector('.loading-fill');
+      if (i < idx) {
+        ind.classList.remove('active');
+        ind.classList.add('completed');
+        if (fill) fill.style.animation = 'none';
+      } else if (i === idx) {
+        ind.classList.remove('completed');
+        ind.classList.add('active');
+        if (fill) {
+          fill.style.animation = 'none';
+          void fill.offsetWidth; // Force CSS reflow to re-trigger 3s animation
+          fill.style.animation = '';
+        }
+      } else {
+        ind.classList.remove('active', 'completed');
+        if (fill) fill.style.animation = 'none';
+      }
+    });
+
+    const activeInd = indicators[idx];
+    const activeFill = activeInd ? activeInd.querySelector('.loading-fill') : null;
+    if (activeFill) {
+      activeFill.onanimationend = null;
+      activeFill.onanimationend = () => {
+        if (!isHovered && isInView) {
+          nextCommunity();
+        }
+      };
+    }
   }
 
   function switchCommunity(targetKey) {
@@ -358,6 +396,8 @@ function initMasterCommunities() {
       bgImg.style.opacity = '1';
       bgImg.style.transform = 'scale(1)';
     }, 280);
+
+    updateCommIndicators(currentCommKey);
   }
 
   function nextCommunity() {
@@ -372,32 +412,18 @@ function initMasterCommunities() {
     switchCommunity(commKeys[prevIdx]);
   }
 
-  function startAutoPlay() {
-    stopAutoPlay();
-    autoPlayTimer = setInterval(() => {
-      if (!isHovered && isInView) {
-        nextCommunity();
-      }
-    }, 3000);
-  }
-
-  function stopAutoPlay() {
-    if (autoPlayTimer) {
-      clearInterval(autoPlayTimer);
-      autoPlayTimer = null;
-    }
-  }
-
-  function resetAutoPlay() {
-    startAutoPlay();
-  }
-
-  // Minimal Navigation Arrows
+  // Navigation Arrows & Hitbox Zones
   if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       prevCommunity();
-      resetAutoPlay();
+    });
+  }
+  if (zonePrev) {
+    zonePrev.addEventListener('click', (e) => {
+      if (e.target !== prevBtn && !prevBtn.contains(e.target)) {
+        prevCommunity();
+      }
     });
   }
 
@@ -405,9 +431,26 @@ function initMasterCommunities() {
     nextBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       nextCommunity();
-      resetAutoPlay();
     });
   }
+  if (zoneNext) {
+    zoneNext.addEventListener('click', (e) => {
+      if (e.target !== nextBtn && !nextBtn.contains(e.target)) {
+        nextCommunity();
+      }
+    });
+  }
+
+  // Direct Click on Story Loading Bars
+  indicators.forEach((ind) => {
+    ind.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(ind.getAttribute('data-index'), 10);
+      if (!isNaN(idx) && commKeys[idx]) {
+        switchCommunity(commKeys[idx]);
+      }
+    });
+  });
 
   // Pause on hover
   if (stage) {
@@ -417,6 +460,17 @@ function initMasterCommunities() {
 
     stage.addEventListener('mouseleave', () => {
       isHovered = false;
+      // If animation had ended or reached near 100% while hovered
+      const activeIdx = commKeys.indexOf(currentCommKey);
+      const activeFill = indicators[activeIdx]?.querySelector('.loading-fill');
+      if (activeFill) {
+        const computed = window.getComputedStyle(activeFill);
+        const curW = parseFloat(computed.width);
+        const parentW = activeFill.parentElement.offsetWidth;
+        if (parentW > 0 && curW >= parentW - 1) {
+          nextCommunity();
+        }
+      }
     });
 
     // Touch swipe support on mobile devices
@@ -431,7 +485,7 @@ function initMasterCommunities() {
     }, { passive: true });
 
     stage.addEventListener('touchend', (e) => {
-      setTimeout(() => { isHovered = false; }, 3500);
+      setTimeout(() => { isHovered = false; }, 2500);
       if (e.changedTouches && e.changedTouches.length > 0) {
         const dx = e.changedTouches[0].clientX - touchStartX;
         const dy = e.changedTouches[0].clientY - touchStartY;
@@ -441,24 +495,28 @@ function initMasterCommunities() {
           } else {
             prevCommunity();
           }
-          resetAutoPlay();
         }
       }
     }, { passive: true });
 
-    // Only auto-play when section is visible in viewport
+    // Only run when section is visible in viewport
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           isInView = entry.isIntersecting;
+          if (!isInView) {
+            stage.classList.add('is-paused');
+          } else {
+            stage.classList.remove('is-paused');
+          }
         });
       }, { threshold: 0.15 });
       observer.observe(stage);
     }
   }
 
-  // Initialize auto-play
-  startAutoPlay();
+  // Initialize indicators for initial community
+  updateCommIndicators(currentCommKey);
 }
 
 /* ==========================================================================
@@ -476,18 +534,52 @@ function initLifestyleCarousel() {
   if (!stage) return;
 
   const cards = stage.querySelectorAll('.panoramic-moment-card');
-  const indicators = stage.querySelectorAll('.lifestyle-indicator');
+  const indicators = stage.querySelectorAll('.lifestyle-indicators .indicator-bar');
   const prevBtn = document.getElementById('lifestyle-prev-btn');
   const nextBtn = document.getElementById('lifestyle-next-btn');
+  const zonePrev = document.getElementById('lifestyle-zone-prev');
+  const zoneNext = document.getElementById('lifestyle-zone-next');
   if (cards.length === 0) return;
 
   let currentIndex = 0;
-  let timer = null;
   let isHovered = false;
   let isInView = true;
 
+  function updateLifestyleIndicators(index) {
+    indicators.forEach((ind, i) => {
+      const fill = ind.querySelector('.loading-fill');
+      if (i < index) {
+        ind.classList.remove('active');
+        ind.classList.add('completed');
+        if (fill) fill.style.animation = 'none';
+      } else if (i === index) {
+        ind.classList.remove('completed');
+        ind.classList.add('active');
+        if (fill) {
+          fill.style.animation = 'none';
+          void fill.offsetWidth; // Force CSS reflow to re-trigger 4.5s animation
+          fill.style.animation = '';
+        }
+      } else {
+        ind.classList.remove('active', 'completed');
+        if (fill) fill.style.animation = 'none';
+      }
+    });
+
+    const activeInd = indicators[index];
+    const activeFill = activeInd ? activeInd.querySelector('.loading-fill') : null;
+    if (activeFill) {
+      activeFill.onanimationend = null;
+      activeFill.onanimationend = () => {
+        if (!isHovered && isInView) {
+          nextMoment();
+        }
+      };
+    }
+  }
+
   function showMoment(index) {
-    if (index === currentIndex) return;
+    if (index === currentIndex && cards[index].classList.contains('active')) return;
     cards.forEach((card, i) => {
       if (i === index) {
         card.classList.add('active');
@@ -496,15 +588,8 @@ function initLifestyleCarousel() {
       }
     });
 
-    indicators.forEach((ind, i) => {
-      if (i === index) {
-        ind.classList.add('active');
-      } else {
-        ind.classList.remove('active');
-      }
-    });
-
     currentIndex = index;
+    updateLifestyleIndicators(currentIndex);
   }
 
   function nextMoment() {
@@ -517,58 +602,63 @@ function initLifestyleCarousel() {
     showMoment(prevIdx);
   }
 
-  function startTimer() {
-    stopTimer();
-    timer = setInterval(() => {
-      if (!isHovered && isInView) {
-        nextMoment();
+  // Navigation Arrows & Hitbox Zones
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevMoment();
+    });
+  }
+  if (zonePrev) {
+    zonePrev.addEventListener('click', (e) => {
+      if (e.target !== prevBtn && !prevBtn.contains(e.target)) {
+        prevMoment();
       }
-    }, 4500);
-  }
-
-  function stopTimer() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-  }
-
-  function resetTimer() {
-    startTimer();
+    });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       nextMoment();
-      resetTimer();
+    });
+  }
+  if (zoneNext) {
+    zoneNext.addEventListener('click', (e) => {
+      if (e.target !== nextBtn && !nextBtn.contains(e.target)) {
+        nextMoment();
+      }
     });
   }
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      prevMoment();
-      resetTimer();
-    });
-  }
-
+  // Direct Click on Story Loading Bars
   indicators.forEach((ind) => {
-    ind.addEventListener('click', () => {
+    ind.addEventListener('click', (e) => {
+      e.stopPropagation();
       const idx = parseInt(ind.getAttribute('data-index'), 10);
       if (!isNaN(idx)) {
         showMoment(idx);
-        resetTimer();
       }
     });
   });
 
+  // Pause on hover
   stage.addEventListener('mouseenter', () => {
     isHovered = true;
   });
 
   stage.addEventListener('mouseleave', () => {
     isHovered = false;
+    // If animation completed or reached near 100% while hovered
+    const activeFill = indicators[currentIndex]?.querySelector('.loading-fill');
+    if (activeFill) {
+      const computed = window.getComputedStyle(activeFill);
+      const curW = parseFloat(computed.width);
+      const parentW = activeFill.parentElement.offsetWidth;
+      if (parentW > 0 && curW >= parentW - 1) {
+        nextMoment();
+      }
+    }
   });
 
   // Touch swipe support on mobile devices
@@ -593,7 +683,6 @@ function initLifestyleCarousel() {
         } else {
           prevMoment();
         }
-        resetTimer();
       }
     }
   }, { passive: true });
@@ -603,12 +692,18 @@ function initLifestyleCarousel() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         isInView = entry.isIntersecting;
+        if (!isInView) {
+          stage.classList.add('is-paused');
+        } else {
+          stage.classList.remove('is-paused');
+        }
       });
     }, { threshold: 0.15 });
     observer.observe(stage);
   }
 
-  startTimer();
+  // Initialize indicators for initial moment
+  updateLifestyleIndicators(0);
 }
 
 /* ==========================================================================

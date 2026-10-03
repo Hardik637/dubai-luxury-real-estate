@@ -617,16 +617,46 @@ a {
   background: linear-gradient(to top, rgba(10, 28, 56, 0.94) 0%, rgba(10, 28, 56, 0.5) 55%, transparent 100%);
 }
 
-/* Minimalist Luxury Community Carousel Arrows (Left & Right Ends) */
-.comm-nav-arrow {
+/* ==========================================================================
+   CAROUSEL NAVIGATION ARROWS WITH PROXIMITY HOVER TRIGGER ZONE (HITBOX)
+   ========================================================================== */
+.carousel-arrow-zone {
   position: absolute;
-  top: 48%;
+  top: 50%;
   transform: translateY(-50%);
-  z-index: 6;
+  width: 96px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  z-index: 12;
+  cursor: pointer;
+  pointer-events: auto;
+  background: transparent;
+}
+
+.carousel-arrow-zone-prev {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 24px;
+}
+
+.carousel-arrow-zone-next {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 24px;
+}
+
+/* Arrows inside the hitbox zone are invisible by default until hovered near */
+.comm-nav-arrow,
+.lifestyle-nav-arrow {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(10, 28, 56, 0.45);
+  background: rgba(10, 28, 56, 0.6);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(212, 185, 150, 0.35);
@@ -635,42 +665,63 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s var(--ease-cinematic);
   padding: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   outline: none;
+  
+  /* Disappear until hovered near them in the box area */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.85);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.28s,
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.2s ease;
 }
 
-.comm-nav-prev {
-  left: 24px;
+/* When hovering anywhere inside the comfortable hitbox zone around the arrow */
+.carousel-arrow-zone:hover .comm-nav-arrow,
+.carousel-arrow-zone:hover .lifestyle-nav-arrow,
+.carousel-arrow-zone:focus-within .comm-nav-arrow,
+.carousel-arrow-zone:focus-within .lifestyle-nav-arrow {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
 }
 
-.comm-nav-next {
-  right: 24px;
-}
-
-.comm-nav-arrow:hover {
-  background: rgba(10, 28, 56, 0.85);
-  border-color: rgba(212, 185, 150, 0.8);
+/* Hover directly on the button */
+.comm-nav-arrow:hover,
+.lifestyle-nav-arrow:hover {
+  background: rgba(10, 28, 56, 0.9);
+  border-color: rgba(212, 185, 150, 0.9);
   color: #FFFFFF;
-  transform: translateY(-50%) scale(1.08);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  transform: scale(1.08) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
 }
 
-.comm-nav-arrow:active {
-  transform: translateY(-50%) scale(0.96);
+.comm-nav-arrow:active,
+.lifestyle-nav-arrow:active {
+  transform: scale(0.96) !important;
 }
 
-.comm-nav-arrow svg {
+.comm-nav-arrow svg,
+.lifestyle-nav-arrow svg {
   display: block;
   transition: transform 0.25s ease;
 }
 
-.comm-nav-prev:hover svg {
+.carousel-arrow-zone-prev:hover .comm-nav-arrow svg,
+.carousel-arrow-zone-prev:hover .lifestyle-nav-arrow svg {
   transform: translateX(-2px);
 }
 
-.comm-nav-next:hover svg {
+.carousel-arrow-zone-next:hover .comm-nav-arrow svg,
+.carousel-arrow-zone-next:hover .lifestyle-nav-arrow svg {
   transform: translateX(2px);
 }
 
@@ -1009,67 +1060,92 @@ a {
   transform: translateY(0);
 }
 
-/* Minimalist Navigation Arrows */
-.lifestyle-nav-arrow {
+/* ==========================================================================
+   CAROUSEL LOADING BAR INDICATORS (STORY-STYLE PROGRESS BARS)
+   ========================================================================== */
+.carousel-indicators {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(10, 28, 56, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(250, 248, 245, 0.2);
-  color: #FAF8F5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  transition: all var(--transition-fast);
-}
-
-.lifestyle-nav-arrow:hover {
-  background: rgba(10, 28, 56, 0.9);
-  border-color: var(--accent-sand);
-  color: var(--accent-sand);
-  transform: translateY(-50%) scale(1.08);
-}
-
-.lifestyle-nav-prev {
-  left: 24px;
-}
-
-.lifestyle-nav-next {
-  right: 24px;
-}
-
-/* Hairline Progress Indicators */
-.lifestyle-indicators {
-  position: absolute;
-  bottom: 24px;
-  right: 32px;
   display: flex;
   align-items: center;
   gap: 8px;
   z-index: 10;
+  pointer-events: auto;
 }
 
-.lifestyle-indicator {
-  width: 24px;
+.lifestyle-indicators {
+  bottom: 24px;
+  right: 32px;
+}
+
+.comm-indicators {
+  bottom: 28px;
+  right: 32px;
+}
+
+.indicator-bar {
+  position: relative;
+  width: 44px;
   height: 3px;
-  background: rgba(250, 248, 245, 0.3);
+  background: rgba(250, 248, 245, 0.22);
   border: none;
   border-radius: 2px;
+  overflow: hidden;
   cursor: pointer;
-  transition: width 0.4s ease, background-color 0.4s ease;
   padding: 0;
+  margin: 0;
+  outline: none;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  display: block;
 }
 
-.lifestyle-indicator.active {
-  width: 48px;
+.indicator-bar:hover {
+  background: rgba(250, 248, 245, 0.45);
+  transform: translateY(-1px);
+}
+
+.indicator-bar .loading-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
   background: var(--accent-sand);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(212, 185, 150, 0.4);
+  pointer-events: none;
+  will-change: width;
+}
+
+/* Past completed slides stay 100% full */
+.indicator-bar.completed .loading-fill {
+  width: 100% !important;
+  animation: none !important;
+}
+
+@keyframes loadingProgressFill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Active slide fills 0% -> 100% */
+.lifestyle-stage .indicator-bar.active .loading-fill {
+  animation: loadingProgressFill 4500ms linear forwards;
+}
+
+.community-display-stage .indicator-bar.active .loading-fill {
+  animation: loadingProgressFill 3000ms linear forwards;
+}
+
+/* Pause the loading bar when hovering over the card or when paused */
+.lifestyle-stage:hover .indicator-bar.active .loading-fill,
+.community-display-stage:hover .indicator-bar.active .loading-fill,
+.lifestyle-stage.is-paused .indicator-bar.active .loading-fill,
+.community-display-stage.is-paused .indicator-bar.active .loading-fill {
+  animation-play-state: paused !important;
 }
 
 .moment-heading {
@@ -2399,22 +2475,38 @@ a {
     margin-bottom: 22px;
   }
 
+  .carousel-arrow-zone {
+    width: 60px;
+    height: 100px;
+  }
+
+  .carousel-arrow-zone-prev {
+    padding-left: 12px;
+  }
+
+  .carousel-arrow-zone-next {
+    padding-right: 12px;
+  }
+
+  .comm-nav-arrow,
   .lifestyle-nav-arrow {
     width: 38px;
     height: 38px;
+    opacity: 0.85;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1);
   }
 
-  .lifestyle-nav-prev {
-    left: 12px;
-  }
-
-  .lifestyle-nav-next {
-    right: 12px;
-  }
-
-  .lifestyle-indicators {
+  .lifestyle-indicators,
+  .comm-indicators {
     bottom: 16px;
     right: 20px;
+    gap: 6px;
+  }
+
+  .indicator-bar {
+    width: 26px;
   }
 
   /* --------------------------------------------------

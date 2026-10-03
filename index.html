@@ -135,17 +135,21 @@
             <div class="comm-gradient-overlay"></div>
           </div>
 
-          <!-- Minimalist Navigation Arrows (Left & Right Ends) -->
-          <button type="button" class="comm-nav-arrow comm-nav-prev" id="comm-prev-btn" aria-label="Previous community">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button type="button" class="comm-nav-arrow comm-nav-next" id="comm-next-btn" aria-label="Next community">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
+          <!-- Minimalist Navigation Arrows with Hover Trigger Zone -->
+          <div class="carousel-arrow-zone carousel-arrow-zone-prev" id="comm-zone-prev" title="Previous community">
+            <button type="button" class="comm-nav-arrow comm-nav-prev" id="comm-prev-btn" aria-label="Previous community">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="carousel-arrow-zone carousel-arrow-zone-next" id="comm-zone-next" title="Next community">
+            <button type="button" class="comm-nav-arrow comm-nav-next" id="comm-next-btn" aria-label="Next community">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
 
           <!-- Dual Mode Toggle (Atmosphere vs Masterplan Blueprint) -->
           <div class="comm-view-mode-bar">
@@ -221,8 +225,25 @@
                   Schedule Private Advisory →
                 </a>
               </div>
-            </div>
+          </div>
 
+          <!-- Hairline Loading Bar Progress Indicators (Story-Style Countdown) -->
+          <div class="carousel-indicators comm-indicators" id="comm-indicators" aria-label="Community slides">
+            <button type="button" class="indicator-bar active" data-index="0" aria-label="The Forest Sanctuary">
+              <span class="loading-fill"></span>
+            </button>
+            <button type="button" class="indicator-bar" data-index="1" aria-label="Island Mansions">
+              <span class="loading-fill"></span>
+            </button>
+            <button type="button" class="indicator-bar" data-index="2" aria-label="The Waterfront Promenade">
+              <span class="loading-fill"></span>
+            </button>
+            <button type="button" class="indicator-bar" data-index="3" aria-label="Desert Fairway Enclave">
+              <span class="loading-fill"></span>
+            </button>
+            <button type="button" class="indicator-bar" data-index="4" aria-label="The Sovereign Sky">
+              <span class="loading-fill"></span>
+            </button>
           </div>
         </div>
 
@@ -398,25 +419,34 @@
             </div>
           </div>
 
-          <!-- Minimalist Navigation Arrows -->
-          <button type="button" class="lifestyle-nav-arrow lifestyle-nav-prev" id="lifestyle-prev-btn" aria-label="Previous moment">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button type="button" class="lifestyle-nav-arrow lifestyle-nav-next" id="lifestyle-next-btn" aria-label="Next moment">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-
-          <!-- Hairline Progress Indicators -->
-          <div class="lifestyle-indicators">
-            <button type="button" class="lifestyle-indicator active" data-index="0" aria-label="Moment 1"></button>
-            <button type="button" class="lifestyle-indicator" data-index="1" aria-label="Moment 2"></button>
-            <button type="button" class="lifestyle-indicator" data-index="2" aria-label="Moment 3"></button>
+          <!-- Minimalist Navigation Arrows with Hover Trigger Zone -->
+          <div class="carousel-arrow-zone carousel-arrow-zone-prev" id="lifestyle-zone-prev" title="Previous moment">
+            <button type="button" class="lifestyle-nav-arrow lifestyle-nav-prev" id="lifestyle-prev-btn" aria-label="Previous moment">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="carousel-arrow-zone carousel-arrow-zone-next" id="lifestyle-zone-next" title="Next moment">
+            <button type="button" class="lifestyle-nav-arrow lifestyle-nav-next" id="lifestyle-next-btn" aria-label="Next moment">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
 
+          <!-- Hairline Loading Bar Progress Indicators (Story-Style Countdown) -->
+          <div class="carousel-indicators lifestyle-indicators" id="lifestyle-indicators" aria-label="Lifestyle moments">
+            <button type="button" class="indicator-bar lifestyle-indicator active" data-index="0" aria-label="Moment 1">
+              <span class="loading-fill"></span>
+            </button>
+            <button type="button" class="indicator-bar lifestyle-indicator" data-index="1" aria-label="Moment 2">
+              <span class="loading-fill"></span>
+            </button>
+            <button type="button" class="indicator-bar lifestyle-indicator" data-index="2" aria-label="Moment 3">
+              <span class="loading-fill"></span>
+            </button>
+          </div>
         </div>
 
       </div>
