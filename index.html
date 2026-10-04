@@ -36,6 +36,7 @@
       <!-- Left Navigation Options -->
       <nav class="nav-col nav-col-left" aria-label="Primary Navigation Left">
         <a href="#manifesto" class="nav-link">Legacy</a>
+        <a href="#estates" class="nav-link">Residences</a>
         <a href="#communities" class="nav-link">Communities</a>
         <a href="#pillars" class="nav-link">Craftsmanship</a>
       </nav>
@@ -108,7 +109,89 @@
     </section>
 
     <!-- ============================================================
-         1. MASTER COMMUNITIES (SOBHA-STYLE ENCLAVES EXPLORATION)
+         1. CURATED SIGNATURE RESIDENCES
+         ============================================================ -->
+    <section id="estates" class="cinematic-estates-section">
+      <div class="act-wrapper">
+        
+        <div class="estates-cinema-header scroll-reveal-box">
+          <div class="act-micro-tag">
+            <span class="act-time">Curated Architecture</span>
+            <span class="act-coord">Verified Private Placements</span>
+          </div>
+          <h2 class="act-cinematic-title-dark">
+            Signature Residences
+          </h2>
+          <p class="estates-lead-desc">
+            Rare architectural landmarks and island sanctuaries selected for their proportion, privacy, and mastercraft.
+          </p>
+
+          <!-- Filter Pills -->
+          <div class="estate-filter-pills" id="category-tabs">
+            <button type="button" class="filter-pill active" data-category="all">All Residences</button>
+            <button type="button" class="filter-pill" data-category="sale">Acquisition</button>
+            <button type="button" class="filter-pill" data-category="rent">Lease</button>
+            <button type="button" class="filter-pill" data-category="off-plan">Off-Plan</button>
+          </div>
+        </div>
+
+        <!-- Featured Full-Size Estate Showcase (Jumeirah Bay Island) -->
+        <div class="estate-hero-cinema-card scroll-reveal-box" id="featured-estate-card">
+          <div class="cinema-card-media view-estate-btn" data-estate-id="estate-jumeirah-bay">
+            <img src="/images/jumeirah_bay_island.jpg" alt="Sanctuary of the Sun, Jumeirah Bay Island" class="cinema-card-img" />
+            <div class="cinema-card-overlay"></div>
+            
+            <div class="cinema-card-content">
+              <div class="cinema-card-top">
+                <span class="cinema-tag">Private Placement • Jumeirah Bay Island</span>
+                <span class="cinema-price sig-price" data-price-aed="165000000">AED 165,000,000</span>
+              </div>
+              
+              <h3 class="cinema-title">Sanctuary of the Sun</h3>
+              <p class="cinema-desc">
+                Ultra-private island enclave featuring 40m open sea frontage, private 120ft yacht slip, and Roman travertine infinity pool.
+              </p>
+              
+              <div class="cinema-specs-row">
+                <span>7 Bedrooms</span>
+                <span>•</span>
+                <span>9 Bathrooms</span>
+                <span>•</span>
+                <span>21,500 sq.ft</span>
+                <span>•</span>
+                <span>Private Yacht Slip</span>
+              </div>
+
+              <div class="cinema-btn-row">
+                <button type="button" class="btn-primary view-estate-btn" data-estate-id="estate-jumeirah-bay">
+                  Inspect Estate & Gallery →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual Estate Cards Grid -->
+        <div class="visual-cinema-grid" id="property-catalog-grid">
+          <!-- Populated dynamically via src/main.js -->
+        </div>
+
+        <!-- Owner Private Representation Strip -->
+        <div class="owner-cinema-strip scroll-reveal-box">
+          <div class="owner-cinema-text">
+            <h4>Discreet Representation for Prime Dubai Estates</h4>
+            <p>Direct placement with vetted international high-net-worth buyers and private family offices.</p>
+          </div>
+          <button type="button" class="btn-minimal" id="btn-owner-enquiry">
+            Submit Estate for Valuation
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. MASTER COMMUNITIES (SOBHA-STYLE ENCLAVES EXPLORATION)
          The Living Worlds: Forest Sanctuary, Waterfront Island, Superyacht Harbour, Sovereign Sky
          ============================================================ -->
     <section id="communities" class="master-communities-section">

@@ -133,10 +133,11 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   NAVIGATION (HERO TRANSPARENT -> SCROLLED FROSTED CREAM BACKGROUND)
+   NAVIGATION (HERO FROSTED GLASS BLUR -> SCROLLED SOLID CREAM BACKGROUND)
    - Centered AURA DUBAI logo & brand.
    - Symmetrical left and right navigation options.
-   - Transparent during hero video; background appears only after hero section.
+   - Frosted blur background during hero section for supreme option legibility.
+   - Solid frosted cream background appears after scrolling beyond hero section.
    -------------------------------------------------------------------------- */
 .main-navbar {
   position: fixed;
@@ -144,18 +145,18 @@ a {
   left: 0;
   width: 100%;
   z-index: 100;
-  padding: 22px 0;
-  background: transparent;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
+  padding: 18px 0;
+  background: rgba(250, 248, 245, 0.52);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(54, 48, 41, 0.12);
-  box-shadow: none;
+  box-shadow: 0 4px 24px rgba(28, 25, 23, 0.05);
   transition: background 0.45s ease, backdrop-filter 0.45s ease, border-color 0.45s ease, padding 0.4s ease, box-shadow 0.45s ease;
 }
 
 /* Post-Hero State: Solid / Frosted Background appears after completing hero section */
 .main-navbar.scrolled {
-  background: rgba(250, 248, 245, 0.95);
+  background: rgba(250, 248, 245, 0.96);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border-subtle);
@@ -180,7 +181,7 @@ a {
 
 .nav-col-left {
   justify-content: flex-start;
-  gap: 32px;
+  gap: clamp(16px, 2vw, 30px);
 }
 
 .nav-col-center {
@@ -190,7 +191,7 @@ a {
 
 .nav-col-right {
   justify-content: flex-end;
-  gap: 32px;
+  gap: clamp(16px, 2vw, 30px);
 }
 
 /* Center Brand Styling */
