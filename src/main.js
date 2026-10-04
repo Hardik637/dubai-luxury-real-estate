@@ -135,8 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initAmbientAudio();
   initCurrencySelector();
-  initMasterCommunities();
-  initCraftsmanshipLab();
+  initActivitiesShowcase();
   initLifestyleCarousel();
   initSovereignCalculator();
   initBidirectionalScrollReveals();
@@ -273,258 +272,108 @@ function stopAmbientSound() {
 }
 
 /* ==========================================================================
-   3. MASTER COMMUNITIES SWITCHER & AUTO-CAROUSEL (SOBHA-STYLE LIVING ENCLAVES)
+   2. ACTIVITIES & SPORTS SHOWCASE (LAZY PRELOAD & INSTANT AUTOPLAY)
    ========================================================================== */
-let currentCommKey = 'forest';
+function initActivitiesShowcase() {
+  const section = document.getElementById('activities');
+  if (!section) return;
 
-function initMasterCommunities() {
-  const stage = document.getElementById('community-stage');
-  const bgImg = document.getElementById('comm-bg-img');
-  const badge = document.getElementById('comm-badge');
-  const title = document.getElementById('comm-title');
-  const desc = document.getElementById('comm-desc');
-  const features = document.getElementById('comm-features');
-  const exploreBtn = document.getElementById('comm-explore-btn');
-  const prevBtn = document.getElementById('comm-prev-btn');
-  const nextBtn = document.getElementById('comm-next-btn');
-  const zonePrev = document.getElementById('comm-zone-prev');
-  const zoneNext = document.getElementById('comm-zone-next');
-  const indicators = stage ? stage.querySelectorAll('.comm-indicators .indicator-bar') : [];
+  const videos = Array.from(section.querySelectorAll('.activity-showcase-video'));
+  if (!videos.length) return;
 
-  // Blueprint Elements
-  const atmosphereView = document.getElementById('comm-atmosphere-view');
-  const blueprintView = document.getElementById('comm-blueprint-view');
-  const blueprintTitle = document.getElementById('comm-blueprint-title');
-  const blueprintGrid = document.getElementById('comm-blueprint-grid');
-  const modeAtmosphereBtn = document.getElementById('mode-atmosphere-btn');
-  const modeBlueprintBtn = document.getElementById('mode-blueprint-btn');
+  let isPreloaded = false;
 
-  const commKeys = ['forest', 'island', 'harbour', 'dunes', 'sky'];
-  let isHovered = false;
-  let isInView = true;
+  function preloadVideos() {
+    if (isPreloaded) return;
+    isPreloaded = true;
 
-  function renderBlueprint(commKey) {
-    const data = MASTER_COMMUNITIES[commKey];
-    if (!data || !data.blueprint) return;
-    if (blueprintTitle) blueprintTitle.textContent = data.blueprint.title;
-    if (blueprintGrid) {
-      blueprintGrid.innerHTML = data.blueprint.stats.map(s => `
-        <div class="blueprint-stat">
-          <span class="blueprint-val">${s.val}</span>
-          <span class="blueprint-lbl">${s.lbl}</span>
-        </div>
-      `).join('');
-    }
-  }
-
-  // Dual View Mode Switcher (Atmosphere vs Blueprint)
-  if (modeAtmosphereBtn && modeBlueprintBtn) {
-    modeAtmosphereBtn.addEventListener('click', () => {
-      modeAtmosphereBtn.classList.add('active');
-      modeBlueprintBtn.classList.remove('active');
-      if (atmosphereView) atmosphereView.style.display = 'block';
-      if (blueprintView) blueprintView.style.display = 'none';
-      updateCommIndicators(currentCommKey);
-    });
-
-    modeBlueprintBtn.addEventListener('click', () => {
-      modeBlueprintBtn.classList.add('active');
-      modeAtmosphereBtn.classList.remove('active');
-      if (atmosphereView) atmosphereView.style.display = 'none';
-      if (blueprintView) blueprintView.style.display = 'block';
-      renderBlueprint(currentCommKey);
-      updateCommIndicators(currentCommKey);
+    videos.forEach((video) => {
+      const src = video.getAttribute('data-src');
+      if (src && !video.src) {
+        video.src = src;
+        video.load();
+      }
     });
   }
 
-  function updateCommIndicators(targetKey) {
-    const idx = commKeys.indexOf(targetKey);
-    if (idx === -1) return;
-
-    indicators.forEach((ind, i) => {
-      const fill = ind.querySelector('.loading-fill');
-      if (i < idx) {
-        ind.classList.remove('active');
-        ind.classList.add('completed');
-        if (fill) fill.style.animation = 'none';
-      } else if (i === idx) {
-        ind.classList.remove('completed');
-        ind.classList.add('active');
-        if (fill) {
-          fill.style.animation = 'none';
-          void fill.offsetWidth; // Force CSS reflow to re-trigger 3s animation
-          fill.style.animation = '';
+  function playAllVideos() {
+    preloadVideos();
+    videos.forEach((video) => {
+      if (video.paused) {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            video.muted = true;
+            video.play().catch(() => {});
+          });
         }
+      }
+    });
+  }
+
+  function pauseAllVideos() {
+    videos.forEach((video) => {
+      if (!video.paused) {
+        video.pause();
+      }
+    });
+  }
+
+  // 1. LAZY SCROLL PRELOAD:
+  // Buffers video streams ahead of time when user is within 1000px of section
+  if ('IntersectionObserver' in window) {
+    const preloadObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            preloadVideos();
+            preloadObserver.disconnect();
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '1000px 0px 1000px 0px',
+        threshold: 0.01
+      }
+    );
+    preloadObserver.observe(section);
+
+    // 2. INSTANT AUTOPLAY AS SOON AS USER REACHES THE SECTION
+    const playbackObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            playAllVideos();
+          } else {
+            pauseAllVideos();
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '50px 0px 50px 0px',
+        threshold: 0.15
+      }
+    );
+    playbackObserver.observe(section);
+  } else {
+    preloadVideos();
+    playAllVideos();
+  }
+
+  // Click to toggle play/pause
+  videos.forEach((video) => {
+    video.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().catch(() => {});
       } else {
-        ind.classList.remove('active', 'completed');
-        if (fill) fill.style.animation = 'none';
-      }
-    });
-
-    const activeInd = indicators[idx];
-    const activeFill = activeInd ? activeInd.querySelector('.loading-fill') : null;
-    if (activeFill) {
-      activeFill.onanimationend = null;
-      activeFill.onanimationend = () => {
-        if (!isHovered && isInView) {
-          nextCommunity();
-        }
-      };
-    }
-  }
-
-  function switchCommunity(targetKey) {
-    if (!MASTER_COMMUNITIES[targetKey]) return;
-    currentCommKey = targetKey;
-
-    const data = MASTER_COMMUNITIES[currentCommKey];
-    if (!data || !bgImg) return;
-
-    bgImg.style.opacity = '0.2';
-    bgImg.style.transform = 'scale(1.08)';
-
-    setTimeout(() => {
-      bgImg.src = data.image;
-      if (badge) badge.textContent = data.badge;
-      if (title) title.textContent = data.title;
-      if (desc) desc.textContent = data.desc;
-      if (features) features.innerHTML = data.features.map(f => `<span>${f}</span>`).join(' • ');
-      if (exploreBtn) exploreBtn.setAttribute('data-estate-id', data.estateId);
-
-      renderBlueprint(currentCommKey);
-
-      bgImg.style.opacity = '1';
-      bgImg.style.transform = 'scale(1)';
-    }, 280);
-
-    updateCommIndicators(currentCommKey);
-  }
-
-  function nextCommunity() {
-    const idx = commKeys.indexOf(currentCommKey);
-    const nextIdx = (idx + 1) % commKeys.length;
-    switchCommunity(commKeys[nextIdx]);
-  }
-
-  function prevCommunity() {
-    const idx = commKeys.indexOf(currentCommKey);
-    const prevIdx = (idx - 1 + commKeys.length) % commKeys.length;
-    switchCommunity(commKeys[prevIdx]);
-  }
-
-  // Navigation Arrows & Hitbox Zones
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      prevCommunity();
-    });
-  }
-  if (zonePrev) {
-    zonePrev.addEventListener('click', (e) => {
-      if (e.target !== prevBtn && !prevBtn.contains(e.target)) {
-        prevCommunity();
-      }
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      nextCommunity();
-    });
-  }
-  if (zoneNext) {
-    zoneNext.addEventListener('click', (e) => {
-      if (e.target !== nextBtn && !nextBtn.contains(e.target)) {
-        nextCommunity();
-      }
-    });
-  }
-
-  // Direct Click on Story Loading Bars
-  indicators.forEach((ind) => {
-    ind.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const idx = parseInt(ind.getAttribute('data-index'), 10);
-      if (!isNaN(idx) && commKeys[idx]) {
-        switchCommunity(commKeys[idx]);
+        video.pause();
       }
     });
   });
-
-  // Pause on hover
-  if (stage) {
-    stage.addEventListener('mouseenter', () => {
-      isHovered = true;
-    });
-
-    stage.addEventListener('mouseleave', () => {
-      isHovered = false;
-      // If animation had ended or reached near 100% while hovered
-      const activeIdx = commKeys.indexOf(currentCommKey);
-      const activeFill = indicators[activeIdx]?.querySelector('.loading-fill');
-      if (activeFill) {
-        const computed = window.getComputedStyle(activeFill);
-        const curW = parseFloat(computed.width);
-        const parentW = activeFill.parentElement.offsetWidth;
-        if (parentW > 0 && curW >= parentW - 1) {
-          nextCommunity();
-        }
-      }
-    });
-
-    // Touch swipe support on mobile devices
-    let touchStartX = 0;
-    let touchStartY = 0;
-    stage.addEventListener('touchstart', (e) => {
-      isHovered = true;
-      if (e.touches && e.touches.length > 0) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    stage.addEventListener('touchend', (e) => {
-      setTimeout(() => { isHovered = false; }, 2500);
-      if (e.changedTouches && e.changedTouches.length > 0) {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        const dy = e.changedTouches[0].clientY - touchStartY;
-        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-          if (dx < 0) {
-            nextCommunity();
-          } else {
-            prevCommunity();
-          }
-        }
-      }
-    }, { passive: true });
-
-    // Only run when section is visible in viewport
-    if (typeof IntersectionObserver !== 'undefined') {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          isInView = entry.isIntersecting;
-          if (!isInView) {
-            stage.classList.add('is-paused');
-          } else {
-            stage.classList.remove('is-paused');
-          }
-        });
-      }, { threshold: 0.15 });
-      observer.observe(stage);
-    }
-  }
-
-  // Initialize indicators for initial community
-  updateCommIndicators(currentCommKey);
 }
 
-/* ==========================================================================
-   3.1 CRAFTSMANSHIP PILLARS SHOWCASE (SOBHA "CONCEPT TO COMPLETION")
-   ========================================================================== */
-function initCraftsmanshipLab() {
-  // Handled declaratively with Sobha-inspired 4-pillar showcase grid & mobile carousel
-}
 
 /* ==========================================================================
    3.1.5 SENSORY LIVING: FULL-SIZE PANORAMIC MOMENTS (SMOOTH CROSSFADE CAROUSEL)

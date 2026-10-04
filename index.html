@@ -37,7 +37,7 @@
       <nav class="nav-col nav-col-left" aria-label="Primary Navigation Left">
         <a href="#manifesto" class="nav-link">Legacy</a>
         <a href="#estates" class="nav-link">Residences</a>
-        <a href="#communities" class="nav-link">Communities</a>
+        <a href="#activities" class="nav-link">Activities</a>
       </nav>
 
       <!-- Center Brand Logo & Name -->
@@ -190,143 +190,127 @@
     </section>
 
     <!-- ============================================================
-         2. MASTER COMMUNITIES (SOBHA-STYLE ENCLAVES EXPLORATION)
-         The Living Worlds: Forest Sanctuary, Waterfront Island, Superyacht Harbour, Sovereign Sky
+         2. ACTIVITIES & SPORTS IN DUBAI (4-IN-LINE VIDEO SHOWCASE)
          ============================================================ -->
-    <section id="communities" class="master-communities-section">
+    <section id="activities" class="activities-showcase-section">
       <div class="act-wrapper">
         
         <div class="section-title-wrap scroll-reveal-box">
           <div class="act-micro-tag">
-            <span class="act-time">Master Enclaves</span>
-            <span class="act-coord">Where Nature, Architecture & Water Converge</span>
+            <span class="act-time">Active Dubai</span>
+            <span class="act-coord">Sports, Adventures & The Outdoor Cadence</span>
           </div>
           <h2 class="section-main-heading">
-            Living ecosystems designed around wellness, privacy, and light.
+            The World's Greatest Outdoor Arena.
           </h2>
           <p class="section-main-sub">
-            We do not create standalone buildings. Each community is an integrated masterwork featuring dedicated private schools, crystal bio-lagoons, and deep acoustic seclusion.
+            From high-speed Arabian Gulf watersports and desert dune expeditions to PGA-tier championship golf and royal equestrian tracks—Dubai is engineered for an extraordinary sporting lifestyle.
           </p>
         </div>
 
-
-        <!-- Master Community Hero Visual Display with Dual-Mode View Switcher -->
-        <div class="community-display-stage scroll-reveal-box" id="community-stage">
-          <div class="comm-media-box">
-            <img id="comm-bg-img" src="/images/forest_villa.jpg" alt="The Forest Sanctuary" class="comm-photo" />
-            <div class="comm-gradient-overlay"></div>
-          </div>
-
-          <!-- Minimalist Navigation Arrows with Hover Trigger Zone -->
-          <div class="carousel-arrow-zone carousel-arrow-zone-prev" id="comm-zone-prev" title="Previous community">
-            <button type="button" class="comm-nav-arrow comm-nav-prev" id="comm-prev-btn" aria-label="Previous community">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-          </div>
-          <div class="carousel-arrow-zone carousel-arrow-zone-next" id="comm-zone-next" title="Next community">
-            <button type="button" class="comm-nav-arrow comm-nav-next" id="comm-next-btn" aria-label="Next community">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-          </div>
-
-          <!-- Dual Mode Toggle (Atmosphere vs Masterplan Blueprint) -->
-          <div class="comm-view-mode-bar">
-            <button type="button" class="comm-mode-btn active" id="mode-atmosphere-btn" data-mode="atmosphere">
-              Atmosphere View
-            </button>
-            <button type="button" class="comm-mode-btn" id="mode-blueprint-btn" data-mode="blueprint">
-              Masterplan Blueprint & Specs
-            </button>
-          </div>
-
-          <div class="comm-content-overlay">
-            <!-- Mode A: Atmosphere Narrative View -->
-            <div class="comm-inner-card" id="comm-atmosphere-view">
-              <span class="comm-badge" id="comm-badge">BIOPHILIC LAGOON LIVING • 40% GREEN CANOPY</span>
-              <h3 class="comm-title" id="comm-title">The Forest Sanctuary</h3>
-              <p class="comm-desc" id="comm-desc">
-                Surrounded by thousands of mature trees, shaded walking paths, and crystalline freshwater lagoons that naturally lower ambient temperature by 4°C. Complete with private international schools and wellness pavilions.
-              </p>
-              
-              <div class="comm-features-strip" id="comm-features">
-                <span>Crystal Bio-Lagoon</span>
+        <!-- 4-in-Line Video Showcase Grid -->
+        <div class="activities-grid scroll-reveal-box">
+          
+          <!-- Video 1: Desert Safari & Dune Bashing -->
+          <article class="activity-card">
+            <div class="activity-video-wrap">
+              <video class="activity-showcase-video" 
+                     data-src="/videos/dubai-safari.mp4" 
+                     muted 
+                     loop 
+                     playsinline 
+                     preload="none"
+                     poster="/images/desert_estate.jpg">
+              </video>
+              <div class="activity-video-overlay"></div>
+              <span class="activity-badge">01 • Desert Expeditions</span>
+            </div>
+            <div class="activity-card-info">
+              <h3 class="activity-title">Dune Safari & Sandboarding</h3>
+              <p class="activity-desc">High-octane 4x4 dune bashing, quad expeditions, and sunset sandboarding across golden Arabian desert sands.</p>
+              <div class="activity-meta-tag">
+                <span>The Desert Reserve</span>
                 <span>•</span>
-                <span>North London Collegiate School (3 min)</span>
-                <span>•</span>
-                <span>Private Forest Villas</span>
-              </div>
-
-              <div class="comm-cta-row">
-                <button type="button" class="btn-primary view-estate-btn" id="comm-explore-btn" data-estate-id="estate-dubai-hills">
-                  Explore Community Masterplan →
-                </button>
-                <a href="#advisory" class="btn-secondary" id="comm-dossier-btn">
-                  Request Enclave Dossier
-                </a>
+                <span>Private 4x4</span>
               </div>
             </div>
+          </article>
 
-            <!-- Mode B: Masterplan Blueprint & Specifications View -->
-            <div class="comm-inner-card comm-blueprint-card" id="comm-blueprint-view" style="display: none;">
-              <span class="comm-badge">ARCHITECTURAL BLUEPRINT & ECOSYSTEM SPECIFICATIONS</span>
-              <h3 class="comm-title" id="comm-blueprint-title">The Forest Sanctuary Masterplan</h3>
-              
-              <div class="blueprint-specs-grid" id="comm-blueprint-grid">
-                <div class="blueprint-stat">
-                  <span class="blueprint-val">350 Acres</span>
-                  <span class="blueprint-lbl">Total Enclave Area</span>
-                </div>
-                <div class="blueprint-stat">
-                  <span class="blueprint-val">40% Canopy</span>
-                  <span class="blueprint-lbl">Protected Green Parkland</span>
-                </div>
-                <div class="blueprint-stat">
-                  <span class="blueprint-val">1.8M Sq.Ft.</span>
-                  <span class="blueprint-lbl">Crystal Bio-Lagoon</span>
-                </div>
-                <div class="blueprint-stat">
-                  <span class="blueprint-val">3 Minutes</span>
-                  <span class="blueprint-lbl">North London Collegiate School</span>
-                </div>
-                <div class="blueprint-stat">
-                  <span class="blueprint-val">12 Minutes</span>
-                  <span class="blueprint-lbl">Downtown Dubai & DIFC</span>
-                </div>
-                <div class="blueprint-stat">
-                  <span class="blueprint-val">100% Freehold</span>
-                  <span class="blueprint-lbl">Sovereign Title Deed</span>
-                </div>
+          <!-- Video 2: Championship Golf -->
+          <article class="activity-card">
+            <div class="activity-video-wrap">
+              <video class="activity-showcase-video" 
+                     data-src="/videos/dubai-golf.mp4" 
+                     muted 
+                     loop 
+                     playsinline 
+                     preload="none"
+                     poster="/images/forest_villa.jpg">
+              </video>
+              <div class="activity-video-overlay"></div>
+              <span class="activity-badge">02 • Championship Golf</span>
+            </div>
+            <div class="activity-card-info">
+              <h3 class="activity-title">World-Tier Golf Clubs</h3>
+              <p class="activity-desc">PGA-grade 18-hole championship fairways and floodlit evening rounds at Emirates & Jumeirah Golf Estates.</p>
+              <div class="activity-meta-tag">
+                <span>PGA Tour Venues</span>
+                <span>•</span>
+                <span>Floodlit Greens</span>
               </div>
+            </div>
+          </article>
 
-              <div class="comm-cta-row" style="margin-top: 24px;">
-                <a href="#advisory" class="btn-primary">
-                  Schedule Private Advisory →
-                </a>
+          <!-- Video 3: Jet Skiing -->
+          <article class="activity-card">
+            <div class="activity-video-wrap">
+              <video class="activity-showcase-video" 
+                     data-src="/videos/dubai-jetski.mp4" 
+                     muted 
+                     loop 
+                     playsinline 
+                     preload="none"
+                     poster="/images/yacht_lifestyle.jpg">
+              </video>
+              <div class="activity-video-overlay"></div>
+              <span class="activity-badge">03 • Coastal Watersports</span>
+            </div>
+            <div class="activity-card-info">
+              <h3 class="activity-title">Gulf Jet Skiing & Speed</h3>
+              <p class="activity-desc">Open Persian Gulf speed runs alongside Burj Al Arab, luxury wakeboarding, and private flyboarding.</p>
+              <div class="activity-meta-tag">
+                <span>Persian Gulf Coast</span>
+                <span>•</span>
+                <span>Deep Sea Run</span>
               </div>
-          </div>
+            </div>
+          </article>
 
-          <!-- Hairline Loading Bar Progress Indicators (Story-Style Countdown) -->
-          <div class="carousel-indicators comm-indicators" id="comm-indicators" aria-label="Community slides">
-            <button type="button" class="indicator-bar active" data-index="0" aria-label="The Forest Sanctuary">
-              <span class="loading-fill"></span>
-            </button>
-            <button type="button" class="indicator-bar" data-index="1" aria-label="Island Mansions">
-              <span class="loading-fill"></span>
-            </button>
-            <button type="button" class="indicator-bar" data-index="2" aria-label="The Waterfront Promenade">
-              <span class="loading-fill"></span>
-            </button>
-            <button type="button" class="indicator-bar" data-index="3" aria-label="Desert Fairway Enclave">
-              <span class="loading-fill"></span>
-            </button>
-            <button type="button" class="indicator-bar" data-index="4" aria-label="The Sovereign Sky">
-              <span class="loading-fill"></span>
-            </button>
-          </div>
+          <!-- Video 4: Camel Racing & Equestrian -->
+          <article class="activity-card">
+            <div class="activity-video-wrap">
+              <video class="activity-showcase-video" 
+                     data-src="/videos/dubai-camel.mp4" 
+                     muted 
+                     loop 
+                     playsinline 
+                     preload="none"
+                     poster="/images/desert_sunset.jpg">
+              </video>
+              <div class="activity-video-overlay"></div>
+              <span class="activity-badge">04 • Royal Heritage</span>
+            </div>
+            <div class="activity-card-info">
+              <h3 class="activity-title">Camel Racing & Equestrian</h3>
+              <p class="activity-desc">Century-old Arabian desert traditions, high-stakes camel racing at Al Marmoom, and elite polo clubs.</p>
+              <div class="activity-meta-tag">
+                <span>Al Marmoom Track</span>
+                <span>•</span>
+                <span>Equestrian Club</span>
+              </div>
+            </div>
+          </article>
+
         </div>
 
       </div>
