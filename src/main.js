@@ -833,7 +833,7 @@ window.addEventListener('resize', () => {
 }, { passive: true });
 
 /* ==========================================================================
-   4. PROMINENT BIDIRECTIONAL SCROLL REVEALS
+   4. SCROLL REVEALS (ONE-TIME ONLY ON INITIAL SCROLL DOWN)
    ========================================================================== */
 function initBidirectionalScrollReveals() {
   const revealElements = document.querySelectorAll('.scroll-reveal-box');
@@ -844,15 +844,14 @@ function initBidirectionalScrollReveals() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-revealed');
-        } else {
-          entry.target.classList.remove('is-revealed');
+          revealObserver.unobserve(entry.target);
         }
       });
     },
     {
       root: null,
-      rootMargin: '-30px 0px -30px 0px',
-      threshold: 0.15
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.1
     }
   );
 
@@ -863,8 +862,7 @@ function initBidirectionalScrollReveals() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
-        } else {
-          entry.target.classList.remove('in-view');
+          panelObserver.unobserve(entry.target);
         }
       });
     },
@@ -985,8 +983,7 @@ function renderVisualCatalog() {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-revealed');
-      } else {
-        entry.target.classList.remove('is-revealed');
+        cardObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });

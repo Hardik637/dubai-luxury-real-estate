@@ -1269,23 +1269,20 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   PROMINENT BIDIRECTIONAL SCROLL REVEALS
+   ONE-TIME INITIAL SCROLL REVEALS
    -------------------------------------------------------------------------- */
 .scroll-reveal-box {
   opacity: 0;
-  transform: translateY(64px) scale(0.96);
-  filter: blur(14px);
+  transform: translateY(32px);
   transition: 
-    opacity 1.2s var(--ease-cinematic),
-    transform 1.2s var(--ease-cinematic),
-    filter 1.2s var(--ease-cinematic);
-  will-change: opacity, transform, filter;
+    opacity 0.85s var(--ease-cinematic),
+    transform 0.85s var(--ease-cinematic);
+  will-change: opacity, transform;
 }
 
 .scroll-reveal-box.is-revealed {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+  transform: translateY(0);
 }
 
 /* --------------------------------------------------------------------------
