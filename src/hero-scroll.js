@@ -50,6 +50,7 @@ export class HeroScrollEngine {
     this.loadFirstFrame().then(() => {
       this.handleResize();
       this.renderFrame(0);
+      window.dispatchEvent(new CustomEvent('hero-canvas-ready'));
       this.preloadAllFrames();
     });
 

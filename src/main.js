@@ -131,6 +131,7 @@ const CRAFT_MATERIALS = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPagePreloader();
   initHeroScroll();
   initNavigation();
   initAmbientAudio();
@@ -144,6 +145,80 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initForms();
 });
+
+/* ==========================================================================
+   0. TRANSLUCENT LUXURY PAGE PRELOADER
+   - Minimum 2.0s presentation time
+   - Waits for window load + hero canvas frame 0 to avoid glitches
+   - Smooth cinematic fade out
+   ========================================================================== */
+function initPagePreloader() {
+  const preloader = document.getElementById('page-preloader');
+  const progressBar = document.getElementById('preloader-progress-bar');
+  if (!preloader) return;
+
+  document.body.classList.add('is-loading');
+
+  const startTime = performance.now();
+  let isWindowLoaded = (document.readyState === 'complete');
+  let isHeroReady = false;
+  let hasDismissed = false;
+
+  // Track progress bar visually
+  let progress = 15;
+  if (progressBar) progressBar.style.width = '15%';
+
+  const progressInterval = setInterval(() => {
+    if (progress < 90) {
+      progress += (90 - progress) * 0.12;
+      if (progressBar) progressBar.style.width = `${Math.min(90, Math.round(progress))}%`;
+    }
+  }, 100);
+
+  const checkAndDismiss = () => {
+    if (hasDismissed) return;
+    if (!isWindowLoaded || !isHeroReady) return;
+
+    const elapsed = performance.now() - startTime;
+    // Enforce minimum 2 seconds (2000ms)
+    const remainingDelay = Math.max(0, 2000 - elapsed);
+
+    hasDismissed = true;
+
+    setTimeout(() => {
+      clearInterval(progressInterval);
+      if (progressBar) progressBar.style.width = '100%';
+
+      setTimeout(() => {
+        preloader.classList.add('is-hidden');
+        document.body.classList.remove('is-loading');
+        
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 900);
+      }, 180);
+    }, remainingDelay);
+  };
+
+  if (!isWindowLoaded) {
+    window.addEventListener('load', () => {
+      isWindowLoaded = true;
+      checkAndDismiss();
+    });
+  }
+
+  window.addEventListener('hero-canvas-ready', () => {
+    isHeroReady = true;
+    checkAndDismiss();
+  });
+
+  // Safety fallback after 6s in case of an unreachable network asset
+  setTimeout(() => {
+    isWindowLoaded = true;
+    isHeroReady = true;
+    checkAndDismiss();
+  }, 6000);
+}
 
 /* ==========================================================================
    1. HERO SCROLL ENGINE

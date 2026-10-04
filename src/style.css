@@ -78,6 +78,94 @@ body {
   overflow-x: hidden;
 }
 
+body.is-loading {
+  overflow: hidden !important;
+  height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   TRANSLUCENT LUXURY PRELOADER
+   - Translucent glassmorphism full-page overlay
+   - Centered breathing Vision of Excellence logo (fades in and out slowly)
+   - Champagne gold hairline progress bar
+   -------------------------------------------------------------------------- */
+.page-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background: rgba(250, 248, 245, 0.94);
+  backdrop-filter: blur(32px) saturate(130%);
+  -webkit-backdrop-filter: blur(32px) saturate(130%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.page-preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 32px;
+  text-align: center;
+}
+
+.preloader-logo {
+  width: clamp(210px, 32vw, 340px);
+  height: auto;
+  object-fit: contain;
+  display: block;
+  animation: preloaderLogoBreathe 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.04));
+  will-change: opacity, transform;
+}
+
+@keyframes preloaderLogoBreathe {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.97);
+  }
+}
+
+.preloader-progress-track {
+  width: 160px;
+  height: 2px;
+  background: rgba(11, 12, 14, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #DFCBA8 0%, #C5A880 50%, #A08359 100%);
+  border-radius: 2px;
+  transition: width 0.35s ease-out;
+}
+
 img {
   max-width: 100%;
   height: auto;
