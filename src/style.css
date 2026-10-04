@@ -403,6 +403,15 @@ a {
   border-color: var(--champagne-gold);
 }
 
+/* Desktop default: mobile toggle and drawer are hidden */
+.nav-mobile-toggle {
+  display: none;
+}
+
+.mobile-drawer {
+  display: none;
+}
+
 /* Acoustic Ambiance Toggle */
 .audio-toggle-btn {
   background: rgba(255, 255, 255, 0.5);
@@ -2779,9 +2788,9 @@ a {
 }
 
 @media (max-width: 768px) {
-  /* Navigation: Perfectly fitted full-width flex navbar on mobile */
+  /* Navigation: Centered logo with right sidebar hamburger menu */
   .main-navbar {
-    padding: 10px 0;
+    padding: 12px 0;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -2789,49 +2798,234 @@ a {
 
   .nav-container-split {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative;
     width: 100%;
     max-width: 100%;
     padding: 0 16px;
     box-sizing: border-box;
+    min-height: 44px;
   }
 
   .nav-col-left {
     display: none !important;
   }
 
-  .nav-col-center {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    text-align: left;
-  }
-
-  .nav-brand-logo-img {
-    height: 38px;
-    max-width: 130px;
-    width: auto;
-    display: block;
-  }
-
   .nav-col-right {
-    position: static;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    gap: 0;
-  }
-
-  .nav-col-right .nav-link:not(.nav-btn-enquire) {
     display: none !important;
   }
 
-  .nav-btn-enquire {
-    padding: 6px 14px;
-    font-size: 0.6875rem;
+  .nav-col-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .nav-brand-logo-img {
+    height: 40px;
+    max-width: 145px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Sleek Luxury Mobile Hamburger Button */
+  .nav-mobile-toggle {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    height: 40px;
+    padding: 11px 9px;
+    background: rgba(250, 248, 245, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(197, 168, 128, 0.4);
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 105;
+    transition: all 0.25s ease;
+  }
+
+  .nav-mobile-toggle:hover,
+  .nav-mobile-toggle:active {
+    background: var(--surface);
+    border-color: var(--champagne-gold);
+    box-shadow: 0 4px 16px rgba(197, 168, 128, 0.2);
+  }
+
+  .hamburger-bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--color-obsidian);
+    border-radius: 2px;
+    transition: transform 0.3s var(--ease-cinematic), opacity 0.3s ease;
+  }
+
+  /* ==========================================================================
+     MOBILE SIDEBAR DRAWER MENU
+     ========================================================================== */
+  .mobile-drawer {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0.35s ease;
+  }
+
+  .mobile-drawer.open {
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .mobile-drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 12, 14, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-cinematic);
+  }
+
+  .mobile-drawer.open .mobile-drawer-backdrop {
+    opacity: 1;
+  }
+
+  .mobile-drawer-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 86%;
+    max-width: 360px;
+    background: #0E1015;
+    border-left: 1px solid rgba(197, 168, 128, 0.28);
+    box-shadow: -16px 0 50px rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px 28px;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .mobile-drawer.open .mobile-drawer-panel {
+    transform: translateX(0);
+  }
+
+  .mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 24px;
+  }
+
+  .drawer-logo-img {
+    height: 36px;
+    width: auto;
+    filter: brightness(1.2) contrast(1.1);
+  }
+
+  .drawer-close-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .drawer-close-btn:hover,
+  .drawer-close-btn:active {
+    background: rgba(197, 168, 128, 0.25);
+    border-color: var(--champagne-gold);
+    color: var(--champagne-gold-light);
+  }
+
+  .mobile-drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+  }
+
+  .drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .drawer-link:hover,
+  .drawer-link:active {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
+  }
+
+  .drawer-link-num {
+    font-family: var(--font-technical);
+    font-size: 0.75rem;
+    color: var(--champagne-gold);
     letter-spacing: 0.12em;
-    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .drawer-link-text {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    letter-spacing: 0.06em;
+    color: #FFFFFF;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .mobile-drawer-footer {
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: auto;
+  }
+
+  .drawer-enquire-btn {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    border-radius: 4px;
+  }
+
+  .drawer-contact-line {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: center;
+    letter-spacing: 0.04em;
   }
 
   /* Architectural Curtain & Spacing */
