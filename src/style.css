@@ -3543,48 +3543,88 @@ a {
     padding: 72px 0 64px;
   }
 
+  /* Featured Estate Hero Card: Image-first, no black gap */
+  .estate-hero-cinema-card {
+    border-radius: 12px;
+    margin-bottom: 32px;
+    background: var(--color-obsidian);
+  }
+
   .cinema-card-media {
-    min-height: 380px;
-    max-height: 440px;
-    aspect-ratio: auto;
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    max-height: none;
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+    overflow: hidden;
   }
 
   .cinema-card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
     image-rendering: -webkit-optimize-contrast;
   }
 
+  .cinema-card-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.45) 40%,
+      rgba(0, 0, 0, 0.08) 70%,
+      transparent 100%
+    );
+  }
+
   .cinema-card-content {
-    padding: 24px 20px;
+    padding: 22px 20px 24px;
   }
 
   .cinema-card-top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  .cinema-tag {
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    opacity: 0.85;
   }
 
   .cinema-price {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    font-weight: 800;
   }
 
   .cinema-title {
-    font-size: 1.65rem;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
   }
 
+  /* Hide description on mobile — just name, price, and specs */
   .cinema-desc {
-    font-size: 0.925rem;
-    line-height: 1.65;
-    margin-bottom: 18px;
+    display: none !important;
   }
 
   .cinema-specs-row {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px 10px;
+    font-size: 0.6875rem;
+    margin-bottom: 16px;
+  }
+
+  .cinema-btn-row .btn-primary {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
     font-size: 0.75rem;
-    margin-bottom: 22px;
   }
 
   .estate-filter-pills {
