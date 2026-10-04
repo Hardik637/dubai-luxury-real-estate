@@ -2836,6 +2836,8 @@ a {
     overflow: hidden;
     background-color: #080A0E;
     z-index: 10;
+    outline: 5px solid red !important;
+    outline-offset: -5px !important;
   }
 
   #hero-canvas {
@@ -2846,6 +2848,8 @@ a {
     display: block;
     background-color: #080A0E;
     image-rendering: -webkit-optimize-contrast;
+    outline: 5px solid blue !important;
+    outline-offset: -10px !important;
   }
 
   /* --------------------------------------------------
