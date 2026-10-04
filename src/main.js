@@ -703,6 +703,7 @@ function initMobileCarousels() {
 
   const carouselTargets = [
     { sel: '.heritage-stats-grid', interval: 3800 },
+    { sel: '.activities-grid', interval: 3800 },
     { sel: '.sobha-pillars-grid', interval: 4200 },
     { sel: '.sovereign-pillars-grid', interval: 3600 },
     { sel: '.calc-results-grid', interval: 4000 },
