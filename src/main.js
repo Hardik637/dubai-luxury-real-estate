@@ -904,7 +904,7 @@ function formatPrice(aedPrice, isRent = false) {
   else if (state.currency === 'EUR') formatted = `€${converted.toLocaleString()}`;
   else if (state.currency === 'GBP') formatted = `£${converted.toLocaleString()}`;
 
-  if (isRent) formatted += ` <span style="font-size: 0.75rem; color: #DDD5C9;">/ yr</span>`;
+  if (isRent) formatted += ` <span style="font-size: 0.75rem; color: inherit; font-weight: 600;">/ yr</span>`;
   return formatted;
 }
 
