@@ -11,12 +11,28 @@
   --border-subtle: #E2DDD5;    /* Muted border */
   --border-medium: #CFC7BC;    /* Defined border */
   
-  --text-main: #000000;        /* Plain pitch black */
-  --text-secondary: #000000;   /* Plain pitch black */
-  --text-muted: #000000;       /* Plain pitch black */
-  --accent-sand: #000000;      /* Plain pitch black */
-  --accent-gold: #000000;      /* Plain pitch black */
-  --brand-navy: #000000;       /* Plain pitch black */
+  /* Obsidian Black Palette */
+  --color-obsidian: #0B0C0E;        /* Deep mineral obsidian jet black */
+  --color-obsidian-subtle: #181A20; /* Refined obsidian charcoal */
+  --color-obsidian-soft: #2C2F38;   /* Soft obsidian slate */
+  --color-obsidian-muted: #585B68;  /* Muted obsidian tone */
+  
+  /* Champagne Gold Accent Palette */
+  --champagne-gold: #C5A880;        /* Core refined champagne gold */
+  --champagne-gold-light: #DFCBA8;  /* Luminous pale champagne gold */
+  --champagne-gold-bright: #E8D8BA; /* Brilliant champagne highlight */
+  --champagne-gold-deep: #A08359;   /* Antique burnished champagne */
+  --champagne-gold-soft: rgba(197, 168, 128, 0.16); /* Delicate champagne tint */
+  --champagne-gradient: linear-gradient(135deg, #DFCBA8 0%, #C5A880 50%, #9F8257 100%);
+  --champagne-gradient-text: linear-gradient(135deg, #E2CEAD 0%, #C5A880 50%, #9F8257 100%);
+  
+  /* Core Text Roles */
+  --text-main: var(--color-obsidian);
+  --text-secondary: var(--color-obsidian-subtle);
+  --text-muted: var(--color-obsidian-muted);
+  --accent-sand: var(--champagne-gold-light);
+  --accent-gold: var(--champagne-gold);
+  --brand-navy: var(--color-obsidian);
   
   /* Curated Multi-Font Design System according to section character */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -229,29 +245,29 @@ a {
   font-size: 0.8125rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 700;
-  transition: opacity 0.25s ease;
+  transition: color 0.25s ease, opacity 0.25s ease;
   white-space: nowrap;
 }
 
 .nav-link:hover {
-  color: #000000;
-  opacity: 0.6;
+  color: var(--champagne-gold);
+  opacity: 1;
 }
 
 .main-navbar.scrolled .nav-link {
-  color: #000000;
+  color: var(--color-obsidian);
 }
 
 .main-navbar.scrolled .nav-link:hover {
-  color: #000000;
-  opacity: 0.6;
+  color: var(--champagne-gold);
+  opacity: 1;
 }
 
 /* Enquire Action Link */
 .nav-btn-enquire {
-  border: 1.5px solid #000000;
+  border: 1.5px solid var(--color-obsidian);
   padding: 8px 20px;
   border-radius: 2px;
   font-family: var(--font-sans);
@@ -259,7 +275,7 @@ a {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #000000;
+  color: var(--color-obsidian);
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -267,27 +283,28 @@ a {
 }
 
 .nav-btn-enquire:hover {
-  background: #000000;
-  color: #FFFFFF;
-  border-color: #000000;
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
 }
 
 .main-navbar.scrolled .nav-btn-enquire {
-  background: #000000;
-  border-color: #000000;
+  background: var(--color-obsidian);
+  border-color: var(--color-obsidian);
   color: #FFFFFF;
   backdrop-filter: none;
 }
 
 .main-navbar.scrolled .nav-btn-enquire:hover {
-  background: #222222;
-  color: #FFFFFF;
+  background: var(--color-obsidian-subtle);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
 }
 
 /* Acoustic Ambiance Toggle */
 .audio-toggle-btn {
   background: rgba(255, 255, 255, 0.5);
-  border: 1px solid #000000;
+  border: 1px solid var(--border-medium);
   padding: 6px 14px;
   border-radius: 20px;
   display: flex;
@@ -295,22 +312,22 @@ a {
   gap: 8px;
   cursor: pointer;
   transition: all var(--transition-fast);
-  color: #000000;
+  color: var(--color-obsidian);
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
 }
 
 .audio-toggle-btn:hover {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: #000000;
-  color: #000000;
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--champagne-gold);
+  color: var(--champagne-gold-deep);
 }
 
 .audio-toggle-btn.playing {
-  background: #000000;
-  color: #FFFFFF;
-  border-color: #000000;
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
 }
 
 .audio-bars {
@@ -384,55 +401,79 @@ a {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-main);
+  color: var(--color-obsidian);
   border-radius: 2px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all var(--transition-fast);
 }
 
 .btn-minimal:hover {
-  background: var(--text-main);
-  color: var(--bg-primary);
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
 }
 
 .btn-primary {
-  background: var(--text-main);
-  border: 1px solid var(--text-main);
-  color: var(--bg-primary);
-  padding: 9px 22px;
+  background: var(--color-obsidian);
+  border: 1px solid rgba(197, 168, 128, 0.45);
+  color: #FAF8F5;
+  padding: 10px 24px;
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: 2px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all var(--transition-fast);
   display: inline-block;
 }
 
 .btn-primary:hover {
-  background: #383430;
-  color: #FFFFFF;
+  background: var(--color-obsidian-subtle);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
+  box-shadow: 0 4px 20px rgba(11, 12, 14, 0.25);
 }
 
 .btn-dark {
-  background: var(--text-main);
-  color: var(--bg-primary);
-  border: 1px solid var(--text-main);
+  background: var(--color-obsidian);
+  color: #FAF8F5;
+  border: 1px solid rgba(197, 168, 128, 0.45);
   padding: 12px 24px;
   font-size: 0.8125rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: 2px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all var(--transition-fast);
   display: inline-block;
 }
 
 .btn-dark:hover {
-  background: #383430;
+  background: var(--color-obsidian-subtle);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
+}
+
+/* Editorial Champagne Gold & Obsidian Accents */
+.gold-hint {
+  color: var(--champagne-gold);
+  background: var(--champagne-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+.gold-hint-solid {
+  color: var(--champagne-gold);
+}
+
+.gold-separator {
+  color: var(--champagne-gold);
+  margin: 0 4px;
+  opacity: 0.9;
 }
 
 /* --------------------------------------------------------------------------
@@ -457,20 +498,20 @@ a {
 
 .act-time {
   font-family: var(--font-sans);
-  font-size: 0.875rem;
-  letter-spacing: 0.12em;
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold);
   font-style: normal;
   font-weight: 700;
 }
 
 .act-coord {
   font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #000000;
-  font-weight: 700;
+  color: var(--color-obsidian-soft);
+  font-weight: 600;
 }
 
 .section-main-heading {
@@ -479,7 +520,7 @@ a {
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1.15;
-  color: #000000;
+  color: var(--color-obsidian);
   max-width: 900px;
   margin-bottom: 16px;
 }
@@ -487,7 +528,7 @@ a {
 .section-main-sub {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   max-width: 720px;
   font-weight: 400;
   letter-spacing: -0.005em;
@@ -513,14 +554,14 @@ a {
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.18;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 24px;
 }
 
 .manifesto-lead {
   font-size: 1.15rem;
   line-height: 1.8;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   max-width: 860px;
   font-weight: 400;
   letter-spacing: -0.005em;
@@ -545,7 +586,7 @@ a {
   font-size: clamp(2.8rem, 4vw, 3.8rem);
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #000000;
+  color: var(--color-obsidian);
   line-height: 0.95;
 }
 
@@ -553,14 +594,14 @@ a {
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold);
   font-weight: 700;
 }
 
 .heritage-desc {
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #000000;
+  color: var(--color-obsidian-soft);
   font-weight: 400;
   letter-spacing: -0.005em;
 }
@@ -631,8 +672,8 @@ a {
   position: absolute;
   top: 14px;
   left: 14px;
-  background: #000000;
-  color: #FFFFFF;
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
   font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
@@ -640,7 +681,7 @@ a {
   text-transform: uppercase;
   padding: 5px 10px;
   border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(197, 168, 128, 0.35);
   z-index: 2;
 }
 
@@ -656,7 +697,7 @@ a {
   font-size: 1.2rem;
   line-height: 1.25;
   font-weight: 700;
-  color: #000000;
+  color: var(--color-obsidian);
   letter-spacing: -0.015em;
   margin-bottom: 8px;
 }
@@ -665,7 +706,7 @@ a {
   font-family: var(--font-sans);
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   font-weight: 400;
   letter-spacing: -0.005em;
   margin-bottom: 16px;
@@ -681,10 +722,14 @@ a {
   font-size: 0.6875rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #000000;
-  font-weight: 700;
+  color: var(--color-obsidian-muted);
+  font-weight: 600;
   padding-top: 12px;
   border-top: 1px solid var(--border-subtle);
+}
+
+.activity-meta-tag span:nth-child(even) {
+  color: var(--champagne-gold);
 }
 
 .section-title-wrap {
@@ -1247,9 +1292,9 @@ a {
   left: 0;
   height: 100%;
   width: 0%;
-  background: #FFFFFF;
+  background: var(--champagne-gold-light);
   border-radius: 2px;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 8px rgba(223, 203, 168, 0.6);
   pointer-events: none;
   will-change: width;
 }
@@ -1346,7 +1391,7 @@ a {
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--champagne-gold-light);
   font-weight: 700;
 }
 
@@ -1419,7 +1464,7 @@ a {
 .sov-icon {
   font-family: var(--font-technical);
   font-size: 1.8rem;
-  color: #000000;
+  color: var(--champagne-gold);
   font-weight: 700;
   display: block;
   margin-bottom: 12px;
@@ -1431,7 +1476,7 @@ a {
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 8px;
 }
 
@@ -1439,7 +1484,7 @@ a {
   font-family: var(--font-sans);
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   font-weight: 400;
   letter-spacing: -0.005em;
 }
@@ -1467,7 +1512,7 @@ a {
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold);
   font-weight: 700;
   display: block;
   margin-bottom: 8px;
@@ -1478,7 +1523,7 @@ a {
   font-size: clamp(1.8rem, 2.8vw, 2.4rem);
   font-weight: 800;
   letter-spacing: -0.025em;
-  color: #000000;
+  color: var(--color-obsidian);
 }
 
 .calc-current-val {
@@ -1492,7 +1537,7 @@ a {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold-deep);
   font-weight: 600;
 }
 
@@ -1501,7 +1546,7 @@ a {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #000000;
+  color: var(--color-obsidian);
 }
 
 .calc-slider-wrap {
@@ -1523,8 +1568,8 @@ a {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #000000;
-  border: 3px solid #FAF8F5;
+  background: var(--color-obsidian);
+  border: 3px solid var(--champagne-gold);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   cursor: grab;
   transition: transform 0.15s ease;
@@ -1540,7 +1585,7 @@ a {
   margin-top: 10px;
   font-family: var(--font-technical);
   font-size: 0.75rem;
-  color: #000000;
+  color: var(--color-obsidian-muted);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -1563,14 +1608,18 @@ a {
 }
 
 .calc-result-card.highlight {
-  border-color: #000000;
-  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(197, 168, 128, 0.6);
+  background: rgba(197, 168, 128, 0.06);
+}
+
+.calc-result-card.highlight .result-number {
+  color: var(--champagne-gold-deep);
 }
 
 .result-number {
   font-family: var(--font-technical);
   font-size: 2rem;
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -1580,7 +1629,7 @@ a {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #000000;
+  color: var(--color-obsidian);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -1588,7 +1637,7 @@ a {
 .result-sub {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
-  color: #000000;
+  color: var(--color-obsidian-muted);
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: -0.005em;
@@ -1619,14 +1668,14 @@ a {
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1.15;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 14px;
 }
 
 .estates-lead-desc {
   font-family: var(--font-sans);
   font-size: 1.05rem;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   font-weight: 400;
   letter-spacing: -0.005em;
   max-width: 680px;
@@ -1640,23 +1689,28 @@ a {
 
 .filter-pill {
   background: var(--surface);
-  border: 1px solid #000000;
+  border: 1px solid var(--border-medium);
   padding: 9px 22px;
   font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 700;
   border-radius: 20px;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
+.filter-pill:hover {
+  border-color: var(--champagne-gold);
+  color: var(--champagne-gold-deep);
+}
+
 .filter-pill.active {
-  background: #000000;
-  color: #FFFFFF;
-  border-color: #000000;
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
   font-weight: 700;
 }
 
@@ -1722,7 +1776,7 @@ a {
   font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: var(--champagne-gold-light);
   font-weight: 700;
 }
 
@@ -1764,6 +1818,10 @@ a {
   color: #FFFFFF;
   font-weight: 700;
   margin-bottom: 28px;
+}
+
+.cinema-specs-row span:nth-child(even) {
+  color: var(--champagne-gold);
 }
 
 .cinema-btn-row {
@@ -1814,8 +1872,8 @@ a {
   position: absolute;
   top: 16px;
   left: 16px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
   padding: 5px 12px;
   font-family: var(--font-sans);
   font-size: 0.6875rem;
@@ -1823,8 +1881,7 @@ a {
   text-transform: uppercase;
   border-radius: 2px;
   font-weight: 700;
-  color: #000000;
-  border: 1px solid #000000;
+  border: 1px solid rgba(197, 168, 128, 0.4);
 }
 
 .prop-body-compact {
@@ -1836,7 +1893,7 @@ a {
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold);
   font-weight: 700;
   margin-bottom: 6px;
 }
@@ -1846,7 +1903,7 @@ a {
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 12px;
 }
 
@@ -1855,11 +1912,15 @@ a {
   gap: 12px;
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: #000000;
+  color: var(--color-obsidian-soft);
   font-weight: 600;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border-subtle);
   margin-bottom: 16px;
+}
+
+.prop-quick-strip span:nth-child(even) {
+  color: var(--champagne-gold);
 }
 
 .prop-foot {
@@ -1873,18 +1934,18 @@ a {
   font-size: 1.375rem;
   font-weight: 800;
   letter-spacing: -0.015em;
-  color: #000000;
+  color: var(--color-obsidian);
 }
 
 .btn-inspect {
   background: none;
-  border: 1.5px solid #000000;
+  border: 1.5px solid var(--border-medium);
   padding: 7px 16px;
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 700;
   border-radius: 2px;
   cursor: pointer;
@@ -1892,8 +1953,9 @@ a {
 }
 
 .btn-inspect:hover {
-  background: #000000;
-  color: #FFFFFF;
+  background: var(--color-obsidian);
+  color: var(--champagne-gold-light);
+  border-color: var(--champagne-gold);
 }
 
 .owner-cinema-strip {
@@ -1911,14 +1973,14 @@ a {
   font-size: 1.55rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 6px;
 }
 
 .owner-cinema-text p {
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   font-weight: 400;
   letter-spacing: -0.005em;
 }
@@ -1949,7 +2011,7 @@ a {
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.18;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 18px;
 }
 
@@ -1957,7 +2019,7 @@ a {
   font-family: var(--font-sans);
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   margin-bottom: 36px;
   font-weight: 400;
 }
@@ -1979,16 +2041,16 @@ a {
 .meta-label {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold);
   font-weight: 700;
 }
 
 .meta-val {
   font-family: var(--font-sans);
   font-size: 0.9375rem;
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 600;
 }
 
@@ -2013,7 +2075,7 @@ a {
   padding: 13px 16px;
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 400;
   outline: none;
   transition: border-color var(--transition-fast), background var(--transition-fast);
@@ -2022,7 +2084,7 @@ a {
 .cinema-clean-form input:focus,
 .cinema-clean-form textarea:focus,
 .custom-select-cinema:focus {
-  border-color: #000000;
+  border-color: var(--champagne-gold);
   background: #FFFFFF;
 }
 
@@ -2237,16 +2299,16 @@ a {
   font-size: 1.85rem;
   font-weight: 700;
   line-height: 1.2;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 6px;
 }
 
 .modal-estate-location {
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold);
   font-weight: 700;
   margin-bottom: 16px;
 }
@@ -2254,8 +2316,8 @@ a {
 .modal-estate-price {
   font-family: var(--font-sans);
   font-size: 1.65rem;
-  font-weight: 700;
-  color: #000000;
+  font-weight: 800;
+  color: var(--color-obsidian);
   margin-bottom: 16px;
 }
 
@@ -2263,7 +2325,7 @@ a {
   font-family: var(--font-sans);
   font-size: 0.875rem;
   line-height: 1.7;
-  color: #000000;
+  color: var(--color-obsidian-subtle);
   font-weight: 400;
   margin-bottom: 24px;
 }
@@ -2282,14 +2344,14 @@ a {
 
 .modal-specs-table td:first-child {
   font-family: var(--font-sans);
-  color: #000000;
+  color: var(--color-obsidian-muted);
   font-weight: 600;
   width: 45%;
 }
 
 .modal-specs-table td:last-child {
   font-family: var(--font-sans);
-  color: #000000;
+  color: var(--color-obsidian);
   font-weight: 700;
   text-align: right;
 }
@@ -2306,7 +2368,7 @@ a {
   font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 700;
-  color: #000000;
+  color: var(--color-obsidian);
   margin-bottom: 14px;
 }
 
@@ -2323,7 +2385,7 @@ a {
   font-size: 0.6875rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--champagne-gold-deep);
   font-weight: 700;
   display: block;
 }
@@ -2332,7 +2394,7 @@ a {
   font-family: var(--font-sans);
   font-size: 1.5rem;
   font-weight: 700;
-  color: #000000;
+  color: var(--color-obsidian);
 }
 
 /* --------------------------------------------------------------------------
