@@ -134,20 +134,6 @@ export class HeroScrollEngine {
     this.cssHeight = height;
     this.dpr = dpr;
 
-    console.table({
-      windowInnerWidth: window.innerWidth,
-      windowInnerHeight: window.innerHeight,
-      visualViewportWidth: window.visualViewport?.width,
-      visualViewportHeight: window.visualViewport?.height,
-      viewportRectWidth: viewport.getBoundingClientRect().width,
-      viewportRectHeight: viewport.getBoundingClientRect().height,
-      canvasCssWidth: this.canvas.getBoundingClientRect().width,
-      canvasCssHeight: this.canvas.getBoundingClientRect().height,
-      canvasBackingWidth: this.canvas.width,
-      canvasBackingHeight: this.canvas.height,
-      devicePixelRatio: window.devicePixelRatio
-    });
-
     if (this.ctx) {
       this.ctx.imageSmoothingEnabled = true;
       this.ctx.imageSmoothingQuality = 'high';
