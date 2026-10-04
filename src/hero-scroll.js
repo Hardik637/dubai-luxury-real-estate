@@ -51,15 +51,23 @@ export class HeroScrollEngine {
   }
 
   init() {
+    let resizeRaf = null;
+    const scheduleResize = () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        this.handleResize();
+      });
+    };
+
     this.handleResize();
-    window.addEventListener('resize', () => this.handleResize(), { passive: true });
+    window.addEventListener('resize', scheduleResize, { passive: true });
     window.addEventListener('orientationchange', () => {
-      setTimeout(() => this.handleResize(), 80);
+      setTimeout(scheduleResize, 80);
     });
 
     // Auto-detect container & viewport resizes (e.g. mobile URL bar expand/collapse, DevTools)
     if (typeof ResizeObserver !== 'undefined' && this.container) {
-      const ro = new ResizeObserver(() => this.handleResize());
+      const ro = new ResizeObserver(() => scheduleResize());
       ro.observe(this.container);
       const viewport = this.container.querySelector('.hero-sticky-viewport');
       if (viewport) ro.observe(viewport);
@@ -97,14 +105,13 @@ export class HeroScrollEngine {
       });
     }
 
-    // On high-DPR mobile screens, use full devicePixelRatio up to 2.5 for crystal-sharp retina clarity
-    const dpr = this.isMobile 
-      ? Math.min(window.devicePixelRatio || 1, 2.5)
-      : Math.min(window.devicePixelRatio || 1, 2);
-
     const viewport = this.canvas.parentElement;
-    const width = (viewport && viewport.clientWidth) ? viewport.clientWidth : window.innerWidth;
-    const height = (viewport && viewport.clientHeight) ? viewport.clientHeight : window.innerHeight;
+    const rect = viewport ? viewport.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
+
+    const width = Math.max(1, Math.round(rect.width || window.innerWidth));
+    const height = Math.max(1, Math.round(rect.height || window.innerHeight));
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const targetW = Math.round(width * dpr);
     const targetH = Math.round(height * dpr);
@@ -113,6 +120,19 @@ export class HeroScrollEngine {
       this.canvas.width = targetW;
       this.canvas.height = targetH;
     }
+
+    const widthPx = `${width}px`;
+    const heightPx = `${height}px`;
+    if (this.canvas.style.width !== widthPx) {
+      this.canvas.style.width = widthPx;
+    }
+    if (this.canvas.style.height !== heightPx) {
+      this.canvas.style.height = heightPx;
+    }
+
+    this.cssWidth = width;
+    this.cssHeight = height;
+    this.dpr = dpr;
 
     if (this.ctx) {
       this.ctx.imageSmoothingEnabled = true;
@@ -249,38 +269,40 @@ export class HeroScrollEngine {
 
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
-    const canvas = this.canvas;
     const ctx = this.ctx;
-    const cWidth = canvas.width;
-    const cHeight = canvas.height;
+    const width = this.cssWidth || (this.canvas.clientWidth || window.innerWidth);
+    const height = this.cssHeight || (this.canvas.clientHeight || window.innerHeight);
+    const dpr = this.dpr || Math.min(window.devicePixelRatio || 1, 2);
 
-    const isMobile = window.innerWidth <= 768;
-    const imgWidth = img.naturalWidth;
-    const imgHeight = img.naturalHeight;
-
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
 
-    // Unified full-bleed cinematic cover-fit (edge-to-edge on mobile and PC)
-    const canvasRatio = cWidth / cHeight;
+    ctx.clearRect(0, 0, width, height);
+
+    const imgWidth = img.naturalWidth;
+    const imgHeight = img.naturalHeight;
+
+    // Full-bleed cinematic cover-fit (edge-to-edge on mobile and PC)
+    const canvasRatio = width / height;
     const imgRatio = imgWidth / imgHeight;
 
     let sWidth, sHeight, sx, sy;
 
     if (imgRatio > canvasRatio) {
-      // Taller screens (mobile portrait): Fill 100% height, center horizontally
+      // Screen is taller than image ratio (mobile portrait): Fill 100% height, center horizontally
       sHeight = imgHeight;
       sWidth = imgHeight * canvasRatio;
       sx = (imgWidth - sWidth) / 2;
       sy = 0;
     } else {
-      // Wider screens (desktop): Fill 100% width, center vertically
+      // Screen is wider than image ratio (desktop/landscape): Fill 100% width, center vertically
       sWidth = imgWidth;
       sHeight = imgWidth / canvasRatio;
       sx = 0;
       sy = (imgHeight - sHeight) / 2;
     }
 
-    ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cWidth, cHeight);
+    ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, width, height);
   }
 }
