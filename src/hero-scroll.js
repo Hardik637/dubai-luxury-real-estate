@@ -106,8 +106,13 @@ export class HeroScrollEngine {
     const width = (viewport && viewport.clientWidth) ? viewport.clientWidth : window.innerWidth;
     const height = (viewport && viewport.clientHeight) ? viewport.clientHeight : window.innerHeight;
 
-    this.canvas.width = Math.round(width * dpr);
-    this.canvas.height = Math.round(height * dpr);
+    const targetW = Math.round(width * dpr);
+    const targetH = Math.round(height * dpr);
+
+    if (this.canvas.width !== targetW || this.canvas.height !== targetH) {
+      this.canvas.width = targetW;
+      this.canvas.height = targetH;
+    }
 
     if (this.ctx) {
       this.ctx.imageSmoothingEnabled = true;
@@ -223,15 +228,21 @@ export class HeroScrollEngine {
     let img = this.images[clampedIndex];
 
     // Fallback to nearest loaded frame if current hasn't finished loading
-    if (!img) {
-      for (let offset = 1; offset < 20; offset++) {
-        if (clampedIndex - offset >= 0 && this.images[clampedIndex - offset]) {
-          img = this.images[clampedIndex - offset];
+    if (!img || !img.complete || img.naturalWidth === 0) {
+      // Search backwards first (most relevant prior frame in sequence)
+      for (let i = clampedIndex - 1; i >= 0; i--) {
+        if (this.images[i] && this.images[i].complete && this.images[i].naturalWidth > 0) {
+          img = this.images[i];
           break;
         }
-        if (clampedIndex + offset < this.totalFrames && this.images[clampedIndex + offset]) {
-          img = this.images[clampedIndex + offset];
-          break;
+      }
+      // If none found backwards, search forwards
+      if (!img || !img.complete || img.naturalWidth === 0) {
+        for (let i = clampedIndex + 1; i < this.totalFrames; i++) {
+          if (this.images[i] && this.images[i].complete && this.images[i].naturalWidth > 0) {
+            img = this.images[i];
+            break;
+          }
         }
       }
     }
