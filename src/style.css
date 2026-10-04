@@ -206,9 +206,10 @@ a {
 
 .nav-brand-center .brand-title {
   font-family: var(--font-sans);
-  font-size: 1.55rem;
-  letter-spacing: 0.28em;
-  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.32em;
+  font-weight: 800;
+  text-transform: uppercase;
   color: #000000;
   transition: opacity 0.3s ease;
 }
@@ -217,9 +218,10 @@ a {
   font-family: var(--font-sans);
   font-size: 0.65rem;
   letter-spacing: 0.45em;
+  text-transform: uppercase;
   color: #000000;
   font-weight: 700;
-  margin-top: 3px;
+  margin-top: 4px;
   transition: opacity 0.3s ease;
 }
 
@@ -235,10 +237,10 @@ a {
 .nav-link {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #000000;
-  font-weight: 600;
+  font-weight: 700;
   transition: opacity 0.25s ease;
   white-space: nowrap;
 }
@@ -260,11 +262,11 @@ a {
 /* Enquire Action Link */
 .nav-btn-enquire {
   border: 1.5px solid #000000;
-  padding: 7px 18px;
+  padding: 8px 20px;
   border-radius: 2px;
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
   color: #000000;
@@ -465,7 +467,9 @@ a {
 
 .act-time {
   font-family: var(--font-sans);
-  font-size: 1.1rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: #000000;
   font-style: normal;
   font-weight: 700;
@@ -473,17 +477,18 @@ a {
 
 .act-coord {
   font-size: 0.75rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #000000;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .section-main-heading {
   font-family: var(--font-sans);
   font-size: clamp(2.2rem, 3.8vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
   color: #000000;
   max-width: 900px;
   margin-bottom: 16px;
@@ -495,6 +500,7 @@ a {
   color: #000000;
   max-width: 720px;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* --------------------------------------------------------------------------
@@ -514,8 +520,9 @@ a {
 .manifesto-title {
   font-family: var(--font-sans);
   font-size: clamp(2.4rem, 4.4vw, 4.2rem);
-  font-weight: 700;
-  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
   color: #000000;
   margin-bottom: 24px;
 }
@@ -526,6 +533,7 @@ a {
   color: #000000;
   max-width: 860px;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 .heritage-stats-grid {
@@ -544,15 +552,16 @@ a {
 
 .heritage-number {
   font-family: var(--font-sans);
-  font-size: clamp(2.6rem, 3.8vw, 3.6rem);
-  font-weight: 700;
+  font-size: clamp(2.8rem, 4vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
   color: #000000;
-  line-height: 1;
+  line-height: 0.95;
 }
 
 .heritage-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #000000;
   font-weight: 700;
@@ -560,9 +569,10 @@ a {
 
 .heritage-desc {
   font-size: 0.875rem;
-  line-height: 1.55;
+  line-height: 1.6;
   color: #000000;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* --------------------------------------------------------------------------
@@ -791,10 +801,11 @@ a {
 .comm-title {
   font-family: var(--font-sans);
   font-size: clamp(2.2rem, 4vw, 3.5rem);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   color: #FFFFFF;
   margin-bottom: 14px;
-  line-height: 1.15;
+  line-height: 1.12;
 }
 
 .comm-desc {
@@ -804,6 +815,7 @@ a {
   color: #FFFFFF;
   margin-bottom: 24px;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 .comm-features-strip {
@@ -812,10 +824,10 @@ a {
   gap: 16px;
   font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #FFFFFF;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 28px;
 }
 
@@ -850,7 +862,8 @@ a {
   font-family: var(--font-sans);
   font-size: 1.6rem;
   color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   line-height: 1;
 }
 
@@ -858,9 +871,9 @@ a {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: rgba(255, 255, 255, 0.85);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
@@ -970,15 +983,16 @@ a {
   font-weight: 700;
   color: #000000;
   margin-bottom: 12px;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.015em;
 }
 
 .sobha-pillar-desc {
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  line-height: 1.68;
+  line-height: 1.65;
   color: #000000;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* --------------------------------------------------------------------------
@@ -1163,8 +1177,9 @@ a {
 .moment-heading {
   font-family: var(--font-sans);
   font-size: clamp(2.2rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
   color: #FFFFFF;
   margin-bottom: 20px;
 }
@@ -1176,6 +1191,7 @@ a {
   color: #FFFFFF;
   margin-bottom: 30px;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 .act-floating-metrics {
@@ -1200,7 +1216,8 @@ a {
   font-family: var(--font-sans);
   font-size: 1.5rem;
   color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
@@ -1208,9 +1225,9 @@ a {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: rgba(255, 255, 255, 0.85);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .act-subtle-pillars {
@@ -1286,7 +1303,7 @@ a {
   font-family: var(--font-sans);
   font-size: 1.8rem;
   color: #000000;
-  font-weight: 700;
+  font-weight: 800;
   display: block;
   margin-bottom: 12px;
   line-height: 1;
@@ -1296,6 +1313,7 @@ a {
   font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 700;
+  letter-spacing: -0.015em;
   color: #000000;
   margin-bottom: 8px;
 }
@@ -1306,6 +1324,7 @@ a {
   line-height: 1.6;
   color: #000000;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* Calculator Box */
@@ -1340,7 +1359,8 @@ a {
 .calc-title {
   font-family: var(--font-sans);
   font-size: clamp(1.8rem, 2.8vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   color: #000000;
 }
 
@@ -1362,7 +1382,8 @@ a {
 .calc-val-number {
   font-family: var(--font-sans);
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   color: #000000;
 }
 
@@ -1433,7 +1454,8 @@ a {
   font-family: var(--font-sans);
   font-size: 2rem;
   color: #000000;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
@@ -1452,6 +1474,7 @@ a {
   color: #000000;
   font-weight: 400;
   line-height: 1.45;
+  letter-spacing: -0.005em;
 }
 
 .calc-cta-row {
@@ -1476,8 +1499,9 @@ a {
 .act-cinematic-title-dark {
   font-family: var(--font-sans);
   font-size: clamp(2.3rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
   color: #000000;
   margin-bottom: 14px;
 }
@@ -1487,6 +1511,7 @@ a {
   font-size: 1.05rem;
   color: #000000;
   font-weight: 400;
+  letter-spacing: -0.005em;
   max-width: 680px;
   margin-bottom: 28px;
 }
@@ -1502,10 +1527,10 @@ a {
   padding: 9px 22px;
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #000000;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 20px;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -1588,15 +1613,18 @@ a {
   font-family: var(--font-sans);
   font-size: 2rem;
   color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .cinema-title {
   font-family: var(--font-sans);
   font-size: 2.3rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   color: #FFFFFF;
   margin-bottom: 10px;
+  line-height: 1.15;
 }
 
 .cinema-desc {
@@ -1606,6 +1634,7 @@ a {
   max-width: 720px;
   margin-bottom: 24px;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 .cinema-specs-row {
@@ -1616,7 +1645,7 @@ a {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #FFFFFF;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 28px;
 }
 
@@ -1673,7 +1702,7 @@ a {
   padding: 5px 12px;
   font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: 2px;
   font-weight: 700;
@@ -1697,8 +1726,9 @@ a {
 
 .prop-name {
   font-family: var(--font-sans);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 700;
+  letter-spacing: -0.015em;
   color: #000000;
   margin-bottom: 12px;
 }
@@ -1724,7 +1754,8 @@ a {
 .prop-price-val {
   font-family: var(--font-sans);
   font-size: 1.375rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   color: #000000;
 }
 
@@ -1762,6 +1793,7 @@ a {
   font-family: var(--font-sans);
   font-size: 1.4rem;
   font-weight: 700;
+  letter-spacing: -0.015em;
   color: #000000;
   margin-bottom: 6px;
 }
@@ -1771,6 +1803,7 @@ a {
   font-size: 0.875rem;
   color: #000000;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* --------------------------------------------------------------------------
@@ -1796,8 +1829,9 @@ a {
 .advisory-cinema-title {
   font-family: var(--font-sans);
   font-size: clamp(2.2rem, 3.5vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
   color: #000000;
   margin-bottom: 18px;
 }
