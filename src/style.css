@@ -19,9 +19,12 @@
   --accent-gold: #000000;      /* Plain pitch black */
   --brand-navy: #000000;       /* Plain pitch black */
   
-  /* Typography - single clean font everywhere, no fancy mixing */
+  /* Curated Multi-Font Design System according to section character */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-monumental: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-editorial: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+  --font-technical: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace, sans-serif;
+  --font-serif: var(--font-editorial);
   
   /* Transitions */
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
@@ -205,9 +208,9 @@ a {
 }
 
 .nav-brand-center .brand-title {
-  font-family: var(--font-sans);
-  font-size: 1.5rem;
-  letter-spacing: 0.32em;
+  font-family: var(--font-monumental);
+  font-size: 1.45rem;
+  letter-spacing: 0.28em;
   font-weight: 800;
   text-transform: uppercase;
   color: #000000;
@@ -518,11 +521,11 @@ a {
 }
 
 .manifesto-title {
-  font-family: var(--font-sans);
-  font-size: clamp(2.4rem, 4.4vw, 4.2rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  font-family: var(--font-monumental);
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
   color: #000000;
   margin-bottom: 24px;
 }
@@ -551,10 +554,10 @@ a {
 }
 
 .heritage-number {
-  font-family: var(--font-sans);
+  font-family: var(--font-monumental);
   font-size: clamp(2.8rem, 4vw, 3.8rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: #000000;
   line-height: 0.95;
 }
@@ -859,11 +862,11 @@ a {
 }
 
 .blueprint-val {
-  font-family: var(--font-sans);
-  font-size: 1.6rem;
+  font-family: var(--font-technical);
+  font-size: 1.55rem;
   color: #FFFFFF;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
@@ -885,6 +888,14 @@ a {
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
+}
+
+.craft-pillars-section .section-main-heading {
+  font-family: var(--font-editorial);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
 }
 
 .sobha-lines-heading {
@@ -977,13 +988,13 @@ a {
 }
 
 .sobha-pillar-title {
-  font-family: var(--font-sans);
-  font-size: 1.35rem;
-  line-height: 1.25;
+  font-family: var(--font-editorial);
+  font-size: 1.65rem;
+  line-height: 1.18;
   font-weight: 700;
   color: #000000;
   margin-bottom: 12px;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
 }
 
 .sobha-pillar-desc {
@@ -1174,12 +1185,20 @@ a {
   animation-play-state: paused !important;
 }
 
+.lifestyle-narrative-section .section-main-heading {
+  font-family: var(--font-editorial);
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
+}
+
 .moment-heading {
-  font-family: var(--font-sans);
-  font-size: clamp(2.2rem, 4vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.12;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
   color: #FFFFFF;
   margin-bottom: 20px;
 }
@@ -1213,10 +1232,10 @@ a {
 }
 
 .chip-val {
-  font-family: var(--font-sans);
+  font-family: var(--font-technical);
   font-size: 1.5rem;
   color: #FFFFFF;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -1300,10 +1319,10 @@ a {
 }
 
 .sov-icon {
-  font-family: var(--font-sans);
+  font-family: var(--font-technical);
   font-size: 1.8rem;
   color: #000000;
-  font-weight: 800;
+  font-weight: 700;
   display: block;
   margin-bottom: 12px;
   line-height: 1;
@@ -1380,10 +1399,10 @@ a {
 }
 
 .calc-val-number {
-  font-family: var(--font-sans);
+  font-family: var(--font-technical);
   font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: #000000;
 }
 
@@ -1421,11 +1440,11 @@ a {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  font-family: var(--font-sans);
+  font-family: var(--font-technical);
   font-size: 0.75rem;
   color: #000000;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
 .calc-results-grid {
@@ -1451,11 +1470,11 @@ a {
 }
 
 .result-number {
-  font-family: var(--font-sans);
+  font-family: var(--font-technical);
   font-size: 2rem;
   color: #000000;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
@@ -1790,10 +1809,10 @@ a {
 }
 
 .owner-cinema-text h4 {
-  font-family: var(--font-sans);
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-family: var(--font-editorial);
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: #000000;
   margin-bottom: 6px;
 }
@@ -1827,11 +1846,11 @@ a {
 }
 
 .advisory-cinema-title {
-  font-family: var(--font-sans);
+  font-family: var(--font-editorial);
   font-size: clamp(2.2rem, 3.5vw, 3.25rem);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
   color: #000000;
   margin-bottom: 18px;
 }
