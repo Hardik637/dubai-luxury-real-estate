@@ -236,6 +236,11 @@ function initHeroScroll() {
     } else {
       navbar.classList.remove('scrolled');
     }
+
+    // Trigger mobile auto-carousels only once hero banner scrolling is done
+    if (heroRect.bottom <= window.innerHeight + 80) {
+      notifyHeroScrollCompleted();
+    }
   };
 
   new HeroScrollEngine({
@@ -247,6 +252,9 @@ function initHeroScroll() {
     mobileFramePath: (num) => `/hero-frames-mobile/frame_${String(num).padStart(4, '0')}.webp`,
     onProgress: (progress) => {
       updateNavbarState();
+      if (progress >= 0.95) {
+        notifyHeroScrollCompleted();
+      }
     }
   });
 
@@ -692,20 +700,62 @@ function initSovereignCalculator() {
    - Zero dots / bullets (as instructed: "dont need the dots to navigate just swiping should do the trick")
    ========================================================================== */
 let mobileCarouselTimers = [];
+let mobileCarouselObservers = [];
+let isHeroBannerScrollDone = false;
+
+function notifyHeroScrollCompleted() {
+  if (isHeroBannerScrollDone) return;
+  isHeroBannerScrollDone = true;
+  activateMobileCarousels();
+}
 
 function initMobileCarousels() {
-  // Clear any existing timers first
+  // Clear any existing timers and observers
   mobileCarouselTimers.forEach((t) => clearInterval(t));
   mobileCarouselTimers = [];
+  mobileCarouselObservers.forEach((obs) => obs.disconnect());
+  mobileCarouselObservers = [];
 
   // STRICT GUARD: DO NOTHING ON PC/DESKTOP VIEW
   if (window.innerWidth > 768) return;
 
+  const carouselSelectors = [
+    '.heritage-stats-grid',
+    '.activities-grid',
+    '.sobha-pillars-grid',
+    '.sovereign-pillars-grid',
+    '.calc-results-grid',
+    '.visual-cinema-grid'
+  ];
+
+  // Immediately ensure all containers start cleanly at scrollLeft = 0 (never offset on load)
+  carouselSelectors.forEach((sel) => {
+    const el = document.querySelector(sel);
+    if (el) el.scrollLeft = 0;
+  });
+
+  // If hero is already done (or no hero container present), activate carousels
+  const heroContainer = document.getElementById('hero-scroll-container');
+  if (!heroContainer) {
+    notifyHeroScrollCompleted();
+    return;
+  }
+
+  const rect = heroContainer.getBoundingClientRect();
+  if (rect.bottom <= window.innerHeight + 80) {
+    notifyHeroScrollCompleted();
+  }
+}
+
+function activateMobileCarousels() {
+  // STRICT GUARD: DO NOTHING ON PC/DESKTOP VIEW
+  if (window.innerWidth > 768) return;
+
   const carouselTargets = [
-    { sel: '.heritage-stats-grid', interval: 3800 },
-    { sel: '.activities-grid', interval: 3800 },
+    { sel: '.heritage-stats-grid', interval: 4000 },
+    { sel: '.activities-grid', interval: 4000 },
     { sel: '.sobha-pillars-grid', interval: 4200 },
-    { sel: '.sovereign-pillars-grid', interval: 3600 },
+    { sel: '.sovereign-pillars-grid', interval: 3800 },
     { sel: '.calc-results-grid', interval: 4000 },
     { sel: '.visual-cinema-grid', interval: 4400 }
   ];
@@ -716,6 +766,7 @@ function initMobileCarousels() {
 
     let isInteracting = false;
     let resumeTimeout = null;
+    let timer = null;
 
     const pause = () => {
       isInteracting = true;
@@ -733,24 +784,61 @@ function initMobileCarousels() {
     container.addEventListener('touchend', resume, { passive: true });
     container.addEventListener('touchcancel', resume, { passive: true });
 
-    // Auto-advance loop
-    const timer = setInterval(() => {
+    const advanceSlide = () => {
       if (window.innerWidth > 768 || isInteracting) return;
 
-      const firstChild = container.firstElementChild;
-      if (!firstChild) return;
+      const cards = Array.from(container.children).filter(
+        (el) => el.nodeType === 1 && !el.classList.contains('carousel-spacer')
+      );
+      if (cards.length <= 1) return;
 
-      const cardWidth = firstChild.offsetWidth + 14;
       const maxScroll = container.scrollWidth - container.clientWidth;
-
-      if (container.scrollLeft >= maxScroll - 15) {
+      if (container.scrollLeft >= maxScroll - 25) {
         container.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        return;
       }
-    }, interval);
 
-    mobileCarouselTimers.push(timer);
+      const containerLeft = container.getBoundingClientRect().left;
+      const nextCard = cards.find((card) => {
+        const cardLeft = card.getBoundingClientRect().left;
+        return cardLeft - containerLeft > 35;
+      });
+
+      if (nextCard) {
+        const targetScroll = nextCard.offsetLeft - container.offsetLeft - 20;
+        container.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
+      } else {
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (!timer) {
+                timer = setInterval(advanceSlide, interval);
+                mobileCarouselTimers.push(timer);
+              }
+            } else {
+              if (timer) {
+                clearInterval(timer);
+                mobileCarouselTimers = mobileCarouselTimers.filter((t) => t !== timer);
+                timer = null;
+              }
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      obs.observe(container);
+      mobileCarouselObservers.push(obs);
+    } else {
+      timer = setInterval(advanceSlide, interval);
+      mobileCarouselTimers.push(timer);
+    }
   });
 }
 

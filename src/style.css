@@ -3116,11 +3116,12 @@ a {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    gap: 14px;
+    gap: 16px;
     margin: 28px -16px 0;
-    padding: 6px 16px 18px;
+    padding: 10px 20px 22px;
     border-top: 1px solid var(--border-subtle);
     scrollbar-width: none;
   }
@@ -3130,14 +3131,14 @@ a {
   }
 
   .heritage-stat-card {
-    flex: 0 0 80% !important;
-    max-width: 80% !important;
+    flex: 0 0 78% !important;
+    max-width: 78% !important;
     scroll-snap-align: start;
     background: var(--surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 6px;
+    border-radius: 12px;
     padding: 26px 22px;
-    box-shadow: var(--shadow-subtle);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
   }
 
   .heritage-number {
@@ -3180,11 +3181,12 @@ a {
     flex-direction: row !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     gap: 16px !important;
     margin: 0 -16px 24px !important;
-    padding: 6px 16px 20px !important;
+    padding: 10px 20px 22px !important;
     scrollbar-width: none;
   }
 
@@ -3193,12 +3195,13 @@ a {
   }
 
   .activity-card {
-    flex: 0 0 82% !important;
-    max-width: 82% !important;
-    scroll-snap-align: center;
-    border-radius: 6px;
+    flex: 0 0 80% !important;
+    max-width: 80% !important;
+    scroll-snap-align: start;
+    border-radius: 12px;
     background: var(--surface);
     box-shadow: var(--shadow-card);
+    overflow: hidden;
   }
 
   .activity-video-wrap {
@@ -3331,11 +3334,12 @@ a {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     gap: 16px;
     margin: 16px -16px 0;
-    padding: 4px 16px 16px;
+    padding: 10px 20px 22px;
     scrollbar-width: none;
   }
 
@@ -3344,11 +3348,12 @@ a {
   }
 
   .sobha-pillar-card {
-    flex: 0 0 82% !important;
-    max-width: 82% !important;
+    flex: 0 0 80% !important;
+    max-width: 80% !important;
     scroll-snap-align: start;
-    border-radius: 6px;
+    border-radius: 12px;
     box-shadow: var(--shadow-subtle);
+    overflow: hidden;
   }
 
   .sobha-pillar-thumb {
@@ -3459,11 +3464,12 @@ a {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    gap: 14px;
+    gap: 16px;
     margin: 0 -16px 28px;
-    padding: 4px 16px 16px;
+    padding: 10px 20px 22px;
     scrollbar-width: none;
   }
 
@@ -3472,10 +3478,10 @@ a {
   }
 
   .sov-pillar-item {
-    flex: 0 0 80% !important;
-    max-width: 80% !important;
+    flex: 0 0 78% !important;
+    max-width: 78% !important;
     scroll-snap-align: start;
-    border-radius: 6px;
+    border-radius: 12px;
     padding: 26px 22px;
     box-shadow: var(--shadow-subtle);
   }
@@ -3500,11 +3506,12 @@ a {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    gap: 12px;
+    gap: 14px;
     margin: 0 -16px 20px;
-    padding: 4px 16px 14px;
+    padding: 10px 20px 20px;
     scrollbar-width: none;
   }
 
@@ -3516,7 +3523,7 @@ a {
     flex: 0 0 74% !important;
     max-width: 74% !important;
     scroll-snap-align: start;
-    border-radius: 6px;
+    border-radius: 12px;
     padding: 20px 18px;
   }
 
@@ -3603,11 +3610,12 @@ a {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     gap: 16px;
     margin: 0 -16px 32px;
-    padding: 4px 16px 18px;
+    padding: 10px 20px 22px;
     scrollbar-width: none;
   }
 
@@ -3616,11 +3624,24 @@ a {
   }
 
   .prop-card-visual {
-    flex: 0 0 82% !important;
-    max-width: 82% !important;
+    flex: 0 0 80% !important;
+    max-width: 80% !important;
     scroll-snap-align: start;
-    border-radius: 6px;
+    border-radius: 12px;
     box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  /* End Spacers for Mobile Carousels to ensure right corner gap */
+  .heritage-stats-grid::after,
+  .activities-grid::after,
+  .sobha-pillars-grid::after,
+  .sovereign-pillars-grid::after,
+  .calc-results-grid::after,
+  .visual-cinema-grid::after {
+    content: '';
+    flex: 0 0 8px;
+    display: block;
   }
 
   .prop-img {
