@@ -2074,6 +2074,174 @@ a {
 }
 
 /* --------------------------------------------------------------------------
+   3.8 PATRON REVIEWS & TESTIMONIALS (WALL OF CLIENT REVIEWS)
+   Masonry review cards styled in Obsidian Black, Champagne Gold, and Sans typography
+   -------------------------------------------------------------------------- */
+.reviews-section {
+  padding: 110px 0 120px;
+  background-color: var(--color-obsidian);
+  border-top: 1px solid rgba(197, 168, 128, 0.22);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+.reviews-section::before {
+  content: '';
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(197, 168, 128, 0.09) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.reviews-section .section-title-wrap {
+  text-align: left;
+  margin-bottom: 50px;
+}
+
+.reviews-section .act-micro-tag .act-time {
+  background: rgba(197, 168, 128, 0.18);
+  color: var(--champagne-gold-light);
+  border: 1px solid rgba(197, 168, 128, 0.3);
+}
+
+.reviews-section .act-micro-tag .act-coord {
+  color: rgba(250, 248, 245, 0.65);
+}
+
+.reviews-section .section-main-heading {
+  color: #FFFFFF;
+}
+
+.reviews-section .section-main-sub {
+  color: rgba(250, 248, 245, 0.72);
+}
+
+/* Masonry Columns */
+.reviews-masonry-grid {
+  column-count: 3;
+  column-gap: 24px;
+}
+
+.review-card {
+  break-inside: avoid;
+  background: #111317;
+  border: 1px solid rgba(197, 168, 128, 0.22);
+  border-radius: 6px;
+  padding: 28px 24px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+
+.review-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(197, 168, 128, 0.5), transparent);
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--champagne-gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 20px rgba(197, 168, 128, 0.12);
+}
+
+.review-card:hover::before {
+  opacity: 1;
+}
+
+.review-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.review-tag {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--champagne-gold-light);
+  font-weight: 700;
+}
+
+.review-stars {
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: var(--champagne-gold);
+  line-height: 1;
+}
+
+.review-quote {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.68;
+  color: rgba(250, 248, 245, 0.88);
+  font-weight: 400;
+  margin-bottom: 22px;
+  letter-spacing: -0.005em;
+}
+
+.review-client-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.review-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--champagne-gold);
+  flex-shrink: 0;
+  background-color: #1a1c22;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.review-client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.review-client-name {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.review-client-title {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--champagne-gold-light);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+/* --------------------------------------------------------------------------
    5. PRIVATE ADVISORY DESK
    -------------------------------------------------------------------------- */
 .cinematic-advisory-section {
@@ -2519,6 +2687,11 @@ a {
 
   .visual-cinema-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .reviews-masonry-grid {
+    column-count: 2;
+    column-gap: 20px;
   }
 }
 
@@ -3085,5 +3258,22 @@ a {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  /* --------------------------------------------------
+     7. PATRON REVIEWS: MOBILE STACK
+     -------------------------------------------------- */
+  .reviews-section {
+    padding: 70px 0 80px;
+  }
+
+  .reviews-masonry-grid {
+    column-count: 1;
+    column-gap: 0;
+  }
+
+  .review-card {
+    padding: 24px 20px 20px;
+    margin-bottom: 16px;
   }
 }
