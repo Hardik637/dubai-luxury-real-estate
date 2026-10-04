@@ -2121,25 +2121,91 @@ a {
   color: rgba(250, 248, 245, 0.72);
 }
 
-/* Masonry Columns */
-.reviews-masonry-grid {
-  column-count: 3;
-  column-gap: 24px;
+/* Infinite Vertical Auto-Scrolling Testimonial Marquee */
+.reviews-marquee-stage {
+  position: relative;
+  height: 720px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.reviews-marquee-stage::before,
+.reviews-marquee-stage::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 90px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.reviews-marquee-stage::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--color-obsidian) 0%, transparent 100%);
+}
+
+.reviews-marquee-stage::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-obsidian) 0%, transparent 100%);
+}
+
+.reviews-column {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+
+.reviews-column-track {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  will-change: transform;
+}
+
+/* Vertical downward scrolling animation: cards move down, disappear at bottom, and seamlessly reappear at top */
+@keyframes marqueeScrollDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.track-down-1 {
+  animation: marqueeScrollDown 42s linear infinite;
+}
+
+.track-down-2 {
+  animation: marqueeScrollDown 52s linear infinite;
+}
+
+.track-down-3 {
+  animation: marqueeScrollDown 46s linear infinite;
+}
+
+/* Pause on hover so patrons can read any review comfortably */
+.reviews-marquee-stage:hover .reviews-column-track {
+  animation-play-state: paused;
 }
 
 .review-card {
-  break-inside: avoid;
   background: #111317;
   border: 1px solid rgba(197, 168, 128, 0.22);
   border-radius: 6px;
   padding: 28px 24px 24px;
-  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
   position: relative;
+  flex-shrink: 0;
 }
 
 .review-card::before {
@@ -2689,9 +2755,13 @@ a {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .reviews-masonry-grid {
-    column-count: 2;
-    column-gap: 20px;
+  .reviews-marquee-stage {
+    grid-template-columns: repeat(2, 1fr);
+    height: 660px;
+  }
+
+  .reviews-column.col-3 {
+    display: none;
   }
 }
 
@@ -3261,19 +3331,23 @@ a {
   }
 
   /* --------------------------------------------------
-     7. PATRON REVIEWS: MOBILE STACK
+     7. PATRON REVIEWS: MOBILE MARQUEE
      -------------------------------------------------- */
   .reviews-section {
     padding: 70px 0 80px;
   }
 
-  .reviews-masonry-grid {
-    column-count: 1;
-    column-gap: 0;
+  .reviews-marquee-stage {
+    grid-template-columns: 1fr;
+    height: 560px;
+  }
+
+  .reviews-column.col-2,
+  .reviews-column.col-3 {
+    display: none;
   }
 
   .review-card {
     padding: 24px 20px 20px;
-    margin-bottom: 16px;
   }
 }
