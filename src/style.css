@@ -1,7 +1,6 @@
 /* ==========================================================================
-   AURA DUBAI — SOBHA-INSPIRED MASTERPIECE EDITORIAL DESIGN SYSTEM
-   Palette: Light Cream, Soft Limestone, Deep Midnight Navy & Warm Sand Gold
-   Typography: Cormorant Garamond & Plus Jakarta Sans
+   VISION OF EXCELLENCE — LUXURY REAL ESTATE DUBAI
+   Editorial Architectural Luxury Design System
    ========================================================================== */
 
 :root {
@@ -137,7 +136,7 @@ a {
 
 /* --------------------------------------------------------------------------
    NAVIGATION (HERO FROSTED GLASS BLUR -> SCROLLED SOLID CREAM BACKGROUND)
-   - Centered AURA DUBAI logo & brand.
+   - Centered VISION OF EXCELLENCE logo & brand.
    - Symmetrical left and right navigation options.
    - Frosted blur background during hero section for supreme option legibility.
    - Solid frosted cream background appears after scrolling beyond hero section.
@@ -200,40 +199,28 @@ a {
 /* Center Brand Styling */
 .nav-brand-center {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   text-decoration: none;
   line-height: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.nav-brand-center .brand-title {
-  font-family: var(--font-monumental);
-  font-size: 1.45rem;
-  letter-spacing: 0.28em;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: #000000;
-  transition: opacity 0.3s ease;
+.nav-brand-center:hover {
+  transform: scale(1.03);
 }
 
-.nav-brand-center .brand-subtitle {
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  color: #000000;
-  font-weight: 700;
-  margin-top: 4px;
-  transition: opacity 0.3s ease;
+.nav-brand-logo-img {
+  height: 52px;
+  width: auto;
+  max-width: 175px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.main-navbar.scrolled .nav-brand-center .brand-title {
-  color: #000000;
-}
-
-.main-navbar.scrolled .nav-brand-center .brand-subtitle {
-  color: #000000;
+.main-navbar.scrolled .nav-brand-logo-img {
+  filter: contrast(1.05) brightness(0.98);
 }
 
 /* Navigation Links */
@@ -2089,14 +2076,21 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.footer-logo {
-  font-family: var(--font-sans);
-  font-size: 1.5rem;
-  letter-spacing: 0.2em;
-  font-weight: 700;
-  color: #FFFFFF;
+.footer-brand-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo-img {
+  height: 48px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  display: block;
 }
 
 .footer-coords {
