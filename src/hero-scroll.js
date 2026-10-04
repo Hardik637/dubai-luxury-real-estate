@@ -61,6 +61,9 @@ export class HeroScrollEngine {
 
     this.handleResize();
     window.addEventListener('resize', scheduleResize, { passive: true });
+    if (typeof window !== 'undefined' && window.visualViewport) {
+      window.visualViewport.addEventListener('resize', scheduleResize, { passive: true });
+    }
     window.addEventListener('orientationchange', () => {
       setTimeout(scheduleResize, 80);
     });

@@ -68,6 +68,9 @@ html {
   background-color: var(--bg-primary);
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -76,6 +79,8 @@ body {
   color: var(--text-main);
   line-height: 1.5;
   overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
 }
 
 body.is-loading {
@@ -91,10 +96,9 @@ body.is-loading {
    -------------------------------------------------------------------------- */
 .page-preloader {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 999999;
   background: rgba(250, 248, 245, 0.94);
   backdrop-filter: blur(32px) saturate(130%);
@@ -228,6 +232,16 @@ a {
   margin-top: -36px;
   box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.45);
   border-top: 1px solid rgba(212, 185, 150, 0.3);
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+}
+
+#main-content > section {
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .manifesto-curtain-pill {
@@ -2497,10 +2511,9 @@ a {
    -------------------------------------------------------------------------- */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -2766,41 +2779,59 @@ a {
 }
 
 @media (max-width: 768px) {
-  /* Navigation */
+  /* Navigation: Perfectly fitted full-width flex navbar on mobile */
+  .main-navbar {
+    padding: 10px 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .nav-container-split {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    position: relative;
-    padding: 0 20px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
   }
 
   .nav-col-left {
-    display: none;
+    display: none !important;
   }
 
   .nav-col-center {
-    margin: 0 auto;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    text-align: left;
+  }
+
+  .nav-brand-logo-img {
+    height: 38px;
+    max-width: 130px;
+    width: auto;
+    display: block;
   }
 
   .nav-col-right {
-    position: absolute;
-    right: 20px;
+    position: static;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
     gap: 0;
   }
 
   .nav-col-right .nav-link:not(.nav-btn-enquire) {
-    display: none;
+    display: none !important;
   }
 
   .nav-btn-enquire {
-    padding: 5px 12px;
+    padding: 6px 14px;
     font-size: 0.6875rem;
-  }
-
-  .main-navbar {
-    padding: 14px 0;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
   }
 
   /* Architectural Curtain & Spacing */
@@ -2811,19 +2842,28 @@ a {
     border-top-right-radius: 28px;
     margin-top: -36px;
     box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.45);
+    overflow-x: clip;
+    width: 100%;
+    max-width: 100%;
   }
 
   .nav-container,
   .act-wrapper,
   .footer-container {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Hero frames dynamic mobile fit */
   .hero-scroll-container {
     height: 320vh;
-    background-color: transparent;
+    background-color: #080A0E;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    overflow: visible;
   }
 
   .hero-sticky-viewport {
@@ -2831,8 +2871,10 @@ a {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100svh;
-    min-height: 100svh;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     overflow: hidden;
     background-color: #080A0E;
     z-index: 10;
