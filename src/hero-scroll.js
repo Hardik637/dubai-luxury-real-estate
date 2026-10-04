@@ -8,10 +8,16 @@ export class HeroScrollEngine {
   constructor(options = {}) {
     this.container = document.querySelector(options.containerSelector || '#hero-scroll-container');
     this.canvas = document.querySelector(options.canvasSelector || '#hero-canvas');
-    this.totalFrames = options.totalFrames || 147;
-    this.framePath = options.framePath || ((i) => `/hero-frames/frame_${String(i).padStart(4, '0')}.webp`);
     this.onProgress = options.onProgress || null;
     this.onComplete = options.onComplete || null;
+
+    // Desktop configuration (147 frames, 16:9 landscape)
+    this.desktopTotalFrames = options.desktopTotalFrames || options.totalFrames || 147;
+    this.desktopFramePath = options.desktopFramePath || options.framePath || ((i) => `/hero-frames/frame_${String(i).padStart(4, '0')}.webp`);
+
+    // Mobile configuration (210 frames, 9:16 portrait)
+    this.mobileTotalFrames = options.mobileTotalFrames || 210;
+    this.mobileFramePath = options.mobileFramePath || ((i) => `/hero-frames-mobile/frame_${String(i).padStart(4, '0')}.webp`);
 
     if (!this.container || !this.canvas) {
       console.error('HeroScrollEngine: Canvas or container not found');
@@ -19,9 +25,10 @@ export class HeroScrollEngine {
     }
 
     this.ctx = this.canvas.getContext('2d', { alpha: false, desynchronized: true });
-    this.images = new Array(this.totalFrames);
-    this.loadedImages = new Set();
     
+    // Set up active frame mode (mobile vs desktop)
+    this.setupActiveMode();
+
     this.currentFrameIndex = 0;
     this.targetFrameIndex = 0;
     this.scrollProgress = 0;
@@ -29,6 +36,18 @@ export class HeroScrollEngine {
     this.isTicking = false;
 
     this.init();
+  }
+
+  isMobileMode() {
+    return window.innerWidth <= 768;
+  }
+
+  setupActiveMode() {
+    this.isMobile = this.isMobileMode();
+    this.totalFrames = this.isMobile ? this.mobileTotalFrames : this.desktopTotalFrames;
+    this.framePath = this.isMobile ? this.mobileFramePath : this.desktopFramePath;
+    this.images = new Array(this.totalFrames);
+    this.loadedImages = new Set();
   }
 
   init() {
@@ -65,9 +84,21 @@ export class HeroScrollEngine {
   handleResize() {
     if (!this.canvas) return;
 
-    const isMobile = window.innerWidth <= 768;
+    const newIsMobile = this.isMobileMode();
+    if (newIsMobile !== this.isMobile) {
+      // Gracefully switch between desktop and mobile modes on viewport crossover
+      const prevProgress = this.totalFrames > 1 ? this.currentFrameIndex / (this.totalFrames - 1) : 0;
+      this.setupActiveMode();
+      this.currentFrameIndex = prevProgress * (this.totalFrames - 1);
+      this.targetFrameIndex = this.currentFrameIndex;
+      this.loadFirstFrame().then(() => {
+        this.renderFrame(Math.round(this.currentFrameIndex));
+        this.preloadAllFrames();
+      });
+    }
+
     // On high-DPR mobile screens, use full devicePixelRatio up to 2.5 for crystal-sharp retina clarity
-    const dpr = isMobile 
+    const dpr = this.isMobile 
       ? Math.min(window.devicePixelRatio || 1, 2.5)
       : Math.min(window.devicePixelRatio || 1, 2);
 

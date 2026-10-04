@@ -241,8 +241,10 @@ function initHeroScroll() {
   new HeroScrollEngine({
     containerSelector: '#hero-scroll-container',
     canvasSelector: '#hero-canvas',
-    totalFrames: 147,
-    framePath: (num) => `/hero-frames/frame_${String(num).padStart(4, '0')}.webp`,
+    desktopTotalFrames: 147,
+    desktopFramePath: (num) => `/hero-frames/frame_${String(num).padStart(4, '0')}.webp`,
+    mobileTotalFrames: 210,
+    mobileFramePath: (num) => `/hero-frames-mobile/frame_${String(num).padStart(4, '0')}.webp`,
     onProgress: (progress) => {
       updateNavbarState();
     }
