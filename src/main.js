@@ -640,6 +640,8 @@ function updateSovereignCalculator() {
   const displayBudget = document.getElementById('calc-display-budget');
   const displayTax = document.getElementById('calc-tax-saved');
   const displayYield = document.getElementById('calc-net-yield');
+  const displayMonthlyYield = document.getElementById('calc-monthly-yield');
+  const display5YearGain = document.getElementById('calc-5year-gain');
   const displayVisa = document.getElementById('calc-visa-status');
 
   const currInfo = EXCHANGE_RATES[state.currency] || EXCHANGE_RATES.AED;
@@ -649,6 +651,8 @@ function updateSovereignCalculator() {
   const convertedBudget = Math.round(currentCalculatorBudgetAED * rate);
   const taxSaved = Math.round(currentCalculatorBudgetAED * 0.084 * 0.45 * rate);
   const netYield = Math.round(currentCalculatorBudgetAED * 0.082 * rate);
+  const monthlyYield = Math.round(netYield / 12);
+  const fiveYearGain = Math.round((netYield * 5) + (currentCalculatorBudgetAED * 0.35 * rate));
 
   const formatCurr = (val) => {
     if (curr === 'AED') return `AED ${val.toLocaleString()}`;
@@ -661,6 +665,8 @@ function updateSovereignCalculator() {
   if (displayBudget) displayBudget.textContent = formatCurr(convertedBudget);
   if (displayTax) displayTax.textContent = formatCurr(taxSaved);
   if (displayYield) displayYield.textContent = formatCurr(netYield);
+  if (displayMonthlyYield) displayMonthlyYield.textContent = `~${formatCurr(monthlyYield)} / month tax-free cash flow`;
+  if (display5YearGain) display5YearGain.textContent = formatCurr(fiveYearGain);
   if (displayVisa) {
     if (currentCalculatorBudgetAED >= 2000000) {
       displayVisa.textContent = "100% Qualified";
@@ -715,6 +721,7 @@ function initMobileCarousels() {
     '.activities-grid',
     '.sobha-pillars-grid',
     '.sovereign-pillars-grid',
+    '.sovereign-lifestyle-grid',
     '.calc-results-grid',
     '.visual-cinema-grid'
   ];
@@ -747,6 +754,7 @@ function activateMobileCarousels() {
     { sel: '.activities-grid', interval: 4000 },
     { sel: '.sobha-pillars-grid', interval: 4200 },
     { sel: '.sovereign-pillars-grid', interval: 3800 },
+    { sel: '.sovereign-lifestyle-grid', interval: 4000 },
     { sel: '.calc-results-grid', interval: 4000 },
     { sel: '.visual-cinema-grid', interval: 4400 }
   ];
