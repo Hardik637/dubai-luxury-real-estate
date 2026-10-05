@@ -3198,31 +3198,53 @@ a {
     flex: 0 0 80% !important;
     max-width: 80% !important;
     scroll-snap-align: start;
-    border-radius: 12px;
+    border-radius: 14px;
     background: var(--surface);
     box-shadow: var(--shadow-card);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
+  /* Full uncropped portrait video height matching 1080x1920 (9:16) */
   .activity-video-wrap {
-    aspect-ratio: 16 / 10 !important;
-    border-radius: 6px 6px 0 0;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16 !important;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    background-color: #000000;
   }
 
+  .activity-showcase-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Mobile: Clean card info with title only - remove explanation and meta */
   .activity-card-info {
-    padding: 20px 18px 22px;
+    padding: 14px 16px 16px;
+    background: #ffffff;
+    flex-grow: 0;
   }
 
   .activity-title {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
+    font-weight: 700;
     line-height: 1.25;
-    margin-bottom: 6px;
+    margin-bottom: 0;
+    color: var(--color-obsidian);
   }
 
   .activity-desc {
-    font-size: 0.84rem;
-    line-height: 1.6;
-    margin-bottom: 12px;
+    display: none !important;
+  }
+
+  .activity-meta-tag {
+    display: none !important;
   }
 
   .community-display-stage {

@@ -366,24 +366,26 @@ function initActivitiesShowcase() {
   const videos = Array.from(section.querySelectorAll('.activity-showcase-video'));
   if (!videos.length) return;
 
-  let isPreloaded = false;
+  // Ensure all videos are properly muted and configured for mobile inline playback
+  videos.forEach((video) => {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
 
-  function preloadVideos() {
-    if (isPreloaded) return;
-    isPreloaded = true;
-
-    videos.forEach((video) => {
-      const src = video.getAttribute('data-src');
-      if (src && !video.src) {
-        video.src = src;
-        video.load();
+    // If video has src and is loaded, play as soon as ready
+    video.addEventListener('canplay', () => {
+      if (video.paused) {
+        video.play().catch(() => {});
       }
-    });
-  }
+    }, { once: true });
+  });
 
   function playAllVideos() {
-    preloadVideos();
     videos.forEach((video) => {
+      video.muted = true;
       if (video.paused) {
         const playPromise = video.play();
         if (playPromise !== undefined) {
@@ -404,27 +406,8 @@ function initActivitiesShowcase() {
     });
   }
 
-  // 1. LAZY SCROLL PRELOAD:
-  // Buffers video streams ahead of time when user is within 1000px of section
+  // Autoplay as soon as activities section approaches viewport
   if ('IntersectionObserver' in window) {
-    const preloadObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            preloadVideos();
-            preloadObserver.disconnect();
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '1000px 0px 1000px 0px',
-        threshold: 0.01
-      }
-    );
-    preloadObserver.observe(section);
-
-    // 2. INSTANT AUTOPLAY AS SOON AS USER REACHES THE SECTION
     const playbackObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -437,17 +420,25 @@ function initActivitiesShowcase() {
       },
       {
         root: null,
-        rootMargin: '50px 0px 50px 0px',
-        threshold: 0.15
+        rootMargin: '200px 0px 200px 0px',
+        threshold: 0.02
       }
     );
     playbackObserver.observe(section);
   } else {
-    preloadVideos();
     playAllVideos();
   }
 
-  // Click to toggle play/pause
+  // Backup trigger on first user interaction (touch/scroll) to ensure mobile compliance
+  const startAutoplayOnInteraction = () => {
+    playAllVideos();
+    window.removeEventListener('touchstart', startAutoplayOnInteraction);
+    window.removeEventListener('scroll', startAutoplayOnInteraction);
+  };
+  window.addEventListener('touchstart', startAutoplayOnInteraction, { passive: true, once: true });
+  window.addEventListener('scroll', startAutoplayOnInteraction, { passive: true, once: true });
+
+  // Click / tap to toggle play/pause
   videos.forEach((video) => {
     video.addEventListener('click', () => {
       if (video.paused) {
