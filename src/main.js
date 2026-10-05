@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCurrencySelector();
   initActivitiesShowcase();
   initLifestyleCarousel();
+  initWhyDubaiExperience();
   initSovereignCalculator();
   initBidirectionalScrollReveals();
   initVisualCatalog();
@@ -632,6 +633,141 @@ function initLifestyleCarousel() {
 }
 
 /* ==========================================================================
+   3.1 WHY DUBAI EDITORIAL EXPERIENCE: PILLARS & GLOBAL POSITIONING
+   ========================================================================== */
+function initWhyDubaiExperience() {
+  // 1. Three Interactive Pillars (Capital, Residency, Lifestyle)
+  const pillarsContainer = document.getElementById('why-pillars-container');
+  const pillarCards = document.querySelectorAll('.pillar-card');
+
+  if (pillarsContainer && pillarCards.length > 0) {
+    pillarCards.forEach((card) => {
+      // Toggle / activate pillar on click or keydown (Enter/Space)
+      card.addEventListener('click', (e) => {
+        // If clicking inside a link or button, let that action proceed
+        if (e.target.closest('a, button')) return;
+
+        const isMobile = window.innerWidth <= 840;
+
+        if (isMobile) {
+          // Mobile Accordion behavior: toggle current card, close others
+          const wasActive = card.classList.contains('is-active');
+          pillarCards.forEach((c) => c.classList.remove('is-active'));
+          if (!wasActive) {
+            card.classList.add('is-active');
+          }
+        } else {
+          // Desktop: ensure clicked pillar becomes active, others inactive
+          pillarCards.forEach((c) => c.classList.remove('is-active'));
+          card.classList.add('is-active');
+        }
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          if (!e.target.closest('a, button')) {
+            e.preventDefault();
+            pillarCards.forEach((c) => c.classList.remove('is-active'));
+            card.classList.add('is-active');
+          }
+        }
+      });
+    });
+
+    // Desktop hover hint: when mouse leaves container, restore the currently active card
+    pillarsContainer.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 840) {
+        const activeCard = pillarsContainer.querySelector('.pillar-card.is-active');
+        if (!activeCard && pillarCards[0]) {
+          pillarCards[0].classList.add('is-active');
+        }
+      }
+    });
+  }
+
+  // 2. Pillar 3: Lifestyle Sequence Moments (07:00, 12:00, 18:00, 23:00)
+  const seqTabs = document.querySelectorAll('.seq-tab-btn');
+  const seqSlides = document.querySelectorAll('.seq-slide');
+
+  if (seqTabs.length > 0 && seqSlides.length > 0) {
+    seqTabs.forEach((tab) => {
+      tab.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetIndex = tab.getAttribute('data-seq');
+
+        seqTabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        seqSlides.forEach((slide) => {
+          if (slide.getAttribute('data-seq-index') === targetIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+      });
+    });
+  }
+
+  // 3. Smooth scroll for "Explore the numbers" button
+  const exploreNumbersBtn = document.getElementById('btn-explore-numbers');
+  if (exploreNumbersBtn) {
+    exploreNumbersBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById('capital-scenario');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // 4. Global Positioning Interactive Hub Nodes
+  const marketNodes = document.querySelectorAll('.market-node');
+  const epicenter = document.getElementById('epicenter-dubai');
+
+  if (marketNodes.length > 0) {
+    marketNodes.forEach((node) => {
+      const city = node.getAttribute('data-city');
+      const connectionLine = document.querySelector(`.hub-line-${city}`);
+
+      const activateNode = () => {
+        marketNodes.forEach((n) => n.classList.remove('is-highlighted'));
+        document.querySelectorAll('.hub-line').forEach((l) => l.classList.remove('is-active'));
+
+        node.classList.add('is-highlighted');
+        if (connectionLine) connectionLine.classList.add('is-active');
+        if (epicenter) epicenter.classList.add('is-transmitting');
+      };
+
+      const deactivateNode = () => {
+        node.classList.remove('is-highlighted');
+        if (connectionLine) connectionLine.classList.remove('is-active');
+        if (epicenter) epicenter.classList.remove('is-transmitting');
+      };
+
+      node.addEventListener('mouseenter', activateNode);
+      node.addEventListener('mouseleave', deactivateNode);
+      node.addEventListener('focus', activateNode);
+      node.addEventListener('blur', deactivateNode);
+
+      // Support tap on mobile
+      node.addEventListener('click', () => {
+        const isHighlight = node.classList.contains('is-highlighted');
+        if (isHighlight) {
+          deactivateNode();
+        } else {
+          activateNode();
+        }
+      });
+    });
+  }
+}
+
+/* ==========================================================================
    3.2 SOVEREIGN WEALTH & YIELD CALCULATOR
    ========================================================================== */
 let currentCalculatorBudgetAED = 25000000;
@@ -643,6 +779,11 @@ function updateSovereignCalculator() {
   const displayMonthlyYield = document.getElementById('calc-monthly-yield');
   const display5YearGain = document.getElementById('calc-5year-gain');
   const displayVisa = document.getElementById('calc-visa-status');
+
+  // Scenario specific display elements
+  const scenYourCapital = document.getElementById('scen-your-capital');
+  const scenPropValue = document.getElementById('scen-prop-value');
+  const scenYieldPct = document.getElementById('scen-yield-pct');
 
   const currInfo = EXCHANGE_RATES[state.currency] || EXCHANGE_RATES.AED;
   const rate = currInfo.rate;
@@ -663,15 +804,20 @@ function updateSovereignCalculator() {
   };
 
   if (displayBudget) displayBudget.textContent = formatCurr(convertedBudget);
+  if (scenYourCapital) scenYourCapital.textContent = formatCurr(convertedBudget);
+  if (scenPropValue) scenPropValue.textContent = formatCurr(convertedBudget);
+
   if (displayTax) displayTax.textContent = formatCurr(taxSaved);
   if (displayYield) displayYield.textContent = formatCurr(netYield);
-  if (displayMonthlyYield) displayMonthlyYield.textContent = `~${formatCurr(monthlyYield)} / month tax-free cash flow`;
+  if (displayMonthlyYield) displayMonthlyYield.textContent = `~${formatCurr(monthlyYield)} / month`;
   if (display5YearGain) display5YearGain.textContent = formatCurr(fiveYearGain);
+  if (scenYieldPct) scenYieldPct.textContent = '8.2%*';
+
   if (displayVisa) {
     if (currentCalculatorBudgetAED >= 2000000) {
-      displayVisa.textContent = "100% Qualified";
+      displayVisa.textContent = "Potential pathway";
     } else {
-      displayVisa.textContent = "Partial (2M AED min)";
+      displayVisa.textContent = "Under min. threshold";
     }
   }
 }
