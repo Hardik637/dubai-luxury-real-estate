@@ -94,6 +94,18 @@ if (!distIndex.includes('hero-scroll-container') || !distIndex.includes('hero-ca
 if (!distIndex.includes('/properties') || !distIndex.includes('/invest')) {
   throw new Error('Homepage navigation does not link to /properties and /invest');
 }
+
+// Verify section order on Homepage
+const pWhyDubai = distIndex.indexOf('id="sovereign-advantage"');
+const pEstates = distIndex.indexOf('id="estates"');
+const pScenario = distIndex.indexOf('id="capital-scenario"');
+const pPositioning = distIndex.indexOf('id="global-positioning"');
+const pActivities = distIndex.indexOf('id="activities"');
+
+if (!(pWhyDubai < pEstates && pEstates < pScenario && pScenario < pPositioning && pPositioning < pActivities)) {
+  throw new Error(`Section order incorrect: WhyDubai(${pWhyDubai}), Estates(${pEstates}), Scenario(${pScenario}), Positioning(${pPositioning}), Activities(${pActivities})`);
+}
+console.log('✓ Section order strictly verified: Why Dubai -> Signature Residences -> Financial Scenario -> Global Positioning -> Activities');
 console.log('✓ Homepage hero & canvas remain 100% intact with updated navigation links.');
 
 console.log('\n🎉 ALL RIGOROUS TESTS PASSED SUCCESSFULLY!');
