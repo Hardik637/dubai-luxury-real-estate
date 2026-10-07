@@ -45,22 +45,22 @@
 
 .editorial-eyebrow {
   display: inline-block;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--champagne-gold-deep);
   margin-bottom: 18px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .editorial-headline {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: clamp(2.4rem, 5.2vw, 4.6rem);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.1;
   color: var(--color-obsidian);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   margin-bottom: 22px;
   max-width: 900px;
 }
@@ -123,9 +123,9 @@
   cursor: pointer;
   padding: 8px 20px;
   border-radius: 999px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-obsidian-muted);
@@ -189,13 +189,13 @@
 .btn-reset-filters {
   background: transparent;
   border: none;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-obsidian-muted);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   padding: 8px 12px;
   transition: color 0.2s ease;
 }
@@ -205,11 +205,11 @@
 }
 
 .results-count-pill {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--champagne-gold-deep);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -229,9 +229,9 @@
   border: 1px solid var(--border-medium);
   border-radius: 6px;
   padding: 10px 18px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-obsidian);
@@ -285,9 +285,9 @@
 }
 
 .sheet-title {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: 1.15rem;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.01em;
   font-weight: 700;
   color: var(--color-obsidian);
 }
@@ -306,9 +306,9 @@
 
 .sheet-group-label {
   display: block;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--champagne-gold-deep);
   font-weight: 700;
@@ -334,9 +334,9 @@
   color: #FFFFFF;
   border: 1px solid var(--champagne-gold);
   border-radius: 8px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
@@ -416,9 +416,9 @@
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(197, 168, 128, 0.4);
   color: var(--champagne-gold-light);
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   font-weight: 700;
   text-transform: uppercase;
   padding: 4px 10px;
@@ -431,7 +431,7 @@
 }
 
 .card-property-name {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-obsidian);
@@ -453,11 +453,11 @@
 }
 
 .card-property-price {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-obsidian);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   border-top: 1px solid var(--border-subtle);
   padding-top: 14px;
 }
@@ -472,9 +472,11 @@
 }
 
 .empty-title {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: 1.5rem;
+  font-weight: 700;
   color: var(--color-obsidian);
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 
@@ -510,9 +512,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-obsidian);
   font-weight: 700;
@@ -574,9 +576,9 @@
 }
 
 .detail-badge-pill {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
   padding: 5px 12px;
@@ -587,9 +589,10 @@
 }
 
 .detail-prop-title {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: clamp(2.2rem, 4.8vw, 4.2rem);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   color: #FFFFFF;
   line-height: 1.1;
   margin-bottom: 8px;
@@ -603,11 +606,11 @@
 }
 
 .detail-prop-price {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: clamp(1.5rem, 2.5vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--champagne-gold-light);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .detail-hero-actions {
@@ -620,9 +623,9 @@
   background: var(--champagne-gradient);
   color: var(--color-obsidian);
   border: none;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 800;
   padding: 16px 32px;
@@ -675,9 +678,9 @@
   cursor: pointer;
   padding: 8px 18px;
   border-radius: 999px;
-  font-family: var(--font-technical);
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
   color: var(--color-obsidian-muted);
@@ -833,9 +836,9 @@
 .lightbox-caption-bar {
   margin-top: 14px;
   color: rgba(255, 255, 255, 0.7);
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
 }
 
 /* Specs Strip */
@@ -869,12 +872,13 @@
 }
 
 .spec-item-lbl {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-obsidian-muted);
   margin-top: 4px;
+  font-weight: 600;
 }
 
 /* Overview & Structured Details */
@@ -890,9 +894,10 @@
 .detail-overview-block h3,
 .detail-specs-block h3,
 .detail-location-block h3 {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: clamp(1.4rem, 2vw, 1.8rem);
   font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--color-obsidian);
   margin-bottom: 24px;
   padding-bottom: 12px;
@@ -941,11 +946,12 @@
 }
 
 .specs-table td:first-child {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-obsidian-muted);
+  font-weight: 600;
   width: 45%;
 }
 
@@ -1007,12 +1013,12 @@
 }
 
 .cta-large-heading {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: clamp(2rem, 4vw, 3.4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-obsidian);
   margin-bottom: 24px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.025em;
 }
 
 /* --------------------------------------------------------------------------
@@ -1044,9 +1050,9 @@
   border: 1px solid var(--champagne-gold);
   padding: 16px 36px;
   border-radius: 4px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
@@ -1069,9 +1075,9 @@
   border: 1px solid var(--border-medium);
   padding: 16px 32px;
   border-radius: 4px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
@@ -1129,11 +1135,11 @@
 }
 
 .journey-step-title {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--color-obsidian);
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 
@@ -1181,9 +1187,9 @@
 }
 
 .obj-indicator-pill {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--champagne-gold-deep);
   font-weight: 700;
@@ -1192,10 +1198,11 @@
 }
 
 .obj-card-title {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-obsidian);
+  letter-spacing: -0.015em;
   margin-bottom: 16px;
 }
 
@@ -1254,9 +1261,9 @@
   border: 1px solid var(--border-medium);
   border-radius: 999px;
   padding: 14px 28px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-obsidian);
@@ -1332,9 +1339,9 @@
 }
 
 .pipeline-node-title {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #FFFFFF;
   font-weight: 700;
@@ -1412,20 +1419,21 @@
 }
 
 .pot-metric-label {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-obsidian-muted);
   margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .pot-metric-value {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-obsidian);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .pot-metric-disclaimer {
@@ -1465,11 +1473,11 @@
 }
 
 .factor-title {
-  font-family: var(--font-monumental);
+  font-family: var(--font-sans);
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--color-obsidian);
-  letter-spacing: 0.06em;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 
@@ -1505,9 +1513,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--champagne-gold-deep);
   font-weight: 700;
@@ -1515,11 +1523,11 @@
 }
 
 .invest-card-yield {
-  font-family: var(--font-technical);
+  font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 700;
   color: #1E6B47;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   margin-top: 6px;
 }
 
