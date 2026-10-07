@@ -76,8 +76,8 @@ console.log('✓ Properties page built with hero, filter system, and grid.');
 if (!distInvest.includes('WHY DUBAI') || !distInvest.includes('WHAT IF YOUR MONEY')) {
   throw new Error('Invest Why Dubai hero text missing');
 }
-if (!distInvest.includes('WHERE YOU LIVE') || !distInvest.includes('CHANGES MORE THAN')) {
-  throw new Error('Invest scroll story sequence missing');
+if (distInvest.includes('WHERE YOU LIVE') && distInvest.includes('CHANGES MORE THAN')) {
+  throw new Error('Invest scroll story section should be removed as requested');
 }
 if (!distInvest.includes('BUILT FOR GLOBAL BUSINESS') || !distInvest.includes('A DIFFERENT ENVIRONMENT FOR WEALTH')) {
   throw new Error('Invest four pillars missing');
@@ -97,7 +97,7 @@ if (!distInvest.includes('Not every beautiful property is a good investment')) {
 if (!distInvest.includes('IF DUBAI MAKES SENSE FOR YOU')) {
   throw new Error('Invest final CTA missing');
 }
-console.log('✓ Invest page built with new Why Dubai experience, scroll story, 4 pillars, base explorer, service journey, and preserved roadmap.');
+console.log('✓ Invest page built with Why Dubai hero, 4 pillars, base explorer, service journey, and preserved roadmap (scroll story removed).');
 
 // Check Home page integrity
 if (!distIndex.includes('hero-scroll-container') || !distIndex.includes('hero-canvas')) {

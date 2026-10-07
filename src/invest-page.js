@@ -186,7 +186,7 @@ function initInvestPageInteractions() {
   if (exploreBtn) {
     exploreBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      const target = document.getElementById('scroll-story');
+      const target = document.getElementById('four-pillars');
       if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   }
