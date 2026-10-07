@@ -37,12 +37,159 @@ function initNavbarAndDrawer() {
   if (backdrop) backdrop.addEventListener('click', closeDrawer);
 }
 
+const DIMENSION_DATA = {
+  tax: {
+    title: 'Tax & Fiscal Environment',
+    traditional: {
+      label: 'Global Metropolitan Metros',
+      headline: 'Progressive Fiscal Drag',
+      desc: 'Top marginal personal income tax rates typically reach 45%–54% (e.g. UK, France, California/NYC). Coupled with capital gains taxation (20%–37%), wealth taxes, and municipal levies, compounding capital faces constant friction.',
+      takeaway: 'Substantial annual fiscal leakage on personal income and asset sales.'
+    },
+    dubai: {
+      label: 'The Dubai Framework',
+      headline: 'Targeted Sovereign Efficiency',
+      desc: '0% personal income tax on salaries and worldwide earnings, with 0% capital gains tax on personal property and investments. Corporate tax is set at a transparent 9% strictly for taxable profits over AED 375,000 (with Free Zone qualifying exemptions). Single 4% DLD transfer fee upon acquisition with 0% recurring municipal property taxes.',
+      takeaway: 'Personal capital and returns compound without recurring personal tax drag.'
+    }
+  },
+  lifestyle: {
+    title: 'Daily Cadence & Security',
+    traditional: {
+      label: 'Global Metropolitan Metros',
+      headline: 'Urban Friction & Strain',
+      desc: 'Legacy capitals offer immense history, yet frequently struggle with deteriorating civic safety indices, transit strikes, property theft, and severe winters that constrain outdoor active living.',
+      takeaway: 'Everyday safety and convenience require perpetual calculation.'
+    },
+    dubai: {
+      label: 'The Dubai Framework',
+      headline: 'World-Class Safety & Seamless Living',
+      desc: 'Consistently ranked among the top 3 safest cities worldwide (Numbeo Safety Index). Clean public environments, 300+ days of annual sunshine, world-class beach clubs, and an effortless service economy across Jumeirah and the Marina.',
+      takeaway: 'A daily rhythm defined by peace of mind, year-round sun, and frictionless convenience.'
+    }
+  },
+  connectivity: {
+    title: 'Global Connectivity & Reach',
+    traditional: {
+      label: 'Global Metropolitan Metros',
+      headline: 'Regional Isolation',
+      desc: 'Traditional Western metropolises operate on time zones misaligned with Asia, making simultaneous coordination between Tokyo, Singapore, and Europe challenging in a single working day.',
+      takeaway: 'Geographic distance from the highest-velocity emerging growth corridors.'
+    },
+    dubai: {
+      label: 'The Dubai Framework',
+      headline: 'The Natural Global Bridge (GMT+4)',
+      desc: 'DXB connects directly to over 260 destinations globally, placing you within 8 hours flight radius of two-thirds of the world’s population. GMT+4 enables active market trading across London, Singapore, Hong Kong, and New York in the same day.',
+      takeaway: 'Direct physical and digital access to the world’s most dynamic markets.'
+    }
+  },
+  business: {
+    title: 'Business Setup & Governance',
+    traditional: {
+      label: 'Global Metropolitan Metros',
+      headline: 'Regulatory Red Tape',
+      desc: 'Heavy bureaucracy, shifting regulatory mandates, and rising compliance overhead increase friction for international founders, family offices, and executives.',
+      takeaway: 'Administrative drag and slower commercial dispute resolutions.'
+    },
+    dubai: {
+      label: 'The Dubai Framework',
+      headline: 'Frictionless Pro-Growth Jurisdictions',
+      desc: '100% foreign business ownership across mainland and free zones. DIFC operates under an independent English common-law legal system with specialized commercial courts and rapid digital corporate incorporation.',
+      takeaway: 'A sovereign jurisdiction built around commercial speed and private facilitation.'
+    }
+  },
+  'real-estate': {
+    title: 'Real Estate Value & Quality',
+    traditional: {
+      label: 'Global Metropolitan Metros',
+      headline: 'High Price-Per-SqFt & Aging Assets',
+      desc: 'Prime central locations in London, New York, or Paris trade at $2,000 to $4,500+/sqft for historic housing stock with limited private amenities, strict tenant eviction laws, and low rental yields (typically 2.5%–4%).',
+      takeaway: 'Compressed yields and recurring capital expenditure on legacy structures.'
+    },
+    dubai: {
+      label: 'The Dubai Framework',
+      headline: 'Contemporary Architectural Excellence',
+      desc: 'Prime and super-prime waterfront residences trade at an attractive entry valuation ($600 to $1,500/sqft) with resort-grade amenities (private concierges, infinity pools, wellness centers). High demand supports attractive rental yields backed by strict RERA escrow security.',
+      takeaway: 'Superior space, architectural innovation, and strong rental demand.'
+    }
+  },
+  wealth: {
+    title: 'Wealth Preservation & Succession',
+    traditional: {
+      label: 'Global Metropolitan Metros',
+      headline: 'High Estate & Inheritance Taxes',
+      desc: 'Inheritance and death duties reach up to 40% in the UK and 45% in France, alongside wealth taxes and capital controls that significantly erode multi-generational assets.',
+      takeaway: 'Intergenerational transfers encounter severe fiscal loss.'
+    },
+    dubai: {
+      label: 'The Dubai Framework',
+      headline: 'Generational Continuity & Trust Structures',
+      desc: '0% inheritance tax on UAE assets for non-Muslim expatriates via registered DIFC Wills and Probate registries. Sophisticated DIFC and ADGM foundations provide robust mechanisms for multi-generational wealth governance.',
+      takeaway: 'Preservation of family capital protected by sovereign common-law certainty.'
+    }
+  }
+};
+
+function renderDimension(dimKey) {
+  const panel = document.getElementById('dim-display-panel');
+  if (!panel || !DIMENSION_DATA[dimKey]) return;
+  const d = DIMENSION_DATA[dimKey];
+  panel.innerHTML = `
+    <div class="dim-display-grid">
+      <div class="dim-col-traditional">
+        <span class="dim-perspective-badge traditional">${d.traditional.label}</span>
+        <h3 class="dim-col-title">${d.traditional.headline}</h3>
+        <p class="dim-col-desc">${d.traditional.desc}</p>
+        <div class="dim-takeaway-box">
+          <strong>Context:</strong> ${d.traditional.takeaway}
+        </div>
+      </div>
+      <div class="dim-col-dubai">
+        <span class="dim-perspective-badge dubai">${d.dubai.label}</span>
+        <h3 class="dim-col-title">${d.dubai.headline}</h3>
+        <p class="dim-col-desc">${d.dubai.desc}</p>
+        <div class="dim-takeaway-box" style="border-left-color: var(--champagne-gold-light);">
+          <strong>Dubai Advantage:</strong> ${d.dubai.takeaway}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function setupDimensionSelector() {
+  const tabBtns = document.querySelectorAll('.dim-tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      const dim = btn.getAttribute('data-dim');
+      renderDimension(dim);
+    });
+  });
+  renderDimension('tax');
+}
+
 function initInvestPageInteractions() {
+  setupDimensionSelector();
   setupObjectiveSelector();
   setupBudgetSelector();
   setupScenarioSlider();
   renderInvestmentOpportunities();
   setupPlanModal();
+
+  // Explore Why Dubai scroll
+  const exploreBtn = document.getElementById('btn-explore-why-dubai');
+  if (exploreBtn) {
+    exploreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById('scroll-story');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 
   // Scroll to opportunities
   const viewOppBtn = document.getElementById('btn-view-opps');
