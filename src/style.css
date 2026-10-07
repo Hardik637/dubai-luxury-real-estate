@@ -252,6 +252,240 @@ a {
   margin: 0 auto 36px;
 }
 
+/* ==========================================================================
+   POST-HERO QUICK PROPERTY FILTER SEARCH BAR
+   Floating capsule search bar directly below the hero section.
+   ========================================================================== */
+.hero-quick-search-section {
+  position: relative;
+  z-index: 40;
+  padding: 40px 0 20px;
+  background-color: var(--bg-primary);
+}
+
+.hero-search-pill-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 16px;
+}
+
+.hero-search-pill-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
+  padding: 6px 8px 6px 28px;
+  position: relative;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-search-pill-bar:hover,
+.hero-search-pill-bar:focus-within {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09), 0 4px 12px rgba(0, 0, 0, 0.04);
+  border-color: rgba(197, 168, 128, 0.4);
+}
+
+.pill-field-group {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.pill-field-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.pill-field-btn:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: #000000;
+}
+
+.pill-field-btn.is-active {
+  background-color: rgba(197, 168, 128, 0.12);
+  color: var(--champagne-gold-deep);
+}
+
+.pill-btn-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pill-chevron {
+  flex-shrink: 0;
+  stroke: currentColor;
+  transition: transform 0.25s var(--ease-cinematic);
+}
+
+.pill-field-group.is-open .pill-chevron {
+  transform: rotate(180deg);
+}
+
+.pill-divider {
+  width: 1px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+  margin: 0 4px;
+}
+
+.pill-search-submit-btn {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 16px 32px;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.pill-search-submit-btn:hover {
+  background: #1f1f1f;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.pill-search-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Dropdown Menu */
+.pill-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 210px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 150;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+.pill-field-group.is-open .pill-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.pill-dropdown-opt {
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #2c2f38;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.pill-dropdown-opt:hover {
+  background-color: #f5f3ee;
+  color: #0b0c0e;
+}
+
+.pill-dropdown-opt.is-selected {
+  background-color: rgba(197, 168, 128, 0.18);
+  color: var(--champagne-gold-deep);
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-search-pill-bar {
+    border-radius: 24px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .pill-divider {
+    display: none;
+  }
+
+  .pill-field-btn {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .pill-dropdown-menu {
+    left: 0;
+    transform: translateY(-6px);
+    width: 100%;
+  }
+
+  .pill-field-group.is-open .pill-dropdown-menu {
+    transform: translateY(0);
+  }
+
+  .pill-search-submit-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    border-radius: 14px;
+    text-align: center;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-quick-search-section {
+    padding: 30px 16px 15px;
+  }
+
+  .hero-search-pill-bar {
+    grid-template-columns: 1fr;
+    padding: 14px;
+    border-radius: 20px;
+    gap: 10px;
+  }
+
+  .pill-field-btn {
+    font-size: 0.72rem;
+  }
+}
+
+
 /* --------------------------------------------------------------------------
    NAVIGATION (HERO FROSTED GLASS BLUR -> SCROLLED SOLID CREAM BACKGROUND)
    - Centered VISION OF EXCELLENCE logo & brand.

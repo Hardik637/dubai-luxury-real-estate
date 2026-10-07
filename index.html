@@ -146,15 +146,112 @@
   <main id="main-content">
 
     <!-- ============================================================
+         POST-HERO QUICK PROPERTY FILTER SEARCH BAR
+         ============================================================ -->
+    <section id="hero-quick-search" class="hero-quick-search-section" aria-label="Search Luxury Dubai Properties">
+      <div class="act-wrapper">
+        <div class="manifesto-curtain-pill" aria-hidden="true"></div>
+
+        <div class="hero-search-pill-container scroll-reveal-box">
+          <form class="hero-search-pill-bar" id="hero-filter-search-form" action="/properties" method="GET">
+            
+            <!-- 1. Property Type -->
+            <div class="pill-field-group" data-field="type">
+              <button type="button" class="pill-field-btn" id="btn-dropdown-type" aria-haspopup="listbox" aria-expanded="false">
+                <span class="pill-btn-label">PROPERTY TYPE</span>
+                <svg class="pill-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 1L5 5L9 1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <input type="hidden" name="type" id="input-search-type" value="all" />
+              <div class="pill-dropdown-menu" id="menu-dropdown-type" role="listbox">
+                <div class="pill-dropdown-opt is-selected" data-val="all">All Types</div>
+                <div class="pill-dropdown-opt" data-val="Villa">Villa</div>
+                <div class="pill-dropdown-opt" data-val="Apartment">Apartment</div>
+                <div class="pill-dropdown-opt" data-val="Penthouse">Penthouse</div>
+                <div class="pill-dropdown-opt" data-val="Townhouse">Townhouse</div>
+              </div>
+            </div>
+
+            <div class="pill-divider" aria-hidden="true"></div>
+
+            <!-- 2. Bedrooms -->
+            <div class="pill-field-group" data-field="bedrooms">
+              <button type="button" class="pill-field-btn" id="btn-dropdown-beds" aria-haspopup="listbox" aria-expanded="false">
+                <span class="pill-btn-label">BEDROOMS</span>
+                <svg class="pill-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 1L5 5L9 1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <input type="hidden" name="bedrooms" id="input-search-beds" value="all" />
+              <div class="pill-dropdown-menu" id="menu-dropdown-beds" role="listbox">
+                <div class="pill-dropdown-opt is-selected" data-val="all">All Bedrooms</div>
+                <div class="pill-dropdown-opt" data-val="1">1 Bedroom</div>
+                <div class="pill-dropdown-opt" data-val="2">2 Bedrooms</div>
+                <div class="pill-dropdown-opt" data-val="3">3 Bedrooms</div>
+                <div class="pill-dropdown-opt" data-val="4+">4+ Bedrooms</div>
+              </div>
+            </div>
+
+            <div class="pill-divider" aria-hidden="true"></div>
+
+            <!-- 3. Price Range -->
+            <div class="pill-field-group" data-field="price">
+              <button type="button" class="pill-field-btn" id="btn-dropdown-price" aria-haspopup="listbox" aria-expanded="false">
+                <span class="pill-btn-label">PRICE RANGE</span>
+                <svg class="pill-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 1L5 5L9 1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <input type="hidden" name="price" id="input-search-price" value="all" />
+              <div class="pill-dropdown-menu" id="menu-dropdown-price" role="listbox">
+                <div class="pill-dropdown-opt is-selected" data-val="all">All Prices</div>
+                <div class="pill-dropdown-opt" data-val="under-5m">Under AED 5M</div>
+                <div class="pill-dropdown-opt" data-val="5m-10m">AED 5M – 10M</div>
+                <div class="pill-dropdown-opt" data-val="10m-20m">AED 10M – 20M</div>
+                <div class="pill-dropdown-opt" data-val="20m-plus">AED 20M+</div>
+              </div>
+            </div>
+
+            <div class="pill-divider" aria-hidden="true"></div>
+
+            <!-- 4. Community -->
+            <div class="pill-field-group" data-field="location">
+              <button type="button" class="pill-field-btn" id="btn-dropdown-community" aria-haspopup="listbox" aria-expanded="false">
+                <span class="pill-btn-label">COMMUNITY</span>
+                <svg class="pill-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 1L5 5L9 1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <input type="hidden" name="location" id="input-search-location" value="all" />
+              <div class="pill-dropdown-menu" id="menu-dropdown-community" role="listbox">
+                <div class="pill-dropdown-opt is-selected" data-val="all">All Communities</div>
+                <div class="pill-dropdown-opt" data-val="Palm Jumeirah">Palm Jumeirah</div>
+                <div class="pill-dropdown-opt" data-val="Dubai Marina">Dubai Marina</div>
+                <div class="pill-dropdown-opt" data-val="Downtown Dubai">Downtown Dubai</div>
+                <div class="pill-dropdown-opt" data-val="Dubai Hills Estate">Dubai Hills Estate</div>
+                <div class="pill-dropdown-opt" data-val="Business Bay">Business Bay</div>
+                <div class="pill-dropdown-opt" data-val="Jumeirah">Jumeirah</div>
+                <div class="pill-dropdown-opt" data-val="Emirates Hills">Emirates Hills</div>
+              </div>
+            </div>
+
+            <!-- 5. Search Button -->
+            <button type="submit" class="pill-search-submit-btn" id="btn-hero-search-submit">
+              SEARCH PROPERTIES
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
          WHY DUBAI: EDITORIAL INTERACTIVE EXPERIENCE
-         1. Why Dubai (Three Interactive Pillars: Capital, Residency, Lifestyle)
-         2. Interactive Financial Scenario (Reusing existing calculation engine)
-         3. Global Positioning (One City. Between the World's Major Markets)
-         4. Emotional Close (Transitioning into Signature Residences)
          ============================================================ -->
     <section id="sovereign-advantage" class="sovereign-section why-dubai-editorial-section" aria-label="Why Dubai Experience">
       <div class="act-wrapper">
-        <div class="manifesto-curtain-pill" aria-hidden="true"></div>
         
         <!-- SECTION 1: WHY DUBAI -->
         <div class="why-dubai-hero-header scroll-reveal-box" id="why-dubai">
@@ -364,27 +461,6 @@
             </div>
           </article>
 
-        </div>
-
-        <!-- ============================================================
-             SECTION 4: EMOTIONAL CLOSE
-             Transitioning into Curated Signature Residences
-             ============================================================ -->
-        <div class="emotional-close-section scroll-reveal-box" id="emotional-close">
-          <div class="emotional-inner">
-            <span class="emotional-eyebrow">THE DECISION</span>
-            <h3 class="emotional-statement">
-              You don't choose Dubai for one reason.
-            </h3>
-            <p class="emotional-substatement">
-              You choose the freedom to live, invest and move differently.
-            </p>
-            <div class="emotional-cta-row">
-              <a href="#estates" class="btn-primary emotional-cta-btn">
-                EXPLORE THE RESIDENCES <span class="arrow-glyph">→</span>
-              </a>
-            </div>
-          </div>
         </div>
 
       </div>

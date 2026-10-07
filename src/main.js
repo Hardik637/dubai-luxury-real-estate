@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBidirectionalScrollReveals();
   initVisualCatalog();
   initMobileCarousels();
+  initHeroFilterSearch();
   initModals();
   initForms();
 });
@@ -1380,3 +1381,105 @@ function initForms() {
     });
   }
 }
+
+/* ==========================================================================
+   POST-HERO QUICK PROPERTY FILTER SEARCH PILL
+   Interactive custom dropdowns & deep-link routing to /properties
+   ========================================================================== */
+function initHeroFilterSearch() {
+  const form = document.getElementById('hero-filter-search-form');
+  if (!form) return;
+
+  const groups = form.querySelectorAll('.pill-field-group');
+
+  const defaultLabels = {
+    type: 'PROPERTY TYPE',
+    bedrooms: 'BEDROOMS',
+    price: 'PRICE RANGE',
+    location: 'COMMUNITY'
+  };
+
+  function closeAllDropdowns() {
+    groups.forEach(g => {
+      g.classList.remove('is-open');
+      const btn = g.querySelector('.pill-field-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  groups.forEach(group => {
+    const fieldName = group.getAttribute('data-field');
+    const btn = group.querySelector('.pill-field-btn');
+    const hiddenInput = group.querySelector('input[type="hidden"]');
+    const labelSpan = group.querySelector('.pill-btn-label');
+    const options = group.querySelectorAll('.pill-dropdown-opt');
+
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = group.classList.contains('is-open');
+        closeAllDropdowns();
+        if (!isOpen) {
+          group.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+
+    options.forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const val = opt.getAttribute('data-val');
+        if (hiddenInput) hiddenInput.value = val;
+
+        options.forEach(o => o.classList.remove('is-selected'));
+        opt.classList.add('is-selected');
+
+        if (labelSpan) {
+          if (val === 'all') {
+            labelSpan.textContent = defaultLabels[fieldName] || 'SELECT';
+            btn.classList.remove('is-active');
+          } else {
+            labelSpan.textContent = opt.textContent.toUpperCase();
+            btn.classList.add('is-active');
+          }
+        }
+
+        closeAllDropdowns();
+      });
+    });
+  });
+
+  // Close when clicking outside form
+  document.addEventListener('click', (e) => {
+    if (!form.contains(e.target)) {
+      closeAllDropdowns();
+    }
+  });
+
+  // Close when pressing Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAllDropdowns();
+    }
+  });
+
+  // Handle Form Submission -> Navigate to /properties
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const typeVal = document.getElementById('input-search-type')?.value || 'all';
+    const bedsVal = document.getElementById('input-search-beds')?.value || 'all';
+    const priceVal = document.getElementById('input-search-price')?.value || 'all';
+    const locVal = document.getElementById('input-search-location')?.value || 'all';
+
+    const params = new URLSearchParams();
+    if (typeVal && typeVal !== 'all') params.set('type', typeVal);
+    if (bedsVal && bedsVal !== 'all') params.set('bedrooms', bedsVal);
+    if (priceVal && priceVal !== 'all') params.set('price', priceVal);
+    if (locVal && locVal !== 'all') params.set('location', locVal);
+
+    const qs = params.toString();
+    window.location.href = qs ? `/properties?${qs}` : '/properties';
+  });
+}
+

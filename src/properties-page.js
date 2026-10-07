@@ -98,6 +98,64 @@ function checkCurrentRoute() {
   showCatalogView();
 }
 
+function applyUrlFilters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const typeParam = urlParams.get('type');
+  const bedsParam = urlParams.get('bedrooms');
+  const priceParam = urlParams.get('price');
+  const locParam = urlParams.get('location');
+  const txnParam = urlParams.get('transaction');
+
+  let hasCustomFilter = false;
+
+  if (typeParam && typeParam !== 'all') {
+    filterState.type = typeParam;
+    const typeSelect = document.getElementById('filter-type-select');
+    if (typeSelect) typeSelect.value = typeParam;
+    const sheetTypeSelect = document.getElementById('sheet-type-select');
+    if (sheetTypeSelect) sheetTypeSelect.value = typeParam;
+    hasCustomFilter = true;
+  }
+
+  if (bedsParam && bedsParam !== 'all') {
+    filterState.bedrooms = bedsParam;
+    const bedSelect = document.getElementById('filter-beds-select');
+    if (bedSelect) bedSelect.value = bedsParam;
+    const sheetBedSelect = document.getElementById('sheet-beds-select');
+    if (sheetBedSelect) sheetBedSelect.value = bedsParam;
+    hasCustomFilter = true;
+  }
+
+  if (priceParam && priceParam !== 'all') {
+    filterState.priceRange = priceParam;
+    const priceSelect = document.getElementById('filter-price-select');
+    if (priceSelect) priceSelect.value = priceParam;
+    const sheetPriceSelect = document.getElementById('sheet-price-select');
+    if (sheetPriceSelect) sheetPriceSelect.value = priceParam;
+    hasCustomFilter = true;
+  }
+
+  if (locParam && locParam !== 'all') {
+    filterState.location = locParam;
+    const locSelect = document.getElementById('filter-location-select');
+    if (locSelect) locSelect.value = locParam;
+    const sheetLocSelect = document.getElementById('sheet-location-select');
+    if (sheetLocSelect) sheetLocSelect.value = locParam;
+    hasCustomFilter = true;
+  }
+
+  if (txnParam && txnParam !== 'all') {
+    filterState.transaction = txnParam;
+    document.querySelectorAll('.txn-pill-btn').forEach(p => {
+      if (p.getAttribute('data-txn') === txnParam) p.classList.add('active');
+      else p.classList.remove('active');
+    });
+    hasCustomFilter = true;
+  }
+
+  return hasCustomFilter;
+}
+
 function showCatalogView() {
   const catalogView = document.getElementById('properties-catalog-view');
   const detailView = document.getElementById('property-detail-view');
@@ -108,6 +166,7 @@ function showCatalogView() {
     detailView.innerHTML = '';
   }
 
+  applyUrlFilters();
   renderPropertiesGrid();
 }
 
