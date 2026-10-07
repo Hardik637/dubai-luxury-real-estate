@@ -157,8 +157,6 @@ function renderDimension(dimKey) {
 }
 
 function setupDimensionSelector() {
-  const panel = document.getElementById('dim-display-panel');
-  if (!panel) return;
   const tabBtns = document.querySelectorAll('.dim-tab-btn');
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
