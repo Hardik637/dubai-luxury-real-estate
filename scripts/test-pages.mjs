@@ -73,8 +73,11 @@ if (!distProp.includes('properties-cards-grid')) {
 console.log('✓ Properties page built with hero, filter system, and grid.');
 
 // Check Invest page
-if (!distInvest.includes('WHY DUBAI') || !distInvest.includes('WHAT IF YOUR MONEY')) {
-  throw new Error('Invest Why Dubai hero text missing');
+if (!distInvest.includes('WHY DUBAI') || !distInvest.includes('THE FOUNDATIONS')) {
+  throw new Error('Invest Why Dubai Four Pillars section missing');
+}
+if (distInvest.includes('WHAT IF YOUR MONEY')) {
+  throw new Error('Invest Why Dubai hero should be removed as requested');
 }
 if (distInvest.includes('WHERE YOU LIVE') && distInvest.includes('CHANGES MORE THAN')) {
   throw new Error('Invest scroll story section should be removed as requested');

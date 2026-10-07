@@ -1261,6 +1261,10 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.four-pillars-section:first-child {
+  padding-top: calc(clamp(80px, 10vw, 140px) + 60px);
+}
+
 .pillars-container {
   max-width: 1440px;
   margin: 0 auto;
