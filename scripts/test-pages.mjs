@@ -73,19 +73,31 @@ if (!distProp.includes('properties-cards-grid')) {
 console.log('✓ Properties page built with hero, filter system, and grid.');
 
 // Check Invest page
-if (!distInvest.includes('REAL ESTATE, WITH A PURPOSE') || !distInvest.includes('Turn property into a strategy')) {
-  throw new Error('Invest hero text missing');
+if (!distInvest.includes('WHY DUBAI') || !distInvest.includes('WHAT IF YOUR MONEY')) {
+  throw new Error('Invest Why Dubai hero text missing');
 }
-if (!distInvest.includes('The Investment Journey') || !distInvest.includes('What are you investing for?')) {
-  throw new Error('Invest journey & objective sections missing');
+if (!distInvest.includes('WHERE YOU LIVE') || !distInvest.includes('CHANGES MORE THAN')) {
+  throw new Error('Invest scroll story sequence missing');
+}
+if (!distInvest.includes('BUILT FOR GLOBAL BUSINESS') || !distInvest.includes('A DIFFERENT ENVIRONMENT FOR WEALTH')) {
+  throw new Error('Invest four pillars missing');
+}
+if (!distInvest.includes('WHAT CHANGES') || !distInvest.includes('WHEN YOU CHANGE YOUR BASE')) {
+  throw new Error('Invest interactive Change Your Base section missing');
+}
+if (!distInvest.includes('SO WHY PROPERTY?') || !distInvest.includes('WE HELP YOU MAKE THE MOVE MAKE SENSE')) {
+  throw new Error('Invest service transition and journey missing');
 }
 if (!distInvest.includes('From property to paying tenant') || !distInvest.includes('See the potential')) {
-  throw new Error('Invest pipeline & scenario slider missing');
+  throw new Error('Invest preserved execution roadmap or scenario slider missing');
 }
 if (!distInvest.includes('Not every beautiful property is a good investment')) {
   throw new Error('Invest advisory discipline section missing');
 }
-console.log('✓ Invest page built with all 9 requested sections and interactive components.');
+if (!distInvest.includes('IF DUBAI MAKES SENSE FOR YOU')) {
+  throw new Error('Invest final CTA missing');
+}
+console.log('✓ Invest page built with new Why Dubai experience, scroll story, 4 pillars, base explorer, service journey, and preserved roadmap.');
 
 // Check Home page integrity
 if (!distIndex.includes('hero-scroll-container') || !distIndex.includes('hero-canvas')) {
