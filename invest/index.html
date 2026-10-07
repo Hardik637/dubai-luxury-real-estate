@@ -120,194 +120,161 @@
   <!-- ============================================================
        MAIN CONTENT CONTAINER
        ============================================================ -->
-  <main class="inner-page-main" id="main-content">
+  <main class="inner-page-main has-cinematic" id="main-content">
 
     <!-- ----------------------------------------------------------
-         1. WHY DUBAI — FOUR PILLARS
+         1. WHY DUBAI — CINEMATIC FULLSCREEN SEQUENCE
          ---------------------------------------------------------- -->
-    <section class="four-pillars-section" id="four-pillars">
-      <div class="pillars-container">
-        <div class="pillars-intro">
-          <span class="editorial-eyebrow">THE FOUNDATIONS</span>
-          <h1 class="cta-large-heading" style="text-align: left; margin-bottom: 12px;">WHY DUBAI</h1>
-          <p class="editorial-subline">
-            Four structural reasons why capital, enterprise, and leadership are choosing Dubai as their primary global anchor.
-          </p>
+    <section class="cinematic-why-dubai" id="why-dubai-cinematic" aria-label="Why Dubai Strategic Foundations">
+      <div class="cinematic-sticky-stage">
+        
+        <!-- Photographic Atmospheric Background Layers -->
+        <div class="cinematic-bg-container" aria-hidden="true">
+          <div class="cinematic-bg-layer is-active" data-scene="0" style="background-image: url('/images/craft_arch.jpg');"></div>
+          <div class="cinematic-bg-layer" data-scene="1" style="background-image: url('/images/twilight_terrace.jpg');"></div>
+          <div class="cinematic-bg-layer" data-scene="2" style="background-image: url('/images/morning_light.jpg');"></div>
+          <div class="cinematic-bg-layer" data-scene="3" style="background-image: url('/images/jumeirah_bay_island.jpg');"></div>
         </div>
 
-        <!-- Pillar 01: ECONOMY -->
-        <div class="pillar-row-item">
-          <div class="pillar-text-col">
-            <span class="pillar-tag">01 • ECONOMY</span>
-            <h3 class="pillar-headline">BUILT FOR GLOBAL BUSINESS.</h3>
-            <p class="pillar-desc">
-              Dubai has deliberately built an economy around international business, trade, tourism, finance and investment. A sovereign strategy designed for stability, long-term capital formation, and forward momentum.
+        <!-- Atmospheric Vignette & Contrast Overlay -->
+        <div class="cinematic-overlay-layer" aria-hidden="true"></div>
+
+        <!-- Minimal Scene Navigation / Progress Indicator -->
+        <nav class="cinematic-progress-indicator" aria-label="Why Dubai Scenes">
+          <button type="button" class="progress-step is-active" data-step="0" aria-label="Scene 1: Economy"><span>01</span></button>
+          <button type="button" class="progress-step" data-step="1" aria-label="Scene 2: Wealth"><span>02</span></button>
+          <button type="button" class="progress-step" data-step="2" aria-label="Scene 3: Lifestyle"><span>03</span></button>
+          <button type="button" class="progress-step" data-step="3" aria-label="Scene 4: Opportunity"><span>04</span></button>
+        </nav>
+
+        <!-- Centered Viewport Editorial Content Panels -->
+        <div class="cinematic-content-stage">
+          
+          <!-- SCENE 01 — ECONOMY -->
+          <article class="cinematic-scene is-active" data-scene="0" aria-label="01 Economy">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">01</span>
+              <span class="scene-sep">—</span>
+              <span class="scene-tag">ECONOMY</span>
+            </div>
+            <h2 class="cinematic-headline">BUILT FOR<br>GLOBAL BUSINESS.</h2>
+            <p class="cinematic-lead">
+              A dynamic economy driven by international trade, finance, tourism and innovation, creating long-term stability and opportunity.
             </p>
-            <div class="pillar-metrics-strip">
-              <div class="pillar-metric-box">
-                <span class="pillar-metric-val">GLOBAL #1</span>
-                <span class="pillar-metric-lbl">Greenfield FDI Projects (Financial Times fDi Markets)</span>
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">#1</span>
+                <span class="fact-desc">FDI DESTINATION<br>IN THE MIDDLE EAST</span>
               </div>
-              <div class="pillar-metric-box">
-                <span class="pillar-metric-val">DIFC</span>
-                <span class="pillar-metric-lbl">Top 10 Global Financial Centre connecting 72+ jurisdictions</span>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">200+</span>
+                <span class="fact-desc">INTERNATIONAL<br>COMPANIES</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">72+</span>
+                <span class="fact-desc">GLOBAL FINANCIAL<br>JURISDICTIONS</span>
               </div>
             </div>
-          </div>
-          <div class="pillar-visual-col">
-            <div class="pillar-img-frame">
-              <img src="/images/craft_arch.jpg" alt="Dubai DIFC Financial District and Modern Architecture" loading="lazy" />
-              <div class="pillar-img-caption">DIFC Financial District & Downtown Commercial Hub</div>
-            </div>
-          </div>
-        </div>
+          </article>
 
-        <!-- Pillar 02: WEALTH -->
-        <div class="pillar-row-item reverse">
-          <div class="pillar-text-col">
-            <span class="pillar-tag">02 • WEALTH</span>
-            <h3 class="pillar-headline">A DIFFERENT ENVIRONMENT FOR WEALTH.</h3>
-            <p class="pillar-desc">
-              A transparent, predictable fiscal framework structured to reward growth and preserve private wealth without arbitrary levies or personal tax drag.
+          <!-- SCENE 02 — WEALTH -->
+          <article class="cinematic-scene" data-scene="1" aria-label="02 Wealth">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">02</span>
+              <span class="scene-sep">—</span>
+              <span class="scene-tag">WEALTH</span>
+            </div>
+            <h2 class="cinematic-headline">A DIFFERENT<br>ENVIRONMENT<br>FOR WEALTH.</h2>
+            <p class="cinematic-lead">
+              A tax and economic environment designed to support globally mobile individuals and investors.
             </p>
-            <div class="tax-distinction-grid">
-              <div class="tax-item">
-                <span class="tax-rate">0%</span>
-                <span class="tax-title">Personal Income Tax</span>
-                <span class="tax-note">Zero personal income tax on salaries, personal earnings, dividends, and global income.</span>
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">0%</span>
+                <span class="fact-desc">PERSONAL<br>INCOME TAX</span>
               </div>
-              <div class="tax-item">
-                <span class="tax-rate">0%</span>
-                <span class="tax-title">Capital Gains Tax</span>
-                <span class="tax-note">Zero tax on personal property value appreciation, securities, and private exits.</span>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">0%</span>
+                <span class="fact-desc">CAPITAL GAINS<br>TAX</span>
               </div>
-              <div class="tax-item">
-                <span class="tax-rate">9%</span>
-                <span class="tax-title">Federal Corporate Tax</span>
-                <span class="tax-note">Standard rate applies strictly to taxable business profits exceeding AED 375,000 (with Free Zone qualifying exemptions).</span>
-              </div>
-              <div class="tax-item">
-                <span class="tax-rate">0%</span>
-                <span class="tax-title">Recurring Wealth Tax</span>
-                <span class="tax-note">One-time 4% DLD transfer fee upon acquisition; zero annual municipal wealth or property taxes.</span>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">0%</span>
+                <span class="fact-desc">ANNUAL RECURRING<br>WEALTH TAX</span>
               </div>
             </div>
-          </div>
-          <div class="pillar-visual-col">
-            <div class="pillar-img-frame">
-              <img src="/images/craft_stone.jpg" alt="Architectural Integrity and Wealth Preservation" loading="lazy" />
-              <div class="pillar-img-caption">Sovereign Asset Protection & Multi-Generational Wealth</div>
-            </div>
-          </div>
-        </div>
+          </article>
 
-        <!-- Pillar 03: LIFESTYLE -->
-        <div class="pillar-row-item">
-          <div class="pillar-text-col">
-            <span class="pillar-tag">03 • LIFESTYLE</span>
-            <h3 class="pillar-headline">A DIFFERENT WAY TO LIVE.</h3>
-            <p class="pillar-desc">
-              The decision is not purely financial. It is about the cadence, security, and quality of everyday existence.
+          <!-- SCENE 03 — LIFESTYLE -->
+          <article class="cinematic-scene" data-scene="2" aria-label="03 Lifestyle">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">03</span>
+              <span class="scene-sep">—</span>
+              <span class="scene-tag">LIFESTYLE</span>
+            </div>
+            <h2 class="cinematic-headline">A DIFFERENT<br>WAY TO LIVE.</h2>
+            <p class="cinematic-lead">
+              World-class infrastructure, safety, wellness, dining and entertainment — built around a global lifestyle.
             </p>
-            <div class="lifestyle-rhythm-track">
-              <div class="rhythm-item">
-                <div class="rhythm-time">MORNING</div>
-                <div class="rhythm-act">WELLNESS / BEACH</div>
-                <div class="rhythm-detail">Sunrise swim along the Jumeirah coastline, private beach clubs, and year-round sunlight.</div>
+            <div class="cinematic-cadence-row">
+              <div class="cinematic-cadence-col">
+                <span class="cadence-time">MORNING</span>
+                <span class="cadence-act">Beach & Wellness</span>
               </div>
-              <div class="rhythm-item">
-                <div class="rhythm-time">DAY</div>
-                <div class="rhythm-act">BUSINESS / WORK</div>
-                <div class="rhythm-detail">DIFC world-class headquarters, high-speed digital services, and frictionless logistics.</div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-cadence-col">
+                <span class="cadence-time">DAY</span>
+                <span class="cadence-act">Business & City</span>
               </div>
-              <div class="rhythm-item">
-                <div class="rhythm-time">EVENING</div>
-                <div class="rhythm-act">DINING / SOCIAL</div>
-                <div class="rhythm-detail">Michelin-starred gastronomy, Dubai Marina promenade, and vibrant international networking.</div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-cadence-col">
+                <span class="cadence-time">EVENING</span>
+                <span class="cadence-act">Dining & Social</span>
               </div>
-              <div class="rhythm-item">
-                <div class="rhythm-time">NIGHT</div>
-                <div class="rhythm-act">CITY / ENTERTAINMENT</div>
-                <div class="rhythm-detail">Unmatched global safety index, world-class cultural performances, and 24/7 city vitality.</div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-cadence-col">
+                <span class="cadence-time">NIGHT</span>
+                <span class="cadence-act">A Vibrant City</span>
               </div>
             </div>
-          </div>
-          <div class="pillar-visual-col">
-            <div class="pillar-img-frame">
-              <img src="/images/morning_light.jpg" alt="Morning Light by the Coast in Dubai" loading="lazy" />
-              <div class="pillar-img-caption">Coastal Cadence along Jumeirah Waterfront</div>
-            </div>
-          </div>
-        </div>
+          </article>
 
-        <!-- Pillar 04: OPPORTUNITY -->
-        <div class="pillar-row-item reverse">
-          <div class="pillar-text-col">
-            <span class="pillar-tag">04 • OPPORTUNITY</span>
-            <h3 class="pillar-headline">POSITION YOURSELF CLOSER TO OPPORTUNITY.</h3>
-            <p class="pillar-desc">
-              Strategically centered between Europe, Asia, and Africa, Dubai connects you directly with the world’s most dynamic markets and visionary capital.
+          <!-- SCENE 04 — OPPORTUNITY -->
+          <article class="cinematic-scene" data-scene="3" aria-label="04 Opportunity">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">04</span>
+              <span class="scene-sep">—</span>
+              <span class="scene-tag">OPPORTUNITY</span>
+            </div>
+            <h2 class="cinematic-headline">POSITION<br>YOURSELF CLOSER<br>TO OPPORTUNITY.</h2>
+            <p class="cinematic-lead">
+              A strategic location between East and West, connecting you to major markets, talent and growth across the world.
             </p>
-            <div class="opportunity-specs-grid">
-              <div class="opp-spec-box">
-                <span class="opp-spec-num">8 HRS</span>
-                <span class="opp-spec-title">Global Flight Radius</span>
-                <p>Direct flight connectivity to two-thirds of the world's population via DXB.</p>
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">8 HRS</span>
+                <span class="fact-desc">FLIGHT RADIUS TO<br>2/3 OF WORLD</span>
               </div>
-              <div class="opp-spec-box">
-                <span class="opp-spec-num">200+</span>
-                <span class="opp-spec-title">Nationalities</span>
-                <p>A meritocratic global hub operating in English with DIFC common-law legal certainty.</p>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">100+</span>
+                <span class="fact-desc">GLOBAL DIRECT<br>FLIGHT ROUTES</span>
               </div>
-              <div class="opp-spec-box">
-                <span class="opp-spec-num">10 YRS</span>
-                <span class="opp-spec-title">Golden Visa Pathway</span>
-                <p>Long-term renewable residency available for real estate investors acquiring properties from AED 2M.</p>
-              </div>
-              <div class="opp-spec-box">
-                <span class="opp-spec-num">#1</span>
-                <span class="opp-spec-title">Regional Infrastructure</span>
-                <p>Recognized benchmark for transport, port capacity, digital governance, and civic safety.</p>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">A GATEWAY</span>
+                <span class="fact-desc">TO GLOBAL<br>MARKETS</span>
               </div>
             </div>
-          </div>
-          <div class="pillar-visual-col">
-            <div class="pillar-img-frame">
-              <img src="/images/twilight_terrace.jpg" alt="Dubai Skyline and Global Opportunity" loading="lazy" />
-              <div class="pillar-img-caption">Global Nexus at the Crossroads of Continents</div>
+            <div class="cinematic-scene-bridge">
+              <span class="bridge-tag">NEXT</span>
+              <span class="bridge-prompt">SO WHY PROPERTY? ↓</span>
             </div>
-          </div>
-        </div>
+          </article>
 
-      </div>
-    </section>
-
-    <!-- ----------------------------------------------------------
-         4. INTERACTIVE "CHANGE YOUR BASE" MOMENT
-         ---------------------------------------------------------- -->
-    <section class="change-base-section" id="change-base">
-      <div class="change-base-inner">
-        <span class="editorial-eyebrow" style="color: var(--champagne-gold-light);">STRATEGIC PERSPECTIVE</span>
-        <h2 class="cta-large-heading" style="text-align: left; color: #FFFFFF; margin-bottom: 12px; text-transform: uppercase;">
-          WHAT CHANGES<br>WHEN YOU CHANGE YOUR BASE?
-        </h2>
-        <p class="editorial-subline" style="color: rgba(255, 255, 255, 0.75); margin-bottom: 36px;">
-          Explore how core pillars of your capital, enterprise, and daily existence compare when anchored in Dubai.
-        </p>
-
-        <!-- Dimension Selector Pills -->
-        <div class="dimension-tabs-row" role="tablist">
-          <button type="button" class="dim-tab-btn active" data-dim="tax" role="tab" aria-selected="true">TAX ENVIRONMENT</button>
-          <button type="button" class="dim-tab-btn" data-dim="lifestyle" role="tab" aria-selected="false">LIFESTYLE</button>
-          <button type="button" class="dim-tab-btn" data-dim="connectivity" role="tab" aria-selected="false">CONNECTIVITY</button>
-          <button type="button" class="dim-tab-btn" data-dim="business" role="tab" aria-selected="false">BUSINESS</button>
-          <button type="button" class="dim-tab-btn" data-dim="real-estate" role="tab" aria-selected="false">REAL ESTATE</button>
-          <button type="button" class="dim-tab-btn" data-dim="wealth" role="tab" aria-selected="false">WEALTH</button>
-        </div>
-
-        <!-- Dimension Comparison Card -->
-        <div class="dim-display-panel" id="dim-display-panel">
-          <!-- Populated by src/invest-page.js -->
         </div>
       </div>
     </section>

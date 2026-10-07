@@ -73,20 +73,23 @@ if (!distProp.includes('properties-cards-grid')) {
 console.log('✓ Properties page built with hero, filter system, and grid.');
 
 // Check Invest page
-if (!distInvest.includes('WHY DUBAI') || !distInvest.includes('THE FOUNDATIONS')) {
-  throw new Error('Invest Why Dubai Four Pillars section missing');
+if (!distInvest.includes('why-dubai-cinematic') || !distInvest.includes('cinematic-sticky-stage')) {
+  throw new Error('Invest Why Dubai Cinematic fullscreen sequence missing');
 }
 if (distInvest.includes('WHAT IF YOUR MONEY')) {
-  throw new Error('Invest Why Dubai hero should be removed as requested');
+  throw new Error('Invest Why Dubai old hero should be removed');
 }
-if (distInvest.includes('WHERE YOU LIVE') && distInvest.includes('CHANGES MORE THAN')) {
-  throw new Error('Invest scroll story section should be removed as requested');
+if (!distInvest.includes('BUILT FOR') || !distInvest.includes('GLOBAL BUSINESS.')) {
+  throw new Error('Scene 01: Economy headline missing');
 }
-if (!distInvest.includes('BUILT FOR GLOBAL BUSINESS') || !distInvest.includes('A DIFFERENT ENVIRONMENT FOR WEALTH')) {
-  throw new Error('Invest four pillars missing');
+if (!distInvest.includes('A DIFFERENT') || !distInvest.includes('ENVIRONMENT') || !distInvest.includes('WEALTH.')) {
+  throw new Error('Scene 02: Wealth headline missing');
 }
-if (!distInvest.includes('WHAT CHANGES') || !distInvest.includes('WHEN YOU CHANGE YOUR BASE')) {
-  throw new Error('Invest interactive Change Your Base section missing');
+if (!distInvest.includes('A DIFFERENT') || !distInvest.includes('WAY TO LIVE.')) {
+  throw new Error('Scene 03: Lifestyle headline missing');
+}
+if (!distInvest.includes('POSITION') || !distInvest.includes('CLOSER') || !distInvest.includes('OPPORTUNITY.')) {
+  throw new Error('Scene 04: Opportunity headline missing');
 }
 if (!distInvest.includes('SO WHY PROPERTY?') || !distInvest.includes('WE HELP YOU MAKE THE MOVE MAKE SENSE')) {
   throw new Error('Invest service transition and journey missing');
