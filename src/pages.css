@@ -1284,6 +1284,12 @@
   color: #FFFFFF;
 }
 
+.pipeline-section:first-child {
+  margin-top: -100px;
+  padding-top: calc(clamp(70px, 9vw, 110px) + 90px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 .pipeline-inner {
   max-width: 1520px;
   margin: 0 auto;
