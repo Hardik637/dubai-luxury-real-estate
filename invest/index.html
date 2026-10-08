@@ -126,40 +126,66 @@
          1. WHY DUBAI — CINEMATIC FULLSCREEN SEQUENCE
          ---------------------------------------------------------- -->
     <!-- ----------------------------------------------------------
-         1. INVESTMENT EDITORIAL — FOUR CINEMATIC INVESTMENT SECTIONS
-         Two-Layer Information System:
-         Layer 1: Casual Visitor (Full-screen substantial editorial summary)
-         Layer 2: Serious Investor (In-place expandable comprehensive brief)
+         1. CINEMATIC FULL-SCREEN INVESTMENT SUITE
+         - Full viewport coverage (100svh) with seamless scroll dissolves
+         - Layer 1 (Outside): Editorial thesis, metrics, keywords, interaction cue
+         - Layer 2 (Inside): Dynamic in-place expanded card opens over the outside layer
          ---------------------------------------------------------- -->
-    <section class="investment-cinematic-suite" id="investment-sections" aria-label="Dubai Real Estate Investment Architecture">
+    <section class="cinematic-why-dubai investment-sections" id="why-dubai-cinematic" aria-label="Dubai Real Estate Investment Architecture">
+      <div class="cinematic-sticky-stage" id="cinematic-sticky-stage">
+        
+        <!-- Photographic Atmospheric Background Layers -->
+        <div class="cinematic-bg-container" aria-hidden="true">
+          <div class="cinematic-bg-layer is-active" data-scene="0" style="background-image: url('/images/craft_arch.jpg');"></div>
+          <div class="cinematic-bg-layer" data-scene="1" style="background-image: url('/images/twilight_terrace.jpg');"></div>
+          <div class="cinematic-bg-layer" data-scene="2" style="background-image: url('/images/villa_exterior.jpg');"></div>
+          <div class="cinematic-bg-layer" data-scene="3" style="background-image: url('/images/jumeirah_bay_island.jpg');"></div>
+        </div>
 
-      <!-- ==========================================================
-           CARD 01 — TAX ENVIRONMENT
-           ========================================================== -->
-      <article class="inv-card-section" id="inv-card-tax" data-card-id="tax-environment">
-        <div class="inv-card-bg" style="background-image: url('/images/craft_arch.jpg');" aria-hidden="true"></div>
-        <div class="inv-card-overlay" aria-hidden="true"></div>
+        <!-- Atmospheric Vignette & Contrast Overlay -->
+        <div class="cinematic-overlay-layer" aria-hidden="true"></div>
 
-        <div class="inv-card-inner">
+        <!-- Minimal Scene Navigation / Progress Indicator -->
+        <nav class="cinematic-progress-indicator" aria-label="Investment Pillars">
+          <button type="button" class="progress-step is-active" data-step="0" aria-label="Pillar 1: Tax Environment"><span>01</span></button>
+          <button type="button" class="progress-step" data-step="1" aria-label="Pillar 2: Rental Income"><span>02</span></button>
+          <button type="button" class="progress-step" data-step="2" aria-label="Pillar 3: Market Fundamentals"><span>03</span></button>
+          <button type="button" class="progress-step" data-step="3" aria-label="Pillar 4: Ownership & Access"><span>04</span></button>
+        </nav>
+
+        <!-- Centered Viewport Editorial Content Stage -->
+        <div class="cinematic-content-stage">
           
-          <!-- LAYER 1: CASUAL VISITOR (CLOSED SUMMARY STATE) -->
-          <div class="inv-summary-layer">
-            <div class="inv-card-eyebrow">
-              <span class="inv-num">01</span>
-              <span class="inv-sep">/</span>
-              <span class="inv-cat">TAX ENVIRONMENT</span>
+          <!-- ======================================================
+               SCENE 01 — TAX ENVIRONMENT (OUTSIDE LAYER)
+               ====================================================== -->
+          <article class="cinematic-scene inv-card-section is-active" data-scene="0" id="scene-tax" aria-label="01 Tax Environment">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">01</span>
+              <span class="scene-sep">/</span>
+              <span class="scene-tag">TAX ENVIRONMENT</span>
+            </div>
+            
+            <h2 class="cinematic-headline">A DIFFERENT<br>TAX LANDSCAPE.</h2>
+
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">0%</span>
+                <span class="fact-desc">PERSONAL<br>INCOME TAX*</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">0%</span>
+                <span class="fact-desc">CAPITAL GAINS<br>TAX</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">0%</span>
+                <span class="fact-desc">RECURRING<br>WEALTH TAX</span>
+              </div>
             </div>
 
-            <h2 class="inv-card-headline">
-              A DIFFERENT<br>TAX LANDSCAPE.
-            </h2>
-
-            <div class="inv-highlight-block">
-              <span class="inv-stat-value">0%</span>
-              <span class="inv-stat-label">PERSONAL INCOME TAX*</span>
-            </div>
-
-            <p class="inv-card-lead">
+            <p class="cinematic-lead">
               Dubai's tax environment can materially affect how investors evaluate income, ownership costs and returns.
             </p>
 
@@ -174,131 +200,43 @@
             </div>
 
             <div class="inv-action-row">
-              <button type="button" class="inv-expand-trigger-btn" data-target="inv-card-tax" aria-expanded="false" aria-controls="expanded-tax">
+              <button type="button" class="inv-expand-trigger-btn" data-target="overlay-tax" aria-expanded="false" aria-controls="overlay-tax">
                 <span class="btn-text">EXPLORE THE INVESTMENT CASE</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
               </button>
             </div>
-          </div>
+          </article>
 
-          <!-- LAYER 2: SERIOUS INVESTOR (IN-PLACE EXPANDED STATE) -->
-          <div class="inv-expanded-wrapper" id="expanded-tax" aria-hidden="true">
-            <div class="inv-expanded-panel">
-              
-              <div class="inv-expanded-top-bar">
-                <div class="inv-expanded-eyebrow">
-                  <span class="inv-num">01</span> / TAX ENVIRONMENT — DETAILED BRIEF
-                </div>
-                <button type="button" class="inv-close-btn" data-target="inv-card-tax" aria-label="Close tax environment brief">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-x" aria-hidden="true">✕</span>
-                </button>
-              </div>
-
-              <h3 class="inv-expanded-title">WHAT THE HEADLINE ACTUALLY MEANS.</h3>
-              
-              <p class="inv-expanded-intro">
-                A transparent fiscal framework with zero personal tax friction on natural persons, structured to maximize net compounding for private real estate capital.
-              </p>
-
-              <div class="inv-expanded-grid">
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">PERSONAL INCOME & RENTAL PROCEEDS</h4>
-                  <p class="inv-text">
-                    Individual property owners — whether resident or non-resident — pay 0% personal income tax on salaries and 0% personal income tax on residential rental proceeds. There are no regional municipal surcharges or recurring personal income withholdings.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">CAPITAL APPRECIATION & DISPOSAL</h4>
-                  <p class="inv-text">
-                    0% capital gains tax applies upon the sale or disposal of privately owned residential property. Asset appreciation compounds without annual mark-to-market taxation or capital exit levies, enabling 100% equity retention upon liquidation.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">CORPORATE TAX (FEDERAL DECREE-LAW NO. 47/2022)</h4>
-                  <p class="inv-text">
-                    A 9% federal corporate tax applies strictly to taxable corporate profits over AED 375,000. Cabinet Decision No. 49 of 2023 explicitly clarifies that natural persons (individuals) deriving personal investment and passive residential rental income from real estate without a commercial business license are generally outside the scope of Corporate Tax.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">ACQUISITION & PROPERTY TRANSACTION COSTS</h4>
-                  <p class="inv-text">
-                    While recurring income and wealth taxes are zero, property acquisitions incur statutory transactional fees: a 4% Dubai Land Department (DLD) transfer fee, Registration Trustee fees (~AED 4,000 + 5% VAT), and annual community service charges approved under the Mollak index.
-                  </p>
-                </div>
-              </div>
-
-              <!-- WHAT THIS MEANS FOR AN INVESTOR -->
-              <div class="inv-implication-card">
-                <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
-                <p class="implication-text">
-                  An investor retains a higher proportion of gross rental cash flows and 100% of realized capital gains. In high-tax jurisdictions (such as the UK, Germany, or the US), effective marginal taxation on rental profits frequently reduces net distributions by 40% to 50%+. In Dubai, fiscal drag is predominantly transactional at entry rather than continuous.
-                </p>
-              </div>
-
-              <!-- WHAT TO CHECK -->
-              <div class="inv-caveats-card">
-                <div class="caveats-badge">WHAT TO CHECK</div>
-                <ul class="caveats-list">
-                  <li>
-                    <strong>Home-Country Tax Residency:</strong> If you maintain tax residency in your country of citizenship or permanent origin (e.g. US worldwide taxation, UK statutory residence test), foreign rental income or capital gains may remain reportable in your home country unless restructured or offset by Double Taxation Agreements (DTAs).
-                  </li>
-                  <li>
-                    <strong>Double Taxation Treaties:</strong> The UAE maintains over 140 bilateral DTAs. Independent accredited cross-border tax advice is required to confirm how income derived in Dubai interacts with your domestic tax domicile.
-                  </li>
-                  <li>
-                    <strong>Commercial vs. Residential VAT:</strong> Standard residential resales and leases are exempt or zero-rated from 5% UAE VAT. Commercial assets and serviced hotel rooms may incur VAT obligations.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="inv-source-footnote">
-                <span>Verified against UAE Ministry of Finance Federal Decree-Law No. 47/2022, Cabinet Decision No. 49/2023, and Dubai Land Department official fee schedules. For educational evaluation only; not licensed tax or legal counsel.</span>
-              </div>
-
-              <div class="inv-expanded-footer">
-                <button type="button" class="inv-close-btn inv-close-btn-bottom" data-target="inv-card-tax">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-arrow" aria-hidden="true">↑</span>
-                </button>
-              </div>
-
+          <!-- ======================================================
+               SCENE 02 — RENTAL INCOME (OUTSIDE LAYER)
+               ====================================================== -->
+          <article class="cinematic-scene inv-card-section" data-scene="1" id="scene-rental" aria-label="02 Rental Income">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">02</span>
+              <span class="scene-sep">/</span>
+              <span class="scene-tag">RENTAL INCOME</span>
             </div>
-          </div>
+            
+            <h2 class="cinematic-headline">THE ASSET<br>CAN WORK FOR YOU.</h2>
 
-        </div>
-      </article>
-
-      <!-- ==========================================================
-           CARD 02 — RENTAL INCOME
-           ========================================================== -->
-      <article class="inv-card-section" id="inv-card-rental" data-card-id="rental-income">
-        <div class="inv-card-bg" style="background-image: url('/images/twilight_terrace.jpg');" aria-hidden="true"></div>
-        <div class="inv-card-overlay" aria-hidden="true"></div>
-
-        <div class="inv-card-inner">
-          
-          <!-- LAYER 1: CASUAL VISITOR (CLOSED SUMMARY STATE) -->
-          <div class="inv-summary-layer">
-            <div class="inv-card-eyebrow">
-              <span class="inv-num">02</span>
-              <span class="inv-sep">/</span>
-              <span class="inv-cat">RENTAL INCOME</span>
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">RENTAL YIELD</span>
+                <span class="fact-desc">GROSS VS NET<br>PERFORMANCE</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">~70%</span>
+                <span class="fact-desc">TYPICAL NET<br>DISTRIBUTABLE</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">MOLLAK</span>
+                <span class="fact-desc">RERA AUDITED<br>SERVICE CHARGES</span>
+              </div>
             </div>
 
-            <h2 class="inv-card-headline">
-              THE ASSET<br>CAN WORK FOR YOU.
-            </h2>
-
-            <div class="inv-highlight-block">
-              <span class="inv-stat-value">RENTAL YIELD</span>
-              <span class="inv-stat-label">GROSS VS NET PERFORMANCE</span>
-            </div>
-
-            <p class="inv-card-lead">
+            <p class="cinematic-lead">
               Rental performance depends on what you buy, where you buy it, what you pay and how efficiently the property is operated.
             </p>
 
@@ -315,191 +253,43 @@
             </div>
 
             <div class="inv-action-row">
-              <button type="button" class="inv-expand-trigger-btn" data-target="inv-card-rental" aria-expanded="false" aria-controls="expanded-rental">
+              <button type="button" class="inv-expand-trigger-btn" data-target="overlay-rental" aria-expanded="false" aria-controls="overlay-rental">
                 <span class="btn-text">SEE THE INVESTMENT MATH</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
               </button>
             </div>
-          </div>
+          </article>
 
-          <!-- LAYER 2: SERIOUS INVESTOR (IN-PLACE EXPANDED STATE) -->
-          <div class="inv-expanded-wrapper" id="expanded-rental" aria-hidden="true">
-            <div class="inv-expanded-panel">
-              
-              <div class="inv-expanded-top-bar">
-                <div class="inv-expanded-eyebrow">
-                  <span class="inv-num">02</span> / RENTAL INCOME — DETAILED BRIEF
-                </div>
-                <button type="button" class="inv-close-btn" data-target="inv-card-rental" aria-label="Close rental income brief">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-x" aria-hidden="true">✕</span>
-                </button>
-              </div>
-
-              <h3 class="inv-expanded-title">LOOK BEYOND THE RENT.</h3>
-              
-              <p class="inv-expanded-intro">
-                Gross yield is an initial reference metric, never the actual distributable return. Sustainable capital performance requires underwriting every deduction between contract rent and banked income.
-              </p>
-
-              <div class="inv-expanded-grid">
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">UNDERSTANDING GROSS YIELD</h4>
-                  <p class="inv-text">
-                    Gross Yield = (Annual Rental Income ÷ Purchase Price) × 100%. While property portals frequently advertise headline gross yields between 6% and 9%, headline gross yield ignores holding friction, service obligations, and operational turnaround.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">THE FRICTION BETWEEN GROSS AND NET</h4>
-                  <p class="inv-text">
-                    Actual return is determined by subtracting operational friction: tenant vacancy intervals (typically a 2–4 week turnaround buffer), building service charges (governed by the DLD Mollak index), preventative maintenance, insurance, and professional management fees.
-                  </p>
-                </div>
-              </div>
-
-              <!-- VISUAL INVESTMENT MATH WATERFALL -->
-              <div class="inv-waterfall-box">
-                <div class="waterfall-header">
-                  <span class="waterfall-title">THE INVESTMENT MATH WATERFALL</span>
-                  <span class="waterfall-tag">ILLUSTRATIVE DECOMPOSITION</span>
-                </div>
-                
-                <div class="waterfall-flow">
-                  <div class="waterfall-step">
-                    <div class="step-num">01</div>
-                    <div class="step-details">
-                      <span class="step-name">GROSS RENTAL INCOME</span>
-                      <span class="step-desc">Achieved market rent under registered Ejari tenancy</span>
-                    </div>
-                    <div class="step-val positive">100% BASE</div>
-                  </div>
-
-                  <div class="waterfall-arrow" aria-hidden="true">↓</div>
-
-                  <div class="waterfall-step">
-                    <div class="step-num">02</div>
-                    <div class="step-details">
-                      <span class="step-name">MINUS VACANCY BUFFER</span>
-                      <span class="step-desc">Factoring tenant changeover and turnaround inspection</span>
-                    </div>
-                    <div class="step-val negative">− 4% to 8%</div>
-                  </div>
-
-                  <div class="waterfall-arrow" aria-hidden="true">↓</div>
-
-                  <div class="waterfall-step">
-                    <div class="step-num">03</div>
-                    <div class="step-details">
-                      <span class="step-name">MINUS OPERATING SERVICE CHARGES</span>
-                      <span class="step-desc">DLD Mollak approved building maintenance, security & chiller</span>
-                    </div>
-                    <div class="step-val negative">− 12% to 22%</div>
-                  </div>
-
-                  <div class="waterfall-arrow" aria-hidden="true">↓</div>
-
-                  <div class="waterfall-step">
-                    <div class="step-num">04</div>
-                    <div class="step-details">
-                      <span class="step-name">MINUS PROPERTY MANAGEMENT</span>
-                      <span class="step-desc">Licensed agency tenant vetting, rent collection & legal compliance</span>
-                    </div>
-                    <div class="step-val negative">− 5% to 8%</div>
-                  </div>
-
-                  <div class="waterfall-arrow" aria-hidden="true">↓</div>
-
-                  <div class="waterfall-step">
-                    <div class="step-num">05</div>
-                    <div class="step-details">
-                      <span class="step-name">MINUS CONTINGENCY & INSURANCE</span>
-                      <span class="step-desc">Routine HVAC servicing and landlord property insurance</span>
-                    </div>
-                    <div class="step-val negative">− 1% to 2%</div>
-                  </div>
-
-                  <div class="waterfall-arrow" aria-hidden="true">═</div>
-
-                  <div class="waterfall-step total">
-                    <div class="step-num">06</div>
-                    <div class="step-details">
-                      <span class="step-name">ESTIMATED NET DISTRIBUTABLE RETURN</span>
-                      <span class="step-desc">Actual net cash flow banked by property owner</span>
-                    </div>
-                    <div class="step-val highlight">~65% to 75% OF GROSS</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- WHAT THIS MEANS FOR AN INVESTOR -->
-              <div class="inv-implication-card">
-                <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
-                <p class="implication-text">
-                  A luxury property with an 8.5% advertised gross yield in an older tower with high service fees (e.g. AED 34/sq.ft.) and frequent vacancy may deliver less net cash flow than an ultra-prime residence with a 6.2% gross yield, AED 14/sq.ft. service charges, and zero tenant churn. Underwriting must always anchor to net distributable cash.
-                </p>
-              </div>
-
-              <!-- WHAT TO CHECK -->
-              <div class="inv-caveats-card">
-                <div class="caveats-badge">WHAT TO CHECK</div>
-                <ul class="caveats-list">
-                  <li>
-                    <strong>Historical Mollak Service Charges:</strong> Check the official DLD Mollak portal for historical service charge rates per square foot before submitting an acquisition offer.
-                  </li>
-                  <li>
-                    <strong>Registered Ejari Comps:</strong> Verify actual achieved rental contracts registered on the DLD REST database rather than speculative portal asking prices.
-                  </li>
-                  <li>
-                    <strong>Short-Term (DTCM) vs Long-Term Leases:</strong> Short-term holiday lets can generate higher headline revenues during peak winter season (Nov–April), but incur 18–25% operator fees and summer demand tapering.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="inv-source-footnote">
-                <span>VERIFIED BENCHMARKS / ILLUSTRATIVE DEMO DATA. Net yields depend on individual property specifications, building management quality, and market conditions. No rental return is guaranteed.</span>
-              </div>
-
-              <div class="inv-expanded-footer">
-                <button type="button" class="inv-close-btn inv-close-btn-bottom" data-target="inv-card-rental">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-arrow" aria-hidden="true">↑</span>
-                </button>
-              </div>
-
+          <!-- ======================================================
+               SCENE 03 — MARKET FUNDAMENTALS (OUTSIDE LAYER)
+               ====================================================== -->
+          <article class="cinematic-scene inv-card-section" data-scene="2" id="scene-market" aria-label="03 Market Fundamentals">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">03</span>
+              <span class="scene-sep">/</span>
+              <span class="scene-tag">MARKET FUNDAMENTALS</span>
             </div>
-          </div>
+            
+            <h2 class="cinematic-headline">CAPITAL<br>FOLLOWS DEMAND.</h2>
 
-        </div>
-      </article>
-
-      <!-- ==========================================================
-           CARD 03 — MARKET FUNDAMENTALS
-           ========================================================== -->
-      <article class="inv-card-section" id="inv-card-market" data-card-id="market-fundamentals">
-        <div class="inv-card-bg" style="background-image: url('/images/villa_exterior.jpg');" aria-hidden="true"></div>
-        <div class="inv-card-overlay" aria-hidden="true"></div>
-
-        <div class="inv-card-inner">
-          
-          <!-- LAYER 1: CASUAL VISITOR (CLOSED SUMMARY STATE) -->
-          <div class="inv-summary-layer">
-            <div class="inv-card-eyebrow">
-              <span class="inv-num">03</span>
-              <span class="inv-sep">/</span>
-              <span class="inv-cat">MARKET FUNDAMENTALS</span>
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">5.8M</span>
+                <span class="fact-desc">TARGET POPULATION<br>DUBAI 2040 PLAN</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">SCARCITY</span>
+                <span class="fact-desc">FINITE PRIME<br>WATERFRONT LAND</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">PEG: USD</span>
+                <span class="fact-desc">SOVEREIGN FX<br>STABILITY</span>
+              </div>
             </div>
 
-            <h2 class="inv-card-headline">
-              CAPITAL<br>FOLLOWS DEMAND.
-            </h2>
-
-            <div class="inv-highlight-block">
-              <span class="inv-stat-value">GLOBAL DEMAND</span>
-              <span class="inv-stat-label">STRUCTURAL GROWTH DRIVERS</span>
-            </div>
-
-            <p class="inv-card-lead">
+            <p class="cinematic-lead">
               Property returns are shaped by the relationship between demand, supply, pricing, rental activity and liquidity.
             </p>
 
@@ -516,131 +306,43 @@
             </div>
 
             <div class="inv-action-row">
-              <button type="button" class="inv-expand-trigger-btn" data-target="inv-card-market" aria-expanded="false" aria-controls="expanded-market">
+              <button type="button" class="inv-expand-trigger-btn" data-target="overlay-market" aria-expanded="false" aria-controls="overlay-market">
                 <span class="btn-text">UNDERSTAND THE MARKET</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
               </button>
             </div>
-          </div>
+          </article>
 
-          <!-- LAYER 2: SERIOUS INVESTOR (IN-PLACE EXPANDED STATE) -->
-          <div class="inv-expanded-wrapper" id="expanded-market" aria-hidden="true">
-            <div class="inv-expanded-panel">
-              
-              <div class="inv-expanded-top-bar">
-                <div class="inv-expanded-eyebrow">
-                  <span class="inv-num">03</span> / MARKET FUNDAMENTALS — DETAILED BRIEF
-                </div>
-                <button type="button" class="inv-close-btn" data-target="inv-card-market" aria-label="Close market fundamentals brief">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-x" aria-hidden="true">✕</span>
-                </button>
-              </div>
-
-              <h3 class="inv-expanded-title">THE MARKET BEHIND THE PROPERTY.</h3>
-              
-              <p class="inv-expanded-intro">
-                Long-term asset resilience is governed by macro population migration, land scarcity, and distinct submarket dynamics — not blanket speculation.
-              </p>
-
-              <div class="inv-expanded-grid">
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">POPULATION & WEALTH MIGRATION</h4>
-                  <p class="inv-text">
-                    Dubai's resident population expanded past 3.65 million in 2023, tracking toward a projected 5.8 million under the Dubai 2040 Urban Master Plan. Sustained growth is propelled by international entrepreneurship visas, multinational regional headquarters, and geopolitical wealth relocation from Europe, the UK, Asia, and the Americas.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">DUBAI IS NOT ONE PROPERTY MARKET</h4>
-                  <p class="inv-text">
-                    The city does not move as a single uniform index. Performance diverges dramatically across distinct tiers: Ultra-Prime Waterfront Enclaves (Palm Jumeirah, Jumeirah Bay) face finite geographical scarcity, while secondary inland suburban developments face significant off-plan delivery volume that can exert downward pressure on rental yields.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">SUPPLY CYCLES & REALISTIC HORIZONS</h4>
-                  <p class="inv-text">
-                    Over-reliance on the assumption that "Dubai property always goes up" is an amateur error. The market moves through distinct macroeconomic cycles dictated by global interest rates, currency valuation (AED pegged to USD), and handover schedules. Sound acquisitions prioritize prime location defensibility over speculative momentum.
-                  </p>
-                </div>
-
-                <div class="inv-grid-cell">
-                  <h4 class="inv-subheading">LIQUIDITY & TRANSACTION DISCIPLINE</h4>
-                  <p class="inv-text">
-                    Secondary market liquidity varies markedly. High-density off-plan master developments often require prolonged marketing periods during market consolidations, whereas trophy apartments and villas in established core districts maintain constant bilateral bid-ask depth.
-                  </p>
-                </div>
-              </div>
-
-              <!-- WHAT THIS MEANS FOR AN INVESTOR -->
-              <div class="inv-implication-card">
-                <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
-                <p class="implication-text">
-                  Long-term capital security is achieved by acquiring limited-supply typologies — such as high-spec 3-bedroom waterfront residences or bespoke private villas — in established prime nodes where tenant demand permanently outstrips newly completed inventory.
-                </p>
-              </div>
-
-              <!-- WHAT TO CHECK -->
-              <div class="inv-caveats-card">
-                <div class="caveats-badge">WHAT TO CHECK</div>
-                <ul class="caveats-list">
-                  <li>
-                    <strong>Developer Track Record & Escrow Status:</strong> Verify developer balance sheets, past project handover delays, and official RERA project escrow accounts on the DLD portal.
-                  </li>
-                  <li>
-                    <strong>Pipeline within 3km Radius:</strong> Audit scheduled handovers over the next 24 to 36 months in the immediate neighborhood to evaluate potential rent compression.
-                  </li>
-                  <li>
-                    <strong>Infrastructure Completion:</strong> Confirm walking accessibility to transport networks, private schools, premium dining, and medical infrastructure.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="inv-source-footnote">
-                <span>Data grounded in Dubai Land Department Quarterly Reports, Dubai Statistics Center Official Censuses, and Dubai 2040 Urban Master Plan documentation.</span>
-              </div>
-
-              <div class="inv-expanded-footer">
-                <button type="button" class="inv-close-btn inv-close-btn-bottom" data-target="inv-card-market">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-arrow" aria-hidden="true">↑</span>
-                </button>
-              </div>
-
+          <!-- ======================================================
+               SCENE 04 — OWNERSHIP & ACCESS (OUTSIDE LAYER)
+               ====================================================== -->
+          <article class="cinematic-scene inv-card-section" data-scene="3" id="scene-access" aria-label="04 Ownership & Access">
+            <div class="cinematic-eyebrow">
+              <span class="scene-num">04</span>
+              <span class="scene-sep">/</span>
+              <span class="scene-tag">OWNERSHIP & ACCESS</span>
             </div>
-          </div>
+            
+            <h2 class="cinematic-headline">INVESTING<br>WITHOUT BORDERS.</h2>
 
-        </div>
-      </article>
-
-      <!-- ==========================================================
-           CARD 04 — OWNERSHIP & ACCESS
-           ========================================================== -->
-      <article class="inv-card-section" id="inv-card-access" data-card-id="ownership-access">
-        <div class="inv-card-bg" style="background-image: url('/images/jumeirah_bay_island.jpg');" aria-hidden="true"></div>
-        <div class="inv-card-overlay" aria-hidden="true"></div>
-
-        <div class="inv-card-inner">
-          
-          <!-- LAYER 1: CASUAL VISITOR (CLOSED SUMMARY STATE) -->
-          <div class="inv-summary-layer">
-            <div class="inv-card-eyebrow">
-              <span class="inv-num">04</span>
-              <span class="inv-sep">/</span>
-              <span class="inv-cat">OWNERSHIP & ACCESS</span>
+            <div class="cinematic-facts-row">
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">100%</span>
+                <span class="fact-desc">FOREIGN FREEHOLD<br>DESIGNATED ZONES</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">10-YR</span>
+                <span class="fact-desc">GOLDEN VISA<br>AED 2M+ ASSET</span>
+              </div>
+              <div class="cinematic-fact-divider"></div>
+              <div class="cinematic-fact-col">
+                <span class="fact-stat">DLD</span>
+                <span class="fact-desc">BLOCKCHAIN TITLE<br>SOVEREIGN SECURITY</span>
+              </div>
             </div>
 
-            <h2 class="inv-card-headline">
-              INVESTING<br>WITHOUT BORDERS.
-            </h2>
-
-            <div class="inv-highlight-block">
-              <span class="inv-stat-value">GLOBAL ACCESS</span>
-              <span class="inv-stat-label">100% FOREIGN FREEHOLD</span>
-            </div>
-
-            <p class="inv-card-lead">
+            <p class="cinematic-lead">
               International investors can access Dubai's property market subject to applicable ownership rules, regulations and transaction requirements.
             </p>
 
@@ -657,117 +359,442 @@
             </div>
 
             <div class="inv-action-row">
-              <button type="button" class="inv-expand-trigger-btn" data-target="inv-card-access" aria-expanded="false" aria-controls="expanded-access">
+              <button type="button" class="inv-expand-trigger-btn" data-target="overlay-access" aria-expanded="false" aria-controls="overlay-access">
                 <span class="btn-text">SEE HOW IT WORKS</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
               </button>
             </div>
-          </div>
 
-          <!-- LAYER 2: SERIOUS INVESTOR (IN-PLACE EXPANDED STATE) -->
-          <div class="inv-expanded-wrapper" id="expanded-access" aria-hidden="true">
-            <div class="inv-expanded-panel">
-              
-              <div class="inv-expanded-top-bar">
-                <div class="inv-expanded-eyebrow">
-                  <span class="inv-num">04</span> / OWNERSHIP & ACCESS — DETAILED BRIEF
-                </div>
-                <button type="button" class="inv-close-btn" data-target="inv-card-access" aria-label="Close ownership and access brief">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-x" aria-hidden="true">✕</span>
-                </button>
+            <div class="cinematic-scene-bridge">
+              <span class="bridge-tag">NEXT</span>
+              <span class="bridge-prompt">SO WHY PROPERTY? ↓</span>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ==========================================================
+             DYNAMIC IN-PLACE EXPANDED CARDS (OPENS OVER THE OUTSIDE LAYER)
+             ========================================================== -->
+
+        <!-- OVERLAY 01 — TAX ENVIRONMENT -->
+        <div class="cinematic-expanded-overlay" id="overlay-tax" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Tax Environment Brief">
+          <div class="inv-expanded-panel">
+            <div class="inv-expanded-top-bar">
+              <div class="inv-expanded-eyebrow">
+                <span class="inv-num">01</span> / TAX ENVIRONMENT — DETAILED BRIEF
               </div>
+              <button type="button" class="inv-close-btn" data-close="overlay-tax" aria-label="Close tax environment brief">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-x" aria-hidden="true">✕</span>
+              </button>
+            </div>
 
-              <h3 class="inv-expanded-title">FROM PURCHASE TO EXIT.</h3>
-              
-              <p class="inv-expanded-intro">
-                A structured five-phase investment lifecycle from asset discovery to seamless secondary market capital repatriation.
-              </p>
+            <h3 class="inv-expanded-title">WHAT THE HEADLINE ACTUALLY MEANS.</h3>
+            
+            <p class="inv-expanded-intro">
+              A transparent fiscal framework with zero personal tax friction on natural persons, structured to maximize net compounding for private real estate capital.
+            </p>
 
-              <!-- 5-STEP LIFECYCLE FLOW -->
-              <div class="inv-lifecycle-grid">
-                <div class="lifecycle-step-card">
-                  <div class="lifecycle-step-num">01</div>
-                  <h4 class="lifecycle-step-title">FIND</h4>
-                  <p class="lifecycle-step-desc">
-                    Select a property in an officially designated Freehold Zone (Law No. 7 of 2006). Over 60 prime zones — including Downtown, Palm Jumeirah, Dubai Marina, and DIFC — grant 100% foreign freehold ownership rights with perpetual title.
-                  </p>
-                </div>
-
-                <div class="lifecycle-step-card">
-                  <div class="lifecycle-step-num">02</div>
-                  <h4 class="lifecycle-step-title">VERIFY</h4>
-                  <p class="lifecycle-step-desc">
-                    Conduct legal, financial, and structural due diligence: verify title deed authenticity via the government DLD REST app, review RERA escrow balances for off-plan assets, audit Mollak service charges, and conduct independent MEP snagging inspections.
-                  </p>
-                </div>
-
-                <div class="lifecycle-step-card">
-                  <div class="lifecycle-step-num">03</div>
-                  <h4 class="lifecycle-step-title">ACQUIRE</h4>
-                  <p class="lifecycle-step-desc">
-                    Execute the standardized Dubai Land Department Unified Form F (MOU) with a 10% deposit held by an authorized escrow broker. Obtain the developer No Objection Certificate (NOC) and complete formal title transfer at a DLD Registration Trustee office.
-                  </p>
-                </div>
-
-                <div class="lifecycle-step-card">
-                  <div class="lifecycle-step-num">04</div>
-                  <h4 class="lifecycle-step-title">OPERATE</h4>
-                  <p class="lifecycle-step-desc">
-                    Register all tenancy agreements through the mandatory government Ejari system. Contract a licensed RERA property management firm to handle tenant screening, rent collection via Central Bank direct debit or certified cheques, and maintenance.
-                  </p>
-                </div>
-
-                <div class="lifecycle-step-card">
-                  <div class="lifecycle-step-num">05</div>
-                  <h4 class="lifecycle-step-title">EXIT</h4>
-                  <p class="lifecycle-step-desc">
-                    Liquidate assets on the transparent secondary market with zero local capital gains withholding. Repatriate capital freely through UAE Central Bank banking rails in foreign currencies (USD, EUR, GBP) without capital export controls.
-                  </p>
-                </div>
-              </div>
-
-              <!-- WHAT THIS MEANS FOR AN INVESTOR -->
-              <div class="inv-implication-card">
-                <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
-                <p class="implication-text">
-                  Dubai offers institutional-grade property rights backed by government blockchain-enabled title deeds, standardized contracts, and English-law commercial arbitration (DIFC Courts), creating legal transparency comparable to London, New York, or Singapore.
+            <div class="inv-expanded-grid">
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">PERSONAL INCOME & RENTAL PROCEEDS</h4>
+                <p class="inv-text">
+                  Individual property owners — whether resident or non-resident — pay 0% personal income tax on salaries and 0% personal income tax on residential rental proceeds. There are no regional municipal surcharges or recurring personal income withholdings.
                 </p>
               </div>
 
-              <!-- RESIDENCY & REGULATORY CAVEATS -->
-              <div class="inv-caveats-card">
-                <div class="caveats-badge">RESIDENCY & REGULATORY CAVEATS</div>
-                <ul class="caveats-list">
-                  <li>
-                    <strong>UAE 10-Year Golden Visa:</strong> Investors acquiring completed or off-plan properties valued at AED 2,000,000 or greater qualify to apply for the renewable 10-Year Golden Visa for themselves, spouse, and family.
-                  </li>
-                  <li>
-                    <strong>IMPORTANT REGULATORY DISTINCTION:</strong> Property ownership confers a residency visa privilege, <em>NOT UAE citizenship, passport, or second nationality</em>. Residency status remains conditional upon maintaining qualifying real estate ownership and official regulatory criteria.
-                  </li>
-                  <li>
-                    <strong>Freehold vs Leasehold:</strong> Ensure the contract explicitly specifies Freehold ownership (unlimited perpetuity) rather than Usufruct or Leasehold rights (limited to 30–99 years).
-                  </li>
-                </ul>
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">CAPITAL APPRECIATION & DISPOSAL</h4>
+                <p class="inv-text">
+                  0% capital gains tax applies upon the sale or disposal of privately owned residential property. Asset appreciation compounds without annual mark-to-market taxation or capital exit levies, enabling 100% equity retention upon liquidation.
+                </p>
               </div>
 
-              <div class="inv-source-footnote">
-                <span>Governed by Dubai Law No. 7 of 2006 (Property Registration), Law No. 8 of 2007 (Escrow Accounts), and UAE Federal Authority for Identity, Citizenship, Customs and Port Security (ICP) Golden Visa guidelines.</span>
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">CORPORATE TAX (FEDERAL DECREE-LAW NO. 47/2022)</h4>
+                <p class="inv-text">
+                  A 9% federal corporate tax applies strictly to taxable corporate profits over AED 375,000. Cabinet Decision No. 49 of 2023 explicitly clarifies that natural persons (individuals) deriving personal investment and passive residential rental income from real estate without a commercial business license are generally outside the scope of Corporate Tax.
+                </p>
               </div>
 
-              <div class="inv-expanded-footer">
-                <button type="button" class="inv-close-btn inv-close-btn-bottom" data-target="inv-card-access">
-                  <span>CLOSE INVESTMENT BRIEF</span>
-                  <span class="close-arrow" aria-hidden="true">↑</span>
-                </button>
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">ACQUISITION & PROPERTY TRANSACTION COSTS</h4>
+                <p class="inv-text">
+                  While recurring income and wealth taxes are zero, property acquisitions incur statutory transactional fees: a 4% Dubai Land Department (DLD) transfer fee, Registration Trustee fees (~AED 4,000 + 5% VAT), and annual community service charges approved under the Mollak index.
+                </p>
               </div>
+            </div>
 
+            <!-- WHAT THIS MEANS FOR AN INVESTOR -->
+            <div class="inv-implication-card">
+              <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
+              <p class="implication-text">
+                An investor retains a higher proportion of gross rental cash flows and 100% of realized capital gains. In high-tax jurisdictions (such as the UK, Germany, or the US), effective marginal taxation on rental profits frequently reduces net distributions by 40% to 50%+. In Dubai, fiscal drag is predominantly transactional at entry rather than continuous.
+              </p>
+            </div>
+
+            <!-- WHAT TO CHECK -->
+            <div class="inv-caveats-card">
+              <div class="caveats-badge">WHAT TO CHECK</div>
+              <ul class="caveats-list">
+                <li>
+                  <strong>Home-Country Tax Residency:</strong> If you maintain tax residency in your country of citizenship or permanent origin (e.g. US worldwide taxation, UK statutory residence test), foreign rental income or capital gains may remain reportable in your home country unless restructured or offset by Double Taxation Agreements (DTAs).
+                </li>
+                <li>
+                  <strong>Double Taxation Treaties:</strong> The UAE maintains over 140 bilateral DTAs. Independent accredited cross-border tax advice is required to confirm how income derived in Dubai interacts with your domestic tax domicile.
+                </li>
+                <li>
+                  <strong>Commercial vs. Residential VAT:</strong> Standard residential resales and leases are exempt or zero-rated from 5% UAE VAT. Commercial assets and serviced hotel rooms may incur VAT obligations.
+                </li>
+              </ul>
+            </div>
+
+            <div class="inv-source-footnote">
+              <span>Verified against UAE Ministry of Finance Federal Decree-Law No. 47/2022, Cabinet Decision No. 49/2023, and Dubai Land Department official fee schedules. For educational evaluation only; not licensed tax or legal counsel.</span>
+            </div>
+
+            <div class="inv-expanded-footer">
+              <button type="button" class="inv-close-btn inv-close-btn-bottom" data-close="overlay-tax">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-arrow" aria-hidden="true">↑</span>
+              </button>
             </div>
           </div>
-
         </div>
-      </article>
 
+        <!-- OVERLAY 02 — RENTAL INCOME -->
+        <div class="cinematic-expanded-overlay" id="overlay-rental" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Rental Income Brief">
+          <div class="inv-expanded-panel">
+            <div class="inv-expanded-top-bar">
+              <div class="inv-expanded-eyebrow">
+                <span class="inv-num">02</span> / RENTAL INCOME — DETAILED BRIEF
+              </div>
+              <button type="button" class="inv-close-btn" data-close="overlay-rental" aria-label="Close rental income brief">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-x" aria-hidden="true">✕</span>
+              </button>
+            </div>
+
+            <h3 class="inv-expanded-title">LOOK BEYOND THE RENT.</h3>
+            
+            <p class="inv-expanded-intro">
+              Gross yield is an initial reference metric, never the actual distributable return. Sustainable capital performance requires underwriting every deduction between contract rent and banked income.
+            </p>
+
+            <div class="inv-expanded-grid">
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">UNDERSTANDING GROSS YIELD</h4>
+                <p class="inv-text">
+                  Gross Yield = (Annual Rental Income ÷ Purchase Price) × 100%. While property portals frequently advertise headline gross yields between 6% and 9%, headline gross yield ignores holding friction, service obligations, and operational turnaround.
+                </p>
+              </div>
+
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">THE FRICTION BETWEEN GROSS AND NET</h4>
+                <p class="inv-text">
+                  Actual return is determined by subtracting operational friction: tenant vacancy intervals (typically a 2–4 week turnaround buffer), building service charges (governed by the DLD Mollak index), preventative maintenance, insurance, and professional management fees.
+                </p>
+              </div>
+            </div>
+
+            <!-- VISUAL INVESTMENT MATH WATERFALL -->
+            <div class="inv-waterfall-box">
+              <div class="waterfall-header">
+                <span class="waterfall-title">THE INVESTMENT MATH WATERFALL</span>
+                <span class="waterfall-tag">ILLUSTRATIVE DECOMPOSITION</span>
+              </div>
+              
+              <div class="waterfall-flow">
+                <div class="waterfall-step">
+                  <div class="step-num">01</div>
+                  <div class="step-details">
+                    <span class="step-name">GROSS RENTAL INCOME</span>
+                    <span class="step-desc">Achieved market rent under registered Ejari tenancy</span>
+                  </div>
+                  <div class="step-val positive">100% BASE</div>
+                </div>
+
+                <div class="waterfall-arrow" aria-hidden="true">↓</div>
+
+                <div class="waterfall-step">
+                  <div class="step-num">02</div>
+                  <div class="step-details">
+                    <span class="step-name">MINUS VACANCY BUFFER</span>
+                    <span class="step-desc">Factoring tenant changeover and turnaround inspection</span>
+                  </div>
+                  <div class="step-val negative">− 4% to 8%</div>
+                </div>
+
+                <div class="waterfall-arrow" aria-hidden="true">↓</div>
+
+                <div class="waterfall-step">
+                  <div class="step-num">03</div>
+                  <div class="step-details">
+                    <span class="step-name">MINUS OPERATING SERVICE CHARGES</span>
+                    <span class="step-desc">DLD Mollak approved building maintenance, security & chiller</span>
+                  </div>
+                  <div class="step-val negative">− 12% to 22%</div>
+                </div>
+
+                <div class="waterfall-arrow" aria-hidden="true">↓</div>
+
+                <div class="waterfall-step">
+                  <div class="step-num">04</div>
+                  <div class="step-details">
+                    <span class="step-name">MINUS PROPERTY MANAGEMENT</span>
+                    <span class="step-desc">Licensed agency tenant vetting, rent collection & legal compliance</span>
+                  </div>
+                  <div class="step-val negative">− 5% to 8%</div>
+                </div>
+
+                <div class="waterfall-arrow" aria-hidden="true">↓</div>
+
+                <div class="waterfall-step">
+                  <div class="step-num">05</div>
+                  <div class="step-details">
+                    <span class="step-name">MINUS CONTINGENCY & INSURANCE</span>
+                    <span class="step-desc">Routine HVAC servicing and landlord property insurance</span>
+                  </div>
+                  <div class="step-val negative">− 1% to 2%</div>
+                </div>
+
+                <div class="waterfall-arrow" aria-hidden="true">═</div>
+
+                <div class="waterfall-step total">
+                  <div class="step-num">06</div>
+                  <div class="step-details">
+                    <span class="step-name">ESTIMATED NET DISTRIBUTABLE RETURN</span>
+                    <span class="step-desc">Actual net cash flow banked by property owner</span>
+                  </div>
+                  <div class="step-val highlight">~65% to 75% OF GROSS</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- WHAT THIS MEANS FOR AN INVESTOR -->
+            <div class="inv-implication-card">
+              <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
+              <p class="implication-text">
+                A luxury property with an 8.5% advertised gross yield in an older tower with high service fees (e.g. AED 34/sq.ft.) and frequent vacancy may deliver less net cash flow than an ultra-prime residence with a 6.2% gross yield, AED 14/sq.ft. service charges, and zero tenant churn. Underwriting must always anchor to net distributable cash.
+              </p>
+            </div>
+
+            <!-- WHAT TO CHECK -->
+            <div class="inv-caveats-card">
+              <div class="caveats-badge">WHAT TO CHECK</div>
+              <ul class="caveats-list">
+                <li>
+                  <strong>Historical Mollak Service Charges:</strong> Check the official DLD Mollak portal for historical service charge rates per square foot before submitting an acquisition offer.
+                </li>
+                <li>
+                  <strong>Registered Ejari Comps:</strong> Verify actual achieved rental contracts registered on the DLD REST database rather than speculative portal asking prices.
+                </li>
+                <li>
+                  <strong>Short-Term (DTCM) vs Long-Term Leases:</strong> Short-term holiday lets can generate higher headline revenues during peak winter season (Nov–April), but incur 18–25% operator fees and summer demand tapering.
+                </li>
+              </ul>
+            </div>
+
+            <div class="inv-source-footnote">
+              <span>VERIFIED BENCHMARKS / ILLUSTRATIVE DEMO DATA. Net yields depend on individual property specifications, building management quality, and market conditions. No rental return is guaranteed.</span>
+            </div>
+
+            <div class="inv-expanded-footer">
+              <button type="button" class="inv-close-btn inv-close-btn-bottom" data-close="overlay-rental">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-arrow" aria-hidden="true">↑</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERLAY 03 — MARKET FUNDAMENTALS -->
+        <div class="cinematic-expanded-overlay" id="overlay-market" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Market Fundamentals Brief">
+          <div class="inv-expanded-panel">
+            <div class="inv-expanded-top-bar">
+              <div class="inv-expanded-eyebrow">
+                <span class="inv-num">03</span> / MARKET FUNDAMENTALS — DETAILED BRIEF
+              </div>
+              <button type="button" class="inv-close-btn" data-close="overlay-market" aria-label="Close market fundamentals brief">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-x" aria-hidden="true">✕</span>
+              </button>
+            </div>
+
+            <h3 class="inv-expanded-title">THE MARKET BEHIND THE PROPERTY.</h3>
+            
+            <p class="inv-expanded-intro">
+              Long-term asset resilience is governed by macro population migration, land scarcity, and distinct submarket dynamics — not blanket speculation.
+            </p>
+
+            <div class="inv-expanded-grid">
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">POPULATION & WEALTH MIGRATION</h4>
+                <p class="inv-text">
+                  Dubai's resident population expanded past 3.65 million in 2023, tracking toward a projected 5.8 million under the Dubai 2040 Urban Master Plan. Sustained growth is propelled by international entrepreneurship visas, multinational regional headquarters, and geopolitical wealth relocation from Europe, the UK, Asia, and the Americas.
+                </p>
+              </div>
+
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">DUBAI IS NOT ONE PROPERTY MARKET</h4>
+                <p class="inv-text">
+                  The city does not move as a single uniform index. Performance diverges dramatically across distinct tiers: Ultra-Prime Waterfront Enclaves (Palm Jumeirah, Jumeirah Bay) face finite geographical scarcity, while secondary inland suburban developments face significant off-plan delivery volume that can exert downward pressure on rental yields.
+                </p>
+              </div>
+
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">SUPPLY CYCLES & REALISTIC HORIZONS</h4>
+                <p class="inv-text">
+                  Over-reliance on the assumption that "Dubai property always goes up" is an amateur error. The market moves through distinct macroeconomic cycles dictated by global interest rates, currency valuation (AED pegged to USD), and handover schedules. Sound acquisitions prioritize prime location defensibility over speculative momentum.
+                </p>
+              </div>
+
+              <div class="inv-grid-cell">
+                <h4 class="inv-subheading">LIQUIDITY & TRANSACTION DISCIPLINE</h4>
+                <p class="inv-text">
+                  Secondary market liquidity varies markedly. High-density off-plan master developments often require prolonged marketing periods during market consolidations, whereas trophy apartments and villas in established core districts maintain constant bilateral bid-ask depth.
+                </p>
+              </div>
+            </div>
+
+            <!-- WHAT THIS MEANS FOR AN INVESTOR -->
+            <div class="inv-implication-card">
+              <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
+              <p class="implication-text">
+                Long-term capital security is achieved by acquiring limited-supply typologies — such as high-spec 3-bedroom waterfront residences or bespoke private villas — in established prime nodes where tenant demand permanently outstrips newly completed inventory.
+              </p>
+            </div>
+
+            <!-- WHAT TO CHECK -->
+            <div class="inv-caveats-card">
+              <div class="caveats-badge">WHAT TO CHECK</div>
+              <ul class="caveats-list">
+                <li>
+                  <strong>Developer Track Record & Escrow Status:</strong> Verify developer balance sheets, past project handover delays, and official RERA project escrow accounts on the DLD portal.
+                </li>
+                <li>
+                  <strong>Pipeline within 3km Radius:</strong> Audit scheduled handovers over the next 24 to 36 months in the immediate neighborhood to evaluate potential rent compression.
+                </li>
+                <li>
+                  <strong>Infrastructure Completion:</strong> Confirm walking accessibility to transport networks, private schools, premium dining, and medical infrastructure.
+                </li>
+              </ul>
+            </div>
+
+            <div class="inv-source-footnote">
+              <span>Data grounded in Dubai Land Department Quarterly Reports, Dubai Statistics Center Official Censuses, and Dubai 2040 Urban Master Plan documentation.</span>
+            </div>
+
+            <div class="inv-expanded-footer">
+              <button type="button" class="inv-close-btn inv-close-btn-bottom" data-close="overlay-market">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-arrow" aria-hidden="true">↑</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERLAY 04 — OWNERSHIP & ACCESS -->
+        <div class="cinematic-expanded-overlay" id="overlay-access" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ownership and Access Brief">
+          <div class="inv-expanded-panel">
+            <div class="inv-expanded-top-bar">
+              <div class="inv-expanded-eyebrow">
+                <span class="inv-num">04</span> / OWNERSHIP & ACCESS — DETAILED BRIEF
+              </div>
+              <button type="button" class="inv-close-btn" data-close="overlay-access" aria-label="Close ownership and access brief">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-x" aria-hidden="true">✕</span>
+              </button>
+            </div>
+
+            <h3 class="inv-expanded-title">FROM PURCHASE TO EXIT.</h3>
+            
+            <p class="inv-expanded-intro">
+              A structured five-phase investment lifecycle from asset discovery to seamless secondary market capital repatriation.
+            </p>
+
+            <!-- 5-STEP LIFECYCLE FLOW -->
+            <div class="inv-lifecycle-grid">
+              <div class="lifecycle-step-card">
+                <div class="lifecycle-step-num">01</div>
+                <h4 class="lifecycle-step-title">FIND</h4>
+                <p class="lifecycle-step-desc">
+                  Select a property in an officially designated Freehold Zone (Law No. 7 of 2006). Over 60 prime zones — including Downtown, Palm Jumeirah, Dubai Marina, and DIFC — grant 100% foreign freehold ownership rights with perpetual title.
+                </p>
+              </div>
+
+              <div class="lifecycle-step-card">
+                <div class="lifecycle-step-num">02</div>
+                <h4 class="lifecycle-step-title">VERIFY</h4>
+                <p class="lifecycle-step-desc">
+                  Conduct legal, financial, and structural due diligence: verify title deed authenticity via the government DLD REST app, review RERA escrow balances for off-plan assets, audit Mollak service charges, and conduct independent MEP snagging inspections.
+                </p>
+              </div>
+
+              <div class="lifecycle-step-card">
+                <div class="lifecycle-step-num">03</div>
+                <h4 class="lifecycle-step-title">ACQUIRE</h4>
+                <p class="lifecycle-step-desc">
+                  Execute the standardized Dubai Land Department Unified Form F (MOU) with a 10% deposit held by an authorized escrow broker. Obtain the developer No Objection Certificate (NOC) and complete formal title transfer at a DLD Registration Trustee office.
+                </p>
+              </div>
+
+              <div class="lifecycle-step-card">
+                <div class="lifecycle-step-num">04</div>
+                <h4 class="lifecycle-step-title">OPERATE</h4>
+                <p class="lifecycle-step-desc">
+                  Register all tenancy agreements through the mandatory government Ejari system. Contract a licensed RERA property management firm to handle tenant screening, rent collection via Central Bank direct debit or certified cheques, and maintenance.
+                </p>
+              </div>
+
+              <div class="lifecycle-step-card">
+                <div class="lifecycle-step-num">05</div>
+                <h4 class="lifecycle-step-title">EXIT</h4>
+                <p class="lifecycle-step-desc">
+                  Liquidate assets on the transparent secondary market with zero local capital gains withholding. Repatriate capital freely through UAE Central Bank banking rails in foreign currencies (USD, EUR, GBP) without capital export controls.
+                </p>
+              </div>
+            </div>
+
+            <!-- WHAT THIS MEANS FOR AN INVESTOR -->
+            <div class="inv-implication-card">
+              <div class="implication-badge">WHAT THIS MEANS FOR AN INVESTOR</div>
+              <p class="implication-text">
+                Dubai offers institutional-grade property rights backed by government blockchain-enabled title deeds, standardized contracts, and English-law commercial arbitration (DIFC Courts), creating legal transparency comparable to London, New York, or Singapore.
+              </p>
+            </div>
+
+            <!-- RESIDENCY & REGULATORY CAVEATS -->
+            <div class="inv-caveats-card">
+              <div class="caveats-badge">RESIDENCY & REGULATORY CAVEATS</div>
+              <ul class="caveats-list">
+                <li>
+                  <strong>UAE 10-Year Golden Visa:</strong> Investors acquiring completed or off-plan properties valued at AED 2,000,000 or greater qualify to apply for the renewable 10-Year Golden Visa for themselves, spouse, and family.
+                </li>
+                <li>
+                  <strong>IMPORTANT REGULATORY DISTINCTION:</strong> Property ownership confers a residency visa privilege, <em>NOT UAE citizenship, passport, or second nationality</em>. Residency status remains conditional upon maintaining qualifying real estate ownership and official regulatory criteria.
+                </li>
+                <li>
+                  <strong>Freehold vs Leasehold:</strong> Ensure the contract explicitly specifies Freehold ownership (unlimited perpetuity) rather than Usufruct or Leasehold rights (limited to 30–99 years).
+                </li>
+              </ul>
+            </div>
+
+            <div class="inv-source-footnote">
+              <span>Governed by Dubai Law No. 7 of 2006 (Property Registration), Law No. 8 of 2007 (Escrow Accounts), and UAE Federal Authority for Identity, Citizenship, Customs and Port Security (ICP) Golden Visa guidelines.</span>
+            </div>
+
+            <div class="inv-expanded-footer">
+              <button type="button" class="inv-close-btn inv-close-btn-bottom" data-close="overlay-access">
+                <span>CLOSE INVESTMENT BRIEF</span>
+                <span class="close-arrow" aria-hidden="true">↑</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- ----------------------------------------------------------
