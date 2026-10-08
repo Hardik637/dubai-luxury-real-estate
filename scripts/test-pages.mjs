@@ -73,37 +73,40 @@ if (!distProp.includes('properties-cards-grid')) {
 console.log('✓ Properties page built with hero, filter system, and grid.');
 
 // Check Invest page
-if (!distInvest.includes('why-dubai-cinematic') || !distInvest.includes('cinematic-sticky-stage')) {
-  throw new Error('Invest Why Dubai Cinematic fullscreen sequence missing');
+if (!distInvest.includes('investment-sections') || !distInvest.includes('inv-card-section')) {
+  throw new Error('Invest cinematic investment sections suite missing');
 }
-if (distInvest.includes('WHAT IF YOUR MONEY')) {
-  throw new Error('Invest Why Dubai old hero should be removed');
+if (distInvest.includes('03 — LIFESTYLE') || distInvest.includes('A DIFFERENT WAY TO LIVE.')) {
+  throw new Error('Invest lifestyle section was supposed to be completely removed');
 }
-if (!distInvest.includes('BUILT FOR') || !distInvest.includes('GLOBAL BUSINESS.')) {
-  throw new Error('Scene 01: Economy headline missing');
+if (!distInvest.includes('A DIFFERENT') || !distInvest.includes('TAX LANDSCAPE.')) {
+  throw new Error('Card 01: Tax Environment headline missing');
 }
-if (!distInvest.includes('A DIFFERENT') || !distInvest.includes('ENVIRONMENT') || !distInvest.includes('WEALTH.')) {
-  throw new Error('Scene 02: Wealth headline missing');
+if (!distInvest.includes('THE ASSET') || !distInvest.includes('CAN WORK FOR YOU.')) {
+  throw new Error('Card 02: Rental Income headline missing');
 }
-if (!distInvest.includes('A DIFFERENT') || !distInvest.includes('WAY TO LIVE.')) {
-  throw new Error('Scene 03: Lifestyle headline missing');
+if (!distInvest.includes('CAPITAL') || !distInvest.includes('FOLLOWS DEMAND.')) {
+  throw new Error('Card 03: Market Fundamentals headline missing');
 }
-if (!distInvest.includes('POSITION') || !distInvest.includes('CLOSER') || !distInvest.includes('OPPORTUNITY.')) {
-  throw new Error('Scene 04: Opportunity headline missing');
+if (!distInvest.includes('INVESTING') || !distInvest.includes('WITHOUT BORDERS.')) {
+  throw new Error('Card 04: Ownership & Access headline missing');
 }
-if (!distInvest.includes('SO WHY PROPERTY?') || !distInvest.includes('WE HELP YOU MAKE THE MOVE MAKE SENSE')) {
-  throw new Error('Invest service transition and journey missing');
+if (!distInvest.includes('WHAT THE HEADLINE ACTUALLY MEANS.') || !distInvest.includes('LOOK BEYOND THE RENT.')) {
+  throw new Error('Invest expanded state detailed briefs missing');
+}
+if (!distInvest.includes('SO WHY PROPERTY?') || !distInvest.includes('Understanding Dubai is one thing.')) {
+  throw new Error('Invest service transition missing');
+}
+if (!distInvest.includes('GOOD INVESTMENTS') || !distInvest.includes('ARE NOT BUILT') || !distInvest.includes('ON ONE NUMBER.')) {
+  throw new Error('Invest credibility discipline section missing');
 }
 if (!distInvest.includes('From property to paying tenant') || !distInvest.includes('See the potential')) {
   throw new Error('Invest preserved execution roadmap or scenario slider missing');
 }
-if (!distInvest.includes('Not every beautiful property is a good investment')) {
-  throw new Error('Invest advisory discipline section missing');
-}
 if (!distInvest.includes('IF DUBAI MAKES SENSE FOR YOU')) {
   throw new Error('Invest final CTA missing');
 }
-console.log('✓ Invest page built with Why Dubai hero, 4 pillars, base explorer, service journey, and preserved roadmap (scroll story removed).');
+console.log('✓ Invest page built with 4 expandable cinematic investment cards, transition, credibility matrix, and roadmap.');
 
 // Check Home page integrity
 if (!distIndex.includes('hero-scroll-container') || !distIndex.includes('hero-canvas')) {

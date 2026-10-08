@@ -7,7 +7,7 @@ import {
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
   initInvestPageInteractions();
-  initCinematicScrollEngine();
+  initExpandableInvestmentCards();
 });
 
 // Navigation Bar & Mobile Drawer for Inner Pages
@@ -384,155 +384,115 @@ function closePlanModal() {
 }
 
 
-/* ==========================================================================
-   CINEMATIC FULL-SCREEN SCROLL ENGINE
-   Smooth sticky 4-scene progression: 01 Economy -> 02 Wealth -> 03 Lifestyle -> 04 Opportunity
-   ========================================================================== */
-function initCinematicScrollEngine() {
-  const container = document.getElementById('why-dubai-cinematic');
+// ==========================================================================
+// CINEMATIC EXPANDABLE INVESTMENT CARDS
+// Two-layer information system: Layer 1 (Summary) + Layer 2 (In-place expand)
+// ==========================================================================
+function initExpandableInvestmentCards() {
+  const container = document.getElementById('investment-sections');
   if (!container) return;
 
-  const stage = container.querySelector('.cinematic-sticky-stage');
-  const bgLayers = Array.from(container.querySelectorAll('.cinematic-bg-layer'));
-  const scenes = Array.from(container.querySelectorAll('.cinematic-scene'));
-  const progressSteps = Array.from(container.querySelectorAll('.progress-step'));
+  const cardSections = Array.from(container.querySelectorAll('.inv-card-section'));
   const navbar = document.getElementById('site-header');
 
-  const totalScenes = scenes.length;
-  if (totalScenes === 0) return;
+  function closeCard(card, shouldScroll = false) {
+    if (!card || !card.classList.contains('is-expanded')) return;
+    
+    card.classList.remove('is-expanded');
+    const trigger = card.querySelector('.inv-expand-trigger-btn');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
 
-  let ticking = false;
+    const wrapper = card.querySelector('.inv-expanded-wrapper');
+    if (wrapper) wrapper.setAttribute('aria-hidden', 'true');
 
-  function updateScroll() {
-    ticking = false;
-    const containerTop = container.offsetTop || 0;
-    const stageHeight = stage ? stage.offsetHeight : window.innerHeight;
-    const totalScrollable = container.offsetHeight - stageHeight;
-
-    if (totalScrollable <= 0) return;
-
-    // Support static scene inspection via query param ?scene=0..3 or native scroll progress
-    let progress = 0;
-    const urlParams = new URLSearchParams(window.location.search);
-    const forcedScene = urlParams.has('scene') ? parseInt(urlParams.get('scene'), 10) : null;
-
-    if (forcedScene !== null && !isNaN(forcedScene) && forcedScene >= 0 && forcedScene < totalScenes) {
-      progress = forcedScene / (totalScenes - 1);
-      if (navbar) navbar.classList.add('invest-nav-dark');
-    } else {
-      const currentScrollY = window.pageYOffset || window.scrollY || 0;
-      const scrolled = Math.max(0, currentScrollY - containerTop);
-      progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-
-      // Navbar dark glass toggle when over the cinematic sequence
-      if (navbar) {
-        if (currentScrollY >= containerTop - 10 && currentScrollY <= containerTop + totalScrollable + 40) {
-          navbar.classList.add('invest-nav-dark');
-        } else {
-          navbar.classList.remove('invest-nav-dark');
-        }
-      }
-    }
-
-    // Virtual index ranges from 0.0 to (totalScenes - 1)
-    const vIndex = progress * (totalScenes - 1);
-    const activeStep = Math.min(totalScenes - 2, Math.floor(vIndex));
-    const fraction = vIndex - activeStep;
-
-    // Generous plateau for each scene (0 to 0.50 of each step), smooth crossfade during 0.50 to 1.0
-    let ease = 0;
-    const plateau = 0.50;
-    if (fraction > plateau) {
-      const t = (fraction - plateau) / (1 - plateau);
-      ease = t * t * (3 - 2 * t); // smoothstep curve
-    }
-
-    // Determine current dominant scene index for indicator
-    const currentSceneIndex = (fraction >= 0.5) ? Math.min(totalScenes - 1, activeStep + 1) : activeStep;
-
-    // Update progress steps
-    progressSteps.forEach((step, idx) => {
-      if (idx === currentSceneIndex) {
-        step.classList.add('is-active');
-        step.setAttribute('aria-current', 'step');
-      } else {
-        step.classList.remove('is-active');
-        step.removeAttribute('aria-current');
-      }
-    });
-
-    // Animate backgrounds and scenes with GPU acceleration
-    for (let i = 0; i < totalScenes; i++) {
-      const bg = bgLayers[i];
-      const scene = scenes[i];
-
-      if (!bg || !scene) continue;
-
-      let opacity = 0;
-      let translateY = 24;
-      let scale = 1.03;
-
-      if (i === activeStep) {
-        opacity = 1 - ease;
-        translateY = -24 * ease;
-        scale = 1.0 - (0.02 * ease);
-      } else if (i === activeStep + 1) {
-        opacity = ease;
-        translateY = 24 * (1 - ease);
-        scale = 1.03 - (0.03 * ease);
-      } else {
-        opacity = 0;
-        translateY = (i < activeStep) ? -28 : 28;
-        scale = 1.03;
-      }
-
-      scene.style.opacity = opacity.toFixed(3);
-      scene.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
-      scene.style.pointerEvents = opacity > 0.4 ? 'auto' : 'none';
-
-      bg.style.opacity = opacity.toFixed(3);
-      bg.style.transform = `scale(${scale.toFixed(4)})`;
+    if (shouldScroll) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
-  // Click on progress steps to jump smoothly to corresponding scene
-  progressSteps.forEach((step, idx) => {
-    step.addEventListener('click', () => {
-      const stageHeight = stage ? stage.offsetHeight : window.innerHeight;
-      const totalScrollable = container.offsetHeight - stageHeight;
-      const targetRatio = idx / (totalScenes - 1);
-      const targetScroll = container.offsetTop + targetRatio * totalScrollable;
+  function expandCard(card) {
+    if (!card) return;
+
+    // Close any other currently expanded card (only one open at a time)
+    cardSections.forEach(otherCard => {
+      if (otherCard !== card && otherCard.classList.contains('is-expanded')) {
+        closeCard(otherCard, false);
+      }
+    });
+
+    // Expand current card
+    card.classList.add('is-expanded');
+    const trigger = card.querySelector('.inv-expand-trigger-btn');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+
+    const wrapper = card.querySelector('.inv-expanded-wrapper');
+    if (wrapper) wrapper.setAttribute('aria-hidden', 'false');
+
+    // Smooth scroll so the card title and brief are comfortably visible
+    setTimeout(() => {
+      const topOffset = card.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({
-        top: targetScroll,
+        top: Math.max(0, topOffset),
         behavior: 'smooth'
+      });
+    }, 120);
+  }
+
+  // Bind trigger buttons
+  cardSections.forEach(card => {
+    const triggerBtn = card.querySelector('.inv-expand-trigger-btn');
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (card.classList.contains('is-expanded')) {
+          closeCard(card, true);
+        } else {
+          expandCard(card);
+        }
+      });
+    }
+
+    // Bind all close buttons inside the card (top bar and footer)
+    const closeBtns = card.querySelectorAll('.inv-close-btn');
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeCard(card, true);
       });
     });
   });
 
-  function onScroll() {
-    if (!ticking) {
-      window.requestAnimationFrame(updateScroll);
-      ticking = true;
+  // Keyboard escape listener to collapse open cards
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const openCard = cardSections.find(c => c.classList.contains('is-expanded'));
+      if (openCard) {
+        closeCard(openCard, true);
+      }
+    }
+  });
+
+  // Dark navigation styling when scrolling over the investment cinematic suite
+  function updateNavDarkState() {
+    if (!navbar) return;
+    const scrollY = window.pageYOffset || window.scrollY || 0;
+    const suiteRect = container.getBoundingClientRect();
+    const credSection = document.getElementById('credibility-discipline');
+    const credRect = credSection ? credSection.getBoundingClientRect() : null;
+
+    const inSuite = suiteRect.top <= 80 && suiteRect.bottom >= 80;
+    const inCred = credRect && credRect.top <= 80 && credRect.bottom >= 80;
+
+    if (inSuite || inCred) {
+      navbar.classList.add('invest-nav-dark');
+    } else {
+      navbar.classList.remove('invest-nav-dark');
     }
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-
-  // Bridge button click to smooth scroll into Why Property
-  const bridgeBtn = container.querySelector('.cinematic-scene-bridge');
-  if (bridgeBtn) {
-    bridgeBtn.style.cursor = 'pointer';
-    bridgeBtn.addEventListener('click', () => {
-      const target = document.getElementById('why-property');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  }
-
-
-
-  // Initial calculation
-  updateScroll();
+  window.addEventListener('scroll', updateNavDarkState, { passive: true });
+  window.addEventListener('resize', updateNavDarkState, { passive: true });
+  updateNavDarkState();
 }

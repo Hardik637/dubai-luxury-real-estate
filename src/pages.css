@@ -1298,44 +1298,36 @@
   background-color: #FFFFFF;
 }
 
-/* 4-Screen Height Sticky Scroll Container */
-.cinematic-why-dubai {
+/* ==========================================================================
+   CINEMATIC INVESTMENT SUITE — FOUR EXPANDABLE INVESTMENT SECTIONS
+   01 Tax Environment, 02 Rental Income, 03 Market Fundamentals, 04 Ownership & Access
+   Two-layer system: Layer 1 (Casual summary) + Layer 2 (In-place expanded brief)
+   ========================================================================== */
+
+.investment-cinematic-suite {
   position: relative;
   width: 100%;
-  height: 400vh;
-  height: 400svh;
   background-color: #0B0F19;
   z-index: 2;
 }
 
-/* Fixed 100svh Viewport Stage */
-.cinematic-sticky-stage {
-  position: sticky;
-  top: 0;
-  left: 0;
+/* Individual Full-Screen Cinematic Investment Section */
+.inv-card-section {
+  position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100svh;
+  min-height: 100vh;
   min-height: 100svh;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* Layered Atmosphere: Background Container */
-.cinematic-bg-container {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
+  background-color: #0B0F19;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: min-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease;
 }
 
-/* Individual Fullscreen Photographic Background Layers */
-.cinematic-bg-layer {
+/* Atmospheric Photographic Background Layer */
+.inv-card-bg {
   position: absolute;
   top: -20px;
   left: -20px;
@@ -1344,403 +1336,776 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(3px) brightness(0.52) saturate(0.85);
-  transform: scale(1.03);
-  opacity: 0;
-  will-change: opacity, transform;
+  filter: blur(2.5px) brightness(0.48) saturate(0.85);
+  transform: scale(1.02);
   pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+  will-change: filter, transform;
 }
 
-.cinematic-bg-layer.is-active {
-  opacity: 1;
-  transform: scale(1);
+/* When expanded, deepen the background blur & vignette */
+.inv-card-section.is-expanded .inv-card-bg {
+  filter: blur(8px) brightness(0.3) saturate(0.7);
+  transform: scale(1.06);
 }
 
 /* Unified Vignette & Depth Overlay */
-.cinematic-overlay-layer {
+.inv-card-overlay {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
   background: 
-    radial-gradient(ellipse at center, rgba(11, 15, 25, 0.42) 0%, rgba(11, 15, 25, 0.78) 65%, rgba(11, 15, 25, 0.95) 100%),
-    linear-gradient(180deg, rgba(11, 15, 25, 0.65) 0%, transparent 22%, transparent 72%, rgba(11, 15, 25, 0.92) 100%);
+    radial-gradient(ellipse at center, rgba(11, 15, 25, 0.45) 0%, rgba(11, 15, 25, 0.8) 65%, rgba(11, 15, 25, 0.96) 100%),
+    linear-gradient(180deg, rgba(11, 15, 25, 0.7) 0%, transparent 22%, transparent 75%, rgba(11, 15, 25, 0.95) 100%);
+  transition: opacity 0.6s ease;
 }
 
-/* Minimalist Right Progress Indicator (01 - 04) */
-.cinematic-progress-indicator {
-  position: absolute;
-  right: clamp(24px, 4vw, 56px);
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 10;
-  pointer-events: auto;
+.inv-card-section.is-expanded .inv-card-overlay {
+  background: 
+    radial-gradient(ellipse at center, rgba(11, 15, 25, 0.75) 0%, rgba(11, 15, 25, 0.92) 65%, rgba(11, 15, 25, 0.98) 100%),
+    linear-gradient(180deg, rgba(11, 15, 25, 0.85) 0%, rgba(11, 15, 25, 0.65) 50%, rgba(11, 15, 25, 0.95) 100%);
 }
 
-.progress-step {
-  background: transparent;
-  border: none;
-  padding: 6px 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  opacity: 0.35;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  outline: none;
-}
-
-.progress-step span {
-  font-family: var(--font-mono, 'Space Grotesk', monospace);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: #FFFFFF;
-  transition: color 0.35s ease;
-}
-
-.progress-step::before {
-  content: '';
-  display: block;
-  width: 14px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.4);
-  transition: width 0.35s ease, background-color 0.35s ease;
-}
-
-.progress-step:hover {
-  opacity: 0.75;
-}
-
-.progress-step.is-active {
-  opacity: 1;
-  transform: translateX(-4px);
-}
-
-.progress-step.is-active span {
-  color: var(--champagne-gold, #C5A880);
-  font-weight: 700;
-}
-
-.progress-step.is-active::before {
-  width: 28px;
-  background-color: var(--champagne-gold, #C5A880);
-}
-
-/* Centered Viewport Editorial Content Stage */
-.cinematic-content-stage {
+/* Inner Centered Container */
+.inv-card-inner {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-/* Individual Editorial Scene Panel */
-.cinematic-scene {
-  position: absolute;
-  width: 100%;
-  max-width: 850px;
-  padding: 0 clamp(20px, 4vw, 40px);
+  max-width: 960px;
+  padding: clamp(60px, 9vh, 110px) clamp(20px, 4vw, 44px);
   margin: 0 auto;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transform: translate3d(0, 24px, 0);
-  will-change: opacity, transform;
-  pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
-.cinematic-scene.is-active {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  pointer-events: auto;
+/* ==========================================================================
+   LAYER 1 — CASUAL VISITOR (SUMMARY STATE)
+   ========================================================================== */
+
+.inv-summary-layer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* Scene Eyebrow */
-.cinematic-eyebrow {
+/* Category Eyebrow */
+.inv-card-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   font-family: var(--font-mono, 'Space Grotesk', monospace);
-  font-size: clamp(0.78rem, 1.1vw, 0.92rem);
-  font-weight: 600;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--champagne-gold, #C5A880);
-  margin-bottom: clamp(14px, 2.2vh, 22px);
+  margin-bottom: clamp(14px, 2.4vh, 22px);
 }
 
-.cinematic-eyebrow .scene-num {
-  font-weight: 700;
-}
-
-.cinematic-eyebrow .scene-sep {
+.inv-card-eyebrow .inv-sep {
   opacity: 0.5;
 }
 
-/* Editorial Cinematic Headline */
-.cinematic-headline {
+/* Large Editorial Headline */
+.inv-card-headline {
   font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
   font-weight: 800;
-  font-size: clamp(2.2rem, 5.2vw, 4.2rem);
-  line-height: 1.1;
+  font-size: clamp(2.3rem, 5.4vw, 4.4rem);
+  line-height: 1.08;
   letter-spacing: -0.025em;
   text-transform: uppercase;
   color: #FFFFFF;
-  margin: 0 0 clamp(16px, 2.5vh, 24px);
+  margin: 0 0 clamp(16px, 2.6vh, 24px);
   text-wrap: balance;
+  text-align: center;
 }
 
-/* Editorial Lead Paragraph */
-.cinematic-lead {
-  font-family: var(--font-editorial, 'Cormorant Garamond', serif);
-  font-style: italic;
-  font-size: clamp(1.2rem, 2vw, 1.55rem);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.84);
-  max-width: 680px;
-  margin: 0 auto clamp(30px, 4.5vh, 44px);
-  text-wrap: balance;
-}
-
-/* Minimal Facts Row (Simple Typography Separated by Thin Vertical Lines) */
-.cinematic-facts-row {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-  max-width: 780px;
-  margin: 0 auto;
-}
-
-.cinematic-fact-col {
-  flex: 1 1 0;
+/* Highlighted Fact / Concept Block */
+.inv-highlight-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding: 0 clamp(12px, 2vw, 24px);
+  margin-bottom: clamp(16px, 2.6vh, 24px);
 }
 
-.cinematic-fact-col .fact-stat {
+.inv-stat-value {
   font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
   font-weight: 800;
-  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
-  line-height: 1.1;
+  font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+  line-height: 1.05;
   letter-spacing: -0.02em;
   color: #FFFFFF;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-.cinematic-fact-col .fact-desc {
+.inv-stat-label {
   font-family: var(--font-mono, 'Space Grotesk', monospace);
-  font-size: clamp(0.68rem, 0.9vw, 0.78rem);
-  font-weight: 600;
-  line-height: 1.45;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.cinematic-fact-divider {
-  width: 1px;
-  background: rgba(255, 255, 255, 0.18);
-  align-self: stretch;
-  min-height: 48px;
-}
-
-/* Subtle Lifestyle Cadence Row */
-.cinematic-cadence-row {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-.cinematic-cadence-col {
-  flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0 clamp(10px, 1.8vw, 20px);
-}
-
-.cinematic-cadence-col .cadence-time {
-  font-family: var(--font-mono, 'Space Grotesk', monospace);
-  font-size: clamp(0.72rem, 0.95vw, 0.82rem);
+  font-size: clamp(0.72rem, 0.95vw, 0.84rem);
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--champagne-gold, #C5A880);
-  margin-bottom: 6px;
 }
 
-.cinematic-cadence-col .cadence-act {
-  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(0.85rem, 1.15vw, 1.05rem);
+/* Outside Short Editorial Lead */
+.inv-card-lead {
+  font-family: var(--font-editorial, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: clamp(1.22rem, 2.1vw, 1.6rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 680px;
+  margin: 0 auto clamp(24px, 3.8vh, 36px);
+  text-wrap: balance;
+  text-align: center;
+}
+
+/* Supporting Investment Keywords Row */
+.inv-keywords-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
   font-weight: 600;
-  line-height: 1.35;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: clamp(28px, 4.4vh, 44px);
+  max-width: 720px;
+}
+
+.inv-keywords-row .inv-dot {
+  color: var(--champagne-gold, #C5A880);
+  opacity: 0.6;
+}
+
+/* Interaction Cue Button */
+.inv-action-row {
+  display: flex;
+  justify-content: center;
+}
+
+.inv-expand-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: rgba(11, 15, 25, 0.65);
+  border: 1px solid rgba(197, 168, 128, 0.45);
+  color: #FFFFFF;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  outline: none;
+}
+
+.inv-expand-trigger-btn:hover {
+  background: var(--champagne-gold, #C5A880);
+  color: #0B0F19;
+  border-color: var(--champagne-gold, #C5A880);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(197, 168, 128, 0.28);
+}
+
+.inv-expand-trigger-btn .btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.inv-expand-trigger-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   LAYER 2 — SERIOUS INVESTOR (IN-PLACE EXPANDED STATE)
+   ========================================================================== */
+
+.inv-expanded-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+  transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  width: 100%;
+}
+
+.inv-card-section.is-expanded .inv-expanded-wrapper {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+  margin-top: clamp(28px, 4.5vh, 44px);
+}
+
+.inv-expanded-panel {
+  overflow: hidden;
+  min-height: 0;
+  background: rgba(11, 15, 25, 0.94);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(197, 168, 128, 0.28);
+  border-radius: 12px;
+  padding: clamp(28px, 4.5vw, 54px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+  text-align: left;
+}
+
+/* Top Control Bar */
+.inv-expanded-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 18px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.inv-expanded-eyebrow {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--champagne-gold, #C5A880);
+}
+
+.inv-close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.inv-close-btn:hover {
+  background: rgba(197, 168, 128, 0.22);
+  border-color: var(--champagne-gold, #C5A880);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+/* Expanded Title & Intro */
+.inv-expanded-title {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0 0 14px;
+  line-height: 1.15;
+}
+
+.inv-expanded-intro {
+  font-family: var(--font-editorial, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.8vw, 1.38rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 32px;
+}
+
+/* 2-Column Editorial Grid for Content Blocks */
+.inv-expanded-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 30px;
+}
+
+.inv-grid-cell {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 22px;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.inv-grid-cell:hover {
+  border-color: rgba(197, 168, 128, 0.3);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.inv-subheading {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--champagne-gold, #C5A880);
+  margin: 0 0 10px;
+}
+
+.inv-text {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Visual Math Waterfall for Rental Card */
+.inv-waterfall-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(197, 168, 128, 0.22);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.waterfall-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.waterfall-title {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #FFFFFF;
 }
 
-/* Scene 04 Story Bridge Indicator */
-.cinematic-scene-bridge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: clamp(28px, 4vh, 40px);
-  padding: 6px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.cinematic-scene-bridge .bridge-tag {
+.waterfall-tag {
   font-family: var(--font-mono, 'Space Grotesk', monospace);
   font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   color: var(--champagne-gold, #C5A880);
-  font-weight: 700;
 }
 
-.cinematic-scene-bridge .bridge-prompt {
+.waterfall-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.waterfall-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.035);
+  border-radius: 6px;
+  gap: 16px;
+}
+
+.waterfall-step .step-num {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--champagne-gold, #C5A880);
+  opacity: 0.8;
+}
+
+.waterfall-step .step-details {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.waterfall-step .step-name {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.waterfall-step .step-desc {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.waterfall-step .step-val {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.waterfall-step .step-val.positive {
+  color: #FFFFFF;
+}
+
+.waterfall-step .step-val.negative {
+  color: #E29578;
+}
+
+.waterfall-step .step-val.highlight {
+  color: var(--champagne-gold, #C5A880);
+  font-size: 0.95rem;
+}
+
+.waterfall-step.total {
+  background: rgba(197, 168, 128, 0.12);
+  border: 1px solid var(--champagne-gold, #C5A880);
+}
+
+.waterfall-arrow {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--champagne-gold, #C5A880);
+  opacity: 0.6;
+  margin: -2px 0;
+}
+
+/* 5-Phase Lifecycle Grid for Ownership Card */
+.inv-lifecycle-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.lifecycle-step-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lifecycle-step-num {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--champagne-gold, #C5A880);
+  margin-bottom: 6px;
+}
+
+.lifecycle-step-title {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0 0 8px;
+}
+
+.lifecycle-step-desc {
   font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
   font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
-  text-transform: uppercase;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
 }
 
-/* Responsive Rules for Tablet and Mobile */
-@media (max-width: 900px) {
-  .cinematic-progress-indicator {
-    right: 18px;
-    gap: 12px;
+/* Investor Implication Block */
+.inv-implication-card {
+  background: rgba(197, 168, 128, 0.08);
+  border-left: 3px solid var(--champagne-gold, #C5A880);
+  border-radius: 0 8px 8px 0;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+}
+
+.implication-badge {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--champagne-gold, #C5A880);
+  margin-bottom: 8px;
+}
+
+.implication-text {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.9rem;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+}
+
+/* What to Check / Caveats Block */
+.inv-caveats-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+}
+
+.caveats-badge {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 12px;
+}
+
+.caveats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.caveats-list li {
+  position: relative;
+  padding-left: 20px;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.caveats-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--champagne-gold, #C5A880);
+  font-weight: bold;
+}
+
+.caveats-list strong {
+  color: #FFFFFF;
+}
+
+/* Source & Footnote */
+.inv-source-footnote {
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 26px;
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Expanded Footer with Close Action */
+.inv-expanded-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.inv-close-btn-bottom {
+  padding: 10px 24px;
+}
+
+/* ==========================================================================
+   3. CREDIBILITY SECTION (GOOD INVESTMENTS ARE NOT BUILT ON ONE NUMBER)
+   ========================================================================== */
+
+.credibility-discipline-section {
+  background: linear-gradient(180deg, #101524 0%, #0B0F19 100%);
+  padding: clamp(90px, 12vh, 150px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  position: relative;
+  color: #FFFFFF;
+}
+
+.credibility-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.credibility-headline {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin: 16px 0 20px;
+  text-wrap: balance;
+}
+
+.credibility-subline {
+  font-family: var(--font-editorial, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 680px;
+  margin: 0 auto 40px;
+  text-wrap: balance;
+}
+
+.credibility-keywords-matrix {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 18px;
+  margin-top: 36px;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cred-keyword {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: clamp(0.76rem, 1.1vw, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cred-keyword:hover {
+  color: var(--champagne-gold, #C5A880);
+  background: rgba(197, 168, 128, 0.12);
+  border-color: rgba(197, 168, 128, 0.4);
+  transform: translateY(-2px);
+}
+
+.cred-sep {
+  color: var(--champagne-gold, #C5A880);
+  opacity: 0.5;
+  font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN FOR INVESTMENT CARDS
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .inv-lifecycle-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .cinematic-progress-indicator {
-    display: none;
+  .inv-card-section {
+    min-height: 100svh;
   }
 
-  .cinematic-scene {
-    width: 100%;
-    max-width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
+  .inv-card-inner {
+    padding: clamp(48px, 6vh, 72px) 20px;
   }
 
-  .cinematic-eyebrow {
-    font-size: 0.72rem;
-    margin-bottom: 10px;
-    letter-spacing: 0.18em;
-  }
-
-  .cinematic-headline {
-    font-size: clamp(1.28rem, 5.2vw, 1.7rem);
-    letter-spacing: -0.015em;
+  .inv-card-headline {
+    font-size: clamp(1.6rem, 6.2vw, 2.2rem);
     line-height: 1.15;
-    margin: 0 auto 12px;
-    word-break: normal;
-    overflow-wrap: break-word;
+    margin-bottom: 14px;
     max-width: 320px;
   }
 
-  .cinematic-lead {
-    font-size: 0.98rem;
+  .inv-stat-value {
+    font-size: clamp(1.8rem, 5.8vw, 2.4rem);
+  }
+
+  .inv-card-lead {
+    font-size: 1.05rem;
     line-height: 1.45;
-    margin: 0 auto 18px;
-    max-width: 300px;
+    margin-bottom: 20px;
+    max-width: 320px;
   }
 
-  .cinematic-facts-row {
+  .inv-keywords-row {
+    font-size: 0.68rem;
+    gap: 6px 10px;
+    margin-bottom: 24px;
+  }
+
+  .inv-expand-trigger-btn {
+    padding: 12px 22px;
+    font-size: 0.76rem;
+  }
+
+  .inv-expanded-panel {
+    padding: 24px 18px;
+  }
+
+  .inv-expanded-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .inv-lifecycle-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .waterfall-step {
     flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
-    max-width: 280px;
-    margin: 0 auto;
   }
 
-  .cinematic-fact-col {
-    padding: 2px 0;
+  .waterfall-step .step-val {
+    align-self: flex-end;
   }
 
-  .cinematic-fact-col .fact-stat {
-    font-size: 1.5rem;
-    margin-bottom: 2px;
+  .credibility-headline {
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
   }
 
-  .cinematic-fact-col .fact-desc {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+  .credibility-keywords-matrix {
+    gap: 8px 12px;
   }
 
-  .cinematic-fact-divider {
-    width: 28px;
-    height: 1px;
-    min-height: 1px;
-    margin: 2px auto;
-    background: rgba(255, 255, 255, 0.14);
-  }
-
-  .cinematic-cadence-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 18px;
-    max-width: 310px;
-    margin: 0 auto;
-  }
-
-  .cinematic-cadence-row .cinematic-fact-divider {
-    display: none !important;
-  }
-
-  .cinematic-cadence-col .cadence-time {
-    font-size: 0.68rem;
-    margin-bottom: 2px;
-  }
-
-  .cinematic-cadence-col .cadence-act {
-    font-size: 0.82rem;
-  }
-
-  .cinematic-scene-bridge {
-    margin-top: 16px;
-    padding: 4px 12px;
+  .cred-keyword {
+    font-size: 0.72rem;
+    padding: 4px 8px;
   }
 }
 
 @media (max-width: 380px) {
-  .cinematic-headline {
-    font-size: clamp(1.3rem, 5.8vw, 1.65rem);
-    max-width: 290px;
+  .inv-card-headline {
+    font-size: 1.5rem;
   }
 
-  .cinematic-lead {
-    font-size: 0.92rem;
-    max-width: 270px;
+  .inv-stat-value {
+    font-size: 1.65rem;
   }
 
-  .cinematic-fact-col .fact-stat {
-    font-size: 1.35rem;
+  .inv-expand-trigger-btn {
+    font-size: 0.72rem;
+    padding: 10px 18px;
   }
 }
+
 
 /* 5. SERVICE TRANSITION SECTION (Dark Bridge after Why Dubai Cinematic) */
 .service-transition-section {
