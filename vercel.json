@@ -1,8 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/properties/:id", "destination": "/properties/index.html" },
-    { "source": "/properties", "destination": "/properties/index.html" },
-    { "source": "/invest", "destination": "/invest/index.html" }
+    { "source": "/properties/:path*", "destination": "/properties" },
+    { "source": "/invest/:path*", "destination": "/invest" }
   ]
 }
