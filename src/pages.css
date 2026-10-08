@@ -2256,40 +2256,6 @@
   margin-top: 24px;
 }
 
-/* Demo Investment Opportunities Section */
-.invest-opportunities-section {
-  padding: clamp(70px, 9vw, 120px) 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.invest-opp-inner {
-  max-width: 1520px;
-  margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 48px);
-}
-
-.invest-card-profile-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-sans);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--champagne-gold-deep);
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.invest-card-yield {
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: #1E6B47;
-  letter-spacing: 0.02em;
-  margin-top: 6px;
-}
-
 /* --------------------------------------------------------------------------
    RESPONSIVE DESIGN (TABLET & MOBILE BREAKPOINTS)
    -------------------------------------------------------------------------- */

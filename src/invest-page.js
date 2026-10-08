@@ -179,7 +179,6 @@ function initInvestPageInteractions() {
   setupObjectiveSelector();
   setupBudgetSelector();
   setupScenarioSlider();
-  renderInvestmentOpportunities();
   setupPlanModal();
 
   // Explore Why Dubai scroll
@@ -291,36 +290,6 @@ function setupScenarioSlider() {
   updateScenario();
 }
 
-// --------------------------------------------------------------------------
-// SECTION — DEMO INVESTMENT OPPORTUNITIES
-// --------------------------------------------------------------------------
-function renderInvestmentOpportunities() {
-  const grid = document.getElementById('invest-opportunities-grid');
-  if (!grid) return;
-
-  // Curate 4 top investment demo properties
-  const opportunities = DEMO_PROPERTIES.slice(0, 4);
-
-  grid.innerHTML = opportunities.map(prop => `
-    <a href="/properties/${prop.id}" class="property-editorial-card" data-id="${prop.id}">
-      <div class="card-media-wrapper">
-        <img src="${prop.coverImage || prop.images.exterior[0]}" alt="${prop.name}" class="card-property-img" loading="lazy" />
-        <span class="card-subtle-badge">${prop.transaction === 'rent' ? 'FOR RENT' : 'FOR SALE'}</span>
-      </div>
-      <div class="card-details-panel">
-        <div class="invest-card-profile-tag">
-          <span>●</span> ${prop.investmentProfile.toUpperCase()} PROFILE
-        </div>
-        <h3 class="card-property-name">${prop.name}</h3>
-        <p class="card-property-location">${prop.location}</p>
-        <div class="card-property-price">${prop.priceDisplay}</div>
-        <div class="invest-card-yield">
-          Illustrative Net Yield: ${prop.illustrativeYield}%*
-        </div>
-      </div>
-    </a>
-  `).join('');
-}
 
 // --------------------------------------------------------------------------
 // INVESTMENT PLAN MODAL
