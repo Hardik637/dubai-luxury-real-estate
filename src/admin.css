@@ -1,25 +1,42 @@
 /* ==========================================================================
-   VISION OF EXCELLENCE — PRIVATE ESTATE DESK & ADMIN CONSOLE STYLES
-   Minimalist Obsidian & Champagne Gold Theme
+   VISION OF EXCELLENCE — OWNER CONSOLE & ADMIN PORTAL
+   Homepage Light Luxury Palette: Warm Cream, Pure White, Obsidian & Champagne Gold
    ========================================================================== */
 
 :root {
-  --admin-bg: #090a0b;
-  --admin-surface: #111315;
-  --admin-surface-2: #171a1d;
-  --admin-surface-3: #1f2327;
-  --admin-border: rgba(255, 255, 255, 0.08);
-  --admin-border-focus: rgba(197, 168, 128, 0.45);
-  --admin-gold: #c5a880;
-  --admin-gold-hover: #d6bc96;
-  --admin-text-main: #f5f4f0;
-  --admin-text-muted: #969ba1;
-  --admin-text-dim: #60656c;
-  --admin-danger: #e05d5d;
-  --admin-success: #4ec994;
-  --admin-warning: #e5a93c;
-  --font-serif: "Cinzel", "Playfair Display", Georgia, serif;
-  --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Exactly Matching Homepage Design Tokens (src/style.css) */
+  --admin-bg: #FAF8F5;          /* Warm light cream canvas */
+  --admin-surface: #FFFFFF;     /* Pure white card surface */
+  --admin-surface-2: #F3EFEA;   /* Soft sand / warm linen */
+  --admin-surface-3: #EAE5DE;   /* Subtle deeper sand */
+  --admin-border: #E2DDD5;      /* Muted border */
+  --admin-border-medium: #CFC7BC; /* Defined border */
+  --admin-border-focus: #C5A880; /* Champagne gold border on focus */
+  
+  /* Brand Typography & Accents */
+  --admin-obsidian: #0B0C0E;    /* Deep mineral jet black */
+  --admin-text-main: #0B0C0E;   /* Main text */
+  --admin-text-secondary: #2C2F38; /* Sub-headings */
+  --admin-text-muted: #6E717E;  /* Supporting labels */
+  --admin-text-dim: #989BA5;    /* Placeholders */
+
+  --admin-gold: #C5A880;        /* Core refined champagne gold */
+  --admin-gold-hover: #A08359;  /* Burnished deeper gold */
+  --admin-gold-soft: rgba(197, 168, 128, 0.12); /* Subtle gold wash */
+  
+  --admin-success: #2E7D32;
+  --admin-success-bg: rgba(46, 125, 50, 0.08);
+  --admin-danger: #D32F2F;
+  --admin-danger-bg: rgba(211, 47, 47, 0.08);
+  --admin-warning: #B26A00;
+  --admin-warning-bg: rgba(237, 108, 2, 0.08);
+
+  --font-serif: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --shadow-float: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -38,26 +55,25 @@ body.admin-body {
 }
 
 /* ==========================================================================
-   ADMIN TOP NAVIGATION BAR
+   TOP NAVIGATION BAR
    ========================================================================== */
 .admin-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 36px;
-  background: rgba(17, 19, 21, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  padding: 16px 36px;
+  background: var(--admin-surface);
   border-bottom: 1px solid var(--admin-border);
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: var(--shadow-subtle);
 }
 
 .admin-nav-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
 }
 
 .admin-brand-mark {
@@ -69,25 +85,24 @@ body.admin-body {
 }
 
 .admin-logo-img {
-  height: 32px;
+  height: 34px;
   width: auto;
-  filter: brightness(1.1);
 }
 
 .admin-console-tag {
   font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--admin-gold);
+  color: var(--admin-gold-hover);
   border-left: 1px solid var(--admin-border);
   padding-left: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .admin-nav-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .status-pill {
@@ -95,12 +110,12 @@ body.admin-body {
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  background: rgba(78, 201, 148, 0.1);
-  border: 1px solid rgba(78, 201, 148, 0.25);
+  background: var(--admin-success-bg);
+  border: 1px solid rgba(46, 125, 50, 0.2);
   color: var(--admin-success);
   border-radius: 999px;
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -110,45 +125,41 @@ body.admin-body {
   height: 6px;
   border-radius: 50%;
   background: currentColor;
-  animation: pulse-dot 2s infinite ease-in-out;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
 .admin-user-pill {
   font-size: 0.8125rem;
   color: var(--admin-text-muted);
+  font-weight: 500;
 }
 
 .btn-admin-ghost {
   background: transparent;
-  border: 1px solid var(--admin-border);
+  border: 1px solid var(--admin-border-medium);
   color: var(--admin-text-main);
   padding: 8px 16px;
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-weight: 500;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .btn-admin-ghost:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--admin-surface-2);
+  border-color: var(--admin-obsidian);
 }
 
-.btn-admin-gold {
-  background: var(--admin-gold);
-  border: 1px solid var(--admin-gold);
-  color: #0c0d0e;
-  padding: 9px 18px;
+.btn-admin-primary {
+  background: var(--admin-obsidian);
+  border: 1px solid var(--admin-obsidian);
+  color: #FFFFFF;
+  padding: 10px 20px;
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
@@ -159,22 +170,22 @@ body.admin-body {
   gap: 8px;
 }
 
-.btn-admin-gold:hover {
-  background: var(--admin-gold-hover);
-  border-color: var(--admin-gold-hover);
-  transform: translateY(-1px);
+.btn-admin-primary:hover {
+  background: #252830;
+  border-color: #252830;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 /* ==========================================================================
-   VIEW 1: ADMIN LOGIN CARD
+   VIEW 1: CLEAN SIMPLE LOGIN SCREEN
    ========================================================================== */
 .admin-login-screen {
-  min-height: calc(100vh - 75px);
+  min-height: calc(100vh - 72px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 20px;
-  background: radial-gradient(circle at top center, rgba(197, 168, 128, 0.06) 0%, transparent 60%);
+  padding: 40px 20px;
+  background: var(--admin-bg);
 }
 
 .admin-login-card {
@@ -184,45 +195,40 @@ body.admin-body {
   border: 1px solid var(--admin-border);
   border-radius: 8px;
   padding: 44px 38px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-  position: relative;
-}
-
-.admin-login-header {
+  box-shadow: var(--shadow-card);
   text-align: center;
-  margin-bottom: 32px;
 }
 
 .login-crest {
   width: 52px;
   height: 52px;
-  margin: 0 auto 18px;
+  margin: 0 auto 16px;
   display: block;
-  opacity: 0.95;
 }
 
 .login-title {
   font-family: var(--font-serif);
   font-size: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   color: var(--admin-text-main);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-transform: uppercase;
 }
 
 .login-subtitle {
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  color: var(--admin-gold);
+  letter-spacing: 0.1em;
+  color: var(--admin-gold-hover);
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
+  margin-bottom: 28px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .admin-field-group {
@@ -234,17 +240,17 @@ body.admin-body {
 
 .admin-field-label {
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--admin-text-muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .admin-input {
   width: 100%;
-  padding: 13px 16px;
-  background: var(--admin-surface-2);
-  border: 1px solid var(--admin-border);
+  padding: 12px 14px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-medium);
   color: var(--admin-text-main);
   border-radius: 4px;
   font-size: 0.9375rem;
@@ -255,12 +261,7 @@ body.admin-body {
 
 .admin-input:focus {
   border-color: var(--admin-border-focus);
-  background: var(--admin-surface-3);
-  box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.12);
-}
-
-.admin-input::placeholder {
-  color: var(--admin-text-dim);
+  box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.15);
 }
 
 .password-input-wrap {
@@ -274,42 +275,33 @@ body.admin-body {
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
   cursor: pointer;
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  font-weight: 600;
   text-transform: uppercase;
   padding: 4px 6px;
-}
-
-.btn-toggle-pwd:hover {
-  color: var(--admin-text-main);
 }
 
 .admin-login-btn {
   width: 100%;
   padding: 14px;
-  background: var(--admin-gold);
-  color: #0c0d0e;
+  background: var(--admin-obsidian);
+  color: #FFFFFF;
   border: none;
   border-radius: 4px;
   font-size: 0.8125rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .admin-login-btn:hover {
-  background: var(--admin-gold-hover);
-  box-shadow: 0 4px 20px rgba(197, 168, 128, 0.25);
-}
-
-.admin-login-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  background: #252830;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .login-feedback {
@@ -317,31 +309,29 @@ body.admin-body {
   border-radius: 4px;
   font-size: 0.8125rem;
   display: none;
-  margin-top: 10px;
 }
 
 .login-feedback.error {
   display: block;
-  background: rgba(224, 93, 93, 0.12);
-  border: 1px solid rgba(224, 93, 93, 0.3);
-  color: #ff9b9b;
+  background: var(--admin-danger-bg);
+  border: 1px solid rgba(211, 47, 47, 0.25);
+  color: var(--admin-danger);
 }
 
 .login-security-notice {
   margin-top: 24px;
-  padding-top: 20px;
+  padding-top: 18px;
   border-top: 1px solid var(--admin-border);
   font-size: 0.6875rem;
-  color: var(--admin-text-dim);
-  text-align: center;
+  color: var(--admin-text-muted);
   line-height: 1.5;
 }
 
 /* ==========================================================================
-   VIEW 2: ADMIN DASHBOARD
+   VIEW 2: SIMPLE ADMIN DASHBOARD
    ========================================================================== */
 .admin-dashboard {
-  max-width: 1400px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 32px 36px 80px;
 }
@@ -350,47 +340,46 @@ body.admin-body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 28px;
-  padding-bottom: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--admin-border);
 }
 
 .dash-title-group h1 {
   font-family: var(--font-serif);
-  font-size: 1.875rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--admin-text-main);
   margin-bottom: 4px;
 }
 
 .dash-title-group p {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--admin-text-muted);
-  letter-spacing: 0.04em;
 }
 
 /* Tab Navigation */
 .admin-tab-nav {
   display: flex;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   background: var(--admin-surface);
   padding: 6px;
   border-radius: 6px;
   border: 1px solid var(--admin-border);
   width: fit-content;
+  box-shadow: var(--shadow-subtle);
 }
 
 .admin-tab-btn {
-  padding: 10px 22px;
+  padding: 10px 24px;
   background: transparent;
   border: none;
   color: var(--admin-text-muted);
   font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
@@ -402,36 +391,34 @@ body.admin-body {
 
 .admin-tab-btn:hover {
   color: var(--admin-text-main);
+  background: var(--admin-surface-2);
 }
 
 .admin-tab-btn.active {
-  background: var(--admin-surface-3);
-  color: var(--admin-gold);
-  border: 1px solid rgba(197, 168, 128, 0.25);
+  background: var(--admin-obsidian);
+  color: #FFFFFF;
 }
 
 .tab-badge {
-  background: var(--admin-surface);
-  border: 1px solid var(--admin-border);
-  color: var(--admin-text-muted);
-  padding: 2px 7px;
+  background: var(--admin-surface-2);
+  color: var(--admin-text-main);
+  padding: 2px 8px;
   border-radius: 999px;
   font-size: 0.6875rem;
   font-weight: 700;
 }
 
 .admin-tab-btn.active .tab-badge {
-  background: rgba(197, 168, 128, 0.15);
-  border-color: rgba(197, 168, 128, 0.35);
-  color: var(--admin-gold);
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
 }
 
-/* Metrics Cards */
+/* Summary Metrics */
 .admin-metrics-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .metric-card {
@@ -441,36 +428,37 @@ body.admin-body {
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  box-shadow: var(--shadow-subtle);
 }
 
 .metric-label {
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--admin-text-muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .metric-value {
   font-size: 1.875rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--admin-text-main);
   letter-spacing: -0.02em;
 }
 
 .metric-sub {
   font-size: 0.75rem;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
 }
 
-/* Filter & Action Toolbar */
+/* Controls Toolbar */
 .admin-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
@@ -484,7 +472,7 @@ body.admin-body {
   width: 100%;
   padding: 10px 16px 10px 38px;
   background: var(--admin-surface);
-  border: 1px solid var(--admin-border);
+  border: 1px solid var(--admin-border-medium);
   color: var(--admin-text-main);
   border-radius: 4px;
   font-size: 0.875rem;
@@ -500,23 +488,24 @@ body.admin-body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
   pointer-events: none;
 }
 
 .toolbar-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .admin-select {
   padding: 9px 14px;
   background: var(--admin-surface);
-  border: 1px solid var(--admin-border);
+  border: 1px solid var(--admin-border-medium);
   color: var(--admin-text-main);
   border-radius: 4px;
   font-size: 0.8125rem;
+  font-weight: 500;
   outline: none;
   cursor: pointer;
 }
@@ -526,12 +515,12 @@ body.admin-body {
 }
 
 /* ==========================================================================
-   TAB 1: ENQUIRIES TABLE & CARDS
+   TAB 1: CLIENT ENQUIRIES CARDS
    ========================================================================== */
 .enquiries-stream {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .enquiry-card {
@@ -539,22 +528,23 @@ body.admin-body {
   border: 1px solid var(--admin-border);
   border-radius: 6px;
   padding: 22px 26px;
-  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  box-shadow: var(--shadow-subtle);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .enquiry-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: var(--admin-surface-2);
+  border-color: var(--admin-border-medium);
+  box-shadow: var(--shadow-card);
 }
 
 .enquiry-card-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
@@ -565,8 +555,8 @@ body.admin-body {
 }
 
 .enquiry-client-name {
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 700;
   color: var(--admin-text-main);
   display: flex;
   align-items: center;
@@ -578,11 +568,11 @@ body.admin-body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 3px 8px;
-  background: rgba(197, 168, 128, 0.12);
-  border: 1px solid rgba(197, 168, 128, 0.25);
-  color: var(--admin-gold);
+  background: var(--admin-surface-2);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-gold-hover);
   border-radius: 3px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .enquiry-contacts-strip {
@@ -595,46 +585,42 @@ body.admin-body {
 }
 
 .enquiry-contacts-strip a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.enquiry-contacts-strip a:hover {
-  color: var(--admin-gold);
+  color: var(--admin-text-main);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .enquiry-time-status {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .enquiry-timestamp {
   font-size: 0.75rem;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
 }
 
 .enquiry-body-details {
   background: var(--admin-surface-2);
   border: 1px solid var(--admin-border);
-  padding: 14px 18px;
+  padding: 12px 16px;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .enquiry-prop-ref {
   font-size: 0.8125rem;
-  color: var(--admin-gold);
-  font-weight: 500;
+  color: var(--admin-gold-hover);
+  font-weight: 700;
 }
 
 .enquiry-notes-content {
   font-size: 0.875rem;
-  color: var(--admin-text-main);
-  line-height: 1.55;
+  color: var(--admin-text-secondary);
+  line-height: 1.5;
   white-space: pre-wrap;
 }
 
@@ -642,9 +628,9 @@ body.admin-body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 4px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
+  padding-top: 4px;
 }
 
 .enquiry-action-cluster {
@@ -659,9 +645,9 @@ body.admin-body {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-radius: 3px;
-  border: 1px solid var(--admin-border);
-  background: var(--admin-surface-3);
+  border-radius: 4px;
+  border: 1px solid var(--admin-border-medium);
+  background: var(--admin-surface);
   color: var(--admin-text-main);
   cursor: pointer;
   outline: none;
@@ -669,11 +655,12 @@ body.admin-body {
 
 .btn-contact-quick {
   padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--admin-surface-2);
   border: 1px solid var(--admin-border);
   color: var(--admin-text-main);
   font-size: 0.75rem;
-  border-radius: 3px;
+  font-weight: 600;
+  border-radius: 4px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -682,30 +669,28 @@ body.admin-body {
 }
 
 .btn-contact-quick:hover {
-  background: rgba(197, 168, 128, 0.15);
-  border-color: var(--admin-gold);
-  color: var(--admin-gold);
+  background: var(--admin-surface-3);
+  border-color: var(--admin-border-medium);
 }
 
 .btn-delete-ghost {
   padding: 6px 10px;
   background: transparent;
   border: 1px solid transparent;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
   font-size: 0.75rem;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 4px;
   transition: all 0.15s ease;
 }
 
 .btn-delete-ghost:hover {
   color: var(--admin-danger);
-  border-color: rgba(224, 93, 93, 0.3);
-  background: rgba(224, 93, 93, 0.1);
+  background: var(--admin-danger-bg);
 }
 
 /* ==========================================================================
-   TAB 2: PROPERTY MANAGEMENT GRID & TOGGLES
+   TAB 2: PROPERTY MANAGEMENT CARDS & SIGNATURE TOGGLE
    ========================================================================== */
 .properties-admin-grid {
   display: grid;
@@ -720,18 +705,19 @@ body.admin-body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.2s ease;
+  box-shadow: var(--shadow-subtle);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .prop-admin-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  border-color: var(--admin-border-medium);
+  box-shadow: var(--shadow-card);
 }
 
 .prop-admin-media {
   position: relative;
   aspect-ratio: 16 / 9;
-  background: #000;
+  background: var(--admin-surface-2);
   overflow: hidden;
 }
 
@@ -739,11 +725,6 @@ body.admin-body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.prop-admin-card:hover .prop-admin-img {
-  transform: scale(1.03);
 }
 
 .prop-admin-status-overlay {
@@ -751,20 +732,19 @@ body.admin-body {
   top: 10px;
   left: 10px;
   padding: 4px 8px;
-  background: rgba(17, 19, 21, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--admin-border);
   color: var(--admin-text-main);
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: 3px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* SIGNATURE TOGGLE SWITCH (OWNER SELECTION) */
 .signature-toggle-bar {
-  padding: 10px 16px;
+  padding: 12px 18px;
   background: var(--admin-surface-2);
   border-bottom: 1px solid var(--admin-border);
   display: flex;
@@ -774,17 +754,14 @@ body.admin-body {
 
 .sig-toggle-label {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--admin-text-muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .sig-toggle-label.active {
-  color: var(--admin-gold);
+  color: var(--admin-obsidian);
 }
 
 /* Switch UI */
@@ -809,7 +786,7 @@ body.admin-body {
   right: 0;
   bottom: 0;
   background-color: var(--admin-surface-3);
-  border: 1px solid var(--admin-border);
+  border: 1px solid var(--admin-border-medium);
   transition: 0.25s;
   border-radius: 999px;
 }
@@ -821,14 +798,15 @@ body.admin-body {
   width: 16px;
   left: 3px;
   bottom: 3px;
-  background-color: var(--admin-text-dim);
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: 0.25s;
   border-radius: 50%;
 }
 
 .switch-control input:checked + .switch-slider {
-  background-color: rgba(197, 168, 128, 0.25);
-  border-color: var(--admin-gold);
+  background-color: var(--admin-obsidian);
+  border-color: var(--admin-obsidian);
 }
 
 .switch-control input:checked + .switch-slider:before {
@@ -840,7 +818,7 @@ body.admin-body {
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
 }
 
@@ -848,14 +826,14 @@ body.admin-body {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
+  font-weight: 600;
 }
 
 .prop-admin-title {
   font-family: var(--font-serif);
-  font-size: 1.125rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-size: 1.1875rem;
+  font-weight: 600;
   color: var(--admin-text-main);
 }
 
@@ -869,14 +847,13 @@ body.admin-body {
 
 .prop-admin-price {
   font-size: 1.1875rem;
-  font-weight: 700;
-  color: var(--admin-gold);
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  color: var(--admin-text-main);
   margin-top: 4px;
 }
 
 .prop-admin-footer {
-  padding: 14px 20px;
+  padding: 12px 20px;
   background: var(--admin-surface-2);
   border-top: 1px solid var(--admin-border);
   display: flex;
@@ -885,33 +862,153 @@ body.admin-body {
 }
 
 .btn-card-edit {
-  padding: 7px 14px;
-  background: transparent;
-  border: 1px solid var(--admin-border);
+  padding: 6px 14px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-medium);
   color: var(--admin-text-main);
-  border-radius: 3px;
+  border-radius: 4px;
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .btn-card-edit:hover {
-  border-color: var(--admin-gold);
-  color: var(--admin-gold);
+  background: var(--admin-obsidian);
+  color: #FFFFFF;
+  border-color: var(--admin-obsidian);
 }
 
 /* ==========================================================================
-   MODAL DIALOGS (PROPERTY EDITOR & SETTINGS)
+   PHOTO UPLOAD DROPZONES & PREVIEWS (NEW FEATURE)
+   ========================================================================== */
+.photo-upload-zone {
+  border: 2px dashed var(--admin-border-medium);
+  border-radius: 6px;
+  padding: 18px 16px;
+  text-align: center;
+  background: var(--admin-surface-2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.photo-upload-zone:hover {
+  border-color: var(--admin-gold);
+  background: var(--admin-surface);
+}
+
+.photo-upload-zone.dragover {
+  border-color: var(--admin-obsidian);
+  background: #FFFFFF;
+}
+
+.photo-upload-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.upload-icon-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.upload-icon {
+  font-size: 1.5rem;
+}
+
+.upload-prompt-text {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--admin-text-main);
+}
+
+.upload-hint-sub {
+  font-size: 0.6875rem;
+  color: var(--admin-text-muted);
+}
+
+/* Single Cover Preview Card */
+.cover-preview-box {
+  margin-top: 10px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  aspect-ratio: 16 / 9;
+  max-width: 280px;
+  background: var(--admin-surface-2);
+}
+
+.cover-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-remove-preview {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(11, 12, 14, 0.75);
+  color: #FFFFFF;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.btn-remove-preview:hover {
+  background: var(--admin-danger);
+}
+
+/* Multi Gallery Preview Grid */
+.gallery-previews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.gallery-preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface-2);
+}
+
+.gallery-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   MODAL WINDOW (PROPERTY EDITOR)
    ========================================================================== */
 .admin-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(11, 12, 14, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -935,13 +1032,13 @@ body.admin-body {
   background: var(--admin-surface);
   border: 1px solid var(--admin-border);
   border-radius: 8px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--shadow-float);
   display: flex;
   flex-direction: column;
 }
 
 .admin-modal-header {
-  padding: 22px 28px;
+  padding: 20px 28px;
   border-bottom: 1px solid var(--admin-border);
   display: flex;
   justify-content: space-between;
@@ -955,19 +1052,18 @@ body.admin-body {
 .admin-modal-title {
   font-family: var(--font-serif);
   font-size: 1.25rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--admin-text-main);
+  font-weight: 700;
 }
 
 .admin-modal-close-btn {
   background: transparent;
   border: none;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
   font-size: 1.25rem;
   cursor: pointer;
   padding: 4px;
-  transition: color 0.15s ease;
 }
 
 .admin-modal-close-btn:hover {
@@ -975,10 +1071,10 @@ body.admin-body {
 }
 
 .admin-modal-body {
-  padding: 28px;
+  padding: 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .form-grid-duo {
@@ -995,9 +1091,9 @@ body.admin-body {
 
 .admin-textarea {
   width: 100%;
-  padding: 12px 16px;
-  background: var(--admin-surface-2);
-  border: 1px solid var(--admin-border);
+  padding: 12px 14px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-medium);
   color: var(--admin-text-main);
   border-radius: 4px;
   font-size: 0.875rem;
@@ -1011,33 +1107,10 @@ body.admin-body {
   border-color: var(--admin-border-focus);
 }
 
-.image-presets-strip {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-
-.preset-chip-btn {
-  padding: 4px 10px;
-  background: var(--admin-surface-3);
-  border: 1px solid var(--admin-border);
-  color: var(--admin-text-muted);
-  font-size: 0.6875rem;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.preset-chip-btn:hover {
-  color: var(--admin-gold);
-  border-color: rgba(197, 168, 128, 0.4);
-}
-
 .signature-field-banner {
-  padding: 14px 18px;
-  background: rgba(197, 168, 128, 0.08);
-  border: 1px solid rgba(197, 168, 128, 0.25);
+  padding: 16px 20px;
+  background: var(--admin-surface-2);
+  border: 1px solid var(--admin-border-medium);
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
@@ -1046,11 +1119,10 @@ body.admin-body {
 }
 
 .signature-banner-info h4 {
-  font-size: 0.8125rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--admin-gold);
+  font-size: 0.875rem;
+  color: var(--admin-text-main);
   margin-bottom: 2px;
+  font-weight: 700;
 }
 
 .signature-banner-info p {
@@ -1059,7 +1131,7 @@ body.admin-body {
 }
 
 .admin-modal-footer {
-  padding: 20px 28px;
+  padding: 18px 28px;
   border-top: 1px solid var(--admin-border);
   display: flex;
   justify-content: flex-end;
@@ -1076,7 +1148,7 @@ body.admin-body {
   background: var(--admin-surface);
   border: 1px solid var(--admin-border);
   border-radius: 6px;
-  color: var(--admin-text-dim);
+  color: var(--admin-text-muted);
 }
 
 .admin-empty-state h3 {

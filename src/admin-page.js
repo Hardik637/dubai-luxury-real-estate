@@ -518,8 +518,88 @@ function renderProperties() {
 }
 
 /* ==========================================================================
-   PROPERTY EDITOR MODAL (ADD / EDIT)
+   PHOTO UPLOAD & PROPERTY EDITOR MODAL (ADD / EDIT)
    ========================================================================== */
+let currentCoverImage = '';
+let currentGalleryImages = [];
+
+function optimizeImageFile(file, maxWidth = 1600, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    if (!file || !file.type.startsWith('image/')) {
+      return reject(new Error('Please select a valid image file.'));
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = () => resolve(e.target.result);
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function setCoverImagePreview(url) {
+  currentCoverImage = url;
+  const container = document.getElementById('cover-preview-container');
+  const imgEl = document.getElementById('cover-preview-img');
+  const hiddenInput = document.getElementById('edit-image');
+
+  if (url && container && imgEl) {
+    imgEl.src = url;
+    container.style.display = 'block';
+    if (hiddenInput) hiddenInput.value = url;
+  } else if (container && hiddenInput) {
+    container.style.display = 'none';
+    hiddenInput.value = '';
+    currentCoverImage = '';
+  }
+}
+
+function renderGalleryPreviews() {
+  const container = document.getElementById('gallery-previews-container');
+  const hiddenInput = document.getElementById('edit-gallery');
+  if (!container) return;
+
+  if (currentGalleryImages.length === 0) {
+    container.innerHTML = '';
+    if (hiddenInput) hiddenInput.value = '';
+    return;
+  }
+
+  if (hiddenInput) hiddenInput.value = currentGalleryImages.join(', ');
+
+  container.innerHTML = currentGalleryImages.map((imgUrl, idx) => `
+    <div class="gallery-preview-item" data-idx="${idx}">
+      <img src="${escapeHtml(imgUrl)}" alt="Gallery View ${idx + 1}" class="gallery-preview-img" />
+      <button type="button" class="btn-remove-preview" data-remove-gallery="${idx}" title="Remove photo">✕</button>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('[data-remove-gallery]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.getAttribute('data-remove-gallery'), 10);
+      currentGalleryImages.splice(idx, 1);
+      renderGalleryPreviews();
+    });
+  });
+}
+
 function setupModalEvents() {
   if (btnClosePropModal) btnClosePropModal.addEventListener('click', closePropertyModal);
   if (btnCancelPropEdit) btnCancelPropEdit.addEventListener('click', closePropertyModal);
@@ -528,12 +608,105 @@ function setupModalEvents() {
     if (e.target === modalPropEditor) closePropertyModal();
   });
 
-  // Image preset buttons
+  // Cover Photo File Upload
+  const coverFileInput = document.getElementById('edit-cover-file');
+  const coverZone = document.getElementById('zone-cover-upload');
+  const btnRemoveCover = document.getElementById('btn-remove-cover');
+
+  if (coverFileInput) {
+    coverFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        try {
+          const optimized = await optimizeImageFile(file);
+          setCoverImagePreview(optimized);
+        } catch (err) {
+          alert('Could not process photo: ' + err.message);
+        }
+      }
+    });
+  }
+
+  if (btnRemoveCover) {
+    btnRemoveCover.addEventListener('click', () => {
+      setCoverImagePreview('');
+      if (coverFileInput) coverFileInput.value = '';
+    });
+  }
+
+  // Cover Drag and Drop
+  if (coverZone) {
+    coverZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      coverZone.classList.add('dragover');
+    });
+    coverZone.addEventListener('dragleave', () => {
+      coverZone.classList.remove('dragover');
+    });
+    coverZone.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      coverZone.classList.remove('dragover');
+      const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) {
+        try {
+          const optimized = await optimizeImageFile(file);
+          setCoverImagePreview(optimized);
+        } catch (err) {
+          alert('Could not process photo: ' + err.message);
+        }
+      }
+    });
+  }
+
+  // Gallery Multiple Photos File Upload
+  const galleryFileInput = document.getElementById('edit-gallery-files');
+  const galleryZone = document.getElementById('zone-gallery-upload');
+
+  if (galleryFileInput) {
+    galleryFileInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      for (const file of files) {
+        try {
+          const optimized = await optimizeImageFile(file);
+          currentGalleryImages.push(optimized);
+        } catch (err) {
+          console.warn('Skipped invalid gallery image:', err);
+        }
+      }
+      renderGalleryPreviews();
+      galleryFileInput.value = '';
+    });
+  }
+
+  if (galleryZone) {
+    galleryZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      galleryZone.classList.add('dragover');
+    });
+    galleryZone.addEventListener('dragleave', () => {
+      galleryZone.classList.remove('dragover');
+    });
+    galleryZone.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      galleryZone.classList.remove('dragover');
+      const files = Array.from(e.dataTransfer && e.dataTransfer.files ? e.dataTransfer.files : []);
+      for (const file of files) {
+        try {
+          const optimized = await optimizeImageFile(file);
+          currentGalleryImages.push(optimized);
+        } catch (err) {
+          console.warn('Skipped invalid gallery image:', err);
+        }
+      }
+      renderGalleryPreviews();
+    });
+  }
+
+  // Preset quick buttons
   document.querySelectorAll('.preset-chip-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const url = btn.getAttribute('data-url');
-      const input = document.getElementById('edit-image');
-      if (input) input.value = url;
+      setCoverImagePreview(url);
     });
   });
 
@@ -553,16 +726,14 @@ function setupModalEvents() {
       const bathrooms = parseInt(document.getElementById('edit-bathrooms').value, 10) || 0;
       const areaSqFt = parseFloat(document.getElementById('edit-area').value) || 0;
       const subarea = document.getElementById('edit-subarea').value.trim();
-      const image = document.getElementById('edit-image').value.trim();
-      const galleryRaw = document.getElementById('edit-gallery').value.trim();
+      
+      const image = currentCoverImage || document.getElementById('edit-image').value.trim() || '/images/villa_exterior.jpg';
+      const gallery = currentGalleryImages.length > 0 ? currentGalleryImages : [image];
+
       const tagline = document.getElementById('edit-tagline').value.trim();
       const desc = document.getElementById('edit-desc').value.trim();
       const amenitiesRaw = document.getElementById('edit-amenities').value.trim();
       const isSignature = document.getElementById('edit-is-signature').checked;
-
-      const gallery = galleryRaw
-        ? galleryRaw.split(',').map(s => s.trim()).filter(Boolean)
-        : [image];
 
       const lifestylePerks = amenitiesRaw
         ? amenitiesRaw.split(',').map(s => s.trim()).filter(Boolean)
@@ -606,6 +777,7 @@ function setupModalEvents() {
 
 function openPropertyModal(prop = null) {
   formPropEditor.reset();
+  currentGalleryImages = [];
 
   if (prop) {
     propModalTitle.textContent = `Edit Residence: ${prop.title || prop.name}`;
@@ -620,8 +792,19 @@ function openPropertyModal(prop = null) {
     document.getElementById('edit-bathrooms').value = prop.bathrooms || '';
     document.getElementById('edit-area').value = prop.areaSqFt || prop.size || '';
     document.getElementById('edit-subarea').value = prop.area || '';
-    document.getElementById('edit-image').value = prop.image || prop.heroImage || '';
-    document.getElementById('edit-gallery').value = (prop.gallery || []).join(', ');
+    
+    // Set cover photo preview
+    const coverUrl = prop.image || prop.heroImage || '/images/villa_exterior.jpg';
+    setCoverImagePreview(coverUrl);
+
+    // Set gallery photos preview
+    if (Array.isArray(prop.gallery) && prop.gallery.length > 0) {
+      currentGalleryImages = [...prop.gallery];
+    } else {
+      currentGalleryImages = [coverUrl];
+    }
+    renderGalleryPreviews();
+
     document.getElementById('edit-tagline').value = prop.tagline || '';
     document.getElementById('edit-desc').value = prop.description || prop.overview || '';
     document.getElementById('edit-amenities').value = (prop.lifestylePerks || prop.highlights || []).join(', ');
@@ -629,7 +812,9 @@ function openPropertyModal(prop = null) {
   } else {
     propModalTitle.textContent = 'List New Residence';
     document.getElementById('edit-prop-id').value = '';
-    document.getElementById('edit-image').value = '/images/villa_exterior.jpg';
+    setCoverImagePreview('/images/villa_exterior.jpg');
+    currentGalleryImages = [];
+    renderGalleryPreviews();
     document.getElementById('edit-is-signature').checked = false;
   }
 

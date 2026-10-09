@@ -104,7 +104,7 @@
         <p>Real-time Client Enquiries & Property Portfolio Management</p>
       </div>
       <div class="dash-header-actions">
-        <button type="button" class="btn-admin-gold" id="btn-open-add-property">
+        <button type="button" class="btn-admin-primary" id="btn-open-add-property">
           <span>+</span> List New Property
         </button>
       </div>
@@ -361,13 +361,27 @@
             </div>
           </div>
 
-          <!-- Media -->
+          <!-- Photos & Media Upload -->
           <div class="admin-field-group">
-            <label for="edit-image" class="admin-field-label">Hero Cover Image URL *</label>
-            <input type="text" id="edit-image" class="admin-input" required placeholder="/images/villa_exterior.jpg or https://..." />
+            <label class="admin-field-label">Cover Photo (Main Card & Hero View) *</label>
+            <div class="photo-upload-zone" id="zone-cover-upload">
+              <input type="file" id="edit-cover-file" accept="image/*" class="photo-upload-input" />
+              <div class="upload-icon-prompt">
+                <span class="upload-icon">📷</span>
+                <span class="upload-prompt-text">Click or Drag & Drop to Upload Cover Photo</span>
+                <span class="upload-hint-sub">Select a high-resolution JPG, PNG or WebP from your device</span>
+              </div>
+            </div>
             
-            <div class="image-presets-strip">
-              <span style="font-size: 0.6875rem; color: var(--admin-text-dim);">Quick Presets:</span>
+            <div id="cover-preview-container" class="cover-preview-box" style="display: none;">
+              <img id="cover-preview-img" class="cover-preview-img" src="" alt="Cover Photo Preview" />
+              <button type="button" class="btn-remove-preview" id="btn-remove-cover" title="Remove cover photo">✕</button>
+            </div>
+            
+            <input type="hidden" id="edit-image" value="" />
+
+            <div class="image-presets-strip" style="margin-top: 10px;">
+              <span style="font-size: 0.6875rem; color: var(--admin-text-muted); font-weight: 600;">Or Pick Existing Photo:</span>
               <button type="button" class="preset-chip-btn" data-url="/images/jumeirah_bay_island.jpg">Jumeirah Bay</button>
               <button type="button" class="preset-chip-btn" data-url="/images/villa_exterior.jpg">Palm Villa</button>
               <button type="button" class="preset-chip-btn" data-url="/images/penthouse_interior.jpg">Penthouse</button>
@@ -377,20 +391,31 @@
             </div>
           </div>
 
+          <!-- Additional Gallery Photos Upload -->
           <div class="admin-field-group">
-            <label for="edit-gallery" class="admin-field-label">Gallery Images (Comma-separated URLs)</label>
-            <input type="text" id="edit-gallery" class="admin-input" placeholder="/images/villa_exterior.jpg, /images/penthouse_interior.jpg" />
+            <label class="admin-field-label">Additional Gallery Photos (Walkthrough Views)</label>
+            <div class="photo-upload-zone" id="zone-gallery-upload">
+              <input type="file" id="edit-gallery-files" accept="image/*" multiple class="photo-upload-input" />
+              <div class="upload-icon-prompt">
+                <span class="upload-icon">🖼️</span>
+                <span class="upload-prompt-text">Upload Multiple Gallery Photos</span>
+                <span class="upload-hint-sub">Select multiple photos from your device to showcase rooms & views</span>
+              </div>
+            </div>
+            
+            <div id="gallery-previews-container" class="gallery-previews-grid"></div>
+            <input type="hidden" id="edit-gallery" value="" />
           </div>
 
           <!-- Editorial Content -->
           <div class="admin-field-group">
-            <label for="edit-tagline" class="admin-field-label">Editorial Tagline (1 Line)</label>
-            <input type="text" id="edit-tagline" class="admin-input" placeholder="Architectural purity carved in limestone along the tranquil waters..." />
+            <label for="edit-tagline" class="admin-field-label">Editorial Tagline (1 Line Summary)</label>
+            <input type="text" id="edit-tagline" class="admin-input" placeholder="e.g. Architectural purity carved in limestone along the tranquil waters..." />
           </div>
 
           <div class="admin-field-group">
             <label for="edit-desc" class="admin-field-label">Full Architectural Description</label>
-            <textarea id="edit-desc" class="admin-textarea" rows="4" placeholder="Detailed architectural narrative, materials, spatial flow..."></textarea>
+            <textarea id="edit-desc" class="admin-textarea" rows="4" placeholder="Detailed architectural narrative, materials, spatial flow, natural lighting..."></textarea>
           </div>
 
           <div class="admin-field-group">
@@ -402,7 +427,7 @@
 
         <div class="admin-modal-footer">
           <button type="button" class="btn-admin-ghost" id="btn-cancel-prop-edit">Cancel</button>
-          <button type="submit" class="btn-admin-gold" id="btn-save-prop-submit">Save Residence</button>
+          <button type="submit" class="btn-admin-primary" id="btn-save-prop-submit">Save Residence</button>
         </div>
 
       </form>
