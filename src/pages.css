@@ -1351,12 +1351,15 @@
 /* Individual Fullscreen Photographic Background Layers */
 .cinematic-bg-layer {
   position: absolute;
-  inset: 0;
+  top: -24px;
+  left: -24px;
+  right: -24px;
+  bottom: -24px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: none;
-  transform: none;
+  filter: blur(14px) brightness(1.02);
+  transform: scale(1.02);
   opacity: 0;
   display: none;
   will-change: auto;
@@ -1369,27 +1372,7 @@
   opacity: 1;
 }
 
-/* Optical Focal Depth-of-Field: Seamlessly blurs the image directly around the text plane, feathered outward into sharp photographic perimeter */
-.cinematic-bg-layer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: inherit;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(36px) brightness(1.16) saturate(1.12);
-  mask-image: radial-gradient(ellipse 960px 640px at 50% 50%, black 25%, rgba(0, 0, 0, 0.8) 48%, rgba(0, 0, 0, 0.25) 72%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 960px 640px at 50% 50%, black 25%, rgba(0, 0, 0, 0.8) 48%, rgba(0, 0, 0, 0.25) 72%, transparent 100%);
-  pointer-events: none;
-}
-
-/* For dark scenes (Scene 1: twilight), keep natural brightness on the blur */
-.cinematic-bg-layer[data-scene="1"]::after {
-  filter: blur(36px) brightness(0.95) saturate(1.2);
-}
-
-/* No white translucent overlay covering the image - 100% vibrant photography */
+/* No white translucent overlay covering the image */
 .cinematic-overlay-layer {
   display: none;
 }
@@ -1427,7 +1410,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   color: #111215;
-  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.85);
+  text-shadow: none;
   transition: color 0.25s ease;
 }
 
@@ -1462,7 +1445,7 @@
 /* Dark mode scene 1 (twilight) adaptation for progress indicator */
 .cinematic-sticky-stage[data-active-scene="1"] .progress-step span {
   color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  text-shadow: none;
 }
 
 .cinematic-sticky-stage[data-active-scene="1"] .progress-step.is-active span {
@@ -1528,7 +1511,7 @@
   text-transform: uppercase;
   color: #111215;
   margin-bottom: clamp(12px, 2vh, 18px);
-  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.85);
+  text-shadow: none;
 }
 
 .cinematic-eyebrow .scene-num {
@@ -1558,7 +1541,7 @@
   margin: 0 0 clamp(16px, 2.5vh, 24px);
   text-wrap: balance;
   text-align: center;
-  text-shadow: 0 1px 12px rgba(250, 248, 245, 0.5);
+  text-shadow: none;
 }
 
 /* Facts Row (Key Metrics Columns) */
@@ -1589,6 +1572,7 @@
   letter-spacing: -0.02em;
   color: var(--color-obsidian);
   margin-bottom: 4px;
+  text-shadow: none;
 }
 
 .cinematic-fact-col .fact-desc {
@@ -1599,7 +1583,7 @@
   text-transform: uppercase;
   color: #111215;
   line-height: 1.35;
-  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.6);
+  text-shadow: none;
 }
 
 .cinematic-fact-divider {
@@ -1620,7 +1604,7 @@
   margin: 0 auto clamp(18px, 2.8vh, 26px);
   text-wrap: balance;
   text-align: center;
-  text-shadow: 0 1px 12px rgba(250, 248, 245, 0.8);
+  text-shadow: none;
 }
 
 /* Supporting Investment Keywords Row */
@@ -1638,7 +1622,7 @@
   color: #0D0E12;
   margin-bottom: clamp(22px, 3.2vh, 32px);
   max-width: 720px;
-  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.6);
+  text-shadow: none;
 }
 
 .inv-keywords-row .inv-dot {
@@ -1649,7 +1633,7 @@
 /* Specific High-Contrast Styling for Scene 02 (Twilight Sky) */
 #scene-rental .cinematic-headline {
   color: #FFFFFF;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.7);
+  text-shadow: none;
 }
 
 #scene-rental .cinematic-eyebrow,
@@ -1660,7 +1644,7 @@
 
 #scene-rental .fact-stat {
   color: #FFFFFF;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+  text-shadow: none;
 }
 
 #scene-rental .cinematic-fact-divider {
@@ -1669,7 +1653,7 @@
 
 #scene-rental .cinematic-lead {
   color: rgba(255, 255, 255, 0.94);
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+  text-shadow: none;
 }
 
 #scene-rental .inv-keyword {
