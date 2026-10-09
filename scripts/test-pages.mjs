@@ -94,9 +94,6 @@ if (!distInvest.includes('INVESTING') || !distInvest.includes('WITHOUT BORDERS.'
 if (!distInvest.includes('WHAT THE HEADLINE ACTUALLY MEANS.') || !distInvest.includes('LOOK BEYOND THE RENT.')) {
   throw new Error('Invest expanded state detailed briefs missing');
 }
-if (!distInvest.includes('SO WHY PROPERTY?') || !distInvest.includes('Understanding Dubai is one thing.')) {
-  throw new Error('Invest service transition missing');
-}
 if (!distInvest.includes('GOOD INVESTMENTS') || !distInvest.includes('ARE NOT BUILT') || !distInvest.includes('ON ONE NUMBER.')) {
   throw new Error('Invest credibility discipline section missing');
 }

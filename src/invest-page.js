@@ -551,7 +551,7 @@ function initCinematicScrollEngine() {
   if (bridgeBtn) {
     bridgeBtn.style.cursor = 'pointer';
     bridgeBtn.addEventListener('click', () => {
-      const target = document.getElementById('why-property');
+      const target = document.getElementById('credibility-discipline');
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
       }
