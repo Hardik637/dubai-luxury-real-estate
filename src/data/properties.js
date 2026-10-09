@@ -801,19 +801,43 @@ export const DEMO_PROPERTIES = [
   }
 ];
 
+function getActiveCatalog() {
+  try {
+    const raw = localStorage.getItem('voe_properties_catalog_v2');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map(p => ({
+          ...p,
+          name: p.name || p.title,
+          title: p.title || p.name,
+          price: Number(p.price || p.priceAED || 0),
+          priceDisplay: p.priceDisplay || `AED ${Number(p.price || p.priceAED || 0).toLocaleString()}`,
+          sizeDisplay: p.sizeDisplay || `${Number(p.size || p.areaSqFt || 0).toLocaleString()} SQ.FT.`,
+          transaction: p.transaction || (p.category === 'rent' || p.isRent ? 'rent' : 'buy'),
+          heroImage: p.heroImage || p.image || '/images/villa_exterior.jpg',
+          galleryImages: p.galleryImages || p.gallery || [p.image || '/images/villa_exterior.jpg']
+        }));
+      }
+    }
+  } catch (e) {}
+  return DEMO_PROPERTIES;
+}
+
 // Helper Functions for Catalog & Investment Pages
 export function getPropertyById(id) {
   if (!id) return null;
   const cleanId = String(id).trim().toLowerCase().replace(/^\/properties\/?/, '');
-  return DEMO_PROPERTIES.find(p => p.id === cleanId) || null;
+  const catalog = getActiveCatalog();
+  return catalog.find(p => p.id === cleanId) || null;
 }
 
 export function getAllProperties() {
-  return [...DEMO_PROPERTIES];
+  return getActiveCatalog();
 }
 
 export function filterProperties({ transaction, location, type, bedrooms, priceRange, sort }) {
-  let list = [...DEMO_PROPERTIES];
+  let list = getActiveCatalog();
 
   if (transaction && transaction !== 'all') {
     list = list.filter(p => p.transaction.toLowerCase() === transaction.toLowerCase());

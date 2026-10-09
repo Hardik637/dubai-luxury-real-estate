@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/properties/:path*", "destination": "/properties" },
-    { "source": "/invest/:path*", "destination": "/invest" }
+    { "source": "/invest/:path*", "destination": "/invest" },
+    { "source": "/admin/:path*", "destination": "/admin" }
   ]
 }

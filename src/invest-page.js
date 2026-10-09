@@ -3,6 +3,7 @@ import {
   getPropertiesByBudget, 
   formatCurrencyAED 
 } from './data/properties.js';
+import { submitEnquiry } from './services/enquiries.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
@@ -349,8 +350,32 @@ function setupPlanModal() {
 
     const form = document.getElementById('invest-plan-form');
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const fullName = document.getElementById('plan-name')?.value || '';
+        const contact = document.getElementById('plan-contact')?.value || '';
+        const objSelect = document.getElementById('plan-objective-select');
+        const budgetSelect = document.getElementById('plan-budget-select');
+        const notes = document.getElementById('plan-notes')?.value || '';
+
+        const objective = objSelect ? objSelect.options[objSelect.selectedIndex].text : 'Portfolio Strategy';
+        const budget = budgetSelect ? budgetSelect.options[budgetSelect.selectedIndex].text : 'AED 3M – 10M';
+
+        const isEmail = contact.includes('@');
+        try {
+          await submitEnquiry({
+            fullName,
+            email: isEmail ? contact : '',
+            phone: !isEmail ? contact : '',
+            type: 'Investment Strategy Advisory',
+            budget: budget,
+            propertyTitle: 'Portfolio Allocation Plan',
+            notes: `Objective: ${objective}\nBudget: ${budget}\nNotes: ${notes}`
+          });
+        } catch (err) {
+          console.warn('Investment enquiry stored in local vault:', err);
+        }
+
         const success = document.getElementById('plan-success-box');
         if (success) success.style.display = 'block';
         form.style.display = 'none';

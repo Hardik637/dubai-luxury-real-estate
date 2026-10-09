@@ -4,6 +4,7 @@ import {
   filterProperties, 
   formatCurrencyAED 
 } from './data/properties.js';
+import { submitEnquiry } from './services/enquiries.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
@@ -805,8 +806,29 @@ function setupInquiryModal() {
 
     const form = document.getElementById('viewing-request-form');
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const propTitle = document.getElementById('inquiry-prop-input')?.value || 'Private Residence';
+        const fullName = document.getElementById('inquiry-name')?.value || '';
+        const contact = document.getElementById('inquiry-contact')?.value || '';
+        const datePref = document.getElementById('inquiry-date')?.value || '';
+        const tourType = document.getElementById('inquiry-type')?.value || '';
+        const notes = document.getElementById('inquiry-notes')?.value || '';
+
+        const isEmail = contact.includes('@');
+        try {
+          await submitEnquiry({
+            fullName,
+            email: isEmail ? contact : '',
+            phone: !isEmail ? contact : '',
+            type: 'Catalog Viewing Request',
+            propertyTitle: propTitle,
+            notes: `Preferred Date: ${datePref}\nTour Format: ${tourType}\nNotes: ${notes}`
+          });
+        } catch (err) {
+          console.warn('Enquiry stored in vault:', err);
+        }
+
         const successBox = document.getElementById('inquiry-success-box');
         if (successBox) successBox.style.display = 'block';
         form.style.display = 'none';

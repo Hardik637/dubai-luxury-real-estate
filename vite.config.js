@@ -18,6 +18,8 @@ export default defineConfig({
             req.url = '/properties/index.html';
           } else if (url.startsWith('/invest') && !url.includes('.')) {
             req.url = '/invest/index.html';
+          } else if (url.startsWith('/admin') && !url.includes('.')) {
+            req.url = '/admin/index.html';
           }
           next();
         });
@@ -31,8 +33,15 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         properties: resolve(__dirname, 'properties/index.html'),
-        invest: resolve(__dirname, 'invest/index.html')
+        invest: resolve(__dirname, 'invest/index.html'),
+        admin: resolve(__dirname, 'admin/index.html')
+      },
+      output: {
+        manualChunks: {
+          firebase: ['firebase/app', 'firebase/firestore', 'firebase/auth']
+        }
       }
-    }
+    },
+    chunkSizeWarningLimit: 1200
   }
 });

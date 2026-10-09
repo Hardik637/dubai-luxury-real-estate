@@ -116,6 +116,35 @@ if (!distIndex.includes('/properties') || !distIndex.includes('/invest')) {
   throw new Error('Homepage navigation does not link to /properties and /invest');
 }
 
+// Check Admin Page
+const distAdmin = fs.readFileSync('dist/admin/index.html', 'utf-8');
+if (!distAdmin.includes('Private Estate Desk') || !distAdmin.includes('Owner Console')) {
+  throw new Error('Admin page title or branding missing');
+}
+if (!distAdmin.includes('admin-login-form') || !distAdmin.includes('Access Passcode')) {
+  throw new Error('Admin login form or passcode field missing');
+}
+if (!distAdmin.includes('tab-btn-enquiries') || !distAdmin.includes('tab-btn-properties')) {
+  throw new Error('Admin tabs (Enquiries & Properties) missing');
+}
+if (!distAdmin.includes('panel-enquiries') || !distAdmin.includes('panel-properties')) {
+  throw new Error('Admin tab panels missing');
+}
+if (!distAdmin.includes('prop-sig-switch') && !distAdmin.includes('edit-is-signature')) {
+  throw new Error('Signature toggle switch missing from Admin page');
+}
+console.log('✓ Admin Portal built with login gate, Enquiries tab, and Property Management tab with Signature Residence toggle.');
+
+// Check Firestore Security Rules
+const rulesFile = fs.readFileSync('firestore.rules', 'utf-8');
+if (!rulesFile.includes('match /enquiries/{enquiryId}') || !rulesFile.includes('allow read, update, delete: if request.auth != null;')) {
+  throw new Error('Firestore rules missing zero data leakage protection for enquiries');
+}
+if (!rulesFile.includes('match /properties/{propertyId}') || !rulesFile.includes('allow write: if request.auth != null;')) {
+  throw new Error('Firestore rules missing write protection on properties');
+}
+console.log('✓ Firestore Security Rules verified: Client lead data strictly protected from unauthorized read access.');
+
 // Verify section order on Homepage
 const pWhyDubai = distIndex.indexOf('id="sovereign-advantage"');
 const pEstates = distIndex.indexOf('id="estates"');

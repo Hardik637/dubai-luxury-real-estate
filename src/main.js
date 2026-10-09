@@ -1,5 +1,9 @@
 import { HeroScrollEngine } from './hero-scroll.js';
 import { PROPERTIES, EXCHANGE_RATES } from './properties-data.js';
+import { submitEnquiry } from './services/enquiries.js';
+import { getSignatureProperties } from './services/properties.js';
+
+let activeCatalogProperties = [...PROPERTIES];
 
 let state = {
   currency: 'AED',
@@ -1137,7 +1141,7 @@ function initCurrencySelector() {
 /* ==========================================================================
    7. VISUAL PROPERTY CATALOG
    ========================================================================== */
-function initVisualCatalog() {
+async function initVisualCatalog() {
   const categoryPills = document.querySelectorAll('.filter-pill');
   categoryPills.forEach((pill) => {
     pill.addEventListener('click', () => {
@@ -1148,6 +1152,25 @@ function initVisualCatalog() {
     });
   });
 
+  try {
+    const liveProps = await getSignatureProperties();
+    if (liveProps && liveProps.length > 0) {
+      activeCatalogProperties = liveProps;
+    }
+  } catch (err) {
+    console.warn('Using default signature properties cache:', err);
+  }
+
+  window.addEventListener('voe:properties-updated', async () => {
+    try {
+      const updated = await getSignatureProperties();
+      if (updated && updated.length > 0) {
+        activeCatalogProperties = updated;
+        renderVisualCatalog();
+      }
+    } catch (e) {}
+  });
+
   renderVisualCatalog();
 }
 
@@ -1155,7 +1178,7 @@ function renderVisualCatalog() {
   const grid = document.getElementById('property-catalog-grid');
   if (!grid) return;
 
-  let filtered = PROPERTIES.filter((p) => {
+  let filtered = activeCatalogProperties.filter((p) => {
     if (state.category !== 'all' && p.category !== state.category) return false;
     return true;
   });
@@ -1163,21 +1186,21 @@ function renderVisualCatalog() {
   grid.innerHTML = filtered.map((p) => `
     <article class="prop-card-visual scroll-reveal-box" data-estate-id="${p.id}">
       <div class="prop-media-wrap view-estate-btn" data-estate-id="${p.id}">
-        <img src="${p.image}" alt="${p.title}" class="prop-img" loading="lazy" />
-        <span class="prop-badge-top">${p.status}</span>
+        <img src="${p.image || p.heroImage || '/images/villa_exterior.jpg'}" alt="${p.title || p.name}" class="prop-img" loading="lazy" />
+        <span class="prop-badge-top">${p.status || 'Exclusive Listing'}</span>
       </div>
       <div class="prop-body-compact">
         <div class="prop-loc-line">${p.location}</div>
-        <h3 class="prop-name">${p.title}</h3>
+        <h3 class="prop-name">${p.title || p.name}</h3>
         <div class="prop-quick-strip">
-          <span>${p.bedrooms} Beds</span>
+          <span>${p.bedrooms || '—'} Beds</span>
           <span>•</span>
-          <span>${p.bathrooms} Baths</span>
+          <span>${p.bathrooms || '—'} Baths</span>
           <span>•</span>
-          <span>${p.areaSqFt.toLocaleString()} sq.ft</span>
+          <span>${(p.areaSqFt || p.size || 0).toLocaleString()} sq.ft</span>
         </div>
         <div class="prop-foot">
-          <div class="prop-price-val">${formatPrice(p.priceAED, p.isRent)}</div>
+          <div class="prop-price-val">${formatPrice(p.priceAED || p.price, p.isRent)}</div>
           <button type="button" class="btn-inspect view-estate-btn" data-estate-id="${p.id}">
             Inspect
           </button>
@@ -1258,38 +1281,41 @@ function closeModal(modal) {
 }
 
 function openPropertyModal(estateId) {
-  const estate = PROPERTIES.find((p) => p.id === estateId) || PROPERTIES[0];
+  const estate = activeCatalogProperties.find((p) => p.id === estateId) || activeCatalogProperties[0] || PROPERTIES[0];
   const modalBody = document.getElementById('modal-content-body');
   const propertyModal = document.getElementById('property-modal');
 
   if (!estate || !modalBody) return;
 
+  const galleryList = (estate.gallery && estate.gallery.length > 0) ? estate.gallery : [estate.image || estate.heroImage || '/images/villa_exterior.jpg'];
+  const specs = estate.specs || {};
+
   modalBody.innerHTML = `
     <div class="modal-estate-layout">
       <div class="modal-gallery-main">
-        <img id="modal-active-img" src="${estate.gallery[0] || estate.image}" alt="${estate.title}" class="modal-main-img" />
+        <img id="modal-active-img" src="${galleryList[0]}" alt="${estate.title || estate.name}" class="modal-main-img" />
       </div>
 
       <div class="modal-gallery-thumbs">
-        ${estate.gallery.map((imgSrc, idx) => `
+        ${galleryList.map((imgSrc, idx) => `
           <img src="${imgSrc}" class="modal-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Gallery ${idx + 1}" />
         `).join('')}
       </div>
 
       <div class="modal-estate-body">
         <div>
-          <h2 class="modal-estate-title">${estate.title}</h2>
+          <h2 class="modal-estate-title">${estate.title || estate.name}</h2>
           <div class="modal-estate-location">${estate.location} • ${estate.type}</div>
-          <div class="modal-estate-price">${formatPrice(estate.priceAED, estate.isRent)}</div>
-          <p class="modal-estate-desc">${estate.description}</p>
+          <div class="modal-estate-price">${formatPrice(estate.priceAED || estate.price, estate.isRent)}</div>
+          <p class="modal-estate-desc">${estate.description || estate.overview || ''}</p>
 
           <table class="modal-specs-table">
             <tbody>
-              <tr><td>Internal Area</td><td>${estate.areaSqFt.toLocaleString()} sq.ft (${estate.areaSqM.toLocaleString()} sq.m)</td></tr>
-              <tr><td>Bedrooms</td><td>${estate.bedrooms} En-Suite Bedrooms</td></tr>
-              <tr><td>Plot Size</td><td>${estate.specs.plotSize}</td></tr>
-              <tr><td>View Exposure</td><td>${estate.specs.view}</td></tr>
-              <tr><td>Finishes</td><td>${estate.specs.finishes}</td></tr>
+              <tr><td>Internal Area</td><td>${(estate.areaSqFt || estate.size || 0).toLocaleString()} sq.ft</td></tr>
+              <tr><td>Bedrooms</td><td>${estate.bedrooms || '—'} En-Suite Bedrooms</td></tr>
+              <tr><td>Plot / Subarea</td><td>${specs.plotSize || estate.area || 'Prime Location'}</td></tr>
+              <tr><td>View Exposure</td><td>${specs.view || 'Panoramic Dubai Skyline'}</td></tr>
+              <tr><td>Finishes</td><td>${specs.finishes || 'European Travertine & Marble'}</td></tr>
             </tbody>
           </table>
         </div>
@@ -1300,13 +1326,13 @@ function openPropertyModal(estateId) {
             
             <div style="margin-bottom: 12px;">
               <span class="calc-monthly-label">Estimated Monthly Financing</span>
-              <span class="calc-monthly-val">${formatMonthlyFinancing(estate.priceAED)}</span>
+              <span class="calc-monthly-val">${formatMonthlyFinancing(estate.priceAED || estate.price || 0)}</span>
             </div>
 
             <form id="modal-viewing-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
-              <input type="text" required placeholder="Your Name" style="padding: 10px; font-size: 0.8125rem; border: 1px solid var(--border-subtle); border-radius: 2px;" />
-              <input type="tel" required placeholder="Phone / WhatsApp" style="padding: 10px; font-size: 0.8125rem; border: 1px solid var(--border-subtle); border-radius: 2px;" />
-              <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; margin-top: 4px;">
+              <input type="text" id="viewing-client-name" required placeholder="Your Name" style="padding: 10px; font-size: 0.8125rem; border: 1px solid var(--border-subtle); border-radius: 2px;" />
+              <input type="tel" id="viewing-client-phone" required placeholder="Phone / WhatsApp" style="padding: 10px; font-size: 0.8125rem; border: 1px solid var(--border-subtle); border-radius: 2px;" />
+              <button type="submit" class="btn-primary" id="btn-submit-chauffeur" style="width: 100%; padding: 12px; margin-top: 4px;">
                 Request Chauffeur Viewing
               </button>
             </form>
@@ -1334,8 +1360,24 @@ function openPropertyModal(estateId) {
   const viewingForm = document.getElementById('modal-viewing-form');
   const viewingSuccess = document.getElementById('modal-viewing-success');
   if (viewingForm) {
-    viewingForm.addEventListener('submit', (e) => {
+    viewingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const name = document.getElementById('viewing-client-name')?.value || '';
+      const phone = document.getElementById('viewing-client-phone')?.value || '';
+      
+      try {
+        await submitEnquiry({
+          fullName: name,
+          phone: phone,
+          type: 'Chauffeur Viewing Request',
+          propertyId: estate.id,
+          propertyTitle: estate.title || estate.name,
+          notes: `Chauffeur viewing request for ${estate.title || estate.name} (${estate.location}). Monthly estimate: ${formatMonthlyFinancing(estate.priceAED || estate.price)}`
+        });
+      } catch (err) {
+        console.warn('Enquiry logged to local vault:', err);
+      }
+
       viewingForm.style.display = 'none';
       if (viewingSuccess) viewingSuccess.style.display = 'block';
     });
@@ -1364,8 +1406,28 @@ function initForms() {
   const enquiryForm = document.getElementById('enquiry-form');
   const enquirySuccess = document.getElementById('enquiry-success');
   if (enquiryForm) {
-    enquiryForm.addEventListener('submit', (e) => {
+    enquiryForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const fullName = document.getElementById('form-name')?.value || '';
+      const email = document.getElementById('form-email')?.value || '';
+      const phone = document.getElementById('form-phone')?.value || '';
+      const intentSelect = document.getElementById('form-intent');
+      const intent = intentSelect ? intentSelect.options[intentSelect.selectedIndex].text : 'Private Acquisition';
+      const notes = document.getElementById('form-notes')?.value || '';
+
+      try {
+        await submitEnquiry({
+          fullName,
+          email,
+          phone,
+          type: 'Private Acquisition Advisory',
+          budget: intent,
+          notes: notes
+        });
+      } catch (err) {
+        console.warn('Enquiry stored in local vault:', err);
+      }
+
       enquiryForm.style.display = 'none';
       if (enquirySuccess) enquirySuccess.style.display = 'block';
     });
@@ -1374,8 +1436,29 @@ function initForms() {
   const ownerForm = document.getElementById('owner-listing-form');
   const ownerSuccess = document.getElementById('owner-success-box');
   if (ownerForm) {
-    ownerForm.addEventListener('submit', (e) => {
+    ownerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const fullName = document.getElementById('owner-name')?.value || '';
+      const contact = document.getElementById('owner-contact')?.value || '';
+      const community = document.getElementById('property-community')?.value || '';
+      const estimatedPrice = document.getElementById('property-estimated-price')?.value || '';
+      const notes = document.getElementById('property-notes')?.value || '';
+
+      const isEmail = contact.includes('@');
+      try {
+        await submitEnquiry({
+          fullName,
+          email: isEmail ? contact : '',
+          phone: !isEmail ? contact : '',
+          type: 'Owner Estate Listing Submission',
+          budget: estimatedPrice,
+          propertyTitle: `${community} Estate`,
+          notes: `Target Value: ${estimatedPrice}\nCommunity: ${community}\nNotes: ${notes}`
+        });
+      } catch (err) {
+        console.warn('Owner listing stored in local vault:', err);
+      }
+
       ownerForm.style.display = 'none';
       if (ownerSuccess) ownerSuccess.style.display = 'block';
     });

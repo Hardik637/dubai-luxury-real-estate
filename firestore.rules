@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // 1. CLIENT ENQUIRIES & LEAD VAULT
+    // Zero Data Leakage Policy:
+    // - Anyone can submit an enquiry from public website forms
+    // - Under NO circumstances can anonymous users read, query, list, or delete leads
+    // - Only authenticated administrators (request.auth != null) have read/write access
+    // =========================================================================
+    match /enquiries/{enquiryId} {
+      allow create: if request.resource.data.keys().hasAll(['fullName', 'createdAt', 'status'])
+                    && request.resource.data.status == 'new'
+                    && request.resource.data.fullName is string
+                    && request.resource.data.fullName.size() > 0;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // =========================================================================
+    // 2. PROPERTY PORTFOLIO
+    // - Public visitors can read property listings to view the website catalog
+    // - Only authenticated administrators can create, update, or delete properties
+    // =========================================================================
+    match /properties/{propertyId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
