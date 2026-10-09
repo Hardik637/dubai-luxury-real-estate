@@ -459,6 +459,10 @@ function initCinematicScrollEngine() {
       activeIndex = Math.min(totalScenes - 1, Math.floor(progress * totalScenes));
     }
 
+    if (stage) {
+      stage.setAttribute('data-active-scene', String(activeIndex));
+    }
+
     // Update progress steps
     progressSteps.forEach((step, idx) => {
       if (idx === activeIndex) {

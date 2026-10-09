@@ -1351,36 +1351,47 @@
 /* Individual Fullscreen Photographic Background Layers */
 .cinematic-bg-layer {
   position: absolute;
-  top: -24px;
-  left: -24px;
-  right: -24px;
-  bottom: -24px;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2.5px) brightness(1.05) saturate(0.85);
+  filter: none;
   transform: none;
   opacity: 0;
   display: none;
   will-change: auto;
   pointer-events: none;
-  transition: none;
+  transition: opacity 0.3s ease;
 }
 
 .cinematic-bg-layer.is-active {
   display: block;
-  opacity: 0.22;
+  opacity: 1;
 }
 
-/* Unified Vignette & Depth Overlay */
-.cinematic-overlay-layer {
+/* Optical Focal Depth-of-Field: Seamlessly blurs the image directly around the text plane, feathered outward into sharp photographic perimeter */
+.cinematic-bg-layer::after {
+  content: '';
   position: absolute;
   inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(36px) brightness(1.16) saturate(1.12);
+  mask-image: radial-gradient(ellipse 960px 640px at 50% 50%, black 25%, rgba(0, 0, 0, 0.8) 48%, rgba(0, 0, 0, 0.25) 72%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 960px 640px at 50% 50%, black 25%, rgba(0, 0, 0, 0.8) 48%, rgba(0, 0, 0, 0.25) 72%, transparent 100%);
   pointer-events: none;
-  z-index: 1;
-  background: 
-    radial-gradient(ellipse at center, rgba(250, 248, 245, 0.72) 0%, rgba(250, 248, 245, 0.88) 65%, var(--bg-primary) 100%),
-    linear-gradient(180deg, var(--bg-primary) 0%, transparent 20%, transparent 80%, var(--bg-primary) 100%);
+}
+
+/* For dark scenes (Scene 1: twilight), keep natural brightness on the blur */
+.cinematic-bg-layer[data-scene="1"]::after {
+  filter: blur(36px) brightness(0.95) saturate(1.2);
+}
+
+/* No white translucent overlay covering the image - 100% vibrant photography */
+.cinematic-overlay-layer {
+  display: none;
 }
 
 /* Minimalist Right Progress Indicator (01 - 04) */
@@ -1405,7 +1416,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  opacity: 0.45;
+  opacity: 0.6;
   transition: opacity 0.25s ease, transform 0.25s ease;
   outline: none;
 }
@@ -1413,9 +1424,10 @@
 .progress-step span {
   font-family: var(--font-mono, 'Space Grotesk', monospace);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--color-obsidian-muted);
+  color: #111215;
+  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.85);
   transition: color 0.25s ease;
 }
 
@@ -1424,12 +1436,12 @@
   display: block;
   width: 14px;
   height: 1px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.4);
   transition: width 0.25s ease, background-color 0.25s ease;
 }
 
 .progress-step:hover {
-  opacity: 0.85;
+  opacity: 0.95;
 }
 
 .progress-step.is-active {
@@ -1438,13 +1450,31 @@
 }
 
 .progress-step.is-active span {
-  color: var(--color-obsidian);
+  color: #0D0E12;
   font-weight: 800;
 }
 
 .progress-step.is-active::before {
   width: 28px;
   background-color: var(--champagne-gold-deep);
+}
+
+/* Dark mode scene 1 (twilight) adaptation for progress indicator */
+.cinematic-sticky-stage[data-active-scene="1"] .progress-step span {
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+
+.cinematic-sticky-stage[data-active-scene="1"] .progress-step.is-active span {
+  color: #FFFFFF;
+}
+
+.cinematic-sticky-stage[data-active-scene="1"] .progress-step::before {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.cinematic-sticky-stage[data-active-scene="1"] .progress-step.is-active::before {
+  background-color: var(--champagne-gold);
 }
 
 /* Centered Viewport Editorial Content Stage (Layer 1 - Outside) */
@@ -1493,19 +1523,27 @@
   gap: 10px;
   font-family: var(--font-mono, 'Space Grotesk', monospace);
   font-size: clamp(0.75rem, 1vw, 0.9rem);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--champagne-gold-deep);
+  color: #111215;
   margin-bottom: clamp(12px, 2vh, 18px);
+  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.85);
 }
 
 .cinematic-eyebrow .scene-num {
-  font-weight: 700;
+  font-weight: 800;
+  color: #111215;
 }
 
 .cinematic-eyebrow .scene-sep {
-  opacity: 0.5;
+  opacity: 0.6;
+  color: var(--champagne-gold-deep);
+}
+
+.cinematic-eyebrow .scene-tag {
+  color: #8C6D3B;
+  font-weight: 800;
 }
 
 /* Large Editorial Headline */
@@ -1520,6 +1558,7 @@
   margin: 0 0 clamp(16px, 2.5vh, 24px);
   text-wrap: balance;
   text-align: center;
+  text-shadow: 0 1px 12px rgba(250, 248, 245, 0.5);
 }
 
 /* Facts Row (Key Metrics Columns) */
@@ -1554,17 +1593,18 @@
 
 .cinematic-fact-col .fact-desc {
   font-family: var(--font-mono, 'Space Grotesk', monospace);
-  font-size: clamp(0.66rem, 0.85vw, 0.78rem);
-  font-weight: 700;
+  font-size: clamp(0.68rem, 0.88vw, 0.82rem);
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--champagne-gold-deep);
+  color: #111215;
   line-height: 1.35;
+  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.6);
 }
 
 .cinematic-fact-divider {
   width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.15) 30%, rgba(0, 0, 0, 0.15) 70%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.3) 70%, transparent 100%);
   margin: 4px 0;
 }
 
@@ -1572,13 +1612,15 @@
 .cinematic-lead {
   font-family: var(--font-editorial, 'Cormorant Garamond', serif);
   font-style: italic;
-  font-size: clamp(1.18rem, 2vw, 1.55rem);
+  font-size: clamp(1.2rem, 2.1vw, 1.6rem);
   line-height: 1.5;
-  color: var(--color-obsidian-muted);
-  max-width: 680px;
+  color: #0D0E12;
+  font-weight: 600;
+  max-width: 700px;
   margin: 0 auto clamp(18px, 2.8vh, 26px);
   text-wrap: balance;
   text-align: center;
+  text-shadow: 0 1px 12px rgba(250, 248, 245, 0.8);
 }
 
 /* Supporting Investment Keywords Row */
@@ -1589,18 +1631,62 @@
   flex-wrap: wrap;
   gap: 8px 12px;
   font-family: var(--font-mono, 'Space Grotesk', monospace);
-  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
-  font-weight: 600;
+  font-size: clamp(0.7rem, 0.92vw, 0.82rem);
+  font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-obsidian-soft);
+  color: #0D0E12;
   margin-bottom: clamp(22px, 3.2vh, 32px);
   max-width: 720px;
+  text-shadow: 0 1px 8px rgba(250, 248, 245, 0.6);
 }
 
 .inv-keywords-row .inv-dot {
   color: var(--champagne-gold-deep);
-  opacity: 0.8;
+  opacity: 0.9;
+}
+
+/* Specific High-Contrast Styling for Scene 02 (Twilight Sky) */
+#scene-rental .cinematic-headline {
+  color: #FFFFFF;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.7);
+}
+
+#scene-rental .cinematic-eyebrow,
+#scene-rental .fact-desc,
+#scene-rental .inv-dot {
+  color: var(--champagne-gold, #C5A880);
+}
+
+#scene-rental .fact-stat {
+  color: #FFFFFF;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+}
+
+#scene-rental .cinematic-fact-divider {
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0.3) 70%, transparent 100%);
+}
+
+#scene-rental .cinematic-lead {
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+
+#scene-rental .inv-keyword {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+#scene-rental .inv-expand-trigger-btn {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--color-obsidian);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+#scene-rental .inv-expand-trigger-btn:hover {
+  background: var(--champagne-gold);
+  color: #0D0E12;
+  border-color: var(--champagne-gold);
 }
 
 /* Interaction Cue Button */
