@@ -444,42 +444,24 @@ function initCinematicScrollEngine() {
     const forcedScene = urlParams.has('scene') ? parseInt(urlParams.get('scene'), 10) : null;
 
     if (forcedScene !== null && !isNaN(forcedScene) && forcedScene >= 0 && forcedScene < totalScenes) {
-      progress = forcedScene / (totalScenes - 1);
-      if (navbar) navbar.classList.add('invest-nav-dark');
+      progress = forcedScene / totalScenes;
     } else {
       const currentScrollY = window.pageYOffset || window.scrollY || 0;
       const scrolled = Math.max(0, currentScrollY - containerTop);
       progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-
-      // Navbar dark glass toggle when over the cinematic sequence
-      if (navbar) {
-        if (currentScrollY >= containerTop - 10 && currentScrollY <= containerTop + totalScrollable + 40) {
-          navbar.classList.add('invest-nav-dark');
-        } else {
-          navbar.classList.remove('invest-nav-dark');
-        }
-      }
     }
 
-    // Virtual index ranges from 0.0 to (totalScenes - 1)
-    const vIndex = progress * (totalScenes - 1);
-    const activeStep = Math.min(totalScenes - 2, Math.floor(vIndex));
-    const fraction = vIndex - activeStep;
-
-    // Generous plateau for each scene (0 to 0.45 of each step), smooth crossfade during 0.45 to 1.0
-    let ease = 0;
-    const plateau = 0.45;
-    if (fraction > plateau) {
-      const t = (fraction - plateau) / (1 - plateau);
-      ease = t * t * (3 - 2 * t); // smoothstep curve
+    // Calculate current active scene index directly from scroll position
+    let activeIndex;
+    if (forcedScene !== null && !isNaN(forcedScene) && forcedScene >= 0 && forcedScene < totalScenes) {
+      activeIndex = forcedScene;
+    } else {
+      activeIndex = Math.min(totalScenes - 1, Math.floor(progress * totalScenes));
     }
-
-    // Determine current dominant scene index for indicator
-    const currentSceneIndex = (fraction >= 0.5) ? Math.min(totalScenes - 1, activeStep + 1) : activeStep;
 
     // Update progress steps
     progressSteps.forEach((step, idx) => {
-      if (idx === currentSceneIndex) {
+      if (idx === activeIndex) {
         step.classList.add('is-active');
         step.setAttribute('aria-current', 'step');
       } else {
@@ -488,47 +470,36 @@ function initCinematicScrollEngine() {
       }
     });
 
-    // Animate backgrounds and scenes with GPU acceleration
+    // Render active card normally without overlapping transition effects
     for (let i = 0; i < totalScenes; i++) {
       const bg = bgLayers[i];
       const scene = scenes[i];
 
       if (!bg || !scene) continue;
 
-      let opacity = 0;
-      let translateY = 24;
-      let scale = 1.03;
+      const isCurrent = (i === activeIndex);
 
-      if (i === activeStep) {
-        opacity = 1 - ease;
-        translateY = -24 * ease;
-        scale = 1.0 - (0.02 * ease);
-      } else if (i === activeStep + 1) {
-        opacity = ease;
-        translateY = 24 * (1 - ease);
-        scale = 1.03 - (0.03 * ease);
-      } else {
-        opacity = 0;
-        translateY = (i < activeStep) ? -28 : 28;
-        scale = 1.03;
-      }
+      scene.style.opacity = isCurrent ? '1' : '0';
+      scene.style.display = isCurrent ? 'flex' : 'none';
+      scene.style.visibility = isCurrent ? 'visible' : 'hidden';
+      scene.style.transform = 'none';
+      scene.style.pointerEvents = isCurrent ? 'auto' : 'none';
+      scene.classList.toggle('is-active', isCurrent);
 
-      scene.style.opacity = opacity.toFixed(3);
-      scene.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
-      scene.style.pointerEvents = opacity > 0.4 ? 'auto' : 'none';
-
-      bg.style.opacity = opacity.toFixed(3);
-      bg.style.transform = `scale(${scale.toFixed(4)})`;
+      bg.style.opacity = isCurrent ? '1' : '0';
+      bg.style.display = isCurrent ? 'block' : 'none';
+      bg.style.visibility = isCurrent ? 'visible' : 'hidden';
+      bg.style.transform = 'none';
+      bg.classList.toggle('is-active', isCurrent);
     }
   }
 
-  // Click on progress steps to jump smoothly to corresponding scene
+  // Click on progress steps to jump directly to corresponding card
   progressSteps.forEach((step, idx) => {
     step.addEventListener('click', () => {
       const stageHeight = stage ? stage.offsetHeight : window.innerHeight;
       const totalScrollable = container.offsetHeight - stageHeight;
-      const targetRatio = idx / (totalScenes - 1);
-      const targetScroll = container.offsetTop + targetRatio * totalScrollable;
+      const targetScroll = container.offsetTop + (idx / totalScenes) * totalScrollable + 2;
       window.scrollTo({
         top: targetScroll,
         behavior: 'smooth'
