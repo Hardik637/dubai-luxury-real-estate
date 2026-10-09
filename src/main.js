@@ -690,35 +690,7 @@ function initWhyDubaiExperience() {
     });
   }
 
-  // 2. Pillar 3: Lifestyle Sequence Moments (07:00, 12:00, 18:00, 23:00)
-  const seqTabs = document.querySelectorAll('.seq-tab-btn');
-  const seqSlides = document.querySelectorAll('.seq-slide');
-
-  if (seqTabs.length > 0 && seqSlides.length > 0) {
-    seqTabs.forEach((tab) => {
-      tab.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const targetIndex = tab.getAttribute('data-seq');
-
-        seqTabs.forEach((t) => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-
-        seqSlides.forEach((slide) => {
-          if (slide.getAttribute('data-seq-index') === targetIndex) {
-            slide.classList.add('active');
-          } else {
-            slide.classList.remove('active');
-          }
-        });
-      });
-    });
-  }
-
-  // 3. Smooth scroll for "Explore the numbers" button
+  // 2. Smooth scroll for "Explore the numbers" button
   const exploreNumbersBtn = document.getElementById('btn-explore-numbers');
   if (exploreNumbersBtn) {
     exploreNumbersBtn.addEventListener('click', (e) => {
