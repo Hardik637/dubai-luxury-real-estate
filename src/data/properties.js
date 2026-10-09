@@ -14,6 +14,324 @@
 
 export const DEMO_PROPERTIES = [
   {
+    id: "estate-jumeirah-bay",
+    name: "Sanctuary of the Sun",
+    title: "Sanctuary of the Sun",
+    location: "Jumeirah Bay Island",
+    area: "Jumeirah Bay Island Seahorse",
+    type: "Villa",
+    transaction: "buy",
+    category: "sale",
+    isRent: false,
+    price: 165000000,
+    priceAED: 165000000,
+    priceDisplay: "AED 165,000,000",
+    bedrooms: 7,
+    bathrooms: 9,
+    size: 21500,
+    areaSqFt: 21500,
+    sizeDisplay: "21,500 SQ.FT.",
+    investmentProfile: "growth",
+    illustrativeYield: 4.8,
+    isSignature: true,
+    status: "Private Placement",
+    tagline: "Ultra-private island enclave with private yacht berth and direct open Gulf panoramas.",
+    highlights: ["Private 120ft Superyacht Slip", "Thermal Spa & Cold Plunge Suite", "Private White Sand Shoreline", "Direct Helipad Access", "Bulgari Resort Proximity"],
+    lifestylePerks: ["Private 120ft Superyacht Slip", "Thermal Spa & Cold Plunge Suite", "Private White Sand Shoreline", "Direct Helipad Access", "Bulgari Resort Proximity"],
+    description: "Conceived by Italian architectural masters, this residence on the prestigious seahorse island represents the apex of waterfront tranquility. Featuring 40 meters of private sea frontage, a dedicated 120ft yacht berth, travertine infinity pool, and discreet staff quarters.",
+    overview: "Conceived by Italian architectural masters, this residence on the prestigious seahorse island represents the apex of waterfront tranquility. Featuring 40 meters of private sea frontage, a dedicated 120ft yacht berth, travertine infinity pool, and discreet staff quarters.",
+    specs: {
+      "Property ID": "VOE-JB-165",
+      "Property Type": "Private Waterfront Island Villa",
+      "Plot Size": "28,400 Sq.Ft.",
+      "Built-Up Area": "21,500 Sq.Ft.",
+      "Furnishing": "Italian Haute-Couture Turnkey",
+      "Ownership": "Freehold Title (100% Foreign Ownership)",
+      "Parking": "6 Subterranean Spaces",
+      "Completion": "Ready for Handover"
+    },
+    locationHighlights: [
+      { landmark: "Private Deepwater Berth", time: "Direct" },
+      { landmark: "Bulgari Resort & Marina", time: "3 min" },
+      { landmark: "Downtown Dubai & DIFC", time: "12 min" },
+      { landmark: "Dubai International Airport (DXB)", time: "18 min" }
+    ],
+    amenities: [
+      "Private Superyacht Berth",
+      "Thermal Spa Suite",
+      "Private Beachfront",
+      "Travertine Infinity Pool",
+      "Smart Home Automation",
+      "Staff Accommodation"
+    ],
+    coverImage: "/images/jumeirah_bay_island.jpg",
+    image: "/images/jumeirah_bay_island.jpg",
+    heroImage: "/images/jumeirah_bay_island.jpg",
+    gallery: [
+      "/images/jumeirah_bay_island.jpg",
+      "/images/villa_exterior.jpg",
+      "/images/penthouse_interior.jpg"
+    ],
+    images: {
+      exterior: [
+        "/images/jumeirah_bay_island.jpg",
+        "/images/villa_exterior.jpg"
+      ],
+      living: [
+        "/images/penthouse_interior.jpg"
+      ],
+      bedrooms: [
+        "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=80"
+      ],
+      kitchen: [
+        "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=80"
+      ],
+      bathrooms: [
+        "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1600&q=80"
+      ],
+      amenities: [
+        "/images/yacht_lifestyle.jpg"
+      ]
+    }
+  },
+  {
+    id: "estate-palm-villa",
+    name: "Villa Al-Noor",
+    title: "Villa Al-Noor",
+    location: "Palm Jumeirah",
+    area: "Palm Jumeirah Frond M",
+    type: "Villa",
+    transaction: "buy",
+    category: "sale",
+    isRent: false,
+    price: 115000000,
+    priceAED: 115000000,
+    priceDisplay: "AED 115,000,000",
+    bedrooms: 6,
+    bathrooms: 8,
+    size: 16500,
+    areaSqFt: 16500,
+    sizeDisplay: "16,500 SQ.FT.",
+    investmentProfile: "growth",
+    illustrativeYield: 5.1,
+    isSignature: true,
+    status: "Exclusive Listing",
+    tagline: "Architectural purity carved in limestone along the tranquil waters of the Palm fronds.",
+    highlights: ["Private Calm-Water Beach Access", "25m Floating Edge Pool", "Temperature-Controlled Wine Gallery", "Private Rooftop Sunset Pavilion", "Smart Home Automation"],
+    lifestylePerks: ["Private Calm-Water Beach Access", "25m Floating Edge Pool", "Temperature-Controlled Wine Gallery", "Private Rooftop Sunset Pavilion", "Smart Home Automation"],
+    description: "Bathed in the warm light of the Arabian sunset, Villa Al-Noor merges indoor serenity with private beach living. Expansive floor-to-ceiling glass folds away to reveal a 25-meter infinity pool, bespoke Japanese zen garden, and a private sheltered beachfront with calm crystalline waters.",
+    overview: "Bathed in the warm light of the Arabian sunset, Villa Al-Noor merges indoor serenity with private beach living. Expansive floor-to-ceiling glass folds away to reveal a 25-meter infinity pool, bespoke Japanese zen garden, and a private sheltered beachfront with calm crystalline waters.",
+    specs: {
+      "Property ID": "VOE-PJ-115",
+      "Property Type": "Beachfront Frond Estate",
+      "Plot Size": "19,200 Sq.Ft.",
+      "Built-Up Area": "16,500 Sq.Ft.",
+      "Furnishing": "Custom European Furnished",
+      "Ownership": "Freehold Title",
+      "Parking": "4 Climatized Bays",
+      "Completion": "Ready for Occupation"
+    },
+    locationHighlights: [
+      { landmark: "Private Frond Beach", time: "Direct Access" },
+      { landmark: "Burj Al Arab & Royal Atlantis", time: "Front-row View" },
+      { landmark: "Nakheel Mall & The Pointe", time: "6 min" },
+      { landmark: "Dubai International Airport (DXB)", time: "28 min" }
+    ],
+    amenities: [
+      "Private Calm-Water Beach",
+      "25m Floating Edge Pool",
+      "Temperature-Controlled Wine Gallery",
+      "Rooftop Sunset Pavilion",
+      "Crestron Smart Home Automation"
+    ],
+    coverImage: "/images/villa_exterior.jpg",
+    image: "/images/villa_exterior.jpg",
+    heroImage: "/images/villa_exterior.jpg",
+    gallery: [
+      "/images/villa_exterior.jpg",
+      "/images/penthouse_interior.jpg",
+      "/images/yacht_lifestyle.jpg"
+    ],
+    images: {
+      exterior: [
+        "/images/villa_exterior.jpg"
+      ],
+      living: [
+        "/images/penthouse_interior.jpg"
+      ],
+      bedrooms: [
+        "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=80"
+      ],
+      kitchen: [
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80"
+      ],
+      bathrooms: [
+        "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1600&q=80"
+      ],
+      amenities: [
+        "/images/yacht_lifestyle.jpg"
+      ]
+    }
+  },
+  {
+    id: "estate-downtown-penthouse",
+    name: "The Horizon Sky Duplex",
+    title: "The Horizon Sky Duplex",
+    location: "Downtown Dubai",
+    area: "Downtown Dubai Opera District",
+    type: "Penthouse",
+    transaction: "buy",
+    category: "sale",
+    isRent: false,
+    price: 78000000,
+    priceAED: 78000000,
+    priceDisplay: "AED 78,000,000",
+    bedrooms: 5,
+    bathrooms: 6,
+    size: 9800,
+    areaSqFt: 9800,
+    sizeDisplay: "9,800 SQ.FT.",
+    investmentProfile: "growth",
+    illustrativeYield: 5.6,
+    isSignature: true,
+    status: "Active Portfolio",
+    tagline: "Floating above the clouds with 360-degree panoramas of the iconic Dubai skyline.",
+    highlights: ["Private High-Speed Elevator with Biometrics", "Heated Sky Lap Pool & Sunset Terrace", "Direct Chauffeured House Car Service", "Private 12-Seat Cinema & Screening Lounge", "24/7 Dedicated Concierge & Sommelier"],
+    lifestylePerks: ["Private High-Speed Elevator with Biometrics", "Heated Sky Lap Pool & Sunset Terrace", "Direct Chauffeured House Car Service", "Private 12-Seat Cinema & Screening Lounge", "24/7 Dedicated Concierge & Sommelier"],
+    description: "A triumph of minimalist volume and light, this two-story sky residence occupies the crowning levels of Downtown's most discreet residential tower. Features double-height 7-meter ceilings, private indoor lap pool, and bespoke furnishings curated from Milan.",
+    overview: "A triumph of minimalist volume and light, this two-story sky residence occupies the crowning levels of Downtown's most discreet residential tower. Features double-height 7-meter ceilings, private indoor lap pool, and bespoke furnishings curated from Milan.",
+    specs: {
+      "Property ID": "VOE-DT-078",
+      "Property Type": "Two-Story Sky Duplex Penthouse",
+      "Floor Level": "Duplex Levels 68 & 69",
+      "Built-Up Area": "9,800 Sq.Ft.",
+      "Furnishing": "Milan Designer Curated",
+      "Ownership": "Freehold Title",
+      "Parking": "5 Dedicated Valet Spots",
+      "Completion": "Ready for Occupation"
+    },
+    locationHighlights: [
+      { landmark: "Burj Khalifa & Dubai Mall", time: "Direct Walk (3 min)" },
+      { landmark: "Dubai Opera", time: "2 min" },
+      { landmark: "DIFC Gate District", time: "5 min drive" },
+      { landmark: "Dubai International Airport (DXB)", time: "14 min drive" }
+    ],
+    amenities: [
+      "Biometric High-Speed Private Elevator",
+      "Heated Sky Lap Pool & Terrace",
+      "Private 12-Seat Screening Cinema",
+      "Sommelier Wine Vault",
+      "24/7 Concierge & Valet"
+    ],
+    coverImage: "/images/penthouse_interior.jpg",
+    image: "/images/penthouse_interior.jpg",
+    heroImage: "/images/penthouse_interior.jpg",
+    gallery: [
+      "/images/penthouse_interior.jpg",
+      "/images/villa_exterior.jpg",
+      "/images/desert_estate.jpg"
+    ],
+    images: {
+      exterior: [
+        "/images/twilight_terrace.jpg"
+      ],
+      living: [
+        "/images/penthouse_interior.jpg"
+      ],
+      bedrooms: [
+        "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=80"
+      ],
+      kitchen: [
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80"
+      ],
+      bathrooms: [
+        "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1600&q=80"
+      ],
+      amenities: [
+        "/images/desert_estate.jpg"
+      ]
+    }
+  },
+  {
+    id: "estate-emirates-hills",
+    name: "The Dunes Oasis",
+    title: "The Dunes Oasis",
+    location: "Emirates Hills",
+    area: "Emirates Hills Sector E",
+    type: "Villa",
+    transaction: "buy",
+    category: "sale",
+    isRent: false,
+    price: 92000000,
+    priceAED: 92000000,
+    priceDisplay: "AED 92,000,000",
+    bedrooms: 6,
+    bathrooms: 7,
+    size: 18200,
+    areaSqFt: 18200,
+    sizeDisplay: "18,200 SQ.FT.",
+    investmentProfile: "growth",
+    illustrativeYield: 4.9,
+    isSignature: true,
+    status: "Private Placement",
+    tagline: "Quiet seclusion wrapped in ancient olive trees, rammed earth walls, and golf fairways.",
+    highlights: ["Natural Biological Swimming Lagoon", "Olive Grove Courtyard (200-Year-Old Trees)", "Independent Wellness Pavilion & Hammam", "Dedicated Security Gatehouse & Annex", "Gated Double-Access Enclave"],
+    lifestylePerks: ["Natural Biological Swimming Lagoon", "Olive Grove Courtyard (200-Year-Old Trees)", "Independent Wellness Pavilion & Hammam", "Dedicated Security Gatehouse & Annex", "Gated Double-Access Enclave"],
+    description: "Designed for ultimate privacy and contemplation, this estate redefines modern desert luxury. Organic limestone, rammed earth textures, and extensive reflecting ponds create a serene microclimate, while the championship golf course provides a lush endless green backdrop.",
+    overview: "Designed for ultimate privacy and contemplation, this estate redefines modern desert luxury. Organic limestone, rammed earth textures, and extensive reflecting ponds create a serene microclimate, while the championship golf course provides a lush endless green backdrop.",
+    specs: {
+      "Property ID": "VOE-EH-092",
+      "Property Type": "Golf Course Sanctuary Villa",
+      "Plot Size": "32,000 Sq.Ft.",
+      "Built-Up Area": "18,200 Sq.Ft.",
+      "Furnishing": "Bespoke Mineral & Wood Finishes",
+      "Ownership": "Freehold Title",
+      "Parking": "8 Covered Vehicles",
+      "Completion": "Ready for Occupation"
+    },
+    locationHighlights: [
+      { landmark: "Montgomerie Championship Golf", time: "Direct Fairway Edge" },
+      { landmark: "Dubai Marina Yacht Club", time: "10 min drive" },
+      { landmark: "Downtown Dubai", time: "18 min drive" },
+      { landmark: "Dubai International Airport (DXB)", time: "25 min drive" }
+    ],
+    amenities: [
+      "Natural Biological Swimming Lagoon",
+      "Olive Grove Courtyard",
+      "Private Hammam & Wellness Spa",
+      "Championship Golf Course Fairway",
+      "Gated Double-Access Security"
+    ],
+    coverImage: "/images/desert_estate.jpg",
+    image: "/images/desert_estate.jpg",
+    heroImage: "/images/desert_estate.jpg",
+    gallery: [
+      "/images/desert_estate.jpg",
+      "/images/villa_exterior.jpg",
+      "/images/penthouse_interior.jpg"
+    ],
+    images: {
+      exterior: [
+        "/images/desert_estate.jpg"
+      ],
+      living: [
+        "/images/villa_exterior.jpg"
+      ],
+      bedrooms: [
+        "/images/penthouse_interior.jpg"
+      ],
+      kitchen: [
+        "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=80"
+      ],
+      bathrooms: [
+        "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80"
+      ],
+      amenities: [
+        "/images/forest_villa.jpg"
+      ]
+    }
+  },
+  {
     id: "palm-residence",
     name: "Palm Residence",
     location: "Palm Jumeirah",
@@ -801,27 +1119,91 @@ export const DEMO_PROPERTIES = [
   }
 ];
 
+function normalizeProperty(p) {
+  if (!p) return null;
+  const isRent = Boolean(p.isRent || p.transaction === 'rent' || p.category === 'rent');
+  const priceVal = Number(p.price || p.priceAED || 0);
+  const sizeVal = Number(p.size || p.areaSqFt || 3500);
+  const coverUrl = p.coverImage || p.image || p.heroImage || (p.images && p.images.exterior && p.images.exterior[0]) || '/images/villa_exterior.jpg';
+
+  const galleryList = Array.isArray(p.gallery) && p.gallery.length > 0
+    ? p.gallery
+    : (Array.isArray(p.galleryImages) && p.galleryImages.length > 0 ? p.galleryImages : [coverUrl]);
+
+  const imagesObj = (p.images && typeof p.images === 'object' && Array.isArray(p.images.exterior))
+    ? p.images
+    : {
+        exterior: [coverUrl],
+        living: [galleryList[1] || '/images/penthouse_interior.jpg'],
+        bedrooms: [galleryList[2] || 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=80'],
+        kitchen: ['https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80'],
+        bathrooms: ['https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1600&q=80'],
+        amenities: ['/images/yacht_lifestyle.jpg']
+      };
+
+  return {
+    ...p,
+    id: String(p.id),
+    name: p.name || p.title || 'Dubai Residence',
+    title: p.title || p.name || 'Dubai Residence',
+    location: p.location || 'Dubai',
+    area: p.area || p.location || 'Dubai',
+    type: p.type || 'Villa',
+    transaction: isRent ? 'rent' : 'buy',
+    category: isRent ? 'rent' : 'sale',
+    isRent,
+    price: priceVal,
+    priceAED: priceVal,
+    priceDisplay: p.priceDisplay || (isRent ? `AED ${priceVal.toLocaleString()} / year` : `AED ${priceVal.toLocaleString()}`),
+    bedrooms: Number(p.bedrooms || 3),
+    bathrooms: Number(p.bathrooms || 4),
+    size: sizeVal,
+    areaSqFt: sizeVal,
+    sizeDisplay: p.sizeDisplay || `${sizeVal.toLocaleString()} SQ.FT.`,
+    investmentProfile: p.investmentProfile || 'balanced',
+    illustrativeYield: Number(p.illustrativeYield || 5.5),
+    highlights: Array.isArray(p.highlights) && p.highlights.length > 0 ? p.highlights : (p.lifestylePerks || ['Prime Dubai Address', 'Private Security']),
+    lifestylePerks: Array.isArray(p.lifestylePerks) && p.lifestylePerks.length > 0 ? p.lifestylePerks : (p.highlights || ['Prime Dubai Address', 'Private Security']),
+    description: p.description || p.overview || 'An exceptional luxury residence in premier Dubai enclave.',
+    overview: p.overview || p.description || 'An exceptional luxury residence in premier Dubai enclave.',
+    specs: (p.specs && typeof p.specs === 'object') ? p.specs : {
+      "Property Type": p.type || "Luxury Residence",
+      "Built-Up Area": `${sizeVal.toLocaleString()} Sq.Ft.`,
+      "Ownership": "Freehold Title"
+    },
+    locationHighlights: Array.isArray(p.locationHighlights) && p.locationHighlights.length > 0 ? p.locationHighlights : [
+      { landmark: "Dubai Marina & Downtown", time: "15 min" },
+      { landmark: "International Airport (DXB)", time: "20 min" }
+    ],
+    amenities: Array.isArray(p.amenities) && p.amenities.length > 0 ? p.amenities : (p.lifestylePerks || ["Private Swimming Pool", "24/7 Security", "Private Parking"]),
+    coverImage: coverUrl,
+    image: coverUrl,
+    heroImage: coverUrl,
+    gallery: galleryList,
+    galleryImages: galleryList,
+    images: imagesObj,
+    isSignature: Boolean(p.isSignature),
+    status: p.status || (isRent ? 'Available for Lease' : 'Exclusive Listing'),
+    tagline: p.tagline || 'Exemplary architectural presence in Dubai.'
+  };
+}
+
 function getActiveCatalog() {
   try {
     const raw = localStorage.getItem('voe_properties_catalog_v2');
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.map(p => ({
-          ...p,
-          name: p.name || p.title,
-          title: p.title || p.name,
-          price: Number(p.price || p.priceAED || 0),
-          priceDisplay: p.priceDisplay || `AED ${Number(p.price || p.priceAED || 0).toLocaleString()}`,
-          sizeDisplay: p.sizeDisplay || `${Number(p.size || p.areaSqFt || 0).toLocaleString()} SQ.FT.`,
-          transaction: p.transaction || (p.category === 'rent' || p.isRent ? 'rent' : 'buy'),
-          heroImage: p.heroImage || p.image || '/images/villa_exterior.jpg',
-          galleryImages: p.galleryImages || p.gallery || [p.image || '/images/villa_exterior.jpg']
-        }));
+        // If parsed catalog has fewer items than our master list, merge to ensure full catalog is visible
+        const masterMap = new Map();
+        DEMO_PROPERTIES.forEach(d => masterMap.set(d.id, d));
+        parsed.forEach(p => masterMap.set(p.id, { ...(masterMap.get(p.id) || {}), ...p }));
+        const merged = Array.from(masterMap.values()).map(p => normalizeProperty(p));
+        return merged;
       }
     }
   } catch (e) {}
-  return DEMO_PROPERTIES;
+  return DEMO_PROPERTIES.map(p => normalizeProperty(p));
 }
 
 // Helper Functions for Catalog & Investment Pages
@@ -839,18 +1221,34 @@ export function getAllProperties() {
 export function filterProperties({ transaction, location, type, bedrooms, priceRange, sort }) {
   let list = getActiveCatalog();
 
+  // 1. Transaction filter: ALL shows both, BUY shows sales, RENT shows leases
   if (transaction && transaction !== 'all') {
-    list = list.filter(p => p.transaction.toLowerCase() === transaction.toLowerCase());
+    list = list.filter(p => {
+      const isRent = Boolean(p.transaction === 'rent' || p.category === 'rent' || p.isRent);
+      return transaction === 'rent' ? isRent : !isRent;
+    });
   }
 
+  // 2. Location filter
   if (location && location !== 'all') {
-    list = list.filter(p => p.location.toLowerCase() === location.toLowerCase());
+    const locNorm = location.toLowerCase();
+    list = list.filter(p => {
+      const pLoc = (p.location || '').toLowerCase();
+      const pArea = (p.area || '').toLowerCase();
+      return pLoc.includes(locNorm) || locNorm.includes(pLoc) || pArea.includes(locNorm);
+    });
   }
 
+  // 3. Type filter
   if (type && type !== 'all') {
-    list = list.filter(p => p.type.toLowerCase() === type.toLowerCase());
+    const typeNorm = type.toLowerCase();
+    list = list.filter(p => {
+      const pType = (p.type || '').toLowerCase();
+      return pType.includes(typeNorm) || typeNorm.includes(pType);
+    });
   }
 
+  // 4. Bedroom filter
   if (bedrooms && bedrooms !== 'all') {
     if (bedrooms === 'studio') {
       list = list.filter(p => p.bedrooms === 0 || p.bedrooms === 'studio');
@@ -862,9 +1260,8 @@ export function filterProperties({ transaction, location, type, bedrooms, priceR
     }
   }
 
+  // 5. Price filter
   if (priceRange && priceRange !== 'all') {
-    // Buy ranges: 'under-5m', '5m-10m', '10m-20m', '20m-plus'
-    // Rent ranges: 'under-200k', '200k-350k', '350k-500k', '500k-plus'
     if (priceRange === 'under-5m') list = list.filter(p => p.price < 5000000);
     else if (priceRange === '5m-10m') list = list.filter(p => p.price >= 5000000 && p.price <= 10000000);
     else if (priceRange === '10m-20m') list = list.filter(p => p.price > 10000000 && p.price <= 20000000);
@@ -875,6 +1272,7 @@ export function filterProperties({ transaction, location, type, bedrooms, priceR
     else if (priceRange === '500k-plus') list = list.filter(p => p.price > 500000);
   }
 
+  // 6. Sorting
   if (sort === 'price-asc') {
     list.sort((a, b) => a.price - b.price);
   } else if (sort === 'price-desc') {

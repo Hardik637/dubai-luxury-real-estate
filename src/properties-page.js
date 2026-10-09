@@ -238,26 +238,33 @@ function renderPropertiesGrid() {
     return;
   }
 
-  gridContainer.innerHTML = filtered.map(prop => `
-    <article class="property-editorial-card" data-id="${prop.id}">
-      <div class="card-media-wrapper">
-        <img 
-          src="${prop.coverImage || prop.images.exterior[0]}" 
-          alt="${prop.name} — ${prop.location}" 
-          class="card-property-img" 
-          loading="lazy"
-        />
-        <span class="card-subtle-badge">
-          ${prop.transaction === 'rent' ? 'FOR RENT' : 'FOR SALE'}
-        </span>
-      </div>
-      <div class="card-details-panel">
-        <h3 class="card-property-name">${prop.name}</h3>
-        <p class="card-property-location">${prop.location}</p>
-        <div class="card-property-price">${prop.priceDisplay}</div>
-      </div>
-    </article>
-  `).join('');
+  gridContainer.innerHTML = filtered.map(prop => {
+    const coverPhoto = prop.coverImage || prop.image || prop.heroImage || (prop.images && prop.images.exterior && prop.images.exterior[0]) || '/images/villa_exterior.jpg';
+    const isRent = Boolean(prop.transaction === 'rent' || prop.category === 'rent' || prop.isRent);
+    const badgeText = isRent ? 'FOR LEASE' : 'FOR SALE';
+    const priceText = prop.priceDisplay || (isRent ? `AED ${Number(prop.price || prop.priceAED || 0).toLocaleString()} / year` : `AED ${Number(prop.price || prop.priceAED || 0).toLocaleString()}`);
+
+    return `
+      <article class="property-editorial-card" data-id="${prop.id}">
+        <div class="card-media-wrapper">
+          <img 
+            src="${coverPhoto}" 
+            alt="${prop.name || prop.title} — ${prop.location}" 
+            class="card-property-img" 
+            loading="lazy"
+          />
+          <span class="card-subtle-badge">
+            ${badgeText}
+          </span>
+        </div>
+        <div class="card-details-panel">
+          <h3 class="card-property-name">${prop.name || prop.title}</h3>
+          <p class="card-property-location">${prop.location}</p>
+          <div class="card-property-price">${priceText}</div>
+        </div>
+      </article>
+    `;
+  }).join('');
 
   // Attach card click handlers
   gridContainer.querySelectorAll('.property-editorial-card').forEach(card => {
@@ -436,6 +443,16 @@ function renderPropertyDetailHTML(prop, container) {
   activeGalleryImages = allImages;
   activeLightboxIndex = 0;
 
+  const coverPhoto = prop.coverImage || prop.image || prop.heroImage || allImages[0] || '/images/villa_exterior.jpg';
+  const isRent = Boolean(prop.transaction === 'rent' || prop.category === 'rent' || prop.isRent);
+  const badgeText = isRent ? 'FOR LEASE' : 'FOR SALE';
+  const priceText = prop.priceDisplay || (isRent ? `AED ${Number(prop.price || prop.priceAED || 0).toLocaleString()} / year` : `AED ${Number(prop.price || prop.priceAED || 0).toLocaleString()}`);
+  const amenitiesList = Array.isArray(prop.amenities) && prop.amenities.length > 0 ? prop.amenities : (prop.lifestylePerks || ["Private Swimming Pool", "24/7 Security", "Private Parking"]);
+  const specsEntries = (prop.specs && typeof prop.specs === 'object') ? Object.entries(prop.specs) : [["Property Type", prop.type || "Luxury Residence"], ["Built-Up Area", prop.sizeDisplay || "Spacious"], ["Ownership", "Freehold Title"]];
+  const locationList = Array.isArray(prop.locationHighlights) && prop.locationHighlights.length > 0 ? prop.locationHighlights : [{ landmark: "Prime Connectivity", time: "Direct" }, { landmark: "Downtown & Marina", time: "15 min" }];
+  const featureKey = (Array.isArray(prop.highlights) && prop.highlights[0]) || (Array.isArray(prop.lifestylePerks) && prop.lifestylePerks[0]) || 'Private Terrace';
+  const amenityKey = (Array.isArray(prop.highlights) && prop.highlights[1]) || (Array.isArray(prop.lifestylePerks) && prop.lifestylePerks[1]) || 'Covered Parking';
+
   container.innerHTML = `
     <!-- Back to Collection Navigation Bar -->
     <div class="detail-nav-strip">
@@ -445,25 +462,25 @@ function renderPropertyDetailHTML(prop, container) {
         </svg>
         Back to Collection
       </button>
-      <div class="results-count-pill">${prop.area}</div>
+      <div class="results-count-pill">${prop.area || prop.location}</div>
     </div>
 
     <!-- Property Detail Hero -->
     <section class="detail-hero-section">
-      <img src="${prop.coverImage || prop.images.exterior[0]}" alt="${prop.name}" class="detail-hero-img" />
+      <img src="${coverPhoto}" alt="${prop.name || prop.title}" class="detail-hero-img" />
       <div class="detail-hero-overlay">
         <div class="detail-hero-content">
           <div class="detail-hero-meta">
             <div class="detail-hero-badges">
-              <span class="detail-badge-pill">${prop.transaction === 'rent' ? 'FOR RENT' : 'FOR SALE'}</span>
-              <span class="detail-badge-pill">${prop.type}</span>
+              <span class="detail-badge-pill">${badgeText}</span>
+              <span class="detail-badge-pill">${prop.type || 'Residence'}</span>
             </div>
-            <h1 class="detail-prop-title">${prop.name}</h1>
-            <p class="detail-prop-loc">${prop.location} • ${prop.area}</p>
-            <div class="detail-prop-price">${prop.priceDisplay}</div>
+            <h1 class="detail-prop-title">${prop.name || prop.title}</h1>
+            <p class="detail-prop-loc">${prop.location} • ${prop.area || prop.location}</p>
+            <div class="detail-prop-price">${priceText}</div>
           </div>
           <div class="detail-hero-actions">
-            <button type="button" class="btn-viewing-hero" id="hero-viewing-btn" data-prop-name="${prop.name}">
+            <button type="button" class="btn-viewing-hero" id="hero-viewing-btn" data-prop-name="${prop.name || prop.title}">
               Arrange a Viewing
             </button>
           </div>
@@ -475,23 +492,23 @@ function renderPropertyDetailHTML(prop, container) {
     <div class="detail-specs-strip">
       <div class="specs-strip-inner">
         <div class="spec-item">
-          <div class="spec-item-val">${prop.bedrooms}</div>
+          <div class="spec-item-val">${prop.bedrooms || '—'}</div>
           <div class="spec-item-lbl">Bedrooms</div>
         </div>
         <div class="spec-item">
-          <div class="spec-item-val">${prop.bathrooms}</div>
+          <div class="spec-item-val">${prop.bathrooms || '—'}</div>
           <div class="spec-item-lbl">Bathrooms</div>
         </div>
         <div class="spec-item">
-          <div class="spec-item-val">${prop.sizeDisplay}</div>
+          <div class="spec-item-val">${prop.sizeDisplay || `${Number(prop.size || prop.areaSqFt || 0).toLocaleString()} SQ.FT.`}</div>
           <div class="spec-item-lbl">Total Area</div>
         </div>
         <div class="spec-item">
-          <div class="spec-item-val">${prop.highlights[0] || 'Private Terrace'}</div>
+          <div class="spec-item-val">${featureKey}</div>
           <div class="spec-item-lbl">Key Feature</div>
         </div>
         <div class="spec-item">
-          <div class="spec-item-val">${prop.highlights[1] || 'Covered Parking'}</div>
+          <div class="spec-item-val">${amenityKey}</div>
           <div class="spec-item-lbl">Exclusive Amenity</div>
         </div>
       </div>
@@ -524,11 +541,11 @@ function renderPropertyDetailHTML(prop, container) {
       <div class="detail-overview-block">
         <h3>Overview</h3>
         <p class="detail-overview-desc">${prop.overview || prop.description}</p>
-        <p class="detail-overview-desc">${prop.description}</p>
+        <p class="detail-overview-desc">${prop.description || prop.overview}</p>
 
         <h3 style="margin-top: 48px;">Curated Amenities</h3>
         <div class="detail-amenities-tags">
-          ${prop.amenities.map(a => `<span class="amenity-chip">${a}</span>`).join('')}
+          ${amenitiesList.map(a => `<span class="amenity-chip">${a}</span>`).join('')}
         </div>
       </div>
 
@@ -536,7 +553,7 @@ function renderPropertyDetailHTML(prop, container) {
         <h3>Property Details</h3>
         <table class="specs-table">
           <tbody>
-            ${Object.entries(prop.specs).map(([key, val]) => `
+            ${specsEntries.map(([key, val]) => `
               <tr>
                 <td>${key}</td>
                 <td>${val}</td>
@@ -554,7 +571,7 @@ function renderPropertyDetailHTML(prop, container) {
           <h3>Strategic Location</h3>
           <p class="detail-prop-loc">${prop.location} • Prime Connectivity</p>
           <div class="location-landmarks-grid">
-            ${prop.locationHighlights.map(item => `
+            ${locationList.map(item => `
               <div class="location-landmark-card">
                 <div class="landmark-time">${item.time}</div>
                 <div class="landmark-name">${item.landmark}</div>
@@ -568,7 +585,7 @@ function renderPropertyDetailHTML(prop, container) {
     <!-- Bottom Viewing CTA -->
     <section class="detail-bottom-cta">
       <h2 class="cta-large-heading">Ready to see it in person?</h2>
-      <button type="button" class="btn-primary-luxury" id="bottom-viewing-btn" data-prop-name="${prop.name}">
+      <button type="button" class="btn-primary-luxury" id="bottom-viewing-btn" data-prop-name="${prop.name || prop.title}">
         Arrange a Private Viewing
       </button>
     </section>
@@ -595,8 +612,8 @@ function renderPropertyDetailHTML(prop, container) {
   // Attach Viewing Buttons to Inquiry Modal
   const heroViewingBtn = document.getElementById('hero-viewing-btn');
   const bottomViewingBtn = document.getElementById('bottom-viewing-btn');
-  if (heroViewingBtn) heroViewingBtn.addEventListener('click', () => openInquiryModal(prop.name));
-  if (bottomViewingBtn) bottomViewingBtn.addEventListener('click', () => openInquiryModal(prop.name));
+  if (heroViewingBtn) heroViewingBtn.addEventListener('click', () => openInquiryModal(prop.name || prop.title));
+  if (bottomViewingBtn) bottomViewingBtn.addEventListener('click', () => openInquiryModal(prop.name || prop.title));
 }
 
 function collectAllImages(prop) {
@@ -609,7 +626,16 @@ function collectAllImages(prop) {
       });
     }
   });
-  if (images.length === 0 && prop.coverImage) images.push(prop.coverImage);
+  if (Array.isArray(prop.gallery)) {
+    prop.gallery.forEach(url => {
+      if (!images.includes(url)) images.push(url);
+    });
+  }
+  const cover = prop.coverImage || prop.image || prop.heroImage;
+  if (cover && !images.includes(cover)) {
+    images.unshift(cover);
+  }
+  if (images.length === 0) images.push('/images/villa_exterior.jpg');
   return images;
 }
 

@@ -1186,7 +1186,7 @@ function renderVisualCatalog() {
   grid.innerHTML = filtered.map((p) => `
     <article class="prop-card-visual scroll-reveal-box" data-estate-id="${p.id}">
       <div class="prop-media-wrap view-estate-btn" data-estate-id="${p.id}">
-        <img src="${p.image || p.heroImage || '/images/villa_exterior.jpg'}" alt="${p.title || p.name}" class="prop-img" loading="lazy" />
+        <img src="${p.image || p.heroImage || p.coverImage || '/images/villa_exterior.jpg'}" alt="${p.title || p.name}" class="prop-img" loading="lazy" />
         <span class="prop-badge-top">${p.status || 'Exclusive Listing'}</span>
       </div>
       <div class="prop-body-compact">

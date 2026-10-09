@@ -443,7 +443,7 @@ function renderProperties() {
     return `
       <article class="prop-admin-card" data-id="${p.id}">
         <div class="prop-admin-media">
-          <img src="${escapeHtml(p.image || p.heroImage || '/images/villa_exterior.jpg')}" alt="${escapeHtml(p.title || p.name)}" class="prop-admin-img" loading="lazy" />
+          <img src="${escapeHtml(p.image || p.heroImage || p.coverImage || '/images/villa_exterior.jpg')}" alt="${escapeHtml(p.title || p.name)}" class="prop-admin-img" loading="lazy" />
           <span class="prop-admin-status-overlay">${escapeHtml(p.status || 'Active Listing')}</span>
         </div>
 
