@@ -1,9 +1,11 @@
 import { isAuthenticated } from './auth.js';
 import { DEMO_PROPERTIES } from '../data/properties.js';
+import { db } from '../firebase-config.js';
+import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
 
 /**
  * Vision of Excellence — Property Catalog & Portfolio Service
- * Connected to live backend API (/api/properties) with resilient local cache
+ * Connected to live Cloud Firestore (voe-luxury-real-estate) with local cache fallback
  */
 
 const PROPERTIES_STORE_KEY = 'voe_properties_catalog_v3';
@@ -41,9 +43,27 @@ function saveStoredProperties(props) {
 }
 
 /**
- * Get all active properties from backend API with local cache
+ * Get all active properties from Cloud Firestore with API & local cache
  */
 export async function getProperties() {
+  // 1. Fetch from live Cloud Firestore
+  if (db) {
+    try {
+      const snapshot = await getDocs(collection(db, 'properties'));
+      const props = [];
+      snapshot.forEach(docSnap => {
+        props.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      if (props.length > 0) {
+        saveStoredProperties(props);
+        return props;
+      }
+    } catch (fbErr) {
+      console.warn('Cloud Firestore getProperties notice:', fbErr.message);
+    }
+  }
+
+  // 2. Fetch from backend API
   try {
     const res = await fetch('/api/properties');
     if (res.ok) {
@@ -129,7 +149,17 @@ export async function saveProperty(propData) {
 
   saveStoredProperties(list);
 
-  // Send to backend API
+  // 2. Save directly to live Cloud Firestore
+  if (db) {
+    try {
+      await setDoc(doc(db, 'properties', id), updatedProperty, { merge: true });
+      console.info('✓ Live property committed to Cloud Firestore:', id);
+    } catch (fbErr) {
+      console.warn('Cloud Firestore saveProperty notice:', fbErr.message);
+    }
+  }
+
+  // 3. Send to backend API
   try {
     const res = await fetch('/api/properties', {
       method: 'POST',
@@ -166,6 +196,15 @@ export async function togglePropertySignature(id) {
 
   saveStoredProperties(list);
 
+  // Update in Cloud Firestore
+  if (db) {
+    try {
+      await setDoc(doc(db, 'properties', id), { isSignature: target.isSignature }, { merge: true });
+    } catch (fbErr) {
+      console.warn('Cloud Firestore toggle signature notice:', fbErr.message);
+    }
+  }
+
   try {
     await fetch(`/api/properties?id=${encodeURIComponent(id)}&action=toggleSignature`, {
       method: 'PUT'
@@ -188,6 +227,16 @@ export async function deleteProperty(id) {
   const list = getStoredProperties();
   const updated = list.filter(p => p.id !== id);
   saveStoredProperties(updated);
+
+  // Delete from Cloud Firestore
+  if (db) {
+    try {
+      await deleteDoc(doc(db, 'properties', id));
+      console.info('✓ Property removed from Cloud Firestore:', id);
+    } catch (fbErr) {
+      console.warn('Cloud Firestore delete notice:', fbErr.message);
+    }
+  }
 
   try {
     await fetch(`/api/properties?id=${encodeURIComponent(id)}`, {

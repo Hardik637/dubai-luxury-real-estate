@@ -1,8 +1,10 @@
 import { isAuthenticated } from './auth.js';
+import { db } from '../firebase-config.js';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from 'firebase/firestore';
 
 /**
  * Vision of Excellence — Client Enquiry & Lead Vault Service
- * Connected to live backend (/api/enquiries) with resilient offline backup
+ * Connected to live Cloud Firestore (voe-luxury-real-estate) with resilient local vault
  */
 
 const LEADS_VAULT_KEY = 'voe_leads_vault_v3';
@@ -64,7 +66,7 @@ function saveLocalVault(leads) {
 
 /**
  * Public submission of enquiry / viewing request
- * Posts to live backend API (/api/enquiries) and updates local vault
+ * Writes directly to live Cloud Firestore with local vault fallback
  */
 export async function submitEnquiry(data) {
   const enquiry = {
@@ -82,7 +84,7 @@ export async function submitEnquiry(data) {
 
   let assignedId = `enq_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
 
-  // 1. Immediately store in local vault as backup
+  // 1. Immediately store in local vault as instant optimistic update
   try {
     const localList = getLocalVault();
     localList.unshift({ ...enquiry, id: assignedId });
@@ -91,19 +93,35 @@ export async function submitEnquiry(data) {
     console.warn('Local vault write error:', e);
   }
 
-  // 2. Transmit to live backend API (/api/enquiries)
+  // 2. Transmit directly to live Cloud Firestore
+  if (db) {
+    try {
+      const docRef = await addDoc(collection(db, 'enquiries'), {
+        ...enquiry,
+        serverTimestamp: serverTimestamp()
+      });
+      if (docRef && docRef.id) {
+        assignedId = docRef.id;
+        console.info('✓ Live enquiry committed to Cloud Firestore:', assignedId);
+      }
+    } catch (fbErr) {
+      console.warn('Cloud Firestore direct write notice:', fbErr.message);
+    }
+  }
+
+  // 3. Forward to backend API (/api/enquiries)
   try {
     const res = await fetch('/api/enquiries', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(enquiry)
+      body: JSON.stringify({ ...enquiry, id: assignedId })
     });
     if (res.ok) {
       const result = await res.json();
       if (result.id) assignedId = result.id;
     }
   } catch (err) {
-    console.warn('Backend /api/enquiries write error, stored in resilient vault:', err.message);
+    // API endpoint optional
   }
 
   return { success: true, id: assignedId };
@@ -111,18 +129,51 @@ export async function submitEnquiry(data) {
 
 /**
  * Fetch all enquiries (Admin Only)
- * Reads from live backend API (/api/enquiries) with local vault fallback
+ * Reads from live Cloud Firestore with API & local vault fallback
  */
 export async function getEnquiries() {
   if (!isAuthenticated()) {
     throw new Error('Access denied: Administrative authentication required.');
   }
 
+  // 1. Query live Cloud Firestore directly
+  if (db) {
+    try {
+      const q = query(collection(db, 'enquiries'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      const leads = [];
+      snapshot.forEach(docSnap => {
+        leads.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      if (leads.length > 0) {
+        saveLocalVault(leads);
+        return leads;
+      }
+    } catch (fbErr) {
+      console.warn('Cloud Firestore ordered fetch notice, trying direct collection query:', fbErr.message);
+      try {
+        const snapshot = await getDocs(collection(db, 'enquiries'));
+        const leads = [];
+        snapshot.forEach(docSnap => {
+          leads.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        leads.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        if (leads.length > 0) {
+          saveLocalVault(leads);
+          return leads;
+        }
+      } catch (fallbackErr) {
+        console.warn('Firestore fallback fetch notice:', fallbackErr.message);
+      }
+    }
+  }
+
+  // 2. Query backend API (/api/enquiries)
   try {
     const res = await fetch('/api/enquiries');
     if (res.ok) {
       const data = await res.json();
-      if (data.success && Array.isArray(data.enquiries)) {
+      if (data.success && Array.isArray(data.enquiries) && data.enquiries.length > 0) {
         saveLocalVault(data.enquiries);
         return data.enquiries;
       }
@@ -151,7 +202,19 @@ export async function updateEnquiryStatus(id, newStatus) {
     saveLocalVault(list);
   }
 
-  // 2. Update backend API
+  // 2. Update Cloud Firestore
+  if (db && id) {
+    try {
+      await updateDoc(doc(db, 'enquiries', id), {
+        status: newStatus,
+        updatedAt: new Date().toISOString()
+      });
+    } catch (fbErr) {
+      console.warn('Firestore status update notice:', fbErr.message);
+    }
+  }
+
+  // 3. Update backend API
   try {
     await fetch('/api/enquiries', {
       method: 'PATCH',
@@ -178,7 +241,16 @@ export async function deleteEnquiry(id) {
   const filtered = list.filter(e => e.id !== id);
   saveLocalVault(filtered);
 
-  // 2. Update backend API
+  // 2. Delete from Cloud Firestore
+  if (db && id) {
+    try {
+      await deleteDoc(doc(db, 'enquiries', id));
+    } catch (fbErr) {
+      console.warn('Firestore delete notice:', fbErr.message);
+    }
+  }
+
+  // 3. Update backend API
   try {
     await fetch(`/api/enquiries?id=${encodeURIComponent(id)}`, {
       method: 'DELETE'
