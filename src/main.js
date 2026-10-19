@@ -747,7 +747,7 @@ function initWhyDubaiExperience() {
 /* ==========================================================================
    3.2 SOVEREIGN WEALTH & YIELD CALCULATOR
    ========================================================================== */
-let currentCalculatorBudgetAED = 25000000;
+let currentCalculatorBudgetAED = 1000000;
 
 function updateSovereignCalculator() {
   const displayBudget = document.getElementById('calc-display-budget');
@@ -804,7 +804,7 @@ function initSovereignCalculator() {
   if (!slider) return;
 
   slider.addEventListener('input', (e) => {
-    currentCalculatorBudgetAED = parseFloat(e.target.value) || 25000000;
+    currentCalculatorBudgetAED = parseFloat(e.target.value) || 1000000;
     updateSovereignCalculator();
   });
 
