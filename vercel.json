@@ -4,6 +4,8 @@
     { "source": "/properties/:path*", "destination": "/properties" },
     { "source": "/invest/:path*", "destination": "/invest" },
     { "source": "/admin/:path*", "destination": "/admin" },
-    { "source": "/privacy/:path*", "destination": "/privacy" }
+    { "source": "/privacy/:path*", "destination": "/privacy" },
+    { "source": "/terms/:path*", "destination": "/terms" },
+    { "source": "/terms-and-conditions/:path*", "destination": "/terms" }
   ]
 }

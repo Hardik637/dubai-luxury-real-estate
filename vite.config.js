@@ -22,6 +22,8 @@ export default defineConfig({
             req.url = '/admin/index.html';
           } else if (url.startsWith('/privacy') && !url.includes('.')) {
             req.url = '/privacy/index.html';
+          } else if ((url.startsWith('/terms') || url.startsWith('/terms-and-conditions')) && !url.includes('.')) {
+            req.url = '/terms/index.html';
           }
           next();
         });
@@ -37,7 +39,8 @@ export default defineConfig({
         properties: resolve(__dirname, 'properties/index.html'),
         invest: resolve(__dirname, 'invest/index.html'),
         admin: resolve(__dirname, 'admin/index.html'),
-        privacy: resolve(__dirname, 'privacy/index.html')
+        privacy: resolve(__dirname, 'privacy/index.html'),
+        terms: resolve(__dirname, 'terms/index.html')
       },
       output: {
         manualChunks: {
