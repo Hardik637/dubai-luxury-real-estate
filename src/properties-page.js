@@ -4,7 +4,7 @@ import {
   filterProperties, 
   formatCurrencyAED 
 } from './data/properties.js';
-import { submitEnquiry } from './services/enquiries.js';
+import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
@@ -817,7 +817,7 @@ function setupInquiryModal() {
           </form>
           <div id="inquiry-success-box" class="form-success-box" style="display: none; margin-top: 20px;">
             <h4>Viewing Request Received</h4>
-            <p>Our private office has registered your request. An executive partner will reach out to confirm your itinerary.</p>
+            <p>Opening WhatsApp to connect directly with our private client desk...</p>
           </div>
         </div>
       </div>
@@ -858,6 +858,16 @@ function setupInquiryModal() {
         const successBox = document.getElementById('inquiry-success-box');
         if (successBox) successBox.style.display = 'block';
         form.style.display = 'none';
+
+        const waMsg = `*NEW CATALOG VIEWING REQUEST*\n` +
+          `• *Property:* ${propTitle}\n` +
+          `• *Client Name:* ${fullName}\n` +
+          `• *Contact:* ${contact}\n` +
+          (datePref ? `• *Preferred Date:* ${datePref}\n` : '') +
+          (tourType ? `• *Tour Format:* ${tourType}\n` : '') +
+          (notes ? `• *Notes / Requests:* ${notes}\n` : '') +
+          `• *Source:* Vision of Excellence Properties Catalog`;
+        openWhatsAppEnquiry(waMsg);
       });
     }
   }

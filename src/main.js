@@ -1,6 +1,6 @@
 import { HeroScrollEngine } from './hero-scroll.js';
 import { PROPERTIES, EXCHANGE_RATES } from './properties-data.js';
-import { submitEnquiry } from './services/enquiries.js';
+import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
 import { getSignatureProperties } from './services/properties.js';
 
 let activeCatalogProperties = [...PROPERTIES];
@@ -1311,7 +1311,7 @@ function openPropertyModal(estateId) {
 
             <div id="modal-viewing-success" style="display: none; padding: 14px; background: var(--bg-secondary); margin-top: 12px; text-align: center; border-radius: 2px; font-size: 0.8125rem;">
               <strong>Request Received</strong><br/>
-              Our private desk will arrange your executive chauffeur itinerary.
+              Opening WhatsApp to confirm your executive chauffeur itinerary...
             </div>
           </div>
         </div>
@@ -1336,6 +1336,9 @@ function openPropertyModal(estateId) {
       e.preventDefault();
       const name = document.getElementById('viewing-client-name')?.value || '';
       const phone = document.getElementById('viewing-client-phone')?.value || '';
+      const propTitle = estate.title || estate.name || 'Private Residence';
+      const propLoc = estate.location || 'Dubai';
+      const monthlyEst = formatMonthlyFinancing(estate.priceAED || estate.price);
       
       try {
         await submitEnquiry({
@@ -1343,8 +1346,8 @@ function openPropertyModal(estateId) {
           phone: phone,
           type: 'Chauffeur Viewing Request',
           propertyId: estate.id,
-          propertyTitle: estate.title || estate.name,
-          notes: `Chauffeur viewing request for ${estate.title || estate.name} (${estate.location}). Monthly estimate: ${formatMonthlyFinancing(estate.priceAED || estate.price)}`
+          propertyTitle: propTitle,
+          notes: `Chauffeur viewing request for ${propTitle} (${propLoc}). Monthly estimate: ${monthlyEst}`
         });
       } catch (err) {
         console.warn('Enquiry logged to local vault:', err);
@@ -1352,6 +1355,14 @@ function openPropertyModal(estateId) {
 
       viewingForm.style.display = 'none';
       if (viewingSuccess) viewingSuccess.style.display = 'block';
+
+      const waMsg = `*NEW CHAUFFEUR VIEWING REQUEST*\n` +
+        `• *Property:* ${propTitle} (${propLoc})\n` +
+        `• *Client Name:* ${name}\n` +
+        `• *Client Phone:* ${phone}\n` +
+        `• *Est. Monthly Financing:* ${monthlyEst}\n` +
+        `• *Source:* Vision of Excellence Website`;
+      openWhatsAppEnquiry(waMsg);
     });
   }
 
@@ -1402,6 +1413,15 @@ function initForms() {
 
       enquiryForm.style.display = 'none';
       if (enquirySuccess) enquirySuccess.style.display = 'block';
+
+      const waMsg = `*NEW PRIVATE ACQUISITION ADVISORY INQUIRY*\n` +
+        `• *Client Name:* ${fullName}\n` +
+        `• *Email:* ${email}\n` +
+        `• *Phone / WhatsApp:* ${phone}\n` +
+        `• *Intent / Scope:* ${intent}\n` +
+        (notes ? `• *Notes / Brief:* ${notes}\n` : '') +
+        `• *Source:* Vision of Excellence Website`;
+      openWhatsAppEnquiry(waMsg);
     });
   }
 
@@ -1433,6 +1453,15 @@ function initForms() {
 
       ownerForm.style.display = 'none';
       if (ownerSuccess) ownerSuccess.style.display = 'block';
+
+      const waMsg = `*NEW OWNER ESTATE LISTING SUBMISSION*\n` +
+        `• *Owner Name:* ${fullName}\n` +
+        `• *Contact:* ${contact}\n` +
+        `• *Community:* ${community}\n` +
+        `• *Estimated Value:* ${estimatedPrice}\n` +
+        (notes ? `• *Notes:* ${notes}\n` : '') +
+        `• *Source:* Vision of Excellence Website`;
+      openWhatsAppEnquiry(waMsg);
     });
   }
 }

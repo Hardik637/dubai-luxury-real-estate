@@ -3,7 +3,7 @@ import {
   getPropertiesByBudget, 
   formatCurrencyAED 
 } from './data/properties.js';
-import { submitEnquiry } from './services/enquiries.js';
+import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
@@ -335,7 +335,7 @@ function setupPlanModal() {
           </form>
           <div id="plan-success-box" class="form-success-box" style="display: none; margin-top: 20px;">
             <h4>Investment Request Received</h4>
-            <p>A Senior Portfolio Advisory Director will contact you within 24 business hours.</p>
+            <p>Opening WhatsApp to connect directly with a Senior Portfolio Advisory Director...</p>
           </div>
         </div>
       </div>
@@ -379,6 +379,15 @@ function setupPlanModal() {
         const success = document.getElementById('plan-success-box');
         if (success) success.style.display = 'block';
         form.style.display = 'none';
+
+        const waMsg = `*NEW INVESTMENT STRATEGY INQUIRY*\n` +
+          `• *Client Name:* ${fullName}\n` +
+          `• *Contact:* ${contact}\n` +
+          `• *Primary Objective:* ${objective}\n` +
+          `• *Target Capital Allocation:* ${budget}\n` +
+          (notes ? `• *Notes / Brief:* ${notes}\n` : '') +
+          `• *Source:* Vision of Excellence Investment Page`;
+        openWhatsAppEnquiry(waMsg);
       });
     }
   }

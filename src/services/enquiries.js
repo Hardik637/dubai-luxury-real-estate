@@ -88,20 +88,24 @@ export async function submitEnquiry(data) {
 
   let assignedId = `enq_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
 
+  // Always keep a secured copy in the local vault immediately (ensures instant persistence)
+  try {
+    const localList = getLocalVault();
+    localList.unshift({ ...enquiry, id: assignedId });
+    saveLocalVault(localList);
+  } catch (e) {
+    console.warn('Local vault write error:', e);
+  }
+
   // Save to Firestore if available
   if (isFirebaseConfigured && db) {
     try {
       const docRef = await addDoc(collection(db, 'enquiries'), enquiry);
       assignedId = docRef.id;
     } catch (err) {
-      console.warn('Firestore enquiry write failed, storing securely in local vault:', err);
+      console.warn('Firestore enquiry write failed:', err);
     }
   }
-
-  // Always keep a secured copy in the local vault
-  const localList = getLocalVault();
-  localList.unshift({ ...enquiry, id: assignedId });
-  saveLocalVault(localList);
 
   return { success: true, id: assignedId };
 }
@@ -210,4 +214,24 @@ export async function exportEnquiriesToCSV() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+export const WHATSAPP_PHONE = '971585673050';
+
+/**
+ * Redirects or opens WhatsApp with the formatted enquiry message
+ */
+export function openWhatsAppEnquiry(message) {
+  if (!message) return;
+  const cleanPhone = WHATSAPP_PHONE.replace(/[^0-9]/g, '');
+  const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+  
+  try {
+    const win = window.open(url, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      window.location.href = url;
+    }
+  } catch (err) {
+    window.location.href = url;
+  }
 }
