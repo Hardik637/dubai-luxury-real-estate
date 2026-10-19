@@ -20,6 +20,8 @@ export default defineConfig({
             req.url = '/invest/index.html';
           } else if (url.startsWith('/admin') && !url.includes('.')) {
             req.url = '/admin/index.html';
+          } else if (url.startsWith('/privacy') && !url.includes('.')) {
+            req.url = '/privacy/index.html';
           }
           next();
         });
@@ -34,7 +36,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         properties: resolve(__dirname, 'properties/index.html'),
         invest: resolve(__dirname, 'invest/index.html'),
-        admin: resolve(__dirname, 'admin/index.html')
+        admin: resolve(__dirname, 'admin/index.html'),
+        privacy: resolve(__dirname, 'privacy/index.html')
       },
       output: {
         manualChunks: {

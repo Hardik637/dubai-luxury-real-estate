@@ -3087,3 +3087,123 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   LEGAL & PRIVACY POLICY PAGE
+   -------------------------------------------------------------------------- */
+.legal-page-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 50px clamp(20px, 4vw, 40px) 100px;
+}
+
+.legal-document__header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 28px;
+  margin-bottom: 40px;
+}
+
+.legal-document__eyebrow {
+  display: inline-block;
+  font-family: var(--font-technical);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--champagne-gold);
+  margin-bottom: 12px;
+}
+
+.legal-document__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-obsidian);
+  margin: 0 0 12px;
+  letter-spacing: -0.015em;
+}
+
+.legal-document__updated {
+  font-family: var(--font-technical);
+  font-size: 0.8125rem;
+  color: var(--color-obsidian-muted);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.legal-document__content {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: rgba(20, 20, 20, 0.85);
+}
+
+.legal-document__content p {
+  margin: 0 0 20px;
+}
+
+.legal-document__content h2,
+.legal-document__content h3 {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-obsidian);
+  margin: 44px 0 18px;
+  letter-spacing: -0.01em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.legal-document__content h4 {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-obsidian);
+  margin: 24px 0 12px;
+}
+
+.legal-document__content ul {
+  margin: 0 0 24px 24px;
+  padding: 0;
+}
+
+.legal-document__content li {
+  margin-bottom: 10px;
+  line-height: 1.75;
+}
+
+.legal-document__content strong {
+  color: var(--color-obsidian);
+  font-weight: 700;
+}
+
+.legal-document__content a {
+  color: var(--champagne-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.legal-document__content a:hover {
+  opacity: 0.75;
+}
+
+.legal-contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 28px 32px;
+  margin-top: 24px;
+}
+
+.legal-contact-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal-contact-card li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+

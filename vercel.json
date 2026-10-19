@@ -3,6 +3,7 @@
   "rewrites": [
     { "source": "/properties/:path*", "destination": "/properties" },
     { "source": "/invest/:path*", "destination": "/invest" },
-    { "source": "/admin/:path*", "destination": "/admin" }
+    { "source": "/admin/:path*", "destination": "/admin" },
+    { "source": "/privacy/:path*", "destination": "/privacy" }
   ]
 }
