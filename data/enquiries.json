@@ -1,0 +1,38 @@
+[
+  {
+    "id": "enq_demo_01",
+    "fullName": "Sir David Montgomery",
+    "email": "d.montgomery@scot-invest.co.uk",
+    "phone": "+44 7911 123456",
+    "type": "Private Acquisition Advisory",
+    "budget": "$15M – $25M",
+    "propertyTitle": "Sanctuary of the Sun (Jumeirah Bay Island)",
+    "notes": "Seeking waterfront residency with private 120ft yacht berth. Require assistance with 10-Year UAE Golden Visa family sponsorship.",
+    "status": "new",
+    "createdAt": "2026-10-18T14:30:00.000Z"
+  },
+  {
+    "id": "enq_demo_02",
+    "fullName": "Dr. Tariq Al-Mansoor",
+    "email": "tariq.mansoor@almansoor-holding.sa",
+    "phone": "+966 50 555 7890",
+    "type": "Chauffeur Viewing Request",
+    "budget": "$10M+",
+    "propertyTitle": "Villa Al-Noor (Palm Jumeirah)",
+    "notes": "Private weekend viewing requested for principal and security detail. Needs Rolls-Royce chauffeur transfer from DIFC.",
+    "status": "contacted",
+    "createdAt": "2026-10-18T08:15:00.000Z"
+  },
+  {
+    "id": "enq_demo_03",
+    "fullName": "Genevieve Vance",
+    "email": "gvance@vancecap.com",
+    "phone": "+1 212 555 0192",
+    "type": "Investment Strategy Advisory",
+    "budget": "AED 10M+",
+    "propertyTitle": "Portfolio Yield Allocation",
+    "notes": "Evaluating prime freehold assets for institutional tax-free yield. Needs quarterly yield simulation model.",
+    "status": "qualified",
+    "createdAt": "2026-10-17T11:00:00.000Z"
+  }
+]

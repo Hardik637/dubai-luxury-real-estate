@@ -1,20 +1,14 @@
-import { db, isFirebaseConfigured } from '../firebase-config.js';
-import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { isAuthenticated } from './auth.js';
 
 /**
  * Vision of Excellence — Client Enquiry & Lead Vault Service
- * 
- * Strict Security Architecture:
- * - Public callers can ONLY submit new enquiries via `submitEnquiry()`.
- * - Reading, modifying, or deleting leads requires verified Admin Authentication (`isAuthenticated()`).
- * - Prevents public inspection or scraping of high-net-worth client leads.
+ * Connected to live backend (/api/enquiries) with resilient offline backup
  */
 
-const LEADS_VAULT_KEY = 'voe_leads_vault_v1';
+const LEADS_VAULT_KEY = 'voe_leads_vault_v3';
 
-// Sample initial leads for realistic admin review if empty
-const DEMO_ENQUIRIES = [
+// Sample initial leads
+export const DEMO_ENQUIRIES = [
   {
     id: 'enq_demo_01',
     fullName: 'Sir David Montgomery',
@@ -60,7 +54,6 @@ function getLocalVault() {
   } catch (e) {
     // fallback
   }
-  // Initialize with demo enquiries
   localStorage.setItem(LEADS_VAULT_KEY, JSON.stringify(DEMO_ENQUIRIES));
   return DEMO_ENQUIRIES;
 }
@@ -71,6 +64,7 @@ function saveLocalVault(leads) {
 
 /**
  * Public submission of enquiry / viewing request
+ * Posts to live backend API (/api/enquiries) and updates local vault
  */
 export async function submitEnquiry(data) {
   const enquiry = {
@@ -88,7 +82,7 @@ export async function submitEnquiry(data) {
 
   let assignedId = `enq_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
 
-  // Always keep a secured copy in the local vault immediately (ensures instant persistence)
+  // 1. Immediately store in local vault as backup
   try {
     const localList = getLocalVault();
     localList.unshift({ ...enquiry, id: assignedId });
@@ -97,14 +91,19 @@ export async function submitEnquiry(data) {
     console.warn('Local vault write error:', e);
   }
 
-  // Save to Firestore if available
-  if (isFirebaseConfigured && db) {
-    try {
-      const docRef = await addDoc(collection(db, 'enquiries'), enquiry);
-      assignedId = docRef.id;
-    } catch (err) {
-      console.warn('Firestore enquiry write failed:', err);
+  // 2. Transmit to live backend API (/api/enquiries)
+  try {
+    const res = await fetch('/api/enquiries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(enquiry)
+    });
+    if (res.ok) {
+      const result = await res.json();
+      if (result.id) assignedId = result.id;
     }
+  } catch (err) {
+    console.warn('Backend /api/enquiries write error, stored in resilient vault:', err.message);
   }
 
   return { success: true, id: assignedId };
@@ -112,24 +111,24 @@ export async function submitEnquiry(data) {
 
 /**
  * Fetch all enquiries (Admin Only)
+ * Reads from live backend API (/api/enquiries) with local vault fallback
  */
 export async function getEnquiries() {
   if (!isAuthenticated()) {
     throw new Error('Access denied: Administrative authentication required.');
   }
 
-  if (isFirebaseConfigured && db) {
-    try {
-      const q = query(collection(db, 'enquiries'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      const firestoreLeads = [];
-      snapshot.forEach(docSnap => {
-        firestoreLeads.push({ id: docSnap.id, ...docSnap.data() });
-      });
-      if (firestoreLeads.length > 0) return firestoreLeads;
-    } catch (err) {
-      console.warn('Firestore enquiry fetch failed, falling back to local vault:', err);
+  try {
+    const res = await fetch('/api/enquiries');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && Array.isArray(data.enquiries)) {
+        saveLocalVault(data.enquiries);
+        return data.enquiries;
+      }
     }
+  } catch (err) {
+    console.warn('Backend /api/enquiries fetch notice, using local cache:', err.message);
   }
 
   return getLocalVault();
@@ -143,21 +142,24 @@ export async function updateEnquiryStatus(id, newStatus) {
     throw new Error('Access denied.');
   }
 
-  if (isFirebaseConfigured && db) {
-    try {
-      const docRef = doc(db, 'enquiries', id);
-      await updateDoc(docRef, { status: newStatus, updatedAt: new Date().toISOString() });
-    } catch (err) {
-      console.warn('Firestore enquiry status update failed:', err);
-    }
+  // 1. Update local vault
+  const list = getLocalVault();
+  const target = list.find(e => e.id === id);
+  if (target) {
+    target.status = newStatus;
+    target.updatedAt = new Date().toISOString();
+    saveLocalVault(list);
   }
 
-  const list = getLocalVault();
-  const idx = list.findIndex(e => e.id === id);
-  if (idx !== -1) {
-    list[idx].status = newStatus;
-    list[idx].updatedAt = new Date().toISOString();
-    saveLocalVault(list);
+  // 2. Update backend API
+  try {
+    await fetch('/api/enquiries', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, status: newStatus })
+    });
+  } catch (err) {
+    console.warn('Backend status update notice:', err.message);
   }
 
   return { success: true };
@@ -171,31 +173,36 @@ export async function deleteEnquiry(id) {
     throw new Error('Access denied.');
   }
 
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'enquiries', id));
-    } catch (err) {
-      console.warn('Firestore enquiry deletion failed:', err);
-    }
-  }
-
+  // 1. Update local vault
   const list = getLocalVault();
-  const updated = list.filter(e => e.id !== id);
-  saveLocalVault(updated);
+  const filtered = list.filter(e => e.id !== id);
+  saveLocalVault(filtered);
+
+  // 2. Update backend API
+  try {
+    await fetch(`/api/enquiries?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+  } catch (err) {
+    console.warn('Backend delete notice:', err.message);
+  }
 
   return { success: true };
 }
 
 /**
- * Export enquiries to CSV (Admin Only)
+ * Export enquiries as CSV (Admin Only)
  */
-export async function exportEnquiriesToCSV() {
-  const enquiries = await getEnquiries();
-  
-  const headers = ['Date', 'Client Name', 'Email', 'Phone', 'Type', 'Property', 'Budget / Intent', 'Status', 'Notes'];
-  
+export function exportEnquiriesToCSV(enquiries) {
+  if (!enquiries || enquiries.length === 0) {
+    alert('No enquiries available to export.');
+    return;
+  }
+
+  const headers = ['Enquiry ID', 'Received Date', 'Client Name', 'Email', 'Phone', 'Type', 'Target Property', 'Budget / Scope', 'Status', 'Client Notes'];
   const rows = enquiries.map(e => [
-    `"${new Date(e.createdAt).toLocaleDateString()} ${new Date(e.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}"`,
+    `"${e.id}"`,
+    `"${new Date(e.createdAt || Date.now()).toLocaleString()}"`,
     `"${(e.fullName || '').replace(/"/g, '""')}"`,
     `"${(e.email || '').replace(/"/g, '""')}"`,
     `"${(e.phone || '').replace(/"/g, '""')}"`,

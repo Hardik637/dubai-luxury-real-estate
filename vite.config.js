@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import enquiriesHandler from './api/enquiries.js';
+import propertiesHandler from './api/properties.js';
+import authHandler from './api/auth.js';
 
 export default defineConfig({
   server: {
@@ -9,11 +12,48 @@ export default defineConfig({
   },
   plugins: [
     {
-      name: 'rewrite-routes-middleware',
+      name: 'api-and-routes-middleware',
       configureServer(server) {
-        server.middlewares.use((req, res, next) => {
+        server.middlewares.use(async (req, res, next) => {
           const url = req.url || '';
-          // If accessing /properties or /properties/* (like /properties/palm-residence)
+
+          // 1. API Endpoints
+          if (url.startsWith('/api/')) {
+            let body = {};
+            if (['POST', 'PATCH', 'PUT'].includes(req.method)) {
+              try {
+                const chunks = [];
+                for await (const chunk of req) chunks.push(chunk);
+                const raw = Buffer.concat(chunks).toString('utf-8');
+                body = raw ? JSON.parse(raw) : {};
+              } catch (e) {
+                body = {};
+              }
+            }
+            req.body = body;
+
+            res.status = function(code) {
+              res.statusCode = code;
+              return this;
+            };
+            res.json = function(data) {
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify(data));
+              return this;
+            };
+
+            if (url.startsWith('/api/enquiries')) {
+              return enquiriesHandler(req, res);
+            }
+            if (url.startsWith('/api/properties')) {
+              return propertiesHandler(req, res);
+            }
+            if (url.startsWith('/api/auth')) {
+              return authHandler(req, res);
+            }
+          }
+
+          // 2. Clean Route Rewrites
           if (url.startsWith('/properties') && !url.includes('.')) {
             req.url = '/properties/index.html';
           } else if (url.startsWith('/invest') && !url.includes('.')) {

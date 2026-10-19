@@ -92,8 +92,8 @@ function showLogin() {
 
 async function showDashboard() {
   const admin = getCurrentAdmin();
-  if (admin && admin.email) {
-    adminUserDisplay.textContent = admin.email;
+  if (adminUserDisplay) {
+    adminUserDisplay.textContent = (admin && admin.name) ? admin.name : 'Master Console';
   }
   viewLogin.style.display = 'none';
   viewDashboard.style.display = 'block';
@@ -118,27 +118,26 @@ function setupAuthEvents() {
     });
   }
 
-  // Login Form Submit
+  // Login Form Submit (Password Only)
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       loginFeedback.style.display = 'none';
       btnSubmitLogin.disabled = true;
-      btnSubmitLogin.textContent = 'Verifying credentials...';
+      btnSubmitLogin.textContent = 'Verifying passcode...';
 
-      const email = document.getElementById('login-email').value;
-      const password = loginPasswordInput.value;
+      const password = loginPasswordInput ? loginPasswordInput.value : '';
 
       try {
-        await loginAdmin(email, password);
+        await loginAdmin(password);
         showDashboard();
       } catch (err) {
-        loginFeedback.textContent = err.message || 'Authentication failed. Please verify credentials.';
+        loginFeedback.textContent = err.message || 'Authentication failed. Please verify passcode.';
         loginFeedback.className = 'login-feedback error';
         loginFeedback.style.display = 'block';
       } finally {
         btnSubmitLogin.disabled = false;
-        btnSubmitLogin.textContent = 'Verify & Enter Console';
+        btnSubmitLogin.textContent = 'Enter Owner Console';
       }
     });
   }

@@ -54,26 +54,15 @@
 
       <form id="admin-login-form" class="login-form">
         <div class="admin-field-group">
-          <label for="login-email" class="admin-field-label">Administrative Email</label>
-          <input
-            type="email"
-            id="login-email"
-            class="admin-input"
-            required
-            placeholder="admin@visionofexcellence.ae"
-            autocomplete="username"
-          />
-        </div>
-
-        <div class="admin-field-group">
-          <label for="login-password" class="admin-field-label">Access Passcode</label>
+          <label for="login-password" class="admin-field-label">Master Password</label>
           <div class="password-input-wrap">
             <input
               type="password"
               id="login-password"
               class="admin-input"
               required
-              placeholder="••••••••••••"
+              autofocus
+              placeholder="Enter master password"
               autocomplete="current-password"
             />
             <button type="button" class="btn-toggle-pwd" id="btn-toggle-pwd" aria-label="Toggle password visibility">Show</button>
@@ -83,7 +72,7 @@
         <div id="login-feedback" class="login-feedback" role="alert"></div>
 
         <button type="submit" class="admin-login-btn" id="btn-submit-login">
-          Verify & Enter Console
+          Enter Owner Console
         </button>
       </form>
 

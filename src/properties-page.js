@@ -5,6 +5,7 @@ import {
   formatCurrencyAED 
 } from './data/properties.js';
 import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
+import { getProperties } from './services/properties.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
@@ -53,8 +54,20 @@ let activeGalleryImages = [];
 let activeLightboxIndex = 0;
 
 function initPropertiesRoute() {
+  // Fetch live properties from backend
+  getProperties().then(() => {
+    renderPropertiesGrid();
+    checkCurrentRoute();
+  }).catch(() => {
+    checkCurrentRoute();
+  });
+
+  // Listen for live updates
+  window.addEventListener('voe:properties-updated', () => {
+    renderPropertiesGrid();
+  });
+
   // Check if URL has a specific property ID
-  // e.g. /properties/palm-residence or /properties?id=palm-residence or hash #palm-residence
   checkCurrentRoute();
 
   // Listen for browser forward/back buttons

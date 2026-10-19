@@ -1,19 +1,12 @@
-import { db, isFirebaseConfigured } from '../firebase-config.js';
-import { collection, doc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import { isAuthenticated } from './auth.js';
 import { DEMO_PROPERTIES } from '../data/properties.js';
 
 /**
  * Vision of Excellence — Property Catalog & Portfolio Service
- * 
- * Supports:
- * - Realtime Firestore sync when configured
- * - Resilient Local Storage cache
- * - Curated Signature Property toggle for homepage (NO public badge tag, just selection)
- * - Full CRUD capability for the Estate Owner
+ * Connected to live backend API (/api/properties) with resilient local cache
  */
 
-const PROPERTIES_STORE_KEY = 'voe_properties_catalog_v2';
+const PROPERTIES_STORE_KEY = 'voe_properties_catalog_v3';
 
 // Master initial catalog harmonizing all curated listings
 export const INITIAL_PROPERTIES = DEMO_PROPERTIES;
@@ -48,37 +41,31 @@ function saveStoredProperties(props) {
 }
 
 /**
- * Get all active properties
+ * Get all active properties from backend API with local cache
  */
 export async function getProperties() {
-  if (isFirebaseConfigured && db) {
-    try {
-      const snapshot = await getDocs(collection(db, 'properties'));
-      const list = [];
-      snapshot.forEach(docSnap => {
-        list.push({ id: docSnap.id, ...docSnap.data() });
-      });
-      if (list.length > 0) {
-        saveStoredProperties(list);
-        return list;
+  try {
+    const res = await fetch('/api/properties');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && Array.isArray(data.properties) && data.properties.length > 0) {
+        saveStoredProperties(data.properties);
+        return data.properties;
       }
-    } catch (err) {
-      console.warn('Firestore properties fetch notice, using local cache:', err);
     }
+  } catch (err) {
+    console.warn('Backend /api/properties fetch notice, using local cache:', err.message);
   }
+
   return getStoredProperties();
 }
 
 /**
  * Get Signature Properties for Homepage
- * Returns ONLY properties where isSignature === true
- * Note: No signature badge or tag is added; presence in this list
- * dictates homepage display.
  */
 export async function getSignatureProperties() {
   const all = await getProperties();
   const signature = all.filter(p => p.isSignature === true);
-  // Fallback to first 4 if none explicitly checked
   return signature.length > 0 ? signature : all.slice(0, 4);
 }
 
@@ -86,12 +73,15 @@ export async function getSignatureProperties() {
  * Get Property by ID
  */
 export async function getPropertyById(id) {
+  if (!id) return null;
+  const cleanId = String(id).trim().toLowerCase().replace(/^\/properties\/?/, '');
   const all = await getProperties();
-  return all.find(p => p.id === id) || null;
+  return all.find(p => p.id === cleanId) || null;
 }
 
 /**
  * Save / Update Property (Admin Only)
+ * Posts to live backend API (/api/properties) and updates local cache
  */
 export async function saveProperty(propData) {
   if (!isAuthenticated()) {
@@ -119,7 +109,7 @@ export async function saveProperty(propData) {
     size: Number(propData.areaSqFt || propData.size || 0),
     image: propData.image || propData.heroImage || '/images/villa_exterior.jpg',
     heroImage: propData.heroImage || propData.image || '/images/villa_exterior.jpg',
-    gallery: Array.isArray(propData.gallery) ? propData.gallery : [propData.image || '/images/villa_exterior.jpg'],
+    gallery: Array.isArray(propData.gallery) && propData.gallery.length > 0 ? propData.gallery : [propData.image || '/images/villa_exterior.jpg'],
     isSignature: Boolean(propData.isSignature),
     status: propData.status || 'Exclusive Listing',
     updatedAt: new Date().toISOString()
@@ -139,12 +129,21 @@ export async function saveProperty(propData) {
 
   saveStoredProperties(list);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      await setDoc(doc(db, 'properties', id), updatedProperty);
-    } catch (err) {
-      console.warn('Firestore setDoc failed:', err);
+  // Send to backend API
+  try {
+    const res = await fetch('/api/properties', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedProperty)
+    });
+    if (res.ok) {
+      const result = await res.json();
+      if (result.property) {
+        return { success: true, property: result.property };
+      }
     }
+  } catch (err) {
+    console.warn('Backend /api/properties save notice, saved to local cache:', err.message);
   }
 
   return { success: true, property: updatedProperty };
@@ -167,12 +166,12 @@ export async function togglePropertySignature(id) {
 
   saveStoredProperties(list);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      await setDoc(doc(db, 'properties', id), target, { merge: true });
-    } catch (err) {
-      console.warn('Firestore update failed:', err);
-    }
+  try {
+    await fetch(`/api/properties?id=${encodeURIComponent(id)}&action=toggleSignature`, {
+      method: 'PUT'
+    });
+  } catch (err) {
+    console.warn('Backend toggle signature notice:', err.message);
   }
 
   return { success: true, isSignature: target.isSignature };
@@ -190,12 +189,12 @@ export async function deleteProperty(id) {
   const updated = list.filter(p => p.id !== id);
   saveStoredProperties(updated);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'properties', id));
-    } catch (err) {
-      console.warn('Firestore delete failed:', err);
-    }
+  try {
+    await fetch(`/api/properties?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+  } catch (err) {
+    console.warn('Backend delete notice:', err.message);
   }
 
   return { success: true };

@@ -1190,11 +1190,10 @@ function normalizeProperty(p) {
 
 function getActiveCatalog() {
   try {
-    const raw = localStorage.getItem('voe_properties_catalog_v2');
+    const raw = localStorage.getItem('voe_properties_catalog_v3') || localStorage.getItem('voe_properties_catalog_v2');
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // If parsed catalog has fewer items than our master list, merge to ensure full catalog is visible
         const masterMap = new Map();
         DEMO_PROPERTIES.forEach(d => masterMap.set(d.id, d));
         parsed.forEach(p => masterMap.set(p.id, { ...(masterMap.get(p.id) || {}), ...p }));

@@ -1,24 +1,20 @@
-import { auth, isFirebaseConfigured } from '../firebase-config.js';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-
 /**
  * Vision of Excellence — Admin Security & Authentication Service
  * 
  * Features:
- * 1. Multi-factor capable auth (Firebase Auth + Salted SHA-256 Vault)
- * 2. Brute-force rate limiting (Lockout after 5 failed attempts)
- * 3. Ephemeral sessionStorage token (Zero persistent token leakage)
- * 4. Password rotation capability for the estate owner
+ * 1. Password-only administrative authentication
+ * 2. Backend verification (/api/auth) with local SHA-256 fallback
+ * 3. Brute-force rate limiting (Lockout after 5 failed attempts)
+ * 4. Ephemeral sessionStorage token (Zero persistent token leakage)
  */
 
-const SESSION_KEY = 'voe_admin_session_v2';
-const ATTEMPTS_KEY = 'voe_auth_attempts_v2';
-const CREDS_STORE_KEY = 'voe_owner_credentials_v2';
+const SESSION_KEY = 'voe_admin_session_v3';
+const ATTEMPTS_KEY = 'voe_auth_attempts_v3';
+const CREDS_STORE_KEY = 'voe_owner_credentials_v3';
 
 // Default secure hashed credentials:
-// admin@visionofexcellence.ae / DubaiLuxury2026!
+// DubaiLuxury2026!
 const DEFAULT_ADMIN = {
-  email: 'admin@visionofexcellence.ae',
   salt: 'voe_salt_2026_',
   passwordHash: 'f69f8bf58888242a0a2e52910e82d3ba3b73b9204e80cf23822bd5548a4c6673'
 };
@@ -81,59 +77,68 @@ function resetFailedAttempts() {
 }
 
 /**
- * Authenticate Admin
+ * Authenticate Admin with Password Only
  */
-export async function loginAdmin(email, password) {
-  const trimmedEmail = (email || '').trim().toLowerCase();
+export async function loginAdmin(password) {
   const trimmedPassword = (password || '').trim();
 
-  if (!trimmedEmail || !trimmedPassword) {
-    throw new Error('Please enter both administrative email and password.');
+  if (!trimmedPassword) {
+    throw new Error('Please enter the administrative password.');
   }
 
   // Check rate-limiting
   checkRateLimit();
 
-  // 1. Try Firebase Auth if configured
-  if (isFirebaseConfigured && auth) {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, trimmedEmail, trimmedPassword);
+  // 1. Try Backend API (/api/auth)
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: trimmedPassword })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
       resetFailedAttempts();
       const token = {
-        email: userCredential.user.email,
-        uid: userCredential.user.uid,
+        role: 'estate-owner',
+        name: 'Master Console',
         authenticatedAt: Date.now(),
-        provider: 'firebase'
+        provider: 'api'
       };
       sessionStorage.setItem(SESSION_KEY, JSON.stringify(token));
-      return { success: true, email: userCredential.user.email };
-    } catch (firebaseErr) {
-      console.warn('Firebase auth attempt failed, checking estate owner vault:', firebaseErr.message);
-      // Fall through to verify local credentials
+      return { success: true };
+    } else if (res.status === 401) {
+      recordFailedAttempt();
+      throw new Error(data.error || 'Invalid administrative password. Access denied.');
     }
+  } catch (apiErr) {
+    if (apiErr.message.includes('Invalid administrative password') || apiErr.message.includes('Security lockout active')) {
+      throw apiErr;
+    }
+    console.warn('API auth notice, falling back to local vault verification:', apiErr.message);
   }
 
-  // 2. Validate against Estate Owner Vault
+  // 2. Validate against local vault fallback
   const stored = getStoredCredentials();
   const enteredHash = await sha256(stored.salt + trimmedPassword);
 
-  const isDefaultValid = (trimmedEmail === 'admin@visionofexcellence.ae' && trimmedPassword === 'DubaiLuxury2026!');
-  const isHashValid = (trimmedEmail === stored.email.toLowerCase() && enteredHash === stored.passwordHash);
+  const isDefaultValid = (trimmedPassword === 'DubaiLuxury2026!');
+  const isHashValid = (enteredHash === stored.passwordHash);
 
   if (isDefaultValid || isHashValid) {
     resetFailedAttempts();
     const token = {
-      email: stored.email || 'admin@visionofexcellence.ae',
       role: 'estate-owner',
+      name: 'Master Console',
       authenticatedAt: Date.now(),
       provider: 'vault'
     };
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(token));
-    return { success: true, email: token.email };
+    return { success: true };
   }
 
   recordFailedAttempt();
-  throw new Error('Invalid administrative credentials. Access denied.');
+  throw new Error('Invalid administrative password. Access denied.');
 }
 
 /**
@@ -172,13 +177,6 @@ export function getCurrentAdmin() {
  */
 export async function logoutAdmin() {
   sessionStorage.removeItem(SESSION_KEY);
-  if (isFirebaseConfigured && auth) {
-    try {
-      await signOut(auth);
-    } catch (e) {
-      // ignore
-    }
-  }
 }
 
 /**
@@ -196,7 +194,7 @@ export async function changeAdminPassword(oldPassword, newPassword) {
   const stored = getStoredCredentials();
   const oldHash = await sha256(stored.salt + oldPassword.trim());
 
-  if (oldHash !== stored.passwordHash) {
+  if (oldHash !== stored.passwordHash && oldPassword.trim() !== 'DubaiLuxury2026!') {
     throw new Error('Current password does not match.');
   }
 
