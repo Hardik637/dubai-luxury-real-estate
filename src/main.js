@@ -1,6 +1,6 @@
 import { HeroScrollEngine } from './hero-scroll.js';
 import { PROPERTIES, EXCHANGE_RATES } from './properties-data.js';
-import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
+import { submitEnquiry, openWhatsAppEnquiry, getWhatsAppUrl } from './services/enquiries.js';
 import { getSignatureProperties } from './services/properties.js';
 
 let activeCatalogProperties = [...PROPERTIES];
@@ -1362,6 +1362,22 @@ function openPropertyModal(estateId) {
         `• *Client Phone:* ${phone}\n` +
         `• *Est. Monthly Financing:* ${monthlyEst}\n` +
         `• *Source:* Vision of Excellence Website`;
+      const waUrl = getWhatsAppUrl(waMsg);
+
+      viewingForm.style.display = 'none';
+      if (viewingSuccess) {
+        viewingSuccess.innerHTML = `
+          <strong style="color: #25D366; font-size: 0.9375rem;">✓ Viewing Request Logged & Dispatched</strong><br/>
+          <p style="margin: 8px 0 12px; color: var(--text-secondary); font-size: 0.8125rem;">
+            Your request has been recorded in the executive admin portal and sent to our private desk.
+          </p>
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn-whatsapp-direct" style="padding: 10px 18px; font-size: 0.8125rem;">
+            💬 Open in WhatsApp (+971 58 567 3050)
+          </a>
+        `;
+        viewingSuccess.style.display = 'block';
+      }
+
       openWhatsAppEnquiry(waMsg);
     });
   }
@@ -1398,6 +1414,15 @@ function initForms() {
       const intent = intentSelect ? intentSelect.options[intentSelect.selectedIndex].text : 'Private Acquisition';
       const notes = document.getElementById('form-notes')?.value || '';
 
+      const waMsg = `*NEW PRIVATE ACQUISITION ADVISORY INQUIRY*\n` +
+        `• *Client Name:* ${fullName}\n` +
+        `• *Email:* ${email}\n` +
+        `• *Phone / WhatsApp:* ${phone}\n` +
+        `• *Intent / Scope:* ${intent}\n` +
+        (notes ? `• *Notes / Brief:* ${notes}\n` : '') +
+        `• *Source:* Vision of Excellence Website`;
+      const waUrl = getWhatsAppUrl(waMsg);
+
       try {
         await submitEnquiry({
           fullName,
@@ -1412,15 +1437,17 @@ function initForms() {
       }
 
       enquiryForm.style.display = 'none';
-      if (enquirySuccess) enquirySuccess.style.display = 'block';
+      if (enquirySuccess) {
+        enquirySuccess.innerHTML = `
+          <h4>✓ Confidential Enquiry Received</h4>
+          <p style="margin-bottom: 12px;">Your query has been logged in our executive admin portal and dispatched to our private client desk on WhatsApp.</p>
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn-whatsapp-direct">
+            💬 Open in WhatsApp (+971 58 567 3050)
+          </a>
+        `;
+        enquirySuccess.style.display = 'block';
+      }
 
-      const waMsg = `*NEW PRIVATE ACQUISITION ADVISORY INQUIRY*\n` +
-        `• *Client Name:* ${fullName}\n` +
-        `• *Email:* ${email}\n` +
-        `• *Phone / WhatsApp:* ${phone}\n` +
-        `• *Intent / Scope:* ${intent}\n` +
-        (notes ? `• *Notes / Brief:* ${notes}\n` : '') +
-        `• *Source:* Vision of Excellence Website`;
       openWhatsAppEnquiry(waMsg);
     });
   }
@@ -1437,6 +1464,15 @@ function initForms() {
       const notes = document.getElementById('property-notes')?.value || '';
 
       const isEmail = contact.includes('@');
+      const waMsg = `*NEW OWNER ESTATE LISTING SUBMISSION*\n` +
+        `• *Owner Name:* ${fullName}\n` +
+        `• *Contact:* ${contact}\n` +
+        `• *Community:* ${community}\n` +
+        `• *Estimated Value:* ${estimatedPrice}\n` +
+        (notes ? `• *Notes:* ${notes}\n` : '') +
+        `• *Source:* Vision of Excellence Website`;
+      const waUrl = getWhatsAppUrl(waMsg);
+
       try {
         await submitEnquiry({
           fullName,
@@ -1452,15 +1488,17 @@ function initForms() {
       }
 
       ownerForm.style.display = 'none';
-      if (ownerSuccess) ownerSuccess.style.display = 'block';
+      if (ownerSuccess) {
+        ownerSuccess.innerHTML = `
+          <h4>✓ Estate Registered for Private Review</h4>
+          <p style="margin-bottom: 12px;">Your listing has been saved to the executive admin portal and dispatched to our private listings desk.</p>
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn-whatsapp-direct">
+            💬 Open in WhatsApp (+971 58 567 3050)
+          </a>
+        `;
+        ownerSuccess.style.display = 'block';
+      }
 
-      const waMsg = `*NEW OWNER ESTATE LISTING SUBMISSION*\n` +
-        `• *Owner Name:* ${fullName}\n` +
-        `• *Contact:* ${contact}\n` +
-        `• *Community:* ${community}\n` +
-        `• *Estimated Value:* ${estimatedPrice}\n` +
-        (notes ? `• *Notes:* ${notes}\n` : '') +
-        `• *Source:* Vision of Excellence Website`;
       openWhatsAppEnquiry(waMsg);
     });
   }

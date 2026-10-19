@@ -1,6 +1,6 @@
 import { isAuthenticated } from './auth.js';
 import { db } from '../firebase-config.js';
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, onSnapshot } from 'firebase/firestore';
 
 /**
  * Vision of Excellence — Client Enquiry & Lead Vault Service
@@ -298,19 +298,91 @@ export function exportEnquiriesToCSV(enquiries) {
 export const WHATSAPP_PHONE = '971585673050';
 
 /**
+ * Returns formatted WhatsApp link for an enquiry message
+ */
+export function getWhatsAppUrl(message) {
+  const cleanPhone = WHATSAPP_PHONE.replace(/[^0-9]/g, '');
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
+
+/**
  * Redirects or opens WhatsApp with the formatted enquiry message
  */
 export function openWhatsAppEnquiry(message) {
-  if (!message) return;
-  const cleanPhone = WHATSAPP_PHONE.replace(/[^0-9]/g, '');
-  const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+  if (!message) return null;
+  const url = getWhatsAppUrl(message);
   
   try {
-    const win = window.open(url, '_blank');
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
     if (!win || win.closed || typeof win.closed === 'undefined') {
-      window.location.href = url;
+      // Gentle delayed fallback in case popup blocker intercepted
+      setTimeout(() => {
+        try {
+          window.location.href = url;
+        } catch (e) {
+          // ignore
+        }
+      }, 1000);
     }
   } catch (err) {
-    window.location.href = url;
+    setTimeout(() => {
+      try {
+        window.location.href = url;
+      } catch (e) {
+        // ignore
+      }
+    }, 1000);
+  }
+  return url;
+}
+
+/**
+ * Subscribe to Real-Time Enquiries (Admin Dashboard)
+ * Fires immediately and whenever any new enquiry is added in Firestore
+ */
+export function subscribeToEnquiries(callback) {
+  if (!isAuthenticated()) {
+    return () => {};
+  }
+
+  if (!db) {
+    callback(getLocalVault());
+    return () => {};
+  }
+
+  try {
+    const q = query(collection(db, 'enquiries'), orderBy('createdAt', 'desc'));
+    return onSnapshot(q, (snapshot) => {
+      const leads = [];
+      snapshot.forEach(docSnap => {
+        leads.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      if (leads.length > 0) {
+        saveLocalVault(leads);
+        callback(leads);
+      }
+    }, (err) => {
+      console.warn('Real-time snapshot ordered query notice, listening on collection:', err.message);
+      try {
+        return onSnapshot(collection(db, 'enquiries'), (snapshot) => {
+          const leads = [];
+          snapshot.forEach(docSnap => {
+            leads.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          leads.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+          if (leads.length > 0) {
+            saveLocalVault(leads);
+            callback(leads);
+          }
+        });
+      } catch (fallbackErr) {
+        console.warn('Fallback snapshot error:', fallbackErr.message);
+      }
+    });
+  } catch (err) {
+    console.warn('subscribeToEnquiries notice:', err.message);
+    callback(getLocalVault());
+    return () => {};
   }
 }
+

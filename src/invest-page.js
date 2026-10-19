@@ -3,7 +3,7 @@ import {
   getPropertiesByBudget, 
   formatCurrencyAED 
 } from './data/properties.js';
-import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
+import { submitEnquiry, openWhatsAppEnquiry, getWhatsAppUrl } from './services/enquiries.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarAndDrawer();
@@ -362,6 +362,15 @@ function setupPlanModal() {
         const budget = budgetSelect ? budgetSelect.options[budgetSelect.selectedIndex].text : 'AED 3M – 10M';
 
         const isEmail = contact.includes('@');
+        const waMsg = `*NEW INVESTMENT STRATEGY INQUIRY*\n` +
+          `• *Client Name:* ${fullName}\n` +
+          `• *Contact:* ${contact}\n` +
+          `• *Primary Objective:* ${objective}\n` +
+          `• *Target Capital Allocation:* ${budget}\n` +
+          (notes ? `• *Notes / Brief:* ${notes}\n` : '') +
+          `• *Source:* Vision of Excellence Investment Page`;
+        const waUrl = getWhatsAppUrl(waMsg);
+
         try {
           await submitEnquiry({
             fullName,
@@ -377,16 +386,18 @@ function setupPlanModal() {
         }
 
         const success = document.getElementById('plan-success-box');
-        if (success) success.style.display = 'block';
+        if (success) {
+          success.innerHTML = `
+            <h4>✓ Investment Request Registered</h4>
+            <p style="margin-bottom: 12px;">Your strategy plan request has been recorded in the executive admin portal and dispatched to our Senior Portfolio Advisory desk.</p>
+            <a href="${waUrl}" target="_blank" rel="noopener" class="btn-whatsapp-direct">
+              💬 Open in WhatsApp (+971 58 567 3050)
+            </a>
+          `;
+          success.style.display = 'block';
+        }
         form.style.display = 'none';
 
-        const waMsg = `*NEW INVESTMENT STRATEGY INQUIRY*\n` +
-          `• *Client Name:* ${fullName}\n` +
-          `• *Contact:* ${contact}\n` +
-          `• *Primary Objective:* ${objective}\n` +
-          `• *Target Capital Allocation:* ${budget}\n` +
-          (notes ? `• *Notes / Brief:* ${notes}\n` : '') +
-          `• *Source:* Vision of Excellence Investment Page`;
         openWhatsAppEnquiry(waMsg);
       });
     }

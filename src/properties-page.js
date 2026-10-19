@@ -4,7 +4,7 @@ import {
   filterProperties, 
   formatCurrencyAED 
 } from './data/properties.js';
-import { submitEnquiry, openWhatsAppEnquiry } from './services/enquiries.js';
+import { submitEnquiry, openWhatsAppEnquiry, getWhatsAppUrl } from './services/enquiries.js';
 import { getProperties } from './services/properties.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -855,6 +855,16 @@ function setupInquiryModal() {
         const notes = document.getElementById('inquiry-notes')?.value || '';
 
         const isEmail = contact.includes('@');
+        const waMsg = `*NEW CATALOG VIEWING REQUEST*\n` +
+          `• *Property:* ${propTitle}\n` +
+          `• *Client Name:* ${fullName}\n` +
+          `• *Contact:* ${contact}\n` +
+          (datePref ? `• *Preferred Date:* ${datePref}\n` : '') +
+          (tourType ? `• *Tour Format:* ${tourType}\n` : '') +
+          (notes ? `• *Notes / Requests:* ${notes}\n` : '') +
+          `• *Source:* Vision of Excellence Properties Catalog`;
+        const waUrl = getWhatsAppUrl(waMsg);
+
         try {
           await submitEnquiry({
             fullName,
@@ -869,17 +879,18 @@ function setupInquiryModal() {
         }
 
         const successBox = document.getElementById('inquiry-success-box');
-        if (successBox) successBox.style.display = 'block';
+        if (successBox) {
+          successBox.innerHTML = `
+            <h4>✓ Viewing Request Registered</h4>
+            <p style="margin-bottom: 12px;">Your viewing request has been recorded in the executive admin portal and dispatched to our private desk on WhatsApp.</p>
+            <a href="${waUrl}" target="_blank" rel="noopener" class="btn-whatsapp-direct">
+              💬 Open in WhatsApp (+971 58 567 3050)
+            </a>
+          `;
+          successBox.style.display = 'block';
+        }
         form.style.display = 'none';
 
-        const waMsg = `*NEW CATALOG VIEWING REQUEST*\n` +
-          `• *Property:* ${propTitle}\n` +
-          `• *Client Name:* ${fullName}\n` +
-          `• *Contact:* ${contact}\n` +
-          (datePref ? `• *Preferred Date:* ${datePref}\n` : '') +
-          (tourType ? `• *Tour Format:* ${tourType}\n` : '') +
-          (notes ? `• *Notes / Requests:* ${notes}\n` : '') +
-          `• *Source:* Vision of Excellence Properties Catalog`;
         openWhatsAppEnquiry(waMsg);
       });
     }

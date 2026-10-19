@@ -6,6 +6,7 @@ import {
 } from './services/auth.js';
 import {
   getEnquiries,
+  subscribeToEnquiries,
   updateEnquiryStatus,
   deleteEnquiry,
   exportEnquiriesToCSV
@@ -103,6 +104,15 @@ async function showDashboard() {
     loadEnquiries(),
     loadProperties()
   ]);
+
+  // Real-time Firestore sync: updates automatically when new enquiries arrive
+  subscribeToEnquiries((leads) => {
+    if (Array.isArray(leads) && leads.length > 0) {
+      allEnquiries = leads;
+      updateEnquiriesMetrics();
+      renderEnquiries();
+    }
+  });
 }
 
 /* ==========================================================================
@@ -266,7 +276,14 @@ function renderEnquiries() {
     }) : 'Recent';
 
     const cleanPhone = (e.phone || '').replace(/[^0-9]/g, '');
-    const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : null;
+    let normalizedPhone = cleanPhone;
+    if (normalizedPhone.startsWith('05') && normalizedPhone.length === 10) {
+      normalizedPhone = '971' + normalizedPhone.slice(1);
+    }
+    const clientName = e.fullName || 'Valued Client';
+    const propTitle = e.propertyTitle || 'Luxury Residence';
+    const replyText = `Hello ${clientName}, thank you for contacting Vision of Excellence Luxury Real Estate regarding ${propTitle}. I am following up on your confidential enquiry. How may we assist you today?`;
+    const waLink = normalizedPhone ? `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(replyText)}` : null;
     const telLink = e.phone ? `tel:${e.phone}` : null;
     const mailLink = e.email ? `mailto:${e.email}?subject=Private%20Advisory%20Follow-up%20—%20Vision%20of%20Excellence` : null;
 

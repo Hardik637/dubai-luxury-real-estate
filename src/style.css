@@ -3401,6 +3401,32 @@ a {
   font-weight: 400;
 }
 
+.btn-whatsapp-direct {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #25D366;
+  color: #FFFFFF !important;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 3px;
+  text-decoration: none;
+  margin-top: 14px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+  cursor: pointer;
+}
+
+.btn-whatsapp-direct:hover {
+  background: #1EBE5D;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  color: #FFFFFF !important;
+}
+
 /* --------------------------------------------------------------------------
    FOOTER
    -------------------------------------------------------------------------- */
