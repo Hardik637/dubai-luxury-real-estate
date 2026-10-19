@@ -768,7 +768,7 @@ function updateSovereignCalculator() {
 
   const convertedBudget = Math.round(currentCalculatorBudgetAED * rate);
   const taxSaved = Math.round(currentCalculatorBudgetAED * 0.084 * 0.45 * rate);
-  const netYield = Math.round(currentCalculatorBudgetAED * 0.082 * rate);
+  const netYield = Math.round(currentCalculatorBudgetAED * 0.10 * rate);
   const monthlyYield = Math.round(netYield / 12);
   const fiveYearGain = Math.round((netYield * 5) + (currentCalculatorBudgetAED * 0.35 * rate));
 
@@ -788,7 +788,7 @@ function updateSovereignCalculator() {
   if (displayYield) displayYield.textContent = formatCurr(netYield);
   if (displayMonthlyYield) displayMonthlyYield.textContent = `~${formatCurr(monthlyYield)} / month`;
   if (display5YearGain) display5YearGain.textContent = formatCurr(fiveYearGain);
-  if (scenYieldPct) scenYieldPct.textContent = '8.2%*';
+  if (scenYieldPct) scenYieldPct.textContent = '10%*';
 
   if (displayVisa) {
     if (currentCalculatorBudgetAED >= 2000000) {
