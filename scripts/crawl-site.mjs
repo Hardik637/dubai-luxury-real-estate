@@ -72,7 +72,7 @@ function fetchUrl(targetUrl, timeoutMs = 10000) {
 }
 
 const visitedUrls = new Set();
-const queue = ['/', '/properties/', '/invest/', '/admin/'];
+const queue = ['/', '/properties/', '/invest/', '/admin/', '/privacy/', '/terms/'];
 const crawlResults = [];
 const discoveredAssets = new Set();
 const brokenLinks = [];
