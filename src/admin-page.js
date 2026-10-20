@@ -94,7 +94,7 @@ function showLogin() {
 async function showDashboard() {
   const admin = getCurrentAdmin();
   if (adminUserDisplay) {
-    adminUserDisplay.textContent = (admin && admin.name) ? admin.name : 'Master Console';
+    adminUserDisplay.textContent = (admin && admin.name) ? admin.name : 'admin';
   }
   viewLogin.style.display = 'none';
   viewDashboard.style.display = 'block';
@@ -134,7 +134,7 @@ function setupAuthEvents() {
       e.preventDefault();
       loginFeedback.style.display = 'none';
       btnSubmitLogin.disabled = true;
-      btnSubmitLogin.textContent = 'Verifying passcode...';
+      btnSubmitLogin.textContent = 'Signing in...';
 
       const password = loginPasswordInput ? loginPasswordInput.value : '';
 
@@ -142,12 +142,12 @@ function setupAuthEvents() {
         await loginAdmin(password);
         showDashboard();
       } catch (err) {
-        loginFeedback.textContent = err.message || 'Authentication failed. Please verify passcode.';
+        loginFeedback.textContent = err.message || 'Incorrect password. Please try again.';
         loginFeedback.className = 'login-feedback error';
         loginFeedback.style.display = 'block';
       } finally {
         btnSubmitLogin.disabled = false;
-        btnSubmitLogin.textContent = 'Enter Owner Console';
+        btnSubmitLogin.textContent = 'Sign In';
       }
     });
   }
@@ -259,8 +259,8 @@ function renderEnquiries() {
   if (filtered.length === 0) {
     enquiriesList.innerHTML = `
       <div class="admin-empty-state">
-        <h3>No Enquiries Found</h3>
-        <p>No client requests match your active filters.</p>
+        <h3>No enquiries found</h3>
+        <p>Try changing your search or filter.</p>
       </div>
     `;
     return;
@@ -292,8 +292,8 @@ function renderEnquiries() {
         <div class="enquiry-card-top">
           <div class="enquiry-client-meta">
             <div class="enquiry-client-name">
-              ${escapeHtml(e.fullName || 'Anonymous Principal')}
-              <span class="enquiry-type-tag">${escapeHtml(e.type || 'Private Request')}</span>
+              ${escapeHtml(e.fullName || 'Anonymous Client')}
+              <span class="enquiry-type-tag">${escapeHtml(e.type || 'Enquiry')}</span>
             </div>
             <div class="enquiry-contacts-strip">
               ${e.email ? `<span>✉ <a href="${mailLink}">${escapeHtml(e.email)}</a></span>` : ''}
@@ -304,10 +304,10 @@ function renderEnquiries() {
           <div class="enquiry-time-status">
             <span class="enquiry-timestamp">${dateStr}</span>
             <select class="status-badge-select" data-action="update-status" data-id="${e.id}">
-              <option value="new" ${e.status === 'new' ? 'selected' : ''}>NEW LEAD</option>
-              <option value="contacted" ${e.status === 'contacted' ? 'selected' : ''}>CONTACTED</option>
-              <option value="qualified" ${e.status === 'qualified' ? 'selected' : ''}>QUALIFIED</option>
-              <option value="archived" ${e.status === 'archived' ? 'selected' : ''}>ARCHIVED</option>
+              <option value="new" ${e.status === 'new' ? 'selected' : ''}>New</option>
+              <option value="contacted" ${e.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+              <option value="qualified" ${e.status === 'qualified' ? 'selected' : ''}>Qualified</option>
+              <option value="archived" ${e.status === 'archived' ? 'selected' : ''}>Archived</option>
             </select>
           </div>
         </div>
@@ -444,8 +444,8 @@ function renderProperties() {
   if (filtered.length === 0) {
     propertiesGrid.innerHTML = `
       <div class="admin-empty-state" style="grid-column: 1 / -1;">
-        <h3>No Residences Found</h3>
-        <p>No listings match your filter criteria.</p>
+        <h3>No properties found</h3>
+        <p>Try changing your search or filter.</p>
       </div>
     `;
     return;
@@ -460,13 +460,13 @@ function renderProperties() {
       <article class="prop-admin-card" data-id="${p.id}">
         <div class="prop-admin-media">
           <img src="${escapeHtml(p.image || p.heroImage || p.coverImage || '/images/villa_exterior.jpg')}" alt="${escapeHtml(p.title || p.name)}" class="prop-admin-img" loading="lazy" />
-          <span class="prop-admin-status-overlay">${escapeHtml(p.status || 'Active Listing')}</span>
+          <span class="prop-admin-status-overlay">${escapeHtml(p.status || 'Active')}</span>
         </div>
 
         <!-- HOMEPAGE SIGNATURE RESIDENCE TOGGLE -->
         <div class="signature-toggle-bar">
           <span class="sig-toggle-label ${isSig ? 'active' : ''}">
-            ${isSig ? '★ Featured on Homepage' : 'Standard Catalog Only'}
+            ${isSig ? '★ Featured on Homepage' : 'Not Featured'}
           </span>
           <label class="switch-control" title="Toggle Homepage Presence">
             <input type="checkbox" class="prop-sig-switch" data-id="${p.id}" ${isSig ? 'checked' : ''} />
@@ -475,7 +475,7 @@ function renderProperties() {
         </div>
 
         <div class="prop-admin-body">
-          <div class="prop-admin-loc">${escapeHtml(p.location || 'Dubai')} • ${escapeHtml(p.type || 'Residence')}</div>
+          <div class="prop-admin-loc">${escapeHtml(p.location || 'Dubai')} • ${escapeHtml(p.type || 'Property')}</div>
           <h3 class="prop-admin-title">${escapeHtml(p.title || p.name)}</h3>
           
           <div class="prop-admin-specs-row">
@@ -493,10 +493,10 @@ function renderProperties() {
 
         <div class="prop-admin-footer">
           <button type="button" class="btn-card-edit" data-action="edit-prop" data-id="${p.id}">
-            Edit Details
+            Edit
           </button>
           <button type="button" class="btn-delete-ghost" data-action="delete-prop" data-id="${p.id}">
-            Remove Listing
+            Delete
           </button>
         </div>
       </article>
@@ -796,7 +796,7 @@ function openPropertyModal(prop = null) {
   currentGalleryImages = [];
 
   if (prop) {
-    propModalTitle.textContent = `Edit Residence: ${prop.title || prop.name}`;
+    propModalTitle.textContent = `Edit Property: ${prop.title || prop.name}`;
     document.getElementById('edit-prop-id').value = prop.id;
     document.getElementById('edit-title').value = prop.title || prop.name || '';
     document.getElementById('edit-location').value = prop.location || '';
@@ -826,7 +826,7 @@ function openPropertyModal(prop = null) {
     document.getElementById('edit-amenities').value = (prop.lifestylePerks || prop.highlights || []).join(', ');
     document.getElementById('edit-is-signature').checked = Boolean(prop.isSignature);
   } else {
-    propModalTitle.textContent = 'List New Residence';
+    propModalTitle.textContent = 'Add Property';
     document.getElementById('edit-prop-id').value = '';
     setCoverImagePreview('/images/villa_exterior.jpg');
     currentGalleryImages = [];

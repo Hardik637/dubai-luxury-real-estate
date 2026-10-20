@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Private Estate Desk — Owner Console | Vision of Excellence</title>
-  <meta name="description" content="Private estate desk and executive authentication console for Vision of Excellence." />
+  <title>Admin Dashboard | Vision of Excellence</title>
+  <meta name="description" content="Admin dashboard to manage client enquiries and property listings." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   
-  <!-- Typography -->
+  <!-- Clean Modern Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/src/admin.css" />
 </head>
@@ -25,16 +25,17 @@
       <a href="/" class="admin-brand-mark" title="Back to Public Website">
         <img src="/images/vision_of_excellence_logo.png" alt="Vision of Excellence" class="admin-logo-img" />
       </a>
-      <span class="admin-console-tag">Owner Console</span>
+      <span class="admin-nav-divider"></span>
+      <span class="admin-nav-title">Admin Dashboard</span>
     </div>
 
     <div class="admin-nav-right">
-      <div class="status-pill" id="security-badge" title="Data Leakage Prevention Active">
+      <div class="status-pill" id="security-badge" title="System Online">
         <span class="status-dot"></span>
-        <span id="security-text">Secured Vault</span>
+        <span id="security-text">Online</span>
       </div>
-      <div id="auth-actions" style="display: none; align-items: center; gap: 14px;">
-        <span class="admin-user-pill" id="admin-user-display">admin@visionofexcellence.ae</span>
+      <div id="auth-actions" style="display: none; align-items: center; gap: 12px;">
+        <span class="admin-user-pill" id="admin-user-display">admin</span>
         <button type="button" class="btn-admin-ghost" id="btn-admin-logout">Sign Out</button>
       </div>
       <a href="/" class="btn-admin-ghost" id="link-public-site" target="_blank" rel="noopener">Live Website ↗</a>
@@ -47,14 +48,14 @@
   <main id="view-login" class="admin-login-screen">
     <div class="admin-login-card">
       <div class="admin-login-header">
-        <img src="/images/vision_of_excellence_logo.png" alt="Crest" class="login-crest" />
-        <h1 class="login-title">Private Estate Desk</h1>
-        <p class="login-subtitle">Owner & Executive Authentication</p>
+        <img src="/images/vision_of_excellence_logo.png" alt="Vision of Excellence" class="login-logo-img" />
+        <h1 class="login-title">Admin Login</h1>
+        <p class="login-subtitle">Enter your password to access the dashboard</p>
       </div>
 
       <form id="admin-login-form" class="login-form">
         <div class="admin-field-group">
-          <label for="login-password" class="admin-field-label">Master Password</label>
+          <label for="login-password" class="admin-field-label">Password</label>
           <div class="password-input-wrap">
             <input
               type="password"
@@ -62,7 +63,7 @@
               class="admin-input"
               required
               autofocus
-              placeholder="Enter master password"
+              placeholder="Enter password"
               autocomplete="current-password"
             />
             <button type="button" class="btn-toggle-pwd" id="btn-toggle-pwd" aria-label="Toggle password visibility">Show</button>
@@ -72,36 +73,32 @@
         <div id="login-feedback" class="login-feedback" role="alert"></div>
 
         <button type="submit" class="admin-login-btn" id="btn-submit-login">
-          Enter Owner Console
+          Sign In
         </button>
       </form>
-
-      <div class="login-security-notice">
-        <strong>Strict Data Leakage Protection:</strong> Access is restricted to authorized estate principals. All sessions are cryptographically isolated.
-      </div>
     </div>
   </main>
 
   <!-- ============================================================
-       VIEW 2: ADMIN DASHBOARD (TABS 1 & 2)
+       VIEW 2: ADMIN DASHBOARD
        ============================================================ -->
   <main id="view-dashboard" class="admin-dashboard" style="display: none;">
     
     <!-- Dashboard Header -->
     <div class="admin-dash-header">
       <div class="dash-title-group">
-        <h1>Private Estate Management</h1>
-        <p>Real-time Client Enquiries & Property Portfolio Management</p>
+        <h1>Dashboard</h1>
+        <p>Manage client enquiries and property listings.</p>
       </div>
       <div class="dash-header-actions">
         <button type="button" class="btn-admin-primary" id="btn-open-add-property">
-          <span>+</span> List New Property
+          + Add Property
         </button>
       </div>
     </div>
 
     <!-- Navigation Tabs -->
-    <nav class="admin-tab-nav" role="tablist" aria-label="Owner Console Tabs">
+    <nav class="admin-tab-nav" role="tablist" aria-label="Dashboard Sections">
       <button
         type="button"
         class="admin-tab-btn active"
@@ -110,7 +107,7 @@
         aria-selected="true"
         aria-controls="panel-enquiries"
       >
-        <span>1. Client Enquiries</span>
+        <span>Client Enquiries</span>
         <span class="tab-badge" id="badge-enquiries-count">0</span>
       </button>
       <button
@@ -121,37 +118,37 @@
         aria-selected="false"
         aria-controls="panel-properties"
       >
-        <span>2. Property Portfolio</span>
+        <span>Properties</span>
         <span class="tab-badge" id="badge-properties-count">0</span>
       </button>
     </nav>
 
     <!-- ============================================================
-         PANEL 1: CLIENT ENQUIRIES (TAB 1)
+         PANEL 1: CLIENT ENQUIRIES
          ============================================================ -->
     <section id="panel-enquiries" class="admin-tab-panel" role="tabpanel" aria-labelledby="tab-btn-enquiries">
       
-      <!-- Metrics Row -->
+      <!-- Summary Metrics Row -->
       <div class="admin-metrics-row">
         <div class="metric-card">
           <span class="metric-label">Total Enquiries</span>
           <div class="metric-value" id="metric-total-enquiries">0</div>
-          <span class="metric-sub">Received across website</span>
+          <span class="metric-sub">All received enquiries</span>
         </div>
-        <div class="metric-card">
-          <span class="metric-label">New / Pending</span>
-          <div class="metric-value" id="metric-new-enquiries" style="color: var(--admin-gold);">0</div>
-          <span class="metric-sub">Awaiting executive reply</span>
+        <div class="metric-card highlight-card">
+          <span class="metric-label">New Enquiries</span>
+          <div class="metric-value metric-new-val" id="metric-new-enquiries">0</div>
+          <span class="metric-sub">Awaiting response</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">High-Value Leads</span>
           <div class="metric-value" id="metric-high-value-enquiries">0</div>
-          <span class="metric-sub">$10M+ Acquisition Budgets</span>
+          <span class="metric-sub">Budget $10M+</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Contacted / Qualified</span>
           <div class="metric-value" id="metric-contacted-enquiries">0</div>
-          <span class="metric-sub">Active discussions</span>
+          <span class="metric-sub">In active discussion</span>
         </div>
       </div>
 
@@ -163,15 +160,15 @@
             type="text"
             id="search-enquiries"
             class="toolbar-search-input"
-            placeholder="Search by client name, email, phone, or notes..."
+            placeholder="Search clients by name, email or phone"
           />
         </div>
         <div class="toolbar-actions">
           <select id="filter-enquiry-status" class="admin-select" aria-label="Filter enquiries by status">
             <option value="all">All Enquiries</option>
-            <option value="new">New Leads Only</option>
+            <option value="new">New</option>
             <option value="contacted">Contacted</option>
-            <option value="qualified">Qualified Principals</option>
+            <option value="qualified">Qualified</option>
             <option value="archived">Archived</option>
           </select>
           <button type="button" class="btn-admin-ghost" id="btn-export-csv" title="Download spreadsheet of leads">
@@ -190,31 +187,31 @@
     </section>
 
     <!-- ============================================================
-         PANEL 2: PROPERTY MANAGEMENT (TAB 2)
+         PANEL 2: PROPERTY MANAGEMENT
          ============================================================ -->
     <section id="panel-properties" class="admin-tab-panel" role="tabpanel" aria-labelledby="tab-btn-properties" style="display: none;">
       
-      <!-- Metrics Row -->
+      <!-- Summary Metrics Row -->
       <div class="admin-metrics-row">
         <div class="metric-card">
-          <span class="metric-label">Total Residences</span>
+          <span class="metric-label">Total Properties</span>
           <div class="metric-value" id="metric-total-props">0</div>
-          <span class="metric-sub">In public catalog</span>
+          <span class="metric-sub">Active listings</span>
         </div>
-        <div class="metric-card">
+        <div class="metric-card highlight-card">
           <span class="metric-label">Featured on Homepage</span>
-          <div class="metric-value" id="metric-sig-props" style="color: var(--admin-gold);">0</div>
-          <span class="metric-sub">Curated signature residences</span>
+          <div class="metric-value" id="metric-sig-props">0</div>
+          <span class="metric-sub">Shown on homepage</span>
         </div>
         <div class="metric-card">
-          <span class="metric-label">Private Placements</span>
+          <span class="metric-label">Private Listings</span>
           <div class="metric-value" id="metric-private-props">0</div>
-          <span class="metric-sub">Off-market collection</span>
+          <span class="metric-sub">Exclusive collection</span>
         </div>
         <div class="metric-card">
-          <span class="metric-label">Prime Leases</span>
+          <span class="metric-label">Rental Properties</span>
           <div class="metric-value" id="metric-lease-props">0</div>
-          <span class="metric-sub">Rental residences</span>
+          <span class="metric-sub">Available for lease</span>
         </div>
       </div>
 
@@ -226,19 +223,19 @@
             type="text"
             id="search-properties"
             class="toolbar-search-input"
-            placeholder="Search by residence name, location, or type..."
+            placeholder="Search properties by name, location or type..."
           />
         </div>
         <div class="toolbar-actions">
           <select id="filter-property-category" class="admin-select" aria-label="Filter properties by category">
             <option value="all">All Categories</option>
             <option value="sale">For Sale</option>
-            <option value="rent">For Lease</option>
+            <option value="rent">For Rent</option>
           </select>
           <select id="filter-property-signature" class="admin-select" aria-label="Filter by homepage presence">
             <option value="all">All Properties</option>
-            <option value="signature">Homepage Featured Only</option>
-            <option value="standard">Standard Catalog Only</option>
+            <option value="signature">Homepage Featured</option>
+            <option value="standard">Standard Catalog</option>
           </select>
         </div>
       </div>
@@ -258,7 +255,7 @@
     <div class="admin-modal-window">
       
       <div class="admin-modal-header">
-        <h2 class="admin-modal-title" id="prop-modal-title">List New Residence</h2>
+        <h2 class="admin-modal-title" id="prop-modal-title">Add Property</h2>
         <button type="button" class="admin-modal-close-btn" id="btn-close-prop-modal" aria-label="Close modal">✕</button>
       </div>
 
@@ -267,157 +264,171 @@
 
         <div class="admin-modal-body">
           
-          <!-- HOMEPAGE SIGNATURE FEATURE BANNER -->
-          <div class="signature-field-banner">
-            <div class="signature-banner-info">
-              <h4>Feature on Homepage</h4>
-              <p>Show this property in the Curated Signature Residences section on the homepage.</p>
-            </div>
-            <label class="switch-control" title="Toggle Homepage Presence">
-              <input type="checkbox" id="edit-is-signature" />
-              <span class="switch-slider"></span>
-            </label>
-          </div>
-
-          <!-- Basic Info -->
-          <div class="form-grid-duo">
-            <div class="admin-field-group">
-              <label for="edit-title" class="admin-field-label">Residence Title / Name *</label>
-              <input type="text" id="edit-title" class="admin-input" required placeholder="e.g. Sanctuary of the Sun" />
-            </div>
-            <div class="admin-field-group">
-              <label for="edit-location" class="admin-field-label">Location / Community *</label>
-              <input type="text" id="edit-location" class="admin-input" required placeholder="e.g. Palm Jumeirah" />
+          <!-- GROUP 1: HOMEPAGE FEATURED SETTING -->
+          <div class="form-section">
+            <div class="signature-field-banner">
+              <div class="signature-banner-info">
+                <h4>Feature on Homepage</h4>
+                <p>Show this property in the featured section on the website homepage.</p>
+              </div>
+              <label class="switch-control" title="Toggle Homepage Presence">
+                <input type="checkbox" id="edit-is-signature" />
+                <span class="switch-slider"></span>
+              </label>
             </div>
           </div>
 
-          <div class="form-grid-trio">
-            <div class="admin-field-group">
-              <label for="edit-type" class="admin-field-label">Property Type</label>
-              <select id="edit-type" class="admin-input">
-                <option value="Waterfront Island Villa">Waterfront Island Villa</option>
-                <option value="Beachfront Frond Estate">Beachfront Frond Estate</option>
-                <option value="Sky Penthouse">Sky Penthouse</option>
-                <option value="Golf Course Sanctuary">Golf Course Sanctuary</option>
-                <option value="Waterfront Residence">Waterfront Residence</option>
-                <option value="Modern Minimalist Villa">Modern Minimalist Villa</option>
-                <option value="Private Mansion">Private Mansion</option>
-                <option value="Executive Duplex">Executive Duplex</option>
-              </select>
-            </div>
-            <div class="admin-field-group">
-              <label for="edit-category" class="admin-field-label">Transaction Category</label>
-              <select id="edit-category" class="admin-input">
-                <option value="sale">For Sale (Freehold)</option>
-                <option value="rent">For Lease (Annual)</option>
-              </select>
-            </div>
-            <div class="admin-field-group">
-              <label for="edit-status" class="admin-field-label">Status Label</label>
-              <select id="edit-status" class="admin-input">
-                <option value="Exclusive Listing">Exclusive Listing</option>
-                <option value="Private Placement">Private Placement</option>
-                <option value="Active Portfolio">Active Portfolio</option>
-                <option value="Available for Lease">Available for Lease</option>
-                <option value="Under Negotiation">Under Negotiation</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Pricing & Dimensions -->
-          <div class="form-grid-trio">
-            <div class="admin-field-group">
-              <label for="edit-price" class="admin-field-label">Price (AED) *</label>
-              <input type="number" id="edit-price" class="admin-input" required min="100000" step="50000" placeholder="e.g. 115000000" />
-            </div>
-            <div class="admin-field-group">
-              <label for="edit-bedrooms" class="admin-field-label">Bedrooms</label>
-              <input type="number" id="edit-bedrooms" class="admin-input" required min="1" max="25" value="5" />
-            </div>
-            <div class="admin-field-group">
-              <label for="edit-bathrooms" class="admin-field-label">Bathrooms</label>
-              <input type="number" id="edit-bathrooms" class="admin-input" required min="1" max="30" value="6" />
-            </div>
-          </div>
-
-          <div class="form-grid-duo">
-            <div class="admin-field-group">
-              <label for="edit-area" class="admin-field-label">Built-Up Area (Sq.Ft) *</label>
-              <input type="number" id="edit-area" class="admin-input" required min="500" placeholder="e.g. 16500" />
-            </div>
-            <div class="admin-field-group">
-              <label for="edit-subarea" class="admin-field-label">Precinct / Frond</label>
-              <input type="text" id="edit-subarea" class="admin-input" placeholder="e.g. Frond M, Gate Precinct" />
-            </div>
-          </div>
-
-          <!-- Photos & Media Upload -->
-          <div class="admin-field-group">
-            <label class="admin-field-label">Cover Photo (Main Card & Hero View) *</label>
-            <div class="photo-upload-zone" id="zone-cover-upload">
-              <input type="file" id="edit-cover-file" accept="image/*" class="photo-upload-input" />
-              <div class="upload-icon-prompt">
-                <span class="upload-icon">📷</span>
-                <span class="upload-prompt-text">Click or Drag & Drop to Upload Cover Photo</span>
-                <span class="upload-hint-sub">Select a high-resolution JPG, PNG or WebP from your device</span>
+          <!-- GROUP 2: BASIC INFORMATION -->
+          <div class="form-section">
+            <h3 class="form-section-title">Basic Information</h3>
+            <div class="form-grid-duo">
+              <div class="admin-field-group">
+                <label for="edit-title" class="admin-field-label">Property Title / Name *</label>
+                <input type="text" id="edit-title" class="admin-input" required placeholder="e.g. Sanctuary of the Sun" />
+              </div>
+              <div class="admin-field-group">
+                <label for="edit-location" class="admin-field-label">Location / Community *</label>
+                <input type="text" id="edit-location" class="admin-input" required placeholder="e.g. Palm Jumeirah" />
               </div>
             </div>
-            
-            <div id="cover-preview-container" class="cover-preview-box" style="display: none;">
-              <img id="cover-preview-img" class="cover-preview-img" src="" alt="Cover Photo Preview" />
-              <button type="button" class="btn-remove-preview" id="btn-remove-cover" title="Remove cover photo">✕</button>
-            </div>
-            
-            <input type="hidden" id="edit-image" value="" />
 
-            <div class="image-presets-strip" style="margin-top: 10px;">
-              <span style="font-size: 0.6875rem; color: var(--admin-text-muted); font-weight: 600;">Or Pick Existing Photo:</span>
-              <button type="button" class="preset-chip-btn" data-url="/images/jumeirah_bay_island.jpg">Jumeirah Bay</button>
-              <button type="button" class="preset-chip-btn" data-url="/images/villa_exterior.jpg">Palm Villa</button>
-              <button type="button" class="preset-chip-btn" data-url="/images/penthouse_interior.jpg">Penthouse</button>
-              <button type="button" class="preset-chip-btn" data-url="/images/desert_estate.jpg">Emirates Hills</button>
-              <button type="button" class="preset-chip-btn" data-url="/images/yacht_lifestyle.jpg">Harbour Yacht</button>
-              <button type="button" class="preset-chip-btn" data-url="/images/twilight_terrace.jpg">Twilight Terrace</button>
-            </div>
-          </div>
-
-          <!-- Additional Gallery Photos Upload -->
-          <div class="admin-field-group">
-            <label class="admin-field-label">Additional Gallery Photos (Walkthrough Views)</label>
-            <div class="photo-upload-zone" id="zone-gallery-upload">
-              <input type="file" id="edit-gallery-files" accept="image/*" multiple class="photo-upload-input" />
-              <div class="upload-icon-prompt">
-                <span class="upload-icon">🖼️</span>
-                <span class="upload-prompt-text">Upload Multiple Gallery Photos</span>
-                <span class="upload-hint-sub">Select multiple photos from your device to showcase rooms & views</span>
+            <div class="form-grid-trio">
+              <div class="admin-field-group">
+                <label for="edit-type" class="admin-field-label">Property Type</label>
+                <select id="edit-type" class="admin-input">
+                  <option value="Waterfront Island Villa">Waterfront Island Villa</option>
+                  <option value="Beachfront Frond Estate">Beachfront Frond Estate</option>
+                  <option value="Sky Penthouse">Sky Penthouse</option>
+                  <option value="Golf Course Sanctuary">Golf Course Sanctuary</option>
+                  <option value="Waterfront Residence">Waterfront Residence</option>
+                  <option value="Modern Minimalist Villa">Modern Minimalist Villa</option>
+                  <option value="Private Mansion">Private Mansion</option>
+                  <option value="Executive Duplex">Executive Duplex</option>
+                </select>
+              </div>
+              <div class="admin-field-group">
+                <label for="edit-category" class="admin-field-label">Transaction Category</label>
+                <select id="edit-category" class="admin-input">
+                  <option value="sale">For Sale (Freehold)</option>
+                  <option value="rent">For Lease (Annual)</option>
+                </select>
+              </div>
+              <div class="admin-field-group">
+                <label for="edit-status" class="admin-field-label">Status Label</label>
+                <select id="edit-status" class="admin-input">
+                  <option value="Exclusive Listing">Exclusive Listing</option>
+                  <option value="Private Placement">Private Placement</option>
+                  <option value="Active Portfolio">Active Portfolio</option>
+                  <option value="Available for Lease">Available for Lease</option>
+                  <option value="Under Negotiation">Under Negotiation</option>
+                </select>
               </div>
             </div>
-            
-            <div id="gallery-previews-container" class="gallery-previews-grid"></div>
-            <input type="hidden" id="edit-gallery" value="" />
           </div>
 
-          <!-- Editorial Content -->
-          <div class="admin-field-group">
-            <label for="edit-tagline" class="admin-field-label">Editorial Tagline (1 Line Summary)</label>
-            <input type="text" id="edit-tagline" class="admin-input" placeholder="e.g. Architectural purity carved in limestone along the tranquil waters..." />
+          <!-- GROUP 3: PRICING & PROPERTY DETAILS -->
+          <div class="form-section">
+            <h3 class="form-section-title">Property Details & Pricing</h3>
+            <div class="form-grid-trio">
+              <div class="admin-field-group">
+                <label for="edit-price" class="admin-field-label">Price (AED) *</label>
+                <input type="number" id="edit-price" class="admin-input" required min="100000" step="50000" placeholder="e.g. 115000000" />
+              </div>
+              <div class="admin-field-group">
+                <label for="edit-bedrooms" class="admin-field-label">Bedrooms</label>
+                <input type="number" id="edit-bedrooms" class="admin-input" required min="1" max="25" value="5" />
+              </div>
+              <div class="admin-field-group">
+                <label for="edit-bathrooms" class="admin-field-label">Bathrooms</label>
+                <input type="number" id="edit-bathrooms" class="admin-input" required min="1" max="30" value="6" />
+              </div>
+            </div>
+
+            <div class="form-grid-duo">
+              <div class="admin-field-group">
+                <label for="edit-area" class="admin-field-label">Built-Up Area (Sq.Ft) *</label>
+                <input type="number" id="edit-area" class="admin-input" required min="500" placeholder="e.g. 16500" />
+              </div>
+              <div class="admin-field-group">
+                <label for="edit-subarea" class="admin-field-label">Precinct / Frond (Optional)</label>
+                <input type="text" id="edit-subarea" class="admin-input" placeholder="e.g. Frond M" />
+              </div>
+            </div>
           </div>
 
-          <div class="admin-field-group">
-            <label for="edit-desc" class="admin-field-label">Full Architectural Description</label>
-            <textarea id="edit-desc" class="admin-textarea" rows="4" placeholder="Detailed architectural narrative, materials, spatial flow, natural lighting..."></textarea>
+          <!-- GROUP 4: PROPERTY IMAGES -->
+          <div class="form-section">
+            <h3 class="form-section-title">Property Images</h3>
+            <div class="admin-field-group">
+              <label class="admin-field-label">Cover Photo (Main Card View) *</label>
+              <div class="photo-upload-zone" id="zone-cover-upload">
+                <input type="file" id="edit-cover-file" accept="image/*" class="photo-upload-input" />
+                <div class="upload-icon-prompt">
+                  <span class="upload-icon">📷</span>
+                  <span class="upload-prompt-text">Click or Drag & Drop to Upload Cover Photo</span>
+                  <span class="upload-hint-sub">JPG, PNG or WebP format</span>
+                </div>
+              </div>
+              
+              <div id="cover-preview-container" class="cover-preview-box" style="display: none;">
+                <img id="cover-preview-img" class="cover-preview-img" src="" alt="Cover Photo Preview" />
+                <button type="button" class="btn-remove-preview" id="btn-remove-cover" title="Remove cover photo">✕</button>
+              </div>
+              
+              <input type="hidden" id="edit-image" value="" />
+
+              <div class="image-presets-strip">
+                <span class="preset-label">Or Pick Preset:</span>
+                <button type="button" class="preset-chip-btn" data-url="/images/jumeirah_bay_island.jpg">Jumeirah Bay</button>
+                <button type="button" class="preset-chip-btn" data-url="/images/villa_exterior.jpg">Palm Villa</button>
+                <button type="button" class="preset-chip-btn" data-url="/images/penthouse_interior.jpg">Penthouse</button>
+                <button type="button" class="preset-chip-btn" data-url="/images/desert_estate.jpg">Emirates Hills</button>
+                <button type="button" class="preset-chip-btn" data-url="/images/yacht_lifestyle.jpg">Harbour Yacht</button>
+                <button type="button" class="preset-chip-btn" data-url="/images/twilight_terrace.jpg">Twilight Terrace</button>
+              </div>
+            </div>
+
+            <!-- Additional Gallery Photos -->
+            <div class="admin-field-group" style="margin-top: 16px;">
+              <label class="admin-field-label">Additional Gallery Photos</label>
+              <div class="photo-upload-zone" id="zone-gallery-upload">
+                <input type="file" id="edit-gallery-files" accept="image/*" multiple class="photo-upload-input" />
+                <div class="upload-icon-prompt">
+                  <span class="upload-icon">🖼️</span>
+                  <span class="upload-prompt-text">Upload Multiple Gallery Photos</span>
+                  <span class="upload-hint-sub">Select multiple photos for walkthrough views</span>
+                </div>
+              </div>
+              
+              <div id="gallery-previews-container" class="gallery-previews-grid"></div>
+              <input type="hidden" id="edit-gallery" value="" />
+            </div>
           </div>
 
-          <div class="admin-field-group">
-            <label for="edit-amenities" class="admin-field-label">Key Amenities / Perks (Comma-separated)</label>
-            <input type="text" id="edit-amenities" class="admin-input" placeholder="Private 120ft Superyacht Berth, Travertine Infinity Pool, 24/7 Security" />
+          <!-- GROUP 5: EDITORIAL CONTENT -->
+          <div class="form-section">
+            <h3 class="form-section-title">Description & Amenities</h3>
+            <div class="admin-field-group">
+              <label for="edit-tagline" class="admin-field-label">Short Tagline (1 Line Summary)</label>
+              <input type="text" id="edit-tagline" class="admin-input" placeholder="e.g. Private waterfront villa with panoramic marina views..." />
+            </div>
+
+            <div class="admin-field-group">
+              <label for="edit-desc" class="admin-field-label">Full Description</label>
+              <textarea id="edit-desc" class="admin-textarea" rows="4" placeholder="Detailed description of features, views, layouts, materials..."></textarea>
+            </div>
+
+            <div class="admin-field-group">
+              <label for="edit-amenities" class="admin-field-label">Amenities (Comma-separated)</label>
+              <input type="text" id="edit-amenities" class="admin-input" placeholder="Private Pool, Yacht Berth, 24/7 Security, Private Beach" />
+            </div>
           </div>
 
         </div>
 
         <div class="admin-modal-footer">
           <button type="button" class="btn-admin-ghost" id="btn-cancel-prop-edit">Cancel</button>
-          <button type="submit" class="btn-admin-primary" id="btn-save-prop-submit">Save Residence</button>
+          <button type="submit" class="btn-admin-primary" id="btn-save-prop-submit">Save Property</button>
         </div>
 
       </form>
