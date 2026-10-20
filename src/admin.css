@@ -553,7 +553,7 @@ body.admin-body {
 
 .enquiries-table-head {
   display: grid;
-  grid-template-columns: 130px 220px 200px 1fr 170px;
+  grid-template-columns: 130px 200px 180px 1fr 240px;
   background: var(--admin-surface-2);
   border-bottom: 1px solid var(--admin-border);
   padding: 6px 12px;
@@ -568,7 +568,7 @@ body.admin-body {
 
 .enquiry-row {
   display: grid;
-  grid-template-columns: 130px 220px 200px 1fr 170px;
+  grid-template-columns: 130px 200px 180px 1fr 240px;
   padding: 8px 12px;
   gap: 12px;
   border-bottom: 1px solid var(--admin-border);
@@ -739,18 +739,20 @@ body.admin-body {
 .td-col.col-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .action-btn-group {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-shrink: 0;
 }
 
 .btn-contact-quick {
-  padding: 2px 7px;
+  padding: 3px 8px;
   font-size: 0.6875rem;
   font-weight: 600;
   border-radius: var(--radius-xs);
@@ -760,6 +762,8 @@ body.admin-body {
   gap: 3px;
   height: 24px;
   line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-wa {
@@ -786,21 +790,28 @@ body.admin-body {
 }
 
 .btn-delete-ghost {
-  padding: 2px 6px;
-  background: transparent;
-  border: none;
-  color: var(--admin-text-dim);
+  padding: 3px 9px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   border-radius: var(--radius-xs);
-  transition: all 0.1s ease;
+  transition: all 0.15s ease;
   height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-delete-ghost:hover {
-  color: var(--admin-danger);
-  background: var(--admin-danger-bg);
+  background: #DC2626;
+  border-color: #DC2626;
+  color: #FFFFFF;
 }
 
 /* ==========================================================================
