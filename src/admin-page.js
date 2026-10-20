@@ -266,11 +266,21 @@ function renderEnquiries() {
     return;
   }
 
-  enquiriesList.innerHTML = filtered.map(e => {
+  const tableHeader = `
+    <div class="enquiries-table-head">
+      <div class="th-col col-status-date">Status & Date</div>
+      <div class="th-col col-client">Client & Contact</div>
+      <div class="th-col col-property">Property & Budget</div>
+      <div class="th-col col-notes">Notes</div>
+      <div class="th-col col-actions">Quick Actions</div>
+    </div>
+  `;
+
+  const rows = filtered.map(e => {
+    const isNew = e.status === 'new';
     const dateStr = e.createdAt ? new Date(e.createdAt).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
     }) : 'Recent';
@@ -288,66 +298,73 @@ function renderEnquiries() {
     const mailLink = e.email ? `mailto:${e.email}?subject=Private%20Advisory%20Follow-up%20—%20Vision%20of%20Excellence` : null;
 
     return `
-      <article class="enquiry-card" data-id="${e.id}">
-        <div class="enquiry-card-top">
-          <div class="enquiry-client-meta">
-            <div class="enquiry-client-name">
-              ${escapeHtml(e.fullName || 'Anonymous Client')}
-              <span class="enquiry-type-tag">${escapeHtml(e.type || 'Enquiry')}</span>
-            </div>
-            <div class="enquiry-contacts-strip">
-              ${e.email ? `<span>✉ <a href="${mailLink}">${escapeHtml(e.email)}</a></span>` : ''}
-              ${e.phone ? `<span>☎ <a href="${telLink}">${escapeHtml(e.phone)}</a></span>` : ''}
-              ${e.budget ? `<span>✦ Budget: <strong>${escapeHtml(e.budget)}</strong></span>` : ''}
-            </div>
-          </div>
-          <div class="enquiry-time-status">
-            <span class="enquiry-timestamp">${dateStr}</span>
-            <select class="status-badge-select" data-action="update-status" data-id="${e.id}">
-              <option value="new" ${e.status === 'new' ? 'selected' : ''}>New</option>
-              <option value="contacted" ${e.status === 'contacted' ? 'selected' : ''}>Contacted</option>
-              <option value="qualified" ${e.status === 'qualified' ? 'selected' : ''}>Qualified</option>
-              <option value="archived" ${e.status === 'archived' ? 'selected' : ''}>Archived</option>
-            </select>
+      <article class="enquiry-row ${isNew ? 'is-new-lead' : ''}" data-id="${e.id}">
+        <!-- Status & Date -->
+        <div class="td-col col-status-date">
+          <select class="status-badge-select status-select-${e.status || 'new'}" data-action="update-status" data-id="${e.id}" aria-label="Change enquiry status">
+            <option value="new" ${e.status === 'new' ? 'selected' : ''}>● New</option>
+            <option value="contacted" ${e.status === 'contacted' ? 'selected' : ''}>● Contacted</option>
+            <option value="qualified" ${e.status === 'qualified' ? 'selected' : ''}>● Qualified</option>
+            <option value="archived" ${e.status === 'archived' ? 'selected' : ''}>● Archived</option>
+          </select>
+          <span class="enquiry-date">${dateStr}</span>
+        </div>
+
+        <!-- Client & Contact -->
+        <div class="td-col col-client">
+          <div class="client-name">${escapeHtml(e.fullName || 'Anonymous Client')}</div>
+          <div class="client-contact-links">
+            ${e.phone ? `<a href="${telLink}" class="contact-link" title="Call ${escapeHtml(e.phone)}">☎ ${escapeHtml(e.phone)}</a>` : ''}
+            ${e.email ? `<a href="${mailLink}" class="contact-link" title="Email ${escapeHtml(e.email)}">✉ ${escapeHtml(e.email)}</a>` : ''}
           </div>
         </div>
 
-        ${e.propertyTitle || e.notes ? `
-          <div class="enquiry-body-details">
-            ${e.propertyTitle ? `
-              <div class="enquiry-prop-ref">Residence: ${escapeHtml(e.propertyTitle)}</div>
-            ` : ''}
-            ${e.notes ? `
-              <div class="enquiry-notes-content">${escapeHtml(e.notes)}</div>
-            ` : ''}
+        <!-- Property of Interest & Budget -->
+        <div class="td-col col-property">
+          <div class="prop-target" title="${escapeHtml(e.propertyTitle || 'General Enquiry')}">
+            ${escapeHtml(e.propertyTitle || 'General Enquiry')}
           </div>
-        ` : ''}
+          <div class="prop-submeta">
+            ${e.budget ? `<span class="badge-budget">Budget: ${escapeHtml(e.budget)}</span>` : ''}
+            ${e.type ? `<span class="badge-type">${escapeHtml(e.type)}</span>` : ''}
+          </div>
+        </div>
 
-        <div class="enquiry-card-bottom">
-          <div class="enquiry-action-cluster">
+        <!-- Client Notes -->
+        <div class="td-col col-notes">
+          ${e.notes ? `
+            <div class="notes-content" title="${escapeHtml(e.notes)}">${escapeHtml(e.notes)}</div>
+          ` : `<span class="notes-empty">—</span>`}
+        </div>
+
+        <!-- Actions -->
+        <div class="td-col col-actions">
+          <div class="action-btn-group">
             ${waLink ? `
-              <a href="${waLink}" target="_blank" rel="noopener" class="btn-contact-quick" title="Message client on WhatsApp">
-                💬 WhatsApp
+              <a href="${waLink}" target="_blank" rel="noopener" class="btn-contact-quick btn-wa" title="WhatsApp client">
+                WhatsApp
               </a>
             ` : ''}
             ${telLink ? `
-              <a href="${telLink}" class="btn-contact-quick" title="Place direct phone call">
-                📞 Call
+              <a href="${telLink}" class="btn-contact-quick btn-call" title="Call client">
+                Call
               </a>
             ` : ''}
             ${mailLink ? `
-              <a href="${mailLink}" class="btn-contact-quick" title="Send email">
-                ✉ Email
+              <a href="${mailLink}" class="btn-contact-quick btn-email" title="Email client">
+                Email
               </a>
             ` : ''}
           </div>
-          <button type="button" class="btn-delete-ghost" data-action="delete-enquiry" data-id="${e.id}" title="Remove enquiry">
-            Delete Record
+          <button type="button" class="btn-delete-ghost btn-delete-row" data-action="delete-enquiry" data-id="${e.id}" title="Delete enquiry">
+            Delete
           </button>
         </div>
       </article>
     `;
   }).join('');
+
+  enquiriesList.innerHTML = tableHeader + rows;
 
   // Attach enquiry card listeners
   enquiriesList.querySelectorAll('[data-action="update-status"]').forEach(select => {
@@ -457,47 +474,57 @@ function renderProperties() {
     const isSig = Boolean(p.isSignature);
 
     return `
-      <article class="prop-admin-card" data-id="${p.id}">
-        <div class="prop-admin-media">
-          <img src="${escapeHtml(p.image || p.heroImage || p.coverImage || '/images/villa_exterior.jpg')}" alt="${escapeHtml(p.title || p.name)}" class="prop-admin-img" loading="lazy" />
-          <span class="prop-admin-status-overlay">${escapeHtml(p.status || 'Active')}</span>
+      <article class="prop-admin-row" data-id="${p.id}">
+        <!-- Thumbnail -->
+        <div class="prop-thumb-wrap">
+          <img src="${escapeHtml(p.image || p.heroImage || p.coverImage || '/images/villa_exterior.jpg')}" alt="${escapeHtml(p.title || p.name)}" class="prop-thumb-img" loading="lazy" />
+          <span class="prop-cat-badge ${isRent ? 'badge-rent' : 'badge-sale'}">${isRent ? 'Rent' : 'Sale'}</span>
         </div>
 
-        <!-- HOMEPAGE SIGNATURE RESIDENCE TOGGLE -->
-        <div class="signature-toggle-bar">
-          <span class="sig-toggle-label ${isSig ? 'active' : ''}">
-            ${isSig ? '★ Featured on Homepage' : 'Not Featured'}
-          </span>
-          <label class="switch-control" title="Toggle Homepage Presence">
-            <input type="checkbox" class="prop-sig-switch" data-id="${p.id}" ${isSig ? 'checked' : ''} />
-            <span class="switch-slider"></span>
-          </label>
-        </div>
-
-        <div class="prop-admin-body">
-          <div class="prop-admin-loc">${escapeHtml(p.location || 'Dubai')} • ${escapeHtml(p.type || 'Property')}</div>
-          <h3 class="prop-admin-title">${escapeHtml(p.title || p.name)}</h3>
+        <!-- Details -->
+        <div class="prop-main-info">
+          <div class="prop-title-line">
+            <h3 class="prop-title" title="${escapeHtml(p.title || p.name)}">${escapeHtml(p.title || p.name)}</h3>
+            <span class="prop-status-tag">${escapeHtml(p.status || 'Active')}</span>
+          </div>
           
-          <div class="prop-admin-specs-row">
+          <div class="prop-meta-specs">
+            <span class="prop-loc">📍 ${escapeHtml(p.location || 'Dubai')}</span>
+            <span class="dot-sep">•</span>
+            <span class="prop-type">${escapeHtml(p.type || 'Property')}</span>
+            <span class="dot-sep">•</span>
             <span>${p.bedrooms || '—'} Beds</span>
-            <span>•</span>
+            <span class="dot-sep">•</span>
             <span>${p.bathrooms || '—'} Baths</span>
-            <span>•</span>
+            <span class="dot-sep">•</span>
             <span>${(p.areaSqFt || p.size || 0).toLocaleString()} sq.ft</span>
           </div>
 
-          <div class="prop-admin-price">
-            AED ${priceFormatted} ${isRent ? '<span style="font-size: 0.75rem; color: var(--admin-text-dim);">/ year</span>' : ''}
+          <div class="prop-price-tag">
+            AED ${priceFormatted} ${isRent ? '<span class="price-cycle">/ year</span>' : ''}
           </div>
         </div>
 
-        <div class="prop-admin-footer">
-          <button type="button" class="btn-card-edit" data-action="edit-prop" data-id="${p.id}">
-            Edit
-          </button>
-          <button type="button" class="btn-delete-ghost" data-action="delete-prop" data-id="${p.id}">
-            Delete
-          </button>
+        <!-- Controls: Homepage toggle + Edit/Delete actions -->
+        <div class="prop-row-controls">
+          <div class="prop-featured-toggle">
+            <label class="switch-control" title="Toggle Homepage Presence">
+              <input type="checkbox" class="prop-sig-switch" data-id="${p.id}" ${isSig ? 'checked' : ''} />
+              <span class="switch-slider"></span>
+            </label>
+            <span class="sig-status-label ${isSig ? 'is-featured' : ''}">
+              ${isSig ? '★ Homepage' : 'Standard'}
+            </span>
+          </div>
+
+          <div class="prop-action-buttons">
+            <button type="button" class="btn-card-edit" data-action="edit-prop" data-id="${p.id}" title="Edit listing">
+              Edit
+            </button>
+            <button type="button" class="btn-delete-ghost" data-action="delete-prop" data-id="${p.id}" title="Delete listing">
+              Delete
+            </button>
+          </div>
         </div>
       </article>
     `;

@@ -84,12 +84,36 @@
        ============================================================ -->
   <main id="view-dashboard" class="admin-dashboard" style="display: none;">
     
-    <!-- Dashboard Header -->
+    <!-- Dashboard Header with Integrated Tabs & Primary Action -->
     <div class="admin-dash-header">
-      <div class="dash-title-group">
-        <h1>Dashboard</h1>
-        <p>Manage client enquiries and property listings.</p>
+      <div class="dash-title-nav">
+        <h1 class="dash-title">Dashboard</h1>
+        <nav class="admin-tab-nav" role="tablist" aria-label="Dashboard Sections">
+          <button
+            type="button"
+            class="admin-tab-btn active"
+            id="tab-btn-enquiries"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-enquiries"
+          >
+            <span>Enquiries</span>
+            <span class="tab-badge" id="badge-enquiries-count">0</span>
+          </button>
+          <button
+            type="button"
+            class="admin-tab-btn"
+            id="tab-btn-properties"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-properties"
+          >
+            <span>Properties</span>
+            <span class="tab-badge" id="badge-properties-count">0</span>
+          </button>
+        </nav>
       </div>
+
       <div class="dash-header-actions">
         <button type="button" class="btn-admin-primary" id="btn-open-add-property">
           + Add Property
@@ -97,58 +121,28 @@
       </div>
     </div>
 
-    <!-- Navigation Tabs -->
-    <nav class="admin-tab-nav" role="tablist" aria-label="Dashboard Sections">
-      <button
-        type="button"
-        class="admin-tab-btn active"
-        id="tab-btn-enquiries"
-        role="tab"
-        aria-selected="true"
-        aria-controls="panel-enquiries"
-      >
-        <span>Client Enquiries</span>
-        <span class="tab-badge" id="badge-enquiries-count">0</span>
-      </button>
-      <button
-        type="button"
-        class="admin-tab-btn"
-        id="tab-btn-properties"
-        role="tab"
-        aria-selected="false"
-        aria-controls="panel-properties"
-      >
-        <span>Properties</span>
-        <span class="tab-badge" id="badge-properties-count">0</span>
-      </button>
-    </nav>
-
     <!-- ============================================================
          PANEL 1: CLIENT ENQUIRIES
          ============================================================ -->
     <section id="panel-enquiries" class="admin-tab-panel" role="tabpanel" aria-labelledby="tab-btn-enquiries">
       
-      <!-- Summary Metrics Row -->
-      <div class="admin-metrics-row">
-        <div class="metric-card">
-          <span class="metric-label">Total Enquiries</span>
-          <div class="metric-value" id="metric-total-enquiries">0</div>
-          <span class="metric-sub">All received enquiries</span>
+      <!-- Compact Horizontal Metrics Summary -->
+      <div class="admin-metrics-bar">
+        <div class="metric-item">
+          <span class="metric-label">Total Enquiries:</span>
+          <span class="metric-value" id="metric-total-enquiries">0</span>
         </div>
-        <div class="metric-card highlight-card">
-          <span class="metric-label">New Enquiries</span>
-          <div class="metric-value metric-new-val" id="metric-new-enquiries">0</div>
-          <span class="metric-sub">Awaiting response</span>
+        <div class="metric-item metric-item-highlight">
+          <span class="metric-label">New Enquiries:</span>
+          <span class="metric-value" id="metric-new-enquiries">0</span>
         </div>
-        <div class="metric-card">
-          <span class="metric-label">High-Value Leads</span>
-          <div class="metric-value" id="metric-high-value-enquiries">0</div>
-          <span class="metric-sub">Budget $10M+</span>
+        <div class="metric-item">
+          <span class="metric-label">High-Value Leads:</span>
+          <span class="metric-value" id="metric-high-value-enquiries">0</span>
         </div>
-        <div class="metric-card">
-          <span class="metric-label">Contacted / Qualified</span>
-          <div class="metric-value" id="metric-contacted-enquiries">0</div>
-          <span class="metric-sub">In active discussion</span>
+        <div class="metric-item">
+          <span class="metric-label">Contacted / Qualified:</span>
+          <span class="metric-value" id="metric-contacted-enquiries">0</span>
         </div>
       </div>
 
@@ -160,12 +154,12 @@
             type="text"
             id="search-enquiries"
             class="toolbar-search-input"
-            placeholder="Search clients by name, email or phone"
+            placeholder="Search clients by name, email or phone..."
           />
         </div>
         <div class="toolbar-actions">
           <select id="filter-enquiry-status" class="admin-select" aria-label="Filter enquiries by status">
-            <option value="all">All Enquiries</option>
+            <option value="all">All Statuses</option>
             <option value="new">New</option>
             <option value="contacted">Contacted</option>
             <option value="qualified">Qualified</option>
@@ -175,13 +169,13 @@
             Export CSV ↓
           </button>
           <button type="button" class="btn-admin-ghost" id="btn-refresh-enquiries" title="Fetch latest updates">
-            Refresh
+            Refresh ↻
           </button>
         </div>
       </div>
 
-      <!-- Enquiries Stream -->
-      <div id="enquiries-list" class="enquiries-stream">
+      <!-- Enquiries Stream (Table / Structured Rows) -->
+      <div id="enquiries-list" class="enquiries-container">
         <!-- Rendered dynamically by src/admin-page.js -->
       </div>
     </section>
@@ -191,27 +185,23 @@
          ============================================================ -->
     <section id="panel-properties" class="admin-tab-panel" role="tabpanel" aria-labelledby="tab-btn-properties" style="display: none;">
       
-      <!-- Summary Metrics Row -->
-      <div class="admin-metrics-row">
-        <div class="metric-card">
-          <span class="metric-label">Total Properties</span>
-          <div class="metric-value" id="metric-total-props">0</div>
-          <span class="metric-sub">Active listings</span>
+      <!-- Compact Horizontal Metrics Summary -->
+      <div class="admin-metrics-bar">
+        <div class="metric-item">
+          <span class="metric-label">Total Properties:</span>
+          <span class="metric-value" id="metric-total-props">0</span>
         </div>
-        <div class="metric-card highlight-card">
-          <span class="metric-label">Featured on Homepage</span>
-          <div class="metric-value" id="metric-sig-props">0</div>
-          <span class="metric-sub">Shown on homepage</span>
+        <div class="metric-item metric-item-highlight">
+          <span class="metric-label">Featured on Homepage:</span>
+          <span class="metric-value" id="metric-sig-props">0</span>
         </div>
-        <div class="metric-card">
-          <span class="metric-label">Private Listings</span>
-          <div class="metric-value" id="metric-private-props">0</div>
-          <span class="metric-sub">Exclusive collection</span>
+        <div class="metric-item">
+          <span class="metric-label">Private Listings:</span>
+          <span class="metric-value" id="metric-private-props">0</span>
         </div>
-        <div class="metric-card">
-          <span class="metric-label">Rental Properties</span>
-          <div class="metric-value" id="metric-lease-props">0</div>
-          <span class="metric-sub">Available for lease</span>
+        <div class="metric-item">
+          <span class="metric-label">Rental Properties:</span>
+          <span class="metric-value" id="metric-lease-props">0</span>
         </div>
       </div>
 
@@ -233,15 +223,15 @@
             <option value="rent">For Rent</option>
           </select>
           <select id="filter-property-signature" class="admin-select" aria-label="Filter by homepage presence">
-            <option value="all">All Properties</option>
-            <option value="signature">Homepage Featured</option>
+            <option value="all">All Listings</option>
+            <option value="signature">Featured on Homepage</option>
             <option value="standard">Standard Catalog</option>
           </select>
         </div>
       </div>
 
-      <!-- Properties Grid -->
-      <div id="properties-grid" class="properties-admin-grid">
+      <!-- Properties Grid / Listing Rows -->
+      <div id="properties-grid" class="properties-admin-list">
         <!-- Rendered dynamically by src/admin-page.js -->
       </div>
     </section>
