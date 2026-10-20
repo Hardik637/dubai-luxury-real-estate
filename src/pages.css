@@ -1788,19 +1788,46 @@
    DYNAMIC IN-PLACE EXPANDED OVERLAYS (OPENS OVER THE OUTSIDE LAYER)
    ========================================================================== */
 
+/* Elevate section above fixed navbar and safely hide navbar during modal view */
+:root:has(.cinematic-expanded-overlay.is-open),
+body.has-inv-overlay-open {
+  overflow: hidden;
+}
+
+:root:has(.cinematic-expanded-overlay.is-open) .cinematic-why-dubai,
+:root:has(.cinematic-expanded-overlay.is-open) .investment-sections,
+:root:has(.cinematic-expanded-overlay.is-open) .cinematic-sticky-stage,
+body.has-inv-overlay-open .cinematic-why-dubai,
+body.has-inv-overlay-open .investment-sections,
+body.has-inv-overlay-open .cinematic-sticky-stage {
+  z-index: 500 !important;
+}
+
+:root:has(.cinematic-expanded-overlay.is-open) .main-navbar,
+body.has-inv-overlay-open .main-navbar {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-12px) !important;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease !important;
+}
+
 .cinematic-expanded-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  width: 100vw;
   width: 100%;
-  height: 100%;
-  z-index: 40;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(16px, 3.5vw, 40px);
-  background: rgba(11, 12, 14, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  padding: clamp(24px, 4.5vh, 48px) clamp(16px, 3.5vw, 40px);
+  box-sizing: border-box;
+  background: rgba(11, 12, 14, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -1830,7 +1857,7 @@
   position: relative;
   width: 100%;
   max-width: 960px;
-  max-height: calc(100svh - clamp(28px, 6vh, 64px));
+  max-height: min(88vh, calc(100dvh - clamp(36px, 6.5vh, 68px)));
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -3071,11 +3098,11 @@
     font-size: 0.7rem;
   }
   .cinematic-expanded-overlay {
-    padding: 12px 10px;
+    padding: 16px 12px;
   }
   .cinematic-expanded-overlay .inv-expanded-panel {
     padding: 20px 16px;
-    max-height: calc(100svh - 24px);
+    max-height: calc(100dvh - 32px);
   }
   .inv-expanded-top-bar {
     margin-bottom: 16px;

@@ -587,6 +587,7 @@ function initCinematicOverlays() {
     overlay.setAttribute('aria-hidden', 'false');
     if (stage) stage.classList.add('has-overlay-open');
     if (triggerBtn) triggerBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('has-inv-overlay-open');
 
     // Scroll overlay panel to top
     const panel = overlay.querySelector('.inv-expanded-panel');
@@ -602,6 +603,7 @@ function initCinematicOverlays() {
     overlay.setAttribute('aria-hidden', 'true');
 
     if (stage) stage.classList.remove('has-overlay-open');
+    document.body.classList.remove('has-inv-overlay-open');
     if (lastActiveTrigger) {
       lastActiveTrigger.setAttribute('aria-expanded', 'false');
       lastActiveTrigger.focus();
