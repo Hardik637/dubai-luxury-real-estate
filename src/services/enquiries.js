@@ -9,7 +9,7 @@ import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy,
 
 const LEADS_VAULT_KEY = 'voe_leads_vault_v3';
 
-// Sample initial leads
+// Sample initial leads with rich diversity
 export const DEMO_ENQUIRIES = [
   {
     id: 'enq_demo_01',
@@ -21,7 +21,7 @@ export const DEMO_ENQUIRIES = [
     propertyTitle: 'Sanctuary of the Sun (Jumeirah Bay Island)',
     notes: 'Seeking waterfront residency with private 120ft yacht berth. Require assistance with 10-Year UAE Golden Visa family sponsorship.',
     status: 'new',
-    createdAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString()
+    createdAt: new Date(Date.now() - 1.5 * 3600 * 1000).toISOString()
   },
   {
     id: 'enq_demo_02',
@@ -33,7 +33,7 @@ export const DEMO_ENQUIRIES = [
     propertyTitle: 'Villa Al-Noor (Palm Jumeirah)',
     notes: 'Private weekend viewing requested for principal and security detail. Needs Rolls-Royce chauffeur transfer from DIFC.',
     status: 'contacted',
-    createdAt: new Date(Date.now() - 14 * 3600 * 1000).toISOString()
+    createdAt: new Date(Date.now() - 5 * 3600 * 1000).toISOString()
   },
   {
     id: 'enq_demo_03',
@@ -41,18 +41,81 @@ export const DEMO_ENQUIRIES = [
     email: 'gvance@vancecap.com',
     phone: '+1 212 555 0192',
     type: 'Investment Strategy Advisory',
-    budget: 'AED 10M+',
+    budget: 'AED 45M+',
     propertyTitle: 'Portfolio Yield Allocation',
     notes: 'Evaluating prime freehold assets for institutional tax-free yield. Needs quarterly yield simulation model.',
     status: 'qualified',
+    createdAt: new Date(Date.now() - 18 * 3600 * 1000).toISOString()
+  },
+  {
+    id: 'enq_demo_04',
+    fullName: 'Alexandre de Saint-Germain',
+    email: 'a.stgermain@monaco-wealth.mc',
+    phone: '+377 93 25 00 11',
+    type: 'Penthouse Acquisition',
+    budget: '$30M – $50M',
+    propertyTitle: 'The Horizon Sky Duplex (Downtown Dubai)',
+    notes: 'Family office relocation from Monaco. Requires triplex penthouse with private rooftop infinity pool and panoramic Burj Khalifa views.',
+    status: 'new',
+    createdAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString()
+  },
+  {
+    id: 'enq_demo_05',
+    fullName: 'Sheikh Hamdan Al-Qasimi',
+    email: 'h.alqasimi@holding.ae',
+    phone: '+971 50 888 2211',
+    type: 'Off-Market Island Villa',
+    budget: 'AED 85,000,000',
+    propertyTitle: 'The Dunes Oasis (Emirates Hills)',
+    notes: 'Seeking ultra-private trophy compound with minimum 25,000 sq ft plot and subterranean 8-car gallery.',
+    status: 'contacted',
+    createdAt: new Date(Date.now() - 36 * 3600 * 1000).toISOString()
+  },
+  {
+    id: 'enq_demo_06',
+    fullName: 'Maximilian Sterling',
+    email: 'max@sterling-partners.ch',
+    phone: '+41 22 710 3344',
+    type: 'Golden Visa & Real Estate',
+    budget: '$8M – $12M',
+    propertyTitle: 'The Royal Beachfront Residence',
+    notes: 'Swiss tech entrepreneur looking for tax residency transition before Q4. Needs complete conveyancing and banking setup.',
+    status: 'qualified',
     createdAt: new Date(Date.now() - 48 * 3600 * 1000).toISOString()
+  },
+  {
+    id: 'enq_demo_07',
+    fullName: 'Vikram & Priya Singhania',
+    email: 'v.singhania@mumbai-ventures.in',
+    phone: '+91 98200 11223',
+    type: 'Luxury Holiday Home',
+    budget: 'AED 25M – $10M',
+    propertyTitle: 'Palm Island Sunset Villa',
+    notes: 'Private beachfront villa for winter months. Preferred fully turnkey furnished by Minotti or Poliform.',
+    status: 'new',
+    createdAt: new Date(Date.now() - 60 * 3600 * 1000).toISOString()
+  },
+  {
+    id: 'enq_demo_08',
+    fullName: 'Elena Rostova',
+    email: 'elena.rostova@nordic-marina.fi',
+    phone: '+358 40 123 4567',
+    type: 'Rental Yield Investment',
+    budget: '$5M – $8M',
+    propertyTitle: 'Dubai Marina Luxury Tower',
+    notes: 'Short-term luxury holiday rental portfolio. Looking for managed assets with guaranteed 8%+ net yield.',
+    status: 'archived',
+    createdAt: new Date(Date.now() - 96 * 3600 * 1000).toISOString()
   }
 ];
 
 function getLocalVault() {
   try {
     const raw = localStorage.getItem(LEADS_VAULT_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
   } catch (e) {
     // fallback
   }
@@ -62,6 +125,23 @@ function getLocalVault() {
 
 function saveLocalVault(leads) {
   localStorage.setItem(LEADS_VAULT_KEY, JSON.stringify(leads));
+}
+
+/**
+ * Seed or restore rich demo enquiries (Admin action)
+ */
+export async function seedDemoEnquiries() {
+  saveLocalVault(DEMO_ENQUIRIES);
+  if (db) {
+    try {
+      for (const enq of DEMO_ENQUIRIES) {
+        await setDoc(doc(db, 'enquiries', enq.id), enq, { merge: true });
+      }
+    } catch (e) {
+      console.warn('Firestore demo seed notice:', e);
+    }
+  }
+  return DEMO_ENQUIRIES;
 }
 
 /**
@@ -264,35 +344,82 @@ export async function deleteEnquiry(id) {
 
 /**
  * Export enquiries as CSV (Admin Only)
+ * Uses standard RFC 4180 CSV escaping, UTF-8 BOM, and Blob download
  */
 export function exportEnquiriesToCSV(enquiries) {
-  if (!enquiries || enquiries.length === 0) {
-    alert('No enquiries available to export.');
-    return;
+  const data = (Array.isArray(enquiries) && enquiries.length > 0)
+    ? enquiries
+    : getLocalVault();
+
+  if (!data || data.length === 0) {
+    if (typeof alert !== 'undefined') {
+      alert('No enquiries available to export.');
+    }
+    return false;
   }
 
-  const headers = ['Enquiry ID', 'Received Date', 'Client Name', 'Email', 'Phone', 'Type', 'Target Property', 'Budget / Scope', 'Status', 'Client Notes'];
-  const rows = enquiries.map(e => [
-    `"${e.id}"`,
-    `"${new Date(e.createdAt || Date.now()).toLocaleString()}"`,
-    `"${(e.fullName || '').replace(/"/g, '""')}"`,
-    `"${(e.email || '').replace(/"/g, '""')}"`,
-    `"${(e.phone || '').replace(/"/g, '""')}"`,
-    `"${(e.type || '').replace(/"/g, '""')}"`,
-    `"${(e.propertyTitle || '').replace(/"/g, '""')}"`,
-    `"${(e.budget || '').replace(/"/g, '""')}"`,
-    `"${(e.status || '').toUpperCase()}"`,
-    `"${(e.notes || '').replace(/"/g, '""')}"`
-  ]);
+  const escapeCSV = (val) => {
+    if (val === null || val === undefined) return '""';
+    const str = String(val).replace(/"/g, '""');
+    return `"${str}"`;
+  };
 
-  const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement('a');
-  link.setAttribute('href', encodedUri);
-  link.setAttribute('download', `Vision_of_Excellence_Leads_${new Date().toISOString().slice(0, 10)}.csv`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const headers = [
+    'Enquiry ID',
+    'Received Date',
+    'Client Name',
+    'Email',
+    'Phone',
+    'Enquiry Type',
+    'Target Property',
+    'Budget / Scope',
+    'Status',
+    'Client Notes'
+  ];
+
+  const rows = data.map(e => {
+    let dateStr = '';
+    if (e.createdAt) {
+      const d = new Date(e.createdAt);
+      dateStr = !isNaN(d.getTime()) ? d.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      }) : String(e.createdAt);
+    }
+
+    return [
+      escapeCSV(e.id || ''),
+      escapeCSV(dateStr),
+      escapeCSV(e.fullName || e.name || 'Anonymous Client'),
+      escapeCSV(e.email || ''),
+      escapeCSV(e.phone || ''),
+      escapeCSV(e.type || 'General Enquiry'),
+      escapeCSV(e.propertyTitle || e.propertyName || ''),
+      escapeCSV(e.budget || ''),
+      escapeCSV((e.status || 'new').toUpperCase()),
+      escapeCSV(e.notes || e.message || '')
+    ].join(',');
+  });
+
+  const csvString = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+
+  if (typeof Blob !== 'undefined' && typeof URL !== 'undefined' && typeof document !== 'undefined') {
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const dateStamp = new Date().toISOString().slice(0, 10);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `Vision_of_Excellence_Leads_${dateStamp}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  return csvString;
 }
 
 export const WHATSAPP_PHONE = '971585673050';

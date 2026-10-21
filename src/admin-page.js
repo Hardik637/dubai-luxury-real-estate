@@ -9,7 +9,8 @@ import {
   subscribeToEnquiries,
   updateEnquiryStatus,
   deleteEnquiry,
-  exportEnquiriesToCSV
+  exportEnquiriesToCSV,
+  seedDemoEnquiries
 } from './services/enquiries.js';
 import {
   getProperties,
@@ -50,6 +51,7 @@ const enquiriesList = document.getElementById('enquiries-list');
 const searchEnquiriesInput = document.getElementById('search-enquiries');
 const filterEnquiryStatus = document.getElementById('filter-enquiry-status');
 const btnExportCsv = document.getElementById('btn-export-csv');
+const btnSeedEnquiries = document.getElementById('btn-seed-enquiries');
 const btnRefreshEnquiries = document.getElementById('btn-refresh-enquiries');
 
 // Properties Controls
@@ -193,6 +195,27 @@ function switchTab(tab) {
 /* ==========================================================================
    TAB 1: CLIENT ENQUIRIES CONTROLLER
    ========================================================================== */
+function getFilteredEnquiries() {
+  const query = (searchEnquiriesInput ? searchEnquiriesInput.value : '').trim().toLowerCase();
+  const statusFilter = filterEnquiryStatus ? filterEnquiryStatus.value : 'all';
+
+  return allEnquiries.filter(e => {
+    // Status filter
+    if (statusFilter !== 'all' && e.status !== statusFilter) return false;
+
+    // Search query
+    if (query) {
+      const matchName = (e.fullName || '').toLowerCase().includes(query);
+      const matchEmail = (e.email || '').toLowerCase().includes(query);
+      const matchPhone = (e.phone || '').toLowerCase().includes(query);
+      const matchProp = (e.propertyTitle || '').toLowerCase().includes(query);
+      const matchNotes = (e.notes || '').toLowerCase().includes(query);
+      return matchName || matchEmail || matchPhone || matchProp || matchNotes;
+    }
+    return true;
+  });
+}
+
 function setupEnquiryEvents() {
   if (searchEnquiriesInput) {
     searchEnquiriesInput.addEventListener('input', () => renderEnquiries());
@@ -204,7 +227,27 @@ function setupEnquiryEvents() {
     btnRefreshEnquiries.addEventListener('click', () => loadEnquiries());
   }
   if (btnExportCsv) {
-    btnExportCsv.addEventListener('click', () => exportEnquiriesToCSV());
+    btnExportCsv.addEventListener('click', () => {
+      const filtered = getFilteredEnquiries();
+      const targetList = (filtered && filtered.length > 0) ? filtered : allEnquiries;
+      exportEnquiriesToCSV(targetList);
+    });
+  }
+  if (btnSeedEnquiries) {
+    btnSeedEnquiries.addEventListener('click', async () => {
+      btnSeedEnquiries.disabled = true;
+      btnSeedEnquiries.textContent = 'Adding...';
+      try {
+        allEnquiries = await seedDemoEnquiries();
+        updateEnquiriesMetrics();
+        renderEnquiries();
+      } catch (err) {
+        console.error('Seed demo error:', err);
+      } finally {
+        btnSeedEnquiries.disabled = false;
+        btnSeedEnquiries.textContent = '+ Demo Leads';
+      }
+    });
   }
 }
 
@@ -237,24 +280,7 @@ function updateEnquiriesMetrics() {
 function renderEnquiries() {
   if (!enquiriesList) return;
 
-  const query = (searchEnquiriesInput.value || '').trim().toLowerCase();
-  const statusFilter = filterEnquiryStatus.value;
-
-  const filtered = allEnquiries.filter(e => {
-    // Status filter
-    if (statusFilter !== 'all' && e.status !== statusFilter) return false;
-
-    // Search query
-    if (query) {
-      const matchName = (e.fullName || '').toLowerCase().includes(query);
-      const matchEmail = (e.email || '').toLowerCase().includes(query);
-      const matchPhone = (e.phone || '').toLowerCase().includes(query);
-      const matchProp = (e.propertyTitle || '').toLowerCase().includes(query);
-      const matchNotes = (e.notes || '').toLowerCase().includes(query);
-      return matchName || matchEmail || matchPhone || matchProp || matchNotes;
-    }
-    return true;
-  });
+  const filtered = getFilteredEnquiries();
 
   if (filtered.length === 0) {
     enquiriesList.innerHTML = `
