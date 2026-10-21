@@ -9,8 +9,7 @@ import {
   subscribeToEnquiries,
   updateEnquiryStatus,
   deleteEnquiry,
-  exportEnquiriesToCSV,
-  seedDemoEnquiries
+  exportEnquiriesToCSV
 } from './services/enquiries.js';
 import {
   getProperties,
@@ -51,7 +50,6 @@ const enquiriesList = document.getElementById('enquiries-list');
 const searchEnquiriesInput = document.getElementById('search-enquiries');
 const filterEnquiryStatus = document.getElementById('filter-enquiry-status');
 const btnExportCsv = document.getElementById('btn-export-csv');
-const btnSeedEnquiries = document.getElementById('btn-seed-enquiries');
 const btnRefreshEnquiries = document.getElementById('btn-refresh-enquiries');
 
 // Properties Controls
@@ -231,22 +229,6 @@ function setupEnquiryEvents() {
       const filtered = getFilteredEnquiries();
       const targetList = (filtered && filtered.length > 0) ? filtered : allEnquiries;
       exportEnquiriesToCSV(targetList);
-    });
-  }
-  if (btnSeedEnquiries) {
-    btnSeedEnquiries.addEventListener('click', async () => {
-      btnSeedEnquiries.disabled = true;
-      btnSeedEnquiries.textContent = 'Adding...';
-      try {
-        allEnquiries = await seedDemoEnquiries();
-        updateEnquiriesMetrics();
-        renderEnquiries();
-      } catch (err) {
-        console.error('Seed demo error:', err);
-      } finally {
-        btnSeedEnquiries.disabled = false;
-        btnSeedEnquiries.textContent = '+ Demo Leads';
-      }
     });
   }
 }

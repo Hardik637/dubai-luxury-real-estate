@@ -4,23 +4,24 @@ console.log('\n============================================================');
 console.log('🧪 TESTING DEMO ENQUIRIES & CSV EXPORT FUNCTIONALITY');
 console.log('============================================================\n');
 
-// 1. Verify DEMO_ENQUIRIES
-console.log(`[Test 1] Verifying Demo Enquiries dataset...`);
-if (!Array.isArray(DEMO_ENQUIRIES) || DEMO_ENQUIRIES.length < 5) {
-  throw new Error(`Demo enquiries list is invalid or too small: length = ${DEMO_ENQUIRIES?.length}`);
-}
-console.log(`  ✓ Demo enquiries present: ${DEMO_ENQUIRIES.length} entries`);
-
-for (const enq of DEMO_ENQUIRIES) {
-  if (!enq.id || !enq.fullName || !enq.email || !enq.phone || !enq.type || !enq.status) {
-    throw new Error(`Demo enquiry missing mandatory fields: ${JSON.stringify(enq)}`);
+const sampleEnquiries = [
+  {
+    id: 'enq_test_01',
+    fullName: 'Sir David Montgomery',
+    email: 'd.montgomery@scot-invest.co.uk',
+    phone: '+44 7911 123456',
+    type: 'Private Acquisition Advisory',
+    budget: '$15M – $25M',
+    propertyTitle: 'Sanctuary of the Sun (Jumeirah Bay Island)',
+    notes: 'Seeking waterfront residency.',
+    status: 'new',
+    createdAt: new Date().toISOString()
   }
-}
-console.log(`  ✓ All demo enquiries have required fields: id, fullName, email, phone, type, status, notes`);
+];
 
-// 2. Test exportEnquiriesToCSV with DEMO_ENQUIRIES
-console.log(`\n[Test 2] Testing exportEnquiriesToCSV output format...`);
-const csv = exportEnquiriesToCSV(DEMO_ENQUIRIES);
+// 2. Test exportEnquiriesToCSV with sample enquiries
+console.log(`\n[Test] Testing exportEnquiriesToCSV output format...`);
+const csv = exportEnquiriesToCSV(sampleEnquiries);
 
 if (!csv) {
   throw new Error('exportEnquiriesToCSV returned empty or falsy result!');
