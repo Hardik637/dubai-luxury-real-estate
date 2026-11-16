@@ -28,26 +28,43 @@ export default async function handler(req, res) {
   } catch {
     return res.status(400).json({error:'Invalid JSON'});
   }
-  const field = (key, limit) => typeof body?.[key] === 'string' ? body[key].trim().slice(0,limit) : '';
-  const lead = {name:field('name',100), phone:field('phone',20), email:field('email',254),
-    unit:field('unit',100), contact:field('contact',12)};
-  if (!lead.name || !/^\+[1-9]\d{7,14}$/.test(lead.phone) ||
-      !['website','call','whatsapp'].includes(lead.contact)) {
-    return res.status(400).json({error:'Invalid enquiry'});
+  const field = (key, limit) => typeof body?.[key] === 'string' ? body[key].trim().slice(0, limit) : '';
+  const name = field('name', 100);
+  const phone = field('phone', 20);
+  const email = field('email', 254);
+  const job = field('job', 100);
+  const unit = field('unit', 40);
+  const budget = field('budget', 40);
+  const purpose = field('purpose', 70);
+  const source = {website: 'Website enquiry', call: 'Website call', whatsapp: 'Website WhatsApp'}[field('contact', 12)];
+
+  if (!name || !/^\+[1-9]\d{7,14}$/.test(phone) || typeof source !== 'string') {
+    return res.status(400).json({error: 'Invalid name, phone or enquiry source'});
   }
+  if (source === 'Website enquiry' && (
+    !["3 BR Townhouse","4 BR Villa","5 BR Villa","6–7 BR Villa","Undecided"].includes(unit) ||
+    (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ||
+    (budget && !["Under AED 2M","AED 2M–3M","AED 3M–5M","AED 5M–7M","AED 7M+","Still deciding"].includes(budget)) ||
+    (purpose && !["Investment or rental income","Long-term capital growth","Primary residence","Second or holiday home","Relocating to the UAE","Other or still exploring"].includes(purpose))
+  )) {
+    return res.status(400).json({error: 'Complete all enquiry fields'});
+  }
+
   const {SUKOON_LEADS_WEBHOOK, SUKOON_LEADS_SECRET} = process.env;
   if (!SUKOON_LEADS_WEBHOOK || !SUKOON_LEADS_SECRET) {
-    return res.status(503).json({error:'Enquiry service unavailable'});
+    return res.status(503).json({error: 'Enquiry service unavailable'});
   }
   try {
-    const result = await fetch(SUKOON_LEADS_WEBHOOK, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({...lead, secret:SUKOON_LEADS_SECRET}),
-      signal:AbortSignal.timeout(8000),
+    const response = await fetch(SUKOON_LEADS_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name, phone, email, job, budget, purpose, unit, source, secret: SUKOON_LEADS_SECRET}),
+      signal: AbortSignal.timeout(8000),
     });
-    const receipt = await result.json();
-    if (result.ok && receipt.saved) return res.status(201).json({saved:true});
-  } catch {}
-  return res.status(502).json({error:'Could not confirm enquiry'});
+    const receipt = await response.json();
+    if (response.ok && receipt.saved === true) return res.status(201).json({saved: true});
+  } catch (error) {
+    console.error('Sukoon enquiry webhook unavailable:', error.name);
+  }
+  return res.status(502).json({error: 'Could not confirm enquiry'});
 }
