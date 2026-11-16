@@ -2,7 +2,25 @@ const dialog = document.querySelector('#contactDialog');
 const businessPhone = '971585673050';
 const mainForm = document.querySelector('#leadForm');
 const contactForm = document.querySelector('#contactForm');
+const contactCountry = document.querySelector('#contactCountry');
+const contactDialingCode = document.querySelector('#contactDialingCode');
+const contactSubmit = document.querySelector('#contactSubmit');
+const contactPhone = document.querySelector('#contactPhone');
+const countryNames = new Intl.DisplayNames(['en'], {type: 'region'});
 let contactMode;
+let contactCountryChanged = false;
+
+function updateContactCountry() {
+  const option = contactCountry.selectedOptions[0];
+  const flag = String.fromCodePoint(...Array.from(option.value, character => character.charCodeAt(0) + 127397));
+  contactDialingCode.textContent = flag + ' ' + option.dataset.code;
+  contactPhone.placeholder = ({AE: '50 123 4567', US: '202 555 0123', GB: '7700 900123'})[option.value] ?? 'Local phone number';
+}
+
+contactCountry.addEventListener('change', () => {
+  contactCountryChanged = true;
+  updateContactCountry();
+});
 let dialingCode = '+971';
 let phoneRegion = 'AE';
 let phoneLibrary;
@@ -52,8 +70,17 @@ for (const trigger of document.querySelectorAll('[data-contact]')) {
   trigger.addEventListener('click', event => {
     event.preventDefault();
     contactMode = trigger.dataset.contact;
+    const isCall = contactMode === 'call';
     document.querySelector('#contactTitle').textContent =
-      contactMode === 'call' ? 'Call VOE Properties' : 'Continue to WhatsApp';
+      isCall ? 'Call VOE Properties' : 'Chat with VOE Properties on WhatsApp';
+    document.querySelector('#contactDescription').textContent =
+      isCall ? 'Speak to a property advisor about Sukoon by Sanzen.' :
+        'Ask our team about current prices, availability and floor plans at Sukoon by Sanzen.';
+    document.querySelector('#contactSubmitLabel').textContent = isCall ? 'Call Now' : 'Open WhatsApp';
+    document.querySelector('#contactPrivacy').textContent =
+      isCall ? 'We use your details to respond to your enquiry.' : 'We use your details to respond on WhatsApp.';
+    contactSubmit.classList.toggle('contact-call', isCall);
+    contactForm.querySelector('[role=status]').textContent = '';
     dialog.showModal();
   });
 }
@@ -66,10 +93,13 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
     const values = Object.fromEntries(new FormData(form));
     const status = form.querySelector('[role=status]');
     const submit = form.querySelector('[type=submit]');
-    let phone = values.phone.trim();
+    const selectedCountry = contactCountry.selectedOptions[0];
+    const region = form === contactForm ? selectedCountry.value : phoneRegion;
+    const prefix = form === contactForm ? selectedCountry.dataset.code : dialingCode;
+    let phone = values.phone.trim().replace(/^00/, '+');
     if (!phone.startsWith('+')) {
-      phone = phoneLibrary?.parsePhoneNumberFromString(phone, phoneRegion)?.number ??
-        (dialingCode + phone.replace(/^0/, ''));
+      phone = phoneLibrary?.parsePhoneNumberFromString(phone, region)?.number ??
+        (prefix + phone.replace(/^0/, ''));
     }
     phone = phone.replace(/[\s().-]/g, '');
     if (!values.name.trim() || !/^\+[1-9]\d{7,14}$/.test(phone)) {
@@ -95,7 +125,12 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
           // Tracking must never interrupt a saved enquiry.
         }
       }
+      const selectedRegion = contactCountry.value;
       form.reset();
+      if (form === contactForm) {
+        contactCountry.value = selectedRegion;
+        updateContactCountry();
+      }
       if (contact === 'website') {
         form.hidden = true;
         const success = document.querySelector('#formSuccess');
@@ -129,15 +164,26 @@ async function localize() {
   const {country, currency, rate} = await response.json();
   const prefix = await import('https://esm.sh/libphonenumber-js@1.12.24').then(library => {
     phoneLibrary = library;
+    const existingCountries = new Set(Array.from(contactCountry.options, option => option.value));
+    const regions = library.getCountries().filter(region => !existingCountries.has(region));
+    regions.sort((first, second) => countryNames.of(first).localeCompare(countryNames.of(second)));
+    for (const region of regions) {
+      const code = '+' + library.getCountryCallingCode(region);
+      const option = new Option(countryNames.of(region) + ' (' + code + ')', region);
+      option.dataset.code = code;
+      contactCountry.add(option);
+    }
     return '+' + library.getCountryCallingCode(country);
   }).catch(() => ({AE:'+971',US:'+1',IN:'+91',GB:'+44',DE:'+49',FR:'+33'}[country]));
   if (prefix) {
     dialingCode = prefix;
     phoneRegion = country;
   }
-  for (const input of document.querySelectorAll('input[type=tel]')) {
-    input.placeholder = dialingCode + ' …';
+  if (!contactCountryChanged && Array.from(contactCountry.options).some(option => option.value === country)) {
+    contactCountry.value = country;
+    updateContactCountry();
   }
+  mainForm.querySelector('input[type=tel]').placeholder = dialingCode + ' …';
   if (currency === 'AED' || !(rate > 0)) return;
   const format = new Intl.NumberFormat(undefined, {
     style:'currency', currency, currencyDisplay:'code', maximumFractionDigits:0,

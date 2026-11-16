@@ -33,6 +33,8 @@
     }
   </script>
   <style>
+    #contactSubmit.contact-call { background: #123836; color: white; }
+    #contactSubmit.contact-call:hover { background: #0c2927; }
     .glass-card {
       background: rgba(10, 25, 30, 0.72);
       backdrop-filter: blur(14px);
@@ -451,18 +453,50 @@
     <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
   </a>
 
-  <dialog id="contactDialog" class="w-11/12 max-w-md rounded-2xl bg-white p-6 text-slate-900 backdrop:bg-black/70">
+  <dialog id="contactDialog" aria-labelledby="contactTitle" aria-describedby="contactDescription" class="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[34rem] overflow-y-auto rounded-[1.75rem] bg-[#faf9f7] p-5 text-slate-800 shadow-2xl backdrop:bg-black/65 sm:p-7">
     <form id="contactForm" class="space-y-4">
-      <button type="button" id="closeContact" class="float-right px-2 text-xl" aria-label="Close">×</button>
-      <h2 id="contactTitle" class="text-xl font-semibold">Contact VOE Properties</h2>
-      <label class="block">Full name<input name="name" required maxlength="100" autocomplete="name" class="mt-1 block w-full rounded-lg border p-2"></label>
-      <label class="block">Phone number<input name="phone" required type="tel" autocomplete="tel" class="mt-1 block w-full rounded-lg border p-2"></label>
-      <p class="text-xs">VOE Properties will use your details to respond. <a href="/privacy" class="underline">Privacy policy</a></p>
-      <button type="submit" class="w-full rounded-lg bg-[#123836] p-3 font-semibold text-white">Submit and continue</button>
-      <p role="status"></p>
+      <div class="relative pr-12">
+        <button type="button" id="closeContact" class="absolute right-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-2xl leading-none shadow-sm hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" aria-label="Close contact form">×</button>
+        <h2 id="contactTitle" class="text-xl font-bold leading-tight sm:text-2xl">Chat with VOE Properties on WhatsApp</h2>
+        <p id="contactDescription" class="mt-2 text-sm leading-relaxed text-slate-600">Ask our team about current prices, availability and floor plans at Sukoon by Sanzen.</p>
+      </div>
+      <div>
+        <label for="contactName" class="block text-sm font-semibold">Your name <span aria-hidden="true" class="text-red-700">*</span></label>
+        <input id="contactName" name="name" required maxlength="100" autocomplete="name" class="mt-2 block w-full rounded-2xl bg-[#f4efe9] px-4 py-3.5 text-base focus:outline focus:outline-2 focus:outline-[#0F4C5C]">
+      </div>
+      <div>
+        <label for="contactPhone" class="block text-sm font-semibold">Phone number <span aria-hidden="true" class="text-red-700">*</span></label>
+        <div class="mt-2 flex rounded-2xl bg-[#f4efe9] focus-within:outline focus-within:outline-2 focus-within:outline-[#0F4C5C]">
+          <div class="relative flex shrink-0 items-center border-r border-slate-300/70 px-3">
+            <span id="contactDialingCode" aria-hidden="true" class="whitespace-nowrap text-sm font-semibold">🇦🇪 +971</span>
+            <span aria-hidden="true" class="ml-1.5 text-xs">⌄</span>
+            <select id="contactCountry" aria-label="Phone country code" autocomplete="tel-country-code" class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
+            <option value="AE" data-code="+971">United Arab Emirates (+971)</option>
+            <option value="SA" data-code="+966">Saudi Arabia (+966)</option>
+            <option value="OM" data-code="+968">Oman (+968)</option>
+            <option value="QA" data-code="+974">Qatar (+974)</option>
+            <option value="KW" data-code="+965">Kuwait (+965)</option>
+            <option value="BH" data-code="+973">Bahrain (+973)</option>
+            <option value="GB" data-code="+44">United Kingdom (+44)</option>
+            <option value="US" data-code="+1">United States (+1)</option>
+            <option value="CA" data-code="+1">Canada (+1)</option>
+            <option value="IN" data-code="+91">India (+91)</option>
+            <option value="PK" data-code="+92">Pakistan (+92)</option>
+            <option value="FR" data-code="+33">France (+33)</option>
+            <option value="DE" data-code="+49">Germany (+49)</option>
+            </select>
+          </div>
+          <input id="contactPhone" name="phone" required maxlength="32" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="50 123 4567" class="min-w-0 flex-1 bg-transparent px-3 py-3.5 text-base outline-none">
+        </div>
+      </div>
+      <button id="contactSubmit" type="submit" class="w-full rounded-full bg-[#25D366] px-4 py-3.5 text-base font-bold text-[#08251a] hover:bg-[#1fbd5a] disabled:cursor-wait disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+        <span id="contactSubmitLabel">Open WhatsApp</span>
+      </button>
+      <p role="status" class="empty:hidden text-center text-sm text-slate-700 [&amp;_a]:underline"></p>
+      <p class="text-center text-xs leading-relaxed text-slate-600"><span id="contactPrivacy">We use your details to respond on WhatsApp.</span> <a href="/privacy" target="_blank" rel="noopener" class="underline underline-offset-2">Privacy policy</a></p>
     </form>
   </dialog>
-  <script src="/sukoon-assets/enquiry.js" defer></script>
+  <script src="/sukoon-assets/enquiry.js?v=contact-dialog-1" defer></script>
 </body>
 </html>
 
