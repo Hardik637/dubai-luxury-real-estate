@@ -7,6 +7,29 @@ let dialingCode = '+971';
 let phoneRegion = 'AE';
 let phoneLibrary;
 
+const pixelId = document.querySelector('meta[name="sukoon-meta-pixel-id"]')?.content;
+if (/^\d+$/.test(pixelId ?? '')) {
+  if (!window.fbq) {
+    const pixel = (...args) => {
+      if (pixel.callMethod) pixel.callMethod(...args);
+      else pixel.queue.push(args);
+    };
+    pixel.push = pixel;
+    pixel.loaded = true;
+    pixel.version = '2.0';
+    pixel.queue = [];
+    window.fbq = window._fbq = pixel;
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    document.head.append(script);
+  }
+  window.fbq('set', 'autoConfig', false, pixelId);
+  window.fbq('init', pixelId);
+  window.fbq('trackSingle', pixelId, 'PageView');
+}
+
 for (const trigger of document.querySelectorAll('[data-contact]')) {
   trigger.addEventListener('click', event => {
     event.preventDefault();
@@ -43,7 +66,14 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({...values, phone, contact}),
       });
-      if (!response.ok) throw new Error('Enquiry failed');
+      if (!response.ok || (await response.json()).saved !== true) throw new Error('Enquiry failed');
+      if (contact === 'website' && /^\d+$/.test(pixelId ?? '')) {
+        try {
+          window.fbq('trackSingle', pixelId, 'Lead');
+        } catch {
+          // Tracking must never interrupt a saved enquiry.
+        }
+      }
       form.reset();
       if (contact === 'website') {
         form.hidden = true;
