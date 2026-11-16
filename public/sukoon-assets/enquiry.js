@@ -6,6 +6,24 @@ let contactMode;
 let dialingCode = '+971';
 let phoneRegion = 'AE';
 let phoneLibrary;
+const enquiryEndpoint = 'https://script.google.com/macros/s/AKfycbzixHq3g_JgE8STqWJ3nGjOt6HSiLB51rD_18Qns7DYtucFIm0XO1nRLg3Vso7ooBag4g/exec';
+
+async function getWebsiteChallenge() {
+  const response = await fetch(enquiryEndpoint + '?submission=' + crypto.randomUUID(), {
+    credentials: 'omit',
+    signal: AbortSignal.timeout(12000),
+  });
+  if (!response.ok) throw new Error('Could not start enquiry');
+  const {nonce, expires, proof} = await response.json();
+  if (typeof proof !== 'string' || expires <= Date.now()) throw new Error('Invalid challenge');
+
+  const encoder = new TextEncoder();
+  for (let answer = 0; answer < 100000; answer++) {
+    const bytes = new Uint8Array(await crypto.subtle.digest('SHA-256', encoder.encode(proof + ':' + answer)));
+    if (bytes[0] === 0 && (bytes[1] & 240) === 0) return {nonce, expires, proof, answer};
+  }
+  throw new Error('Could not verify enquiry');
+}
 
 const pixelId = document.querySelector('meta[name="sukoon-meta-pixel-id"]')?.content;
 if (/^\d+$/.test(pixelId ?? '')) {
@@ -61,10 +79,13 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
     submit.disabled = true;
     status.textContent = 'Saving your enquiry…';
     try {
-      const response = await fetch('/api/sukoon-enquiry', {
+      const challenge = await getWebsiteChallenge();
+      const response = await fetch(enquiryEndpoint, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({...values, phone, contact}),
+        credentials: 'omit',
+        headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+        body: JSON.stringify({...values, phone, contact, channel: 'sukoon-website', challenge}),
+        signal: AbortSignal.timeout(20000),
       });
       if (!response.ok || (await response.json()).saved !== true) throw new Error('Enquiry failed');
       if (contact === 'website' && /^\d+$/.test(pixelId ?? '')) {
