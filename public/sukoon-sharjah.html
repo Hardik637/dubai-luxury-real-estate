@@ -152,14 +152,38 @@
             <form id="leadForm" class="space-y-4">
               <label class="block text-sm font-medium">Full name<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="name" type="text" autocomplete="name" maxlength="100" required></label>
               <div class="grid gap-3 sm:grid-cols-2">
-                <label class="block text-sm font-medium">Phone / WhatsApp<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="phone" type="tel" autocomplete="tel" maxlength="30" required></label>
+                <div>
+                  <label for="leadPhone" class="block text-sm font-medium">Phone / WhatsApp</label>
+                  <div class="mt-1 flex rounded-xl border border-white/20 bg-brand-dark focus-within:border-brand-goldLight">
+                    <div class="relative flex shrink-0 items-center gap-1.5 border-r border-white/20 px-2.5">
+                      <span data-dialing-code aria-hidden="true" class="whitespace-nowrap text-sm font-semibold">🇦🇪 +971</span>
+                      <span aria-hidden="true" class="text-xs">⌄</span>
+                      <select id="leadCountry" data-phone-country aria-label="Phone country code" autocomplete="tel-country-code" class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
+            <option value="AE" data-code="+971">United Arab Emirates (+971)</option>
+            <option value="SA" data-code="+966">Saudi Arabia (+966)</option>
+            <option value="OM" data-code="+968">Oman (+968)</option>
+            <option value="QA" data-code="+974">Qatar (+974)</option>
+            <option value="KW" data-code="+965">Kuwait (+965)</option>
+            <option value="BH" data-code="+973">Bahrain (+973)</option>
+            <option value="GB" data-code="+44">United Kingdom (+44)</option>
+            <option value="US" data-code="+1">United States (+1)</option>
+            <option value="CA" data-code="+1">Canada (+1)</option>
+            <option value="IN" data-code="+91">India (+91)</option>
+            <option value="PK" data-code="+92">Pakistan (+92)</option>
+            <option value="FR" data-code="+33">France (+33)</option>
+            <option value="DE" data-code="+49">Germany (+49)</option>
+            </select>
+                    </div>
+                    <input id="leadPhone" class="min-w-0 flex-1 bg-transparent px-2.5 py-3 text-base text-white outline-none" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="50 123 4567" maxlength="30" required>
+                  </div>
+                </div>
                 <label class="block text-sm font-medium">Villa Type<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="unit"><option value="" selected>Select if you know</option><option>3 BR Townhouse</option><option>4 BR Villa</option><option>5 BR Villa</option><option>6–7 BR Villa</option><option>Undecided</option></select></label>
               </div>
               <details class="space-y-3">
                 <summary class="cursor-pointer text-sm text-white/75">Add buying preferences</summary>
                 <label class="block text-sm font-medium">Email<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="email" type="email" autocomplete="email" maxlength="254"></label>
                 <label class="block text-sm font-medium">Job title<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="job" type="text" autocomplete="organization-title" maxlength="100"></label>
-              <label class="block text-sm font-medium">Property budget<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="budget"><option value="" selected disabled>Select an option</option><option>Under AED 2M</option><option>AED 2M–3M</option><option>AED 3M–5M</option><option>AED 5M–7M</option><option>AED 7M+</option><option>Still deciding</option></select></label>
+              <label class="block text-sm font-medium">Property budget<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="budget"><option value="" selected disabled>Select an option</option><option value="Under AED 2M">Under AED 2M</option><option value="AED 2M–3M">AED 2M–3M</option><option value="AED 3M–5M">AED 3M–5M</option><option value="AED 5M–7M">AED 5M–7M</option><option value="AED 7M+">AED 7M+</option><option>Still deciding</option></select></label>
               <label class="block text-sm font-medium">Why are you looking to buy property in Dubai or nearby?<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="purpose"><option value="" selected disabled>Select an option</option><option>Investment or rental income</option><option>Long-term capital growth</option><option>Primary residence</option><option>Second or holiday home</option><option>Relocating to the UAE</option><option>Other or still exploring</option></select></label>
               </details>
               
@@ -344,9 +368,9 @@
         <label for="contactPhone" class="block text-sm font-semibold">Phone number <span aria-hidden="true" class="text-red-700">*</span></label>
         <div class="mt-2 flex rounded-2xl bg-[#f4efe9] focus-within:outline focus-within:outline-2 focus-within:outline-[#0F4C5C]">
           <div class="relative flex shrink-0 items-center border-r border-slate-300/70 px-3">
-            <span id="contactDialingCode" aria-hidden="true" class="whitespace-nowrap text-sm font-semibold">🇦🇪 +971</span>
+            <span id="contactDialingCode" data-dialing-code aria-hidden="true" class="whitespace-nowrap text-sm font-semibold">🇦🇪 +971</span>
             <span aria-hidden="true" class="ml-1.5 text-xs">⌄</span>
-            <select id="contactCountry" aria-label="Phone country code" autocomplete="tel-country-code" class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
+            <select id="contactCountry" data-phone-country aria-label="Phone country code" autocomplete="tel-country-code" class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
             <option value="AE" data-code="+971">United Arab Emirates (+971)</option>
             <option value="SA" data-code="+966">Saudi Arabia (+966)</option>
             <option value="OM" data-code="+968">Oman (+968)</option>
@@ -372,7 +396,7 @@
       <p class="text-center text-xs leading-relaxed text-slate-600"><span id="contactPrivacy">We use your details to respond on WhatsApp.</span> <a href="/privacy" target="_blank" rel="noopener" class="underline underline-offset-2">Privacy policy</a></p>
     </form>
   </dialog>
-  <script src="/sukoon-assets/enquiry.js?v=project-details-1" defer></script>
+  <script src="/sukoon-assets/enquiry.js?v=visitor-country-1" defer></script>
 </body>
 </html>
 

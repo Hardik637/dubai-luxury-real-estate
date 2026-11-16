@@ -2,28 +2,27 @@ const dialog = document.querySelector('#contactDialog');
 const businessPhone = '971585673050';
 const mainForm = document.querySelector('#leadForm');
 const contactForm = document.querySelector('#contactForm');
-const contactCountry = document.querySelector('#contactCountry');
-const contactDialingCode = document.querySelector('#contactDialingCode');
 const contactSubmit = document.querySelector('#contactSubmit');
-const contactPhone = document.querySelector('#contactPhone');
 const countryNames = new Intl.DisplayNames(['en'], {type: 'region'});
 let contactMode;
-let contactCountryChanged = false;
+let phoneLibrary;
+const changedCountries = new WeakSet();
 
-function updateContactCountry() {
-  const option = contactCountry.selectedOptions[0];
+function updatePhoneCountry(select) {
+  const option = select.selectedOptions[0];
   const flag = String.fromCodePoint(...Array.from(option.value, character => character.charCodeAt(0) + 127397));
-  contactDialingCode.textContent = flag + ' ' + option.dataset.code;
-  contactPhone.placeholder = ({AE: '50 123 4567', US: '202 555 0123', GB: '7700 900123'})[option.value] ?? 'Local phone number';
+  const form = select.form;
+  form.querySelector('[data-dialing-code]').textContent = flag + ' ' + option.dataset.code;
+  form.querySelector('input[type=tel]').placeholder =
+    ({AE: '50 123 4567', US: '202 555 0123', GB: '7700 900123'})[option.value] ?? 'Local phone number';
 }
 
-contactCountry.addEventListener('change', () => {
-  contactCountryChanged = true;
-  updateContactCountry();
-});
-let dialingCode = '+971';
-let phoneRegion = 'AE';
-let phoneLibrary;
+for (const select of document.querySelectorAll('[data-phone-country]')) {
+  select.addEventListener('change', () => {
+    changedCountries.add(select);
+    updatePhoneCountry(select);
+  });
+}
 const enquiryEndpoint = 'https://script.google.com/macros/s/AKfycbzixHq3g_JgE8STqWJ3nGjOt6HSiLB51rD_18Qns7DYtucFIm0XO1nRLg3Vso7ooBag4g/exec';
 
 async function getWebsiteChallenge() {
@@ -93,9 +92,13 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
     const values = Object.fromEntries(new FormData(form));
     const status = form.querySelector('[role=status]');
     const submit = form.querySelector('[type=submit]');
-    const selectedCountry = contactCountry.selectedOptions[0];
-    const region = form === contactForm ? selectedCountry.value : phoneRegion;
-    const prefix = form === contactForm ? selectedCountry.dataset.code : dialingCode;
+    if (submit.disabled) return;
+    submit.disabled = true;
+    const location = await locationReady;
+    const select = form.querySelector('[data-phone-country]');
+    const selectedCountry = select?.selectedOptions[0];
+    const region = selectedCountry?.value ?? 'AE';
+    const prefix = selectedCountry?.dataset.code ?? '+971';
     let phone = values.phone.trim().replace(/^00/, '+');
     if (!phone.startsWith('+')) {
       phone = phoneLibrary?.parsePhoneNumberFromString(phone, region)?.number ??
@@ -104,9 +107,9 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
     phone = phone.replace(/[\s().-]/g, '');
     if (!values.name.trim() || !/^\+[1-9]\d{7,14}$/.test(phone)) {
       status.textContent = 'Enter your name and a valid phone number, including the country code.';
+      submit.disabled = false;
       return;
     }
-    submit.disabled = true;
     status.textContent = 'Saving your enquiry…';
     try {
       const challenge = await getWebsiteChallenge();
@@ -114,7 +117,11 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
         method: 'POST',
         credentials: 'omit',
         headers: {'Content-Type': 'text/plain;charset=UTF-8'},
-        body: JSON.stringify({...values, phone, contact, channel: 'sukoon-website', challenge}),
+        body: JSON.stringify({
+          ...values, phone, contact, channel: 'sukoon-website', challenge,
+          visitorCountry: location?.country,
+          visitorCountryName: location?.country ? countryNames.of(location.country) : undefined,
+        }),
         signal: AbortSignal.timeout(20000),
       });
       if (!response.ok || (await response.json()).saved !== true) throw new Error('Enquiry failed');
@@ -125,11 +132,10 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
           // Tracking must never interrupt a saved enquiry.
         }
       }
-      const selectedRegion = contactCountry.value;
       form.reset();
-      if (form === contactForm) {
-        contactCountry.value = selectedRegion;
-        updateContactCountry();
+      if (select) {
+        select.value = selectedCountry.value;
+        updatePhoneCountry(select);
       }
       if (contact === 'website') {
         form.hidden = true;
@@ -155,36 +161,50 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
   });
 }
 
-const amounts = {'AED 207,000':207000, 'AED 207K':207000, 'AED 2.07M':2070000,
-  'AED 2 Million':2000000, 'AED 4.5M–6M':[4500000,6000000],
-  'AED 2.98M':2980000, 'AED 4.06M':4060000, 'AED 4.60M':4600000, 'AED 6.19M':6190000};
-const prices = /AED (?:207,000|207K|2\.07M|2\.98M|4\.06M|4\.60M|6\.19M|2 Million|4\.5M–6M)/g;
-async function localize() {
-  const response = await fetch('/api/sukoon-enquiry');
-  if (!response.ok) return;
-  const {country, currency, rate} = await response.json();
-  const prefix = await import('https://esm.sh/libphonenumber-js@1.12.24').then(library => {
-    phoneLibrary = library;
-    const existingCountries = new Set(Array.from(contactCountry.options, option => option.value));
-    const regions = library.getCountries().filter(region => !existingCountries.has(region));
-    regions.sort((first, second) => countryNames.of(first).localeCompare(countryNames.of(second)));
+const amounts = {
+  'AED 2.07M': 2070000, 'AED 2.98M': 2980000, 'AED 4.06M': 4060000,
+  'AED 4.60M': 4600000, 'AED 6.19M': 6190000, 'AED 2M–3M': [2000000, 3000000],
+  'AED 3M–5M': [3000000, 5000000], 'AED 5M–7M': [5000000, 7000000],
+  'AED 2M': 2000000, 'AED 7M': 7000000,
+};
+const prices = new RegExp(Object.keys(amounts).map(price => price.replace('.', '\\.')).join('|'), 'g');
+
+const locationReady = fetch('/api/sukoon-enquiry', {signal: AbortSignal.timeout(6500)})
+  .then(response => response.ok ? response.json() : null)
+  .catch(() => null);
+
+function selectDetectedCountry(select, country) {
+  if (!country || changedCountries.has(select) || !Array.from(select.options).some(option => option.value === country)) return;
+  select.value = country;
+  updatePhoneCountry(select);
+}
+
+async function localizePhones() {
+  const selects = Array.from(document.querySelectorAll('[data-phone-country]'));
+  const libraryReady = import('https://esm.sh/libphonenumber-js@1.12.24').catch(() => null);
+  const location = await locationReady;
+  for (const select of selects) selectDetectedCountry(select, location?.country);
+  phoneLibrary = await libraryReady;
+  if (!phoneLibrary) return;
+
+  const regions = phoneLibrary.getCountries().sort((first, second) => countryNames.of(first).localeCompare(countryNames.of(second)));
+  for (const select of selects) {
+    const existing = new Set(Array.from(select.options, option => option.value));
     for (const region of regions) {
-      const code = '+' + library.getCountryCallingCode(region);
+      if (existing.has(region)) continue;
+      const code = '+' + phoneLibrary.getCountryCallingCode(region);
       const option = new Option(countryNames.of(region) + ' (' + code + ')', region);
       option.dataset.code = code;
-      contactCountry.add(option);
+      select.add(option);
     }
-    return '+' + library.getCountryCallingCode(country);
-  }).catch(() => ({AE:'+971',US:'+1',IN:'+91',GB:'+44',DE:'+49',FR:'+33'}[country]));
-  if (prefix) {
-    dialingCode = prefix;
-    phoneRegion = country;
+    selectDetectedCountry(select, location?.country);
   }
-  if (!contactCountryChanged && Array.from(contactCountry.options).some(option => option.value === country)) {
-    contactCountry.value = country;
-    updateContactCountry();
-  }
-  mainForm.querySelector('input[type=tel]').placeholder = dialingCode + ' …';
+}
+
+async function localizePrices() {
+  const location = await locationReady;
+  if (!location) return;
+  const {currency, rate} = location;
   if (currency === 'AED' || !(rate > 0)) return;
   const format = new Intl.NumberFormat(undefined, {
     style:'currency', currency, currencyDisplay:'code', maximumFractionDigits:0,
@@ -202,4 +222,5 @@ async function localize() {
   }
   document.querySelector('#exchangeNote').hidden = false;
 }
-localize().catch(() => {});
+localizePrices().catch(() => {});
+localizePhones().catch(() => {});
