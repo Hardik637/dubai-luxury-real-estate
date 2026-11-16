@@ -141,21 +141,26 @@
         <div id="enquire" class="lg:col-span-5">
           <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl text-white">
             <div class="text-center mb-6">
-              <span class="text-xs uppercase tracking-[0.25em] text-brand-gold font-semibold">Priority Launch Access</span>
-              <h2 class="font-serif text-2xl sm:text-3xl font-bold mt-1">Reserve With AED 207,000</h2>
-              <p class="text-xs sm:text-sm text-white/75 mt-1">Request floor plans, a brochure and current availability</p>
+              <span class="text-xs uppercase tracking-[0.25em] text-brand-gold font-semibold">Priority Allocation</span>
+              <h2 class="font-serif text-2xl sm:text-3xl font-bold mt-1">Request Floor Plans &amp; 10% Offer</h2>
+              <p class="text-xs sm:text-sm text-white/75 mt-1">Ask about current availability and booking terms</p>
             </div>
 
             <form id="leadForm" class="space-y-4">
               <label class="block text-sm font-medium">Full name<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="name" type="text" autocomplete="name" maxlength="100" required></label>
               <div class="grid gap-3 sm:grid-cols-2">
-                <label class="block text-sm font-medium">Email<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="email" type="email" autocomplete="email" maxlength="254" required></label>
-                <label class="block text-sm font-medium">Phone / Mobile<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="phone" type="tel" autocomplete="tel" maxlength="30" required></label>
+                <label class="block text-sm font-medium">Phone / WhatsApp<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="phone" type="tel" autocomplete="tel" maxlength="30" required></label>
+                <label class="block text-sm font-medium">Villa Type<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="unit" required><option>3 BR Townhouse</option><option>4 BR Villa</option><option>5 BR Villa</option><option>6–7 BR Villa</option><option>Undecided</option></select></label>
               </div>
-              <label class="block text-sm font-medium">Job title<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="job" type="text" autocomplete="organization-title" maxlength="100" required></label>
-              <label class="block text-sm font-medium">Property budget<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="budget" required><option value="" selected disabled>Select an option</option><option>Under AED 2M</option><option>AED 2M–3M</option><option>AED 3M–5M</option><option>AED 5M–7M</option><option>AED 7M+</option><option>Still deciding</option></select></label>
-              <label class="block text-sm font-medium">Why are you looking to buy property in Dubai or nearby?<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="purpose" required><option value="" selected disabled>Select an option</option><option>Investment or rental income</option><option>Long-term capital growth</option><option>Primary residence</option><option>Second or holiday home</option><option>Relocating to the UAE</option><option>Other or still exploring</option></select></label>
-              <button type="submit" class="w-full gold-gradient text-brand-dark font-bold py-4 rounded-xl shadow-lg hover:opacity-95 transition text-sm sm:text-base">Request Brochure &amp; Price List</button>
+              <details class="space-y-3">
+                <summary class="cursor-pointer text-sm text-white/75">Add buying preferences</summary>
+                <label class="block text-sm font-medium">Email<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="email" type="email" autocomplete="email" maxlength="254"></label>
+                <label class="block text-sm font-medium">Job title<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="job" type="text" autocomplete="organization-title" maxlength="100"></label>
+              <label class="block text-sm font-medium">Property budget<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="budget"><option value="" selected disabled>Select an option</option><option>Under AED 2M</option><option>AED 2M–3M</option><option>AED 3M–5M</option><option>AED 5M–7M</option><option>AED 7M+</option><option>Still deciding</option></select></label>
+              <label class="block text-sm font-medium">Why are you looking to buy property in Dubai or nearby?<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="purpose"><option value="" selected disabled>Select an option</option><option>Investment or rental income</option><option>Long-term capital growth</option><option>Primary residence</option><option>Second or holiday home</option><option>Relocating to the UAE</option><option>Other or still exploring</option></select></label>
+              </details>
+              
+              <button type="submit" class="w-full gold-gradient text-brand-dark font-bold py-4 rounded-xl shadow-lg hover:opacity-95 transition text-sm sm:text-base">Get Brochure &amp; AED 207,000 Booking Details</button>
               <p class="text-xs text-white/70">VOE Properties will use your details to respond to this enquiry. <a href="/privacy" class="underline">Privacy policy</a></p>
               <p role="status" class="text-sm" aria-live="polite"></p>
             </form>
