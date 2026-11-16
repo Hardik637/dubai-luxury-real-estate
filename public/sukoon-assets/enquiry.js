@@ -156,8 +156,9 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
 }
 
 const amounts = {'AED 207,000':207000, 'AED 207K':207000, 'AED 2.07M':2070000,
-  'AED 2 Million':2000000, 'AED 4.5M–6M':[4500000,6000000]};
-const prices = /AED (?:207,000|207K|2\.07M|2 Million|4\.5M–6M)/g;
+  'AED 2 Million':2000000, 'AED 4.5M–6M':[4500000,6000000],
+  'AED 2.98M':2980000, 'AED 4.06M':4060000, 'AED 4.60M':4600000, 'AED 6.19M':6190000};
+const prices = /AED (?:207,000|207K|2\.07M|2\.98M|4\.06M|4\.60M|6\.19M|2 Million|4\.5M–6M)/g;
 async function localize() {
   const response = await fetch('/api/sukoon-enquiry');
   if (!response.ok) return;
