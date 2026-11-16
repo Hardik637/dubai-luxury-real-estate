@@ -18,7 +18,7 @@ for (const trigger of document.querySelectorAll('[data-contact]')) {
 }
 document.querySelector('#closeContact').onclick = () => dialog.close();
 
-for (const form of [mainForm, contactForm]) {
+for (const form of [mainForm, contactForm].filter(Boolean)) {
   form.addEventListener('submit', async event => {
     event.preventDefault();
     const contact = form === contactForm ? contactMode : 'website';
