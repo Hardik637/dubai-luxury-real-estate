@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'private, no-store');
   if (req.method === 'GET') {
     const country = /^[A-Z]{2}$/.test(req.headers['x-vercel-ip-country']) ?
-      req.headers['x-vercel-ip-country'] : 'AE';
+      req.headers['x-vercel-ip-country'] : null;
     const currency = euro.has(country) ? 'EUR' : markets[country] || 'AED';
     if (currency !== 'AED' && Date.now() >= expiresAt) {
       try {
