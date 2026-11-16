@@ -146,9 +146,20 @@
               <p class="text-xs sm:text-sm text-white/75 mt-1">Request floor plans, a brochure and current availability</p>
             </div>
 
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeT1vP1ymTfVL40h8suOg4F8tCT7y2zntlCIA9WAFOPg9Hdfw/viewform" class="block w-full gold-gradient text-brand-dark text-center font-bold py-4 rounded-xl shadow-lg hover:opacity-95 transition text-sm sm:text-base">
-              Request Brochure &amp; Price List
-            </a>
+            <form id="leadForm" class="space-y-4">
+              <label class="block text-sm font-medium">Full name<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="name" type="text" autocomplete="name" maxlength="100" required></label>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <label class="block text-sm font-medium">Email<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="email" type="email" autocomplete="email" maxlength="254" required></label>
+                <label class="block text-sm font-medium">Phone / Mobile<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="phone" type="tel" autocomplete="tel" maxlength="30" required></label>
+              </div>
+              <label class="block text-sm font-medium">Job title<input class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="job" type="text" autocomplete="organization-title" maxlength="100" required></label>
+              <label class="block text-sm font-medium">Property budget<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="budget" required><option value="" selected disabled>Select an option</option><option>Under AED 2M</option><option>AED 2M–3M</option><option>AED 3M–5M</option><option>AED 5M–7M</option><option>AED 7M+</option><option>Still deciding</option></select></label>
+              <label class="block text-sm font-medium">Why are you looking to buy property in Dubai or nearby?<select class="mt-1 w-full rounded-xl border border-white/20 bg-brand-dark px-3 py-3 text-sm text-white" name="purpose" required><option value="" selected disabled>Select an option</option><option>Investment or rental income</option><option>Long-term capital growth</option><option>Primary residence</option><option>Second or holiday home</option><option>Relocating to the UAE</option><option>Other or still exploring</option></select></label>
+              <button type="submit" class="w-full gold-gradient text-brand-dark font-bold py-4 rounded-xl shadow-lg hover:opacity-95 transition text-sm sm:text-base">Request Brochure &amp; Price List</button>
+              <p class="text-xs text-white/70">VOE Properties will use your details to respond to this enquiry. <a href="/privacy" class="underline">Privacy policy</a></p>
+              <p role="status" class="text-sm" aria-live="polite"></p>
+            </form>
+            <div id="formSuccess" class="hidden rounded-xl border border-white/20 p-4 text-center" role="status">Enquiry received. VOE Properties will follow up with floor plans, pricing and availability.</div>
           </div>
         </div>
 
