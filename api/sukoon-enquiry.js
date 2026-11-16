@@ -33,6 +33,7 @@ export default async function handler(req, res) {
   const phone = field('phone', 20);
   const email = field('email', 254);
   const job = field('job', 100);
+  const unit = field('unit', 40);
   const budget = field('budget', 40);
   const purpose = field('purpose', 70);
   const source = {website: 'Website enquiry', call: 'Website call', whatsapp: 'Website WhatsApp'}[field('contact', 12)];
@@ -41,9 +42,10 @@ export default async function handler(req, res) {
     return res.status(400).json({error: 'Invalid name, phone or enquiry source'});
   }
   if (source === 'Website enquiry' && (
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !job ||
-    !["Under AED 2M","AED 2M–3M","AED 3M–5M","AED 5M–7M","AED 7M+","Still deciding"].includes(budget) ||
-    !["Investment or rental income","Long-term capital growth","Primary residence","Second or holiday home","Relocating to the UAE","Other or still exploring"].includes(purpose)
+    !["3 BR Townhouse","4 BR Villa","5 BR Villa","6–7 BR Villa","Undecided"].includes(unit) ||
+    (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ||
+    (budget && !["Under AED 2M","AED 2M–3M","AED 3M–5M","AED 5M–7M","AED 7M+","Still deciding"].includes(budget)) ||
+    (purpose && !["Investment or rental income","Long-term capital growth","Primary residence","Second or holiday home","Relocating to the UAE","Other or still exploring"].includes(purpose))
   )) {
     return res.status(400).json({error: 'Complete all enquiry fields'});
   }
@@ -56,7 +58,7 @@ export default async function handler(req, res) {
     const response = await fetch(SUKOON_LEADS_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({name, phone, email, job, budget, purpose, source, secret: SUKOON_LEADS_SECRET}),
+      body: JSON.stringify({name, phone, email, job, budget, purpose, unit, source, secret: SUKOON_LEADS_SECRET}),
       signal: AbortSignal.timeout(8000),
     });
     const receipt = await response.json();
