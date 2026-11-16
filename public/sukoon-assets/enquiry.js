@@ -47,7 +47,10 @@ for (const form of [mainForm, contactForm].filter(Boolean)) {
       form.reset();
       if (contact === 'website') {
         form.hidden = true;
-        document.querySelector('#formSuccess').classList.remove('hidden');
+        const success = document.querySelector('#formSuccess');
+        success.classList.remove('hidden');
+        success.setAttribute('tabindex', '-1');
+        success.focus();
       } else {
         const destination = contact === 'call' ? 'tel:+' + businessPhone :
           'https://wa.me/' + businessPhone + '?text=' +
